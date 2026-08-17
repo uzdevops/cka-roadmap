@@ -1,0 +1,122 @@
+{
+  "locale": "uz",
+  "phases": {
+    "foundations": {
+      "title": "1-bosqich - Asoslar",
+      "description": "Konteyner orkestratsiyasini boshidan o'rganish: Kubernetes aslida nima qiladi, klaster qanday tuzilgan, uni kubectl bilan qanday boshqarish kerak va keyingi barcha mavzular tayanadigan asosiy obyektlar (Pod, label, Deployment, Namespace).",
+      "exam_domain": "Asosiy tushunchalar va tayyorgarlik"
+    },
+    "workloads-scheduling": {
+      "title": "2-bosqich - Workload'lar va rejalashtirish",
+      "description": "Imtihonning 15% qismi: workload'lar qanday aniqlanadi, sozlanadi va node'larga joylashtiriladi. Deployment'lar, rollout'lar, konfiguratsiya, avtomatik masshtablash va rejalashtirishning to'liq to'plami.",
+      "exam_domain": "Workload'lar va rejalashtirish"
+    },
+    "networking-storage": {
+      "title": "3-bosqich - Tarmoq va saqlash",
+      "description": "Bir vaqtda ikkita imtihon sohasi: Service'lar va tarmoq (20%) hamda saqlash (10%). Klaster tarmog'i, Service'lar, Ingress, DNS, NetworkPolicy, volume'lar, PV/PVC va StorageClass'lar.",
+      "exam_domain": "Service'lar va tarmoq + saqlash"
+    },
+    "cluster-architecture": {
+      "title": "4-bosqich - Klaster arxitekturasi va administratsiya",
+      "description": "Imtihonning 25% qismi: klasterlarni qurish va boshqarish. kubeadm, yangilashlar, etcd zaxirasi va tiklash, RBAC, sertifikatlar, node'ga xizmat ko'rsatish va kengaytirish interfeyslari.",
+      "exam_domain": "Klaster arxitekturasi, o'rnatish va sozlash"
+    },
+    "troubleshooting": {
+      "title": "5-bosqich - Nosozliklarni bartaraf etish",
+      "description": "30% bilan eng katta imtihon sohasi. Vaqt tig'izligida ilova, klaster, node va tarmoq nosozliklarini tizimli aniqlash usuli.",
+      "exam_domain": "Nosozliklarni bartaraf etish"
+    },
+    "mock-exams": {
+      "title": "6-bosqich - Sinov imtihonlari va takrorlash",
+      "description": "Simulyatsiya va mustahkamlash. To'liq vaqtli sinov imtihonlari, imtihon kuni tartibi, tezlik mashqlari va eng zaif sohalaringizni maqsadli takrorlash.",
+      "exam_domain": "Imtihon simulyatsiyasi"
+    }
+  },
+  "weeks": {
+    "1": {"title": "1-hafta - Kubernetes va klaster arxitekturasi", "description": "Orkestratsiya nega kerak, control plane nima qiladi va worker node'da nima ishlaydi."},
+    "2": {"title": "2-hafta - Laboratoriya muhiti va kubectl", "description": "Lokal klaster quring va imtihonda kuningiz o'tadigan CLI'ni puxta o'zlashtiring."},
+    "3": {"title": "3-hafta - Pod'lar va obyekt modeli", "description": "Eng kichik joylashtiriladigan birlik, uning hayot sikli va obyektlar bir-birini label orqali qanday topishi."},
+    "4": {"title": "4-hafta - Kontrollerlar va namespace'lar", "description": "Deployment'lar, ReplicaSet'lar, rollout'lar va workload'larni izolyatsiyada saqlash."},
+    "5": {"title": "5-hafta - Rollout'lar va workload kontrollerlari", "description": "Deployment strategiyalari, DaemonSet, StatefulSet, Job va CronJob."},
+    "6": {"title": "6-hafta - Ilova konfiguratsiyasi", "description": "ConfigMap, Secret, environment o'zgaruvchilari va o'zgarmas konfiguratsiya."},
+    "7": {"title": "7-hafta - Rejalashtirish", "description": "Kerakli Pod'ni kerakli node'ga joylashtirish."},
+    "8": {"title": "8-hafta - Masshtablash va o'z-o'zini tiklash", "description": "Avtomatik masshtablash va sog'lom bo'lmagan Pod'lardan trafikni uzadigan probe'lar."},
+    "9": {"title": "9-hafta - Klaster tarmog'i va Service'lar", "description": "Tarmoq modeli va Service'ning to'rt turi."},
+    "10": {"title": "10-hafta - Ingress va tashqi trafik", "description": "Klasterga HTTP marshrutlash."},
+    "11": {"title": "11-hafta - Saqlash asoslari", "description": "Volume'lar, PersistentVolume va PersistentVolumeClaim."},
+    "12": {"title": "12-hafta - Stateful workload'lar", "description": "Tarmoq va saqlashni birgalikda qo'llash."},
+    "13": {"title": "13-hafta - kubeadm bilan klaster qurish", "description": "Bo'sh node'lardan ishlaydigan klastergacha."},
+    "14": {"title": "14-hafta - etcd va klaster holati", "description": "Imtihonda eng ko'p uchraydigan administrativ ko'nikma."},
+    "15": {"title": "15-hafta - Kirish nazorati", "description": "Kim, qayerdan, nima qila oladi."},
+    "16": {"title": "16-hafta - Operatsiyalar va kengaytmalar", "description": "Kundalik administratsiya."},
+    "17": {"title": "17-hafta - Ilova va klaster nosozliklari", "description": "Alomatdan asosiy sababga qarab ishlash."},
+    "18": {"title": "18-hafta - Node va tarmoq nosozliklari", "description": "Workload qatlamidan pastda."},
+    "19": {"title": "19-hafta - Vaqtli simulyatsiyalar", "description": "Haqiqiy sharoitda ikkita to'liq sinov imtihoni."},
+    "20": {"title": "20-hafta - Maqsadli takrorlash", "description": "Sinovlar ochib bergan bo'shliqlarni yopish."}
+  },
+  "lessons": {
+    "what-is-kubernetes": {"title": "Kubernetes nima (va nima emas)", "summary": "Orkestratsiya hal qiladigan muammo, deklarativ model va har bir kontroller asosidagi moslashtirish tsikli."},
+    "kubernetes-architecture-overview": {"title": "Klaster arxitekturasi: control plane va node'lar", "summary": "Control plane va worker node'lar mas'uliyatni qanday bo'lishadi hamda so'rov kubectl'dan ishlayotgan konteynergacha qanday yo'l bosadi."},
+    "control-plane-components": {"title": "Control plane komponentlari batafsil", "summary": "kube-apiserver, etcd, kube-scheduler va kube-controller-manager: har biri nimaga javobgar va qanday ishdan chiqadi."},
+    "build-your-lab-environment": {"title": "kind va minikube bilan mashq klasterini qurish", "summary": "Lokal ko'p node'li klaster o'rnating, kubeconfig'ni tushuning va imtihonda daqiqalarni tejaydigan shell alias'larini sozlang."},
+    "kubectl-fundamentals": {"title": "kubectl asoslari", "summary": "get, describe, logs, exec, apply va imperativ generatorlar - hamda nosozlikni tez topishga yordam beradigan output bayroqlari."},
+    "kubernetes-api-objects-and-yaml": {"title": "API obyekt modeli va YAML yozish", "summary": "apiVersion, kind, metadata, spec va status; har qanday maydonni yodlash o'rniga kubectl explain bilan topish."},
+    "pods-deep-dive": {"title": "Pod'lar chuqur tahlili", "summary": "Ko'p konteynerli shablonlar, init konteynerlar, probe'lar, resurslar va Pod'ning to'liq hayot sikli - u qotib qolishining barcha sabablari bilan."},
+    "labels-selectors-annotations": {"title": "Label, selector va annotation'lar", "summary": "Service, Deployment va node joylashtirishi ortidagi bo'sh bog'lanish mexanizmi - va imtihon kutadigan selector sintaksisi."},
+    "deployments-and-replicasets": {"title": "Deployment va ReplicaSet'lar", "summary": "Deklarativ rollout, orqaga qaytarish, masshtablash va Deployment, uning ReplicaSet'lari hamda Pod'lari orasidagi aniq munosabat."},
+    "namespaces-and-context": {"title": "Namespace, context va resurs kvotalari", "summary": "Obyektlarni ajratish, vaqt yo'qotmasdan context almashtirish va namespace'ni cheklaydigan quota/limit-range obyektlari."},
+
+    "deployment-strategies-and-rollbacks": {"title": "Deployment strategiyalari va orqaga qaytarish", "summary": "RollingUpdate sozlash, maxSurge/maxUnavailable, pauza va yomon relizni qaytarish."},
+    "daemonsets-and-statefulsets": {"title": "DaemonSet va StatefulSet'lar", "summary": "Node'ga bog'liq agentlar va barqaror tarmoq identifikatori qachon to'g'ri tanlov bo'ladi."},
+    "jobs-and-cronjobs": {"title": "Job va CronJob'lar", "summary": "Yakuniga yetadigan workload'lar, parallellik, backoff chegarasi va jadval bo'yicha bajarish."},
+    "configmaps-in-practice": {"title": "ConfigMap amaliyotda", "summary": "Konfiguratsiyani konteynerga uzatishning barcha usullari va har birining kelishuvlari."},
+    "secrets-and-encryption": {"title": "Secret'lar va diskda shifrlash", "summary": "Secret turlari, mount qilish va env o'zgaruvchisi farqi, API serverda shifrlash provayderini yoqish."},
+    "resource-requests-and-limits": {"title": "Resurs so'rovlari, limitlar va QoS sinflari", "summary": "request'lar rejalashtirishga, limit'lar esa evictionga qanday ta'sir qiladi va Guaranteed/Burstable/BestEffort nimani anglatadi."},
+    "node-selectors-and-affinity": {"title": "nodeSelector, node affinity va pod affinity", "summary": "Qattiq va yumshoq joylashtirish qoidalari va ular qachon baholanadi."},
+    "taints-and-tolerations": {"title": "Taint va toleration'lar", "summary": "Pod'larni node'dan uzoqlashtirish, NoSchedule/NoExecute effektlari va control plane taint'lari."},
+    "topology-spread-and-priority": {"title": "Topology spread cheklovlari va priority sinflari", "summary": "Replikalarni nosozlik domenlari bo'ylab taqsimlash va yuk ostida nima siqib chiqarilishini hal qilish."},
+    "horizontal-pod-autoscaling": {"title": "Horizontal Pod Autoscaling", "summary": "metrics-server, HPA v2 maqsadlari va avtomasshtablovchi qarorlarini o'qish."},
+    "probes-and-self-healing": {"title": "Liveness, readiness va startup probe'lari", "summary": "Tez ishdan chiqadigan, lekin tebranmaydigan probe'lar loyihalash va ularning rollout'ga ta'siri."},
+    "helm-and-kustomize-basics": {"title": "Helm va Kustomize asoslari", "summary": "Joriy CKA dasturi talab qiladigan shablonlash va overlay asosidagi konfiguratsiya boshqaruvi."},
+
+    "kubernetes-network-model": {"title": "Kubernetes tarmoq modeli va CNI", "summary": "Tekis pod tarmog'i, CNI plagin mas'uliyati va plagin nima qilganini tekshirish."},
+    "services-clusterip-nodeport-loadbalancer": {"title": "Service'lar: ClusterIP, NodePort, LoadBalancer", "summary": "Endpoint'lar, kube-proxy rejimlari va workload uchun to'g'ri ochish usulini tanlash."},
+    "coredns-and-service-discovery": {"title": "CoreDNS va service discovery", "summary": "Service va Pod uchun DNS nomlari, search domenlari va nom yechish nosozliklarini tekshirish."},
+    "ingress-controllers-and-rules": {"title": "Ingress kontrollerlari va qoidalari", "summary": "Kontrollerni o'rnatish, path va host marshrutlash hamda TLS tugatish."},
+    "gateway-api-introduction": {"title": "Gateway API bilan tanishuv", "summary": "Ingress vorisi va joriy CKA dasturi eslatib o'tadigan qismlari."},
+    "network-policies": {"title": "NetworkPolicy'lar", "summary": "Default-deny shabloni, ingress/egress qoidalari va izolyatsiyani tekshirish."},
+    "volumes-and-volume-types": {"title": "Volume'lar va volume turlari", "summary": "emptyDir, hostPath, projected volume'lar va konteyner fayl tizimining hayot sikli."},
+    "persistent-volumes-and-claims": {"title": "PersistentVolume va PersistentVolumeClaim", "summary": "Bog'lanish, kirish rejimlari, reclaim siyosati va PVC nega Pending holatida qolishi."},
+    "storage-classes-and-dynamic-provisioning": {"title": "StorageClass va dinamik ta'minlash", "summary": "Provisioner'lar, standart sinflar, volume kengaytirish va bog'lanish rejimlari."},
+    "stateful-workloads-with-storage": {"title": "Stateful workload'larni ishga tushirish", "summary": "volumeClaimTemplates, headless Service'lar va tartibli rollout'lar."},
+    "troubleshooting-network-and-storage": {"title": "Tarmoq va saqlash nosozliklarini bartaraf etish", "summary": "Ulanish va mount nosozliklari uchun takrorlanadigan tekshiruv ro'yxati."},
+    "phase-3-consolidation": {"title": "3-bosqich mustahkamlash mashqi", "summary": "Service, Ingress, NetworkPolicy va PVC'ni qamrab oluvchi vaqtli mashqlar."},
+
+    "kubeadm-cluster-bootstrap": {"title": "kubeadm bilan klasterni ishga tushirish", "summary": "Dastlabki talablar, kubeadm init/join va CNI plaginini o'rnatish."},
+    "cluster-upgrades": {"title": "Klasterni yangilash", "summary": "Avval control plane tartibi, kubeadm upgrade plan/apply va node'ni drain qilish."},
+    "highly-available-control-planes": {"title": "Yuqori mavjudlikdagi control plane'lar", "summary": "Stacked va tashqi etcd farqi hamda API serverni yuk muvozanatlash."},
+    "etcd-backup-and-restore": {"title": "etcd zaxirasi va tiklash", "summary": "To'g'ri sertifikatlar bilan etcdctl snapshot save/restore va natijani tekshirish."},
+    "certificates-and-kubeconfig": {"title": "Sertifikatlar, CSR va kubeconfig", "summary": "PKI tuzilishi, sertifikatlarni yangilash va yangi foydalanuvchi uchun kubeconfig yaratish."},
+    "static-pods-and-manifests": {"title": "Static Pod'lar va control plane manifestlari", "summary": "/etc/kubernetes/manifests qanday ishlaydi va control plane bayroqlarini xavfsiz tahrirlash."},
+    "rbac-roles-and-bindings": {"title": "RBAC: Role, ClusterRole va binding'lar", "summary": "Eng kam imtiyozli kirishni loyihalash va uni kubectl auth can-i bilan tekshirish."},
+    "service-accounts-and-tokens": {"title": "ServiceAccount va projected tokenlar", "summary": "Workload identifikatsiyasi, token projection va avtomatik mount."},
+    "admission-control-basics": {"title": "Admission control asoslari", "summary": "Admission plaginlari, validating/mutating webhook'lar va Pod Security admission."},
+    "node-maintenance-cordon-drain": {"title": "Node'ga xizmat: cordon, drain, uncordon", "summary": "Workload'larni xavfsiz ko'chirish va PodDisruptionBudget'ga rioya qilish."},
+    "crds-and-operators": {"title": "CRD'lar va operatorlar", "summary": "API'ni kengaytirish va operator boshqaradigan resurslarni tanib olish."},
+    "cluster-observability": {"title": "Klaster kuzatuvchanligi", "summary": "Metrikalar, hodisalar va loglar: nimadir noto'g'ri bo'lganda avval nimaga qarash kerak."},
+
+    "troubleshooting-methodology": {"title": "Kengayadigan nosozlik aniqlash usuli", "summary": "describe -> events -> logs -> exec tsikli va vaqt yo'qotmaslik yo'llari."},
+    "debugging-pods-and-containers": {"title": "Pod va konteynerlarni tekshirish", "summary": "CrashLoopBackOff, ImagePullBackOff, OOMKilled, Pending va Init nosozliklari - sabab va yechim."},
+    "control-plane-failures": {"title": "Control plane nosozliklari", "summary": "O'lgan API server, nosog'lom scheduler va buzilgan static Pod manifesti."},
+    "node-not-ready": {"title": "NotReady node'ni aniqlash", "summary": "kubelet, konteyner runtime, disk bosimi va sertifikat muddati."},
+    "network-troubleshooting": {"title": "Tarmoq nosozliklarini bartaraf etish", "summary": "Service'dan endpoint'ga, undan Pod'ga: trafik qayerda to'xtayotganini aniqlash."},
+    "monitoring-and-log-aggregation": {"title": "Monitoring va loglarni yig'ish", "summary": "Node'da loglar qayerda saqlanadi va ularni klaster bo'ylab qanday yig'ish kerak."},
+
+    "exam-day-logistics": {"title": "Imtihon kuni tartibi va muhiti", "summary": "PSI muhiti, ruxsat etilgan hujjatlar, terminal sozlamalari va vaqtni taqsimlash."},
+    "mock-exam-one": {"title": "1-sinov imtihoni", "summary": "Haqiqiy soha foizlariga mos ikki soatlik simulyatsiya."},
+    "mock-exam-two": {"title": "2-sinov imtihoni", "summary": "Nosozliklarni bartaraf etish va klaster administratsiyasiga urg'u bergan ikkinchi simulyatsiya."},
+    "speed-drills-and-imperative-commands": {"title": "Tezlik mashqlari va imperativ buyruqlar", "summary": "Vaqt yutadigan generator buyruqlari va dry-run usullari."},
+    "weak-domain-review": {"title": "Zaif sohalarni takrorlash", "summary": "Dashboard'dagi tayyorlik tahlilidan foydalanib nimani qayta ko'rish kerakligini aniqlash."},
+    "final-checklist": {"title": "Band qilishdan oldingi yakuniy ro'yxat", "summary": "Ketamiz/kutamiz ro'yxati: hech narsaga qaramasdan bajara olishingiz shart bo'lgan ishlar."}
+  }
+}

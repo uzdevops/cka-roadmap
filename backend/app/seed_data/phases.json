@@ -1,0 +1,280 @@
+{
+  "phases": [
+    {
+      "slug": "foundations",
+      "title": "Phase 1 - Foundations",
+      "description": "Container orchestration from first principles: what Kubernetes actually does, how a cluster is put together, how to drive it with kubectl, and the core objects (Pods, labels, Deployments, Namespaces) every later topic builds on.",
+      "order_index": 1,
+      "exam_domain": "Core concepts & prerequisites",
+      "exam_weight": 0,
+      "week_start": 1,
+      "week_end": 4,
+      "color": "sky",
+      "weeks": [
+        {
+          "number": 1,
+          "title": "Week 1 - Kubernetes and cluster architecture",
+          "description": "Why orchestration exists, what the control plane does, and what runs on a worker node.",
+          "lessons": [
+            {"slug": "what-is-kubernetes", "title": "What Kubernetes is (and what it is not)", "summary": "The problem orchestration solves, the declarative model, and the reconciliation loop that underpins every controller.", "estimated_minutes": 30, "day_of_week": 1},
+            {"slug": "kubernetes-architecture-overview", "title": "Cluster architecture: control plane and nodes", "summary": "How the control plane and worker nodes divide responsibility, and the path a request takes from kubectl to a running container.", "estimated_minutes": 40, "day_of_week": 3},
+            {"slug": "control-plane-components", "title": "Control plane components in detail", "summary": "kube-apiserver, etcd, kube-scheduler and kube-controller-manager: what each one owns and how they fail.", "estimated_minutes": 45, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Week 2 - Your lab environment and kubectl",
+          "description": "Build a local cluster and become fluent with the CLI you will live in during the exam.",
+          "lessons": [
+            {"slug": "build-your-lab-environment", "title": "Build your practice cluster with kind and minikube", "summary": "Install a local multi-node cluster, understand kubeconfig, and set up the shell aliases that save minutes in the exam.", "estimated_minutes": 45, "day_of_week": 1},
+            {"slug": "kubectl-fundamentals", "title": "kubectl fundamentals", "summary": "get, describe, logs, exec, apply and the imperative generators - plus the output flags that make debugging fast.", "estimated_minutes": 50, "day_of_week": 3},
+            {"slug": "kubernetes-api-objects-and-yaml", "title": "The API object model and writing YAML", "summary": "apiVersion, kind, metadata, spec and status; how to discover any field with kubectl explain instead of memorising it.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Week 3 - Pods and the object model",
+          "description": "The smallest deployable unit, its lifecycle, and how objects find each other through labels.",
+          "lessons": [
+            {"slug": "pods-deep-dive", "title": "Pods deep dive", "summary": "Multi-container patterns, init containers, probes, resources and the full Pod lifecycle including every reason a Pod gets stuck.", "estimated_minutes": 55, "day_of_week": 1},
+            {"slug": "labels-selectors-annotations", "title": "Labels, selectors and annotations", "summary": "The loose-coupling mechanism behind Services, Deployments and node placement - and the selector syntax the exam expects.", "estimated_minutes": 35, "day_of_week": 4}
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Week 4 - Controllers and namespaces",
+          "description": "Deployments, ReplicaSets, rollouts and how to keep workloads isolated.",
+          "lessons": [
+            {"slug": "deployments-and-replicasets", "title": "Deployments and ReplicaSets", "summary": "Declarative rollouts, rollback, scaling and the exact relationship between a Deployment, its ReplicaSets and its Pods.", "estimated_minutes": 50, "day_of_week": 1},
+            {"slug": "namespaces-and-context", "title": "Namespaces, contexts and resource quotas", "summary": "Scoping objects, switching context without losing time, and the quota/limit-range objects that constrain a namespace.", "estimated_minutes": 40, "day_of_week": 4}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "workloads-scheduling",
+      "title": "Phase 2 - Workloads & Scheduling",
+      "description": "The 15% exam domain: how workloads are defined, configured and placed onto nodes. Deployments, rollouts, configuration, autoscaling and the full scheduling toolbox.",
+      "order_index": 2,
+      "exam_domain": "Workloads & Scheduling",
+      "exam_weight": 15,
+      "week_start": 5,
+      "week_end": 8,
+      "color": "violet",
+      "weeks": [
+        {
+          "number": 5,
+          "title": "Week 5 - Rollouts and workload controllers",
+          "description": "Deployment strategies, DaemonSets, StatefulSets, Jobs and CronJobs.",
+          "lessons": [
+            {"slug": "deployment-strategies-and-rollbacks", "title": "Deployment strategies and rollbacks", "summary": "RollingUpdate tuning, maxSurge/maxUnavailable, pausing and rolling back a bad release.", "estimated_minutes": 45, "day_of_week": 1},
+            {"slug": "daemonsets-and-statefulsets", "title": "DaemonSets and StatefulSets", "summary": "When node-local agents and stable network identities are the right controller.", "estimated_minutes": 45, "day_of_week": 3},
+            {"slug": "jobs-and-cronjobs", "title": "Jobs and CronJobs", "summary": "Run-to-completion workloads, parallelism, backoff limits and scheduled execution.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Week 6 - Application configuration",
+          "description": "ConfigMaps, Secrets, environment injection and immutable configuration.",
+          "lessons": [
+            {"slug": "configmaps-in-practice", "title": "ConfigMaps in practice", "summary": "Every way to get configuration into a container and the trade-offs of each.", "estimated_minutes": 40, "day_of_week": 1},
+            {"slug": "secrets-and-encryption", "title": "Secrets and encryption at rest", "summary": "Secret types, mounting versus env vars, and enabling encryption providers on the API server.", "estimated_minutes": 45, "day_of_week": 3},
+            {"slug": "resource-requests-and-limits", "title": "Resource requests, limits and QoS classes", "summary": "How requests drive scheduling, how limits drive eviction, and what Guaranteed/Burstable/BestEffort mean.", "estimated_minutes": 45, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Week 7 - Scheduling",
+          "description": "Getting the right Pod onto the right node.",
+          "lessons": [
+            {"slug": "node-selectors-and-affinity", "title": "nodeSelector, node affinity and pod affinity", "summary": "Hard and soft placement rules and when each is evaluated.", "estimated_minutes": 50, "day_of_week": 1},
+            {"slug": "taints-and-tolerations", "title": "Taints and tolerations", "summary": "Repelling Pods from nodes, the NoSchedule/NoExecute effects, and control-plane taints.", "estimated_minutes": 40, "day_of_week": 3},
+            {"slug": "topology-spread-and-priority", "title": "Topology spread constraints and priority classes", "summary": "Spreading replicas across failure domains and deciding what gets preempted under pressure.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 8,
+          "title": "Week 8 - Scaling and self-healing",
+          "description": "Autoscaling and the probes that keep traffic away from unhealthy Pods.",
+          "lessons": [
+            {"slug": "horizontal-pod-autoscaling", "title": "Horizontal Pod Autoscaling", "summary": "metrics-server, HPA v2 targets and reading autoscaler decisions.", "estimated_minutes": 45, "day_of_week": 1},
+            {"slug": "probes-and-self-healing", "title": "Liveness, readiness and startup probes", "summary": "Designing probes that fail fast without flapping, and their effect on rollouts.", "estimated_minutes": 40, "day_of_week": 3},
+            {"slug": "helm-and-kustomize-basics", "title": "Helm and Kustomize basics", "summary": "Templating and overlay-based configuration management as expected by the current CKA curriculum.", "estimated_minutes": 45, "day_of_week": 5}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "networking-storage",
+      "title": "Phase 3 - Networking & Storage",
+      "description": "Two exam domains at once: Services & Networking (20%) and Storage (10%). Cluster networking, Services, Ingress, DNS, NetworkPolicies, volumes, PV/PVC and StorageClasses.",
+      "order_index": 3,
+      "exam_domain": "Services & Networking + Storage",
+      "exam_weight": 30,
+      "week_start": 9,
+      "week_end": 12,
+      "color": "emerald",
+      "weeks": [
+        {
+          "number": 9,
+          "title": "Week 9 - Cluster networking and Services",
+          "description": "The network model and the four Service types.",
+          "lessons": [
+            {"slug": "kubernetes-network-model", "title": "The Kubernetes network model and CNI", "summary": "Flat pod networking, CNI plugin responsibilities and how to inspect what your plugin did.", "estimated_minutes": 45, "day_of_week": 1},
+            {"slug": "services-clusterip-nodeport-loadbalancer", "title": "Services: ClusterIP, NodePort, LoadBalancer", "summary": "Endpoints, kube-proxy modes and choosing the right exposure for a workload.", "estimated_minutes": 50, "day_of_week": 3},
+            {"slug": "coredns-and-service-discovery", "title": "CoreDNS and service discovery", "summary": "DNS names for Services and Pods, search domains and debugging resolution failures.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 10,
+          "title": "Week 10 - Ingress and gateway traffic",
+          "description": "HTTP routing into the cluster.",
+          "lessons": [
+            {"slug": "ingress-controllers-and-rules", "title": "Ingress controllers and rules", "summary": "Installing a controller, path and host routing, and TLS termination.", "estimated_minutes": 50, "day_of_week": 1},
+            {"slug": "gateway-api-introduction", "title": "Gateway API introduction", "summary": "The successor to Ingress and the parts of it the current CKA blueprint mentions.", "estimated_minutes": 40, "day_of_week": 3},
+            {"slug": "network-policies", "title": "NetworkPolicies", "summary": "Default-deny patterns, ingress/egress rules and verifying isolation.", "estimated_minutes": 50, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 11,
+          "title": "Week 11 - Storage fundamentals",
+          "description": "Volumes, persistent volumes and claims.",
+          "lessons": [
+            {"slug": "volumes-and-volume-types", "title": "Volumes and volume types", "summary": "emptyDir, hostPath, projected volumes and the container filesystem lifecycle.", "estimated_minutes": 40, "day_of_week": 1},
+            {"slug": "persistent-volumes-and-claims", "title": "PersistentVolumes and PersistentVolumeClaims", "summary": "Binding, access modes, reclaim policies and why a PVC stays Pending.", "estimated_minutes": 50, "day_of_week": 3},
+            {"slug": "storage-classes-and-dynamic-provisioning", "title": "StorageClasses and dynamic provisioning", "summary": "Provisioners, default classes, volume expansion and binding modes.", "estimated_minutes": 45, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 12,
+          "title": "Week 12 - Stateful workloads",
+          "description": "Putting networking and storage together.",
+          "lessons": [
+            {"slug": "stateful-workloads-with-storage", "title": "Running stateful workloads", "summary": "volumeClaimTemplates, headless Services and ordered rollouts.", "estimated_minutes": 50, "day_of_week": 1},
+            {"slug": "troubleshooting-network-and-storage", "title": "Troubleshooting networking and storage", "summary": "A repeatable checklist for connectivity and mount failures.", "estimated_minutes": 45, "day_of_week": 3},
+            {"slug": "phase-3-consolidation", "title": "Phase 3 consolidation drill", "summary": "Timed exercises spanning Services, Ingress, NetworkPolicy and PVCs.", "estimated_minutes": 60, "day_of_week": 5}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cluster-architecture",
+      "title": "Phase 4 - Cluster Architecture & Administration",
+      "description": "The 25% exam domain: building and operating clusters. kubeadm, upgrades, etcd backup and restore, RBAC, certificates, node maintenance and extension interfaces.",
+      "order_index": 4,
+      "exam_domain": "Cluster Architecture, Installation & Configuration",
+      "exam_weight": 25,
+      "week_start": 13,
+      "week_end": 16,
+      "color": "amber",
+      "weeks": [
+        {
+          "number": 13,
+          "title": "Week 13 - Building a cluster with kubeadm",
+          "description": "From bare nodes to a working cluster.",
+          "lessons": [
+            {"slug": "kubeadm-cluster-bootstrap", "title": "Bootstrapping a cluster with kubeadm", "summary": "Prerequisites, kubeadm init/join, and installing a CNI plugin.", "estimated_minutes": 60, "day_of_week": 1},
+            {"slug": "cluster-upgrades", "title": "Upgrading a cluster", "summary": "Control-plane-first upgrade order, kubeadm upgrade plan/apply and node draining.", "estimated_minutes": 55, "day_of_week": 3},
+            {"slug": "highly-available-control-planes", "title": "Highly available control planes", "summary": "Stacked versus external etcd and load-balancing the API server.", "estimated_minutes": 45, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 14,
+          "title": "Week 14 - etcd and cluster state",
+          "description": "The single most exam-relevant administrative skill.",
+          "lessons": [
+            {"slug": "etcd-backup-and-restore", "title": "etcd backup and restore", "summary": "etcdctl snapshot save/restore with the right certificates, and validating the result.", "estimated_minutes": 55, "day_of_week": 1},
+            {"slug": "certificates-and-kubeconfig", "title": "Certificates, CSRs and kubeconfig", "summary": "The PKI layout, renewing certificates and creating a kubeconfig for a new user.", "estimated_minutes": 50, "day_of_week": 3},
+            {"slug": "static-pods-and-manifests", "title": "Static Pods and control plane manifests", "summary": "How /etc/kubernetes/manifests works and how to edit control plane flags safely.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 15,
+          "title": "Week 15 - Access control",
+          "description": "Who can do what, from where.",
+          "lessons": [
+            {"slug": "rbac-roles-and-bindings", "title": "RBAC: Roles, ClusterRoles and bindings", "summary": "Designing least-privilege access and verifying it with kubectl auth can-i.", "estimated_minutes": 55, "day_of_week": 1},
+            {"slug": "service-accounts-and-tokens", "title": "ServiceAccounts and projected tokens", "summary": "Workload identity, token projection and automounting.", "estimated_minutes": 40, "day_of_week": 3},
+            {"slug": "admission-control-basics", "title": "Admission control basics", "summary": "Admission plugins, validating/mutating webhooks and Pod Security admission.", "estimated_minutes": 45, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 16,
+          "title": "Week 16 - Operations and extensions",
+          "description": "Day-two administration.",
+          "lessons": [
+            {"slug": "node-maintenance-cordon-drain", "title": "Node maintenance: cordon, drain, uncordon", "summary": "Evicting workloads safely and respecting PodDisruptionBudgets.", "estimated_minutes": 40, "day_of_week": 1},
+            {"slug": "crds-and-operators", "title": "CRDs and operators", "summary": "Extending the API and recognising operator-managed resources.", "estimated_minutes": 45, "day_of_week": 3},
+            {"slug": "cluster-observability", "title": "Cluster observability", "summary": "Metrics, events and logs: what to look at first when something is wrong.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "troubleshooting",
+      "title": "Phase 5 - Troubleshooting",
+      "description": "The largest exam domain at 30%. A systematic method for diagnosing application, cluster, node and network failures under time pressure.",
+      "order_index": 5,
+      "exam_domain": "Troubleshooting",
+      "exam_weight": 30,
+      "week_start": 17,
+      "week_end": 18,
+      "color": "rose",
+      "weeks": [
+        {
+          "number": 17,
+          "title": "Week 17 - Application and cluster failures",
+          "description": "Working from symptom to root cause.",
+          "lessons": [
+            {"slug": "troubleshooting-methodology", "title": "A troubleshooting methodology that scales", "summary": "The describe -> events -> logs -> exec loop and how to avoid rabbit holes.", "estimated_minutes": 40, "day_of_week": 1},
+            {"slug": "debugging-pods-and-containers", "title": "Debugging Pods and containers", "summary": "CrashLoopBackOff, ImagePullBackOff, OOMKilled, Pending and Init failures - causes and fixes.", "estimated_minutes": 55, "day_of_week": 3},
+            {"slug": "control-plane-failures", "title": "Control plane failures", "summary": "A dead API server, an unhealthy scheduler and a corrupted static Pod manifest.", "estimated_minutes": 50, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 18,
+          "title": "Week 18 - Node and network failures",
+          "description": "Below the workload layer.",
+          "lessons": [
+            {"slug": "node-not-ready", "title": "Diagnosing a NotReady node", "summary": "kubelet, container runtime, disk pressure and certificate expiry.", "estimated_minutes": 50, "day_of_week": 1},
+            {"slug": "network-troubleshooting", "title": "Network troubleshooting", "summary": "Service to endpoint to Pod: isolating where traffic stops.", "estimated_minutes": 50, "day_of_week": 3},
+            {"slug": "monitoring-and-log-aggregation", "title": "Monitoring and log aggregation", "summary": "Where logs live on a node and how to collect them cluster-wide.", "estimated_minutes": 40, "day_of_week": 5}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "mock-exams",
+      "title": "Phase 6 - Mock Exams & Review",
+      "description": "Simulation and consolidation. Full-length timed exams, exam-day logistics, speed drills and a targeted review of your weakest domains.",
+      "order_index": 6,
+      "exam_domain": "Exam simulation",
+      "exam_weight": 0,
+      "week_start": 19,
+      "week_end": 20,
+      "color": "indigo",
+      "weeks": [
+        {
+          "number": 19,
+          "title": "Week 19 - Timed simulations",
+          "description": "Two full mock exams under real conditions.",
+          "lessons": [
+            {"slug": "exam-day-logistics", "title": "Exam day logistics and environment", "summary": "The PSI environment, allowed documentation, the terminal setup and time budgeting.", "estimated_minutes": 30, "day_of_week": 1},
+            {"slug": "mock-exam-one", "title": "Mock exam 1", "summary": "A two-hour simulation weighted to the real domain percentages.", "estimated_minutes": 120, "day_of_week": 3},
+            {"slug": "mock-exam-two", "title": "Mock exam 2", "summary": "A second simulation emphasising troubleshooting and cluster administration.", "estimated_minutes": 120, "day_of_week": 5}
+          ]
+        },
+        {
+          "number": 20,
+          "title": "Week 20 - Targeted review",
+          "description": "Close the gaps the mocks exposed.",
+          "lessons": [
+            {"slug": "speed-drills-and-imperative-commands", "title": "Speed drills and imperative commands", "summary": "The generator commands and dry-run patterns that buy you time.", "estimated_minutes": 45, "day_of_week": 1},
+            {"slug": "weak-domain-review", "title": "Weak domain review", "summary": "Using your dashboard readiness breakdown to decide what to revisit.", "estimated_minutes": 60, "day_of_week": 3},
+            {"slug": "final-checklist", "title": "Final checklist before booking", "summary": "The go/no-go list: what you must be able to do without looking anything up.", "estimated_minutes": 30, "day_of_week": 5}
+          ]
+        }
+      ]
+    }
+  ]
+}

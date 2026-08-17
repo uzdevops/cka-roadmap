@@ -1,0 +1,65 @@
+# Runs migrations and the idempotent seed exactly once per rollout, so the
+# backend replicas never race on the same DDL. The entrypoint waits for the
+# database, migrates, seeds, then execs the given command - `true` exits 0.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cka-migrate
+  namespace: cka-prep
+  labels:
+    app.kubernetes.io/name: migrate
+    app.kubernetes.io/part-of: cka-prep
+  annotations:
+    # With Helm/Argo this becomes a pre-install/pre-upgrade hook. With plain
+    # kubectl, re-apply after bumping the image and delete the old Job first:
+    #   kubectl -n cka-prep delete job cka-migrate --ignore-not-found
+    argocd.argoproj.io/hook: PreSync
+spec:
+  backoffLimit: 6
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: migrate
+        app.kubernetes.io/part-of: cka-prep
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: migrate
+          image: cka-prep-backend:latest
+          imagePullPolicy: IfNotPresent
+          args: ["true"]
+          envFrom:
+            - configMapRef:
+                name: cka-prep-config
+            - secretRef:
+                name: cka-prep-secrets
+          env:
+            - name: RUN_MIGRATIONS
+              value: "true"
+            - name: SEED_ON_START
+              value: "true"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

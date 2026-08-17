@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cka-prep-config
+  namespace: cka-prep
+  labels:
+    app.kubernetes.io/part-of: cka-prep
+data:
+  # --- shared ---
+  POSTGRES_DB: "cka_prep"
+  POSTGRES_HOST: "cka-postgres"
+  POSTGRES_PORT: "5432"
+
+  # --- backend ---
+  ENVIRONMENT: "production"
+  DEBUG: "false"
+  ACCESS_TOKEN_EXPIRE_MINUTES: "60"
+  REFRESH_TOKEN_EXPIRE_DAYS: "30"
+  # Must match the Ingress host below.
+  FRONTEND_ORIGIN: "https://cka.example.com"
+  ENFORCE_PHASE_UNLOCK: "false"
+  RATE_LIMIT_ENABLED: "true"
+  OAUTH_REDIRECT_URL: "https://cka.example.com/api/v1/auth/google/callback"
+  OAUTH_SUCCESS_REDIRECT: "https://cka.example.com/auth/callback"
+
+  # --- frontend ---
+  # The browser reaches the API through the Ingress; server-side rendering
+  # short-circuits to the in-cluster Service.
+  NEXT_PUBLIC_API_URL: "https://cka.example.com"
+  NEXT_PUBLIC_SITE_URL: "https://cka.example.com"
+  INTERNAL_API_URL: "http://cka-backend:8000"
+  # Fallback language when the visitor has no cookie and no matching
+  # Accept-Language. NEXT_PUBLIC_* is compiled into the client bundle, so
+  # changing it needs a frontend image rebuild, not just a ConfigMap edit.
+  NEXT_PUBLIC_DEFAULT_LOCALE: "en"
+---
+# Demo values only. Generate real ones before deploying:
+#
+#   kubectl -n cka-prep create secret generic cka-prep-secrets \
+#     --from-literal=POSTGRES_USER=cka \
+#     --from-literal=POSTGRES_PASSWORD="$(openssl rand -base64 24)" \
+#     --from-literal=SECRET_KEY="$(openssl rand -hex 32)" \
+#     --dry-run=client -o yaml | kubectl apply -f -
+#
+# For anything real, use a Secret manager (External Secrets, Sealed Secrets,
+# SOPS) rather than committing this file.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cka-prep-secrets
+  namespace: cka-prep
+  labels:
+    app.kubernetes.io/part-of: cka-prep
+type: Opaque
+stringData:
+  POSTGRES_USER: "cka"
+  POSTGRES_PASSWORD: "CHANGE_ME_before_deploying"
+  SECRET_KEY: "CHANGE_ME_openssl_rand_hex_32"
+  # Leave both empty to run without Google OAuth - the UI hides the button.
+  GOOGLE_CLIENT_ID: ""
+  GOOGLE_CLIENT_SECRET: ""
+  # Demo accounts created by the seed Job. Change or blank them for production.
+  DEMO_STUDENT_EMAIL: "student@demo.local"
+  DEMO_STUDENT_PASSWORD: "DemoPass123!"
+  DEMO_ADMIN_EMAIL: "admin@demo.local"
+  DEMO_ADMIN_PASSWORD: "AdminPass123!"

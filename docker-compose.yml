@@ -1,0 +1,127 @@
+# The only entrypoint for a local run:
+#
+#     docker compose up
+#
+# Every variable below has a working default, so no .env file is required.
+# Copy .env.example to .env only when you want to override something.
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: cka-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cka}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cka_password}
+      POSTGRES_DB: ${POSTGRES_DB:-cka_prep}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [k8s]
+    ports:
+      # For psql / GUI clients. Set POSTGRES_PORT_HOST if 5432 is already taken
+      # on the host, or delete this block - nothing in the stack needs it.
+      - "${POSTGRES_PORT_HOST:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cka} -d ${POSTGRES_DB:-cka_prep}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    # Named explicitly so the k8s/ manifests can reference the same image.
+    image: ${BACKEND_IMAGE:-cka-prep-backend:latest}
+    container_name: cka-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # --- database ---
+      POSTGRES_USER: ${POSTGRES_USER:-cka}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cka_password}
+      POSTGRES_DB: ${POSTGRES_DB:-cka_prep}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      # --- app ---
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DEBUG: ${DEBUG:-false}
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-change-me-in-production-0123456789abcdef}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-30}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3000}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      # --- optional Google OAuth: leave empty to hide the button ---
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      OAUTH_REDIRECT_URL: ${OAUTH_REDIRECT_URL:-http://localhost:8000/api/v1/auth/google/callback}
+      OAUTH_SUCCESS_REDIRECT: ${OAUTH_SUCCESS_REDIRECT:-http://localhost:3000/auth/callback}
+      # --- features ---
+      ENFORCE_PHASE_UNLOCK: ${ENFORCE_PHASE_UNLOCK:-false}
+      SEED_ON_START: ${SEED_ON_START:-true}
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
+      # --- demo accounts ---
+      DEMO_STUDENT_EMAIL: ${DEMO_STUDENT_EMAIL:-student@demo.local}
+      DEMO_STUDENT_PASSWORD: ${DEMO_STUDENT_PASSWORD:-DemoPass123!}
+      DEMO_ADMIN_EMAIL: ${DEMO_ADMIN_EMAIL:-admin@demo.local}
+      DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:-AdminPass123!}
+    networks: [k8s]
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Baked into the client bundle at build time.
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_DEFAULT_LOCALE: ${NEXT_PUBLIC_DEFAULT_LOCALE:-en}
+    image: ${FRONTEND_IMAGE:-cka-prep-frontend:latest}
+    container_name: cka-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      # Browser-side calls go to the published host port ...
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+      # ... server-side rendering talks to the container directly.
+      INTERNAL_API_URL: ${INTERNAL_API_URL:-http://backend:8000}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_DEFAULT_LOCALE: ${NEXT_PUBLIC_DEFAULT_LOCALE:-en}
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    networks: [k8s]
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+
+networks:
+  # One dedicated bridge network for the whole stack. Services reach each other
+  # by service name on it (db, backend, frontend) and nothing else on the host
+  # shares it.
+  k8s:
+    name: ${DOCKER_NETWORK:-k8s}
+    driver: bridge
+
+volumes:
+  pgdata:
+    driver: local

@@ -1,0 +1,97 @@
+{
+  "title": "Klaster arxitekturasi va control plane",
+  "description": "Har bir control plane komponenti nimaga javobgar, so'rov API server ichidan qanday o'tadi va qaysi nosozlik qaysi komponentga tegishli - o'nta savol.",
+  "questions": {
+    "q01-scheduler-role": {
+      "prompt": "Yangi yaratilgan Pod qaysi node'da ishlashini qaysi komponent hal qiladi?",
+      "options": [
+        {"id": "a", "text": "kubelet"},
+        {"id": "b", "text": "kube-scheduler"},
+        {"id": "c", "text": "kube-controller-manager"},
+        {"id": "d", "text": "kube-proxy"},
+        {"id": "e", "text": "etcd"}
+      ],
+      "explanation": "kube-scheduler spec.nodeName bo'sh bo'lgan Pod'larni kuzatadi, Pod'ni ishga tushira olmaydigan node'larni chetlab, qolganlarini baholaydi va Binding yozadi. Keyin kubelet tanlangan node'da konteynerlarni ishga tushiradi - lekin node'ni o'zi tanlamaydi."
+    },
+    "q02-etcd-quorum": {
+      "prompt": "Nega etcd klasterida a'zolar soni doim toq bo'lishi kerak?",
+      "options": [
+        {"id": "a", "text": "Juft son yozuv paytida ma'lumotni buzadi"},
+        {"id": "b", "text": "Raft (n/2)+1 kvorum talab qiladi, shuning uchun juft son nosozlikka chidamlilikni oshirmasdan a'zo qo'shadi"},
+        {"id": "c", "text": "API server faqat toq sondagi endpoint'ga ulana oladi"},
+        {"id": "d", "text": "Bu texnik ta'sirsiz shunchaki kelishuv"}
+      ],
+      "explanation": "3 a'zoli klaster 1 nosozlikka chidaydi (kvorum 2). 4 a'zoli klaster ham faqat 1 nosozlikka chidaydi (kvorum 3), demak qo'shimcha a'zo mavjudlikni oshirmasdan xarajat va yozuv kechikishini oshiradi."
+    },
+    "q03-apiserver-down": {
+      "prompt": "kube-apiserver to'xtatildi. Mavjud ilova Pod'lari sog'lom va trafik xizmat qilmoqda. Nima bo'ladi?",
+      "options": [
+        {"id": "a", "text": "Barcha Pod'lar darhol to'xtatiladi"},
+        {"id": "b", "text": "Ishlayotgan Pod'lar trafikka xizmat qilishda davom etadi, lekin yangi rejalashtirish yoki API o'zgarishlari mumkin emas"},
+        {"id": "c", "text": "Pod'lar ishlashda davom etadi, lekin tarmoq ulanishini yo'qotadi"},
+        {"id": "d", "text": "Scheduler API serverning vazifalarini o'z zimmasiga oladi"}
+      ],
+      "explanation": "Data plane - kubelet, kube-proxy va konteynerlaringiz - allaqachon mavjud holat asosida ishlashda davom etadi. Faqat control plane'ning o'zgarish qilish va qabul qilish qobiliyati yo'qoladi."
+    },
+    "q04-request-pipeline": {
+      "prompt": "API server kiruvchi so'rovni qanday tartibda qayta ishlaydi?",
+      "options": [
+        {"id": "a", "text": "Avtorizatsiya, autentifikatsiya, admission control, validatsiya, saqlash"},
+        {"id": "b", "text": "Autentifikatsiya, avtorizatsiya, admission control, validatsiya, saqlash"},
+        {"id": "c", "text": "Admission control, autentifikatsiya, avtorizatsiya, saqlash, validatsiya"},
+        {"id": "d", "text": "Validatsiya, autentifikatsiya, avtorizatsiya, admission control, saqlash"}
+      ],
+      "explanation": "Avval shaxs (kimsiz - xatoda 401), keyin ruxsat (buni qila olasizmi - xatoda 403), so'ng o'zgartirishi yoki rad etishi mumkin bo'lgan admission plaginlari va webhook'lar, keyin sxema validatsiyasi va nihoyat etcd'ga yozish."
+    },
+    "q05-control-plane-pods": {
+      "prompt": "kubeadm bilan qurilgan klasterda odatda qaysi komponentlar /etc/kubernetes/manifests ichidagi static Pod sifatida ishlaydi? (Barcha to'g'ri javoblarni tanlang.)",
+      "options": [
+        {"id": "a", "text": "kube-apiserver"},
+        {"id": "b", "text": "etcd"},
+        {"id": "c", "text": "kubelet"},
+        {"id": "d", "text": "kube-scheduler"},
+        {"id": "e", "text": "kube-controller-manager"},
+        {"id": "f", "text": "CoreDNS"}
+      ],
+      "explanation": "To'rtta control plane komponenti kubelet boshqaradigan static Pod sifatida ishlaydi. Kubelet o'zi systemd xizmati (o'zini Pod sifatida ishga tushira olmaydi), CoreDNS esa kube-system'da oddiy Deployment sifatida ishlaydi."
+    },
+    "q06-symptom-mapping": {
+      "prompt": "Yangi Pod'lar cheksiz Pending holatida qolyapti, avval ishlayotganlari esa to'liq sog'lom. Qaysi komponent buzilgan bo'lishi mumkin?",
+      "options": [
+        {"id": "a", "text": "kube-proxy"},
+        {"id": "b", "text": "kube-scheduler"},
+        {"id": "c", "text": "CoreDNS"},
+        {"id": "d", "text": "Konteyner runtime"}
+      ],
+      "explanation": "Pending - node tayinlanmagan degani. Node tayinlash aynan scheduler vazifasi. Scheduler ishlamasa, mavjud Pod'larda nodeName allaqachon bor, shuning uchun ular ta'sirlanmaydi."
+    },
+    "q07-nodes-notready-cni": {
+      "prompt": "'kubeadm init' dan keyin barcha node'lar NotReady deb ko'rsatmoqda. Eng ehtimoliy sabab nima?",
+      "options": [
+        {"id": "a", "text": "etcd dastlabki saylovni tugatmagan"},
+        {"id": "b", "text": "Hali CNI tarmoq plagini o'rnatilmagan"},
+        {"id": "c", "text": "Node'larni qo'lda Ready deb belgilash kerak"},
+        {"id": "d", "text": "kubelet sertifikatlari muddati o'tgan"}
+      ],
+      "explanation": "CNI plaginisiz kubelet NetworkReady=false deb xabar beradi va node holati NotReady bo'lib qoladi. Calico, Cilium yoki Flannel o'rnatilishi buni hal qiladi. 'kubectl describe node' aniq holatni ko'rsatadi."
+    },
+    "q08-declarative-model": {
+      "prompt": "Kubernetes moslashtirish modeli haqidagi qaysi fikrlar to'g'ri? (Barcha to'g'ri javoblarni tanlang.)",
+      "options": [
+        {"id": "a", "text": "Siz spec yozasiz; tizim status yozadi"},
+        {"id": "b", "text": "Kontrollerlar kutilgan holatni kuzatilgan holat bilan uzluksiz solishtiradi"},
+        {"id": "c", "text": "Deployment'ga tegishli Pod'ni o'chirish replika sonini doimiy kamaytiradi"},
+        {"id": "d", "text": "Kontrollerlar etcd'ni to'g'ridan-to'g'ri so'rash o'rniga API serverni kuzatadi"}
+      ],
+      "explanation": "etcd bilan faqat API server gaplashadi. ReplicaSet egalik qiladigan Pod'ni o'chirish bo'shliq hosil qiladi va kontroller uni bir necha soniyada yopadi - replika soni o'zgarmaydi."
+    },
+    "q09-events-command": {
+      "prompt": "Joriy namespace'dagi hodisalarni oxirgi vaqt bo'yicha saralab ko'rsatadigan kubectl buyrug'ini yozing.",
+      "explanation": "kubectl get events --sort-by=.lastTimestamp - butun imtihondagi eng qimmatli bitta nosozlik aniqlash buyrug'i: rejalashtirish, image tortish, probe va volume mount nosozliklari avval shu yerda ko'rinadi."
+    },
+    "q10-node-components": {
+      "prompt": "Node NotReady holatida. O'sha node'da kubelet loglarini kuzatib turadigan systemd journal buyrug'ini yozing.",
+      "explanation": "Kubelet - systemd birligi, shuning uchun uning loglari kubectl'da emas, journalda bo'ladi. Bu har qanday NotReady node'da birinchi ishlatiladigan buyruq."
+    }
+  }
+}
