@@ -26,6 +26,7 @@ export function SiteHeader() {
     { path: '/lessons', label: t.nav.lessons },
     { path: '/quizzes', label: t.nav.quizzes },
     { path: '/labs', label: t.nav.labs },
+    { path: '/resources', label: t.nav.resources },
     ...(user ? [{ path: '/dashboard', label: t.nav.dashboard }] : []),
   ];
 

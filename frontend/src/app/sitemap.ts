@@ -35,6 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...entry('/lessons', 0.8, 'weekly'),
     ...entry('/quizzes', 0.6, 'monthly'),
     ...entry('/labs', 0.6, 'monthly'),
+    ...entry('/resources', 0.5, 'monthly'),
     ...(phases ?? []).flatMap((phase) => entry(`/roadmap/${phase.slug}`, 0.7, 'monthly')),
     ...(lessons ?? [])
       .filter((lesson) => !lesson.is_placeholder)

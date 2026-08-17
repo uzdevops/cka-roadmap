@@ -41,16 +41,29 @@ PostgreSQL. Cold start after the images are built is about 25 seconds.
   blocks, copy buttons, and tip/warning/exam-tip callouts. Phase 1 ships ten
   full lessons; phases 2–6 ship the complete structure with drafts, so
   navigation works end to end.
+- **A clickable architecture diagram** in the cluster-architecture lesson.
+  `::cluster-architecture` renders the control-plane / worker diagram as inline
+  SVG, and all nine of its boxes — the two plane headers included — jump to that
+  part's write-up further down the page. Server-rendered, no JavaScript: the
+  boxes are `#hash` links and the landing highlight is CSS `:target`.
 - **Quizzes** with single-choice, multi-select, and fill-in-the-command
   questions. Commands are graded server-side with fuzzy matching, so
   `kubectl get po -A` scores the same as `kubectl get pods --all-namespaces`.
 - **Labs** with kind/minikube setup, staged tasks with hidden solutions, and
   verification commands.
-- **A dashboard** with per-phase progress, a quiz score trend, a study streak,
-  and an exam-readiness estimate weighted by CKA domain percentages.
+- **A dashboard**, which is what `/` shows once you are signed in — guests keep
+  the landing page, so the route stays indexable. A 20-week tracker leads it: a
+  progress ring, a twenty-segment status bar, and one card per week with its own
+  meter and lesson checklist. Beside it sit per-phase progress, a quiz score
+  trend, a study streak, and an exam-readiness estimate weighted by CKA domain
+  percentages.
 - **An admin panel** with a Markdown editor and live preview that renders
   through the exact pipeline students see, plus per-lesson Uzbek translation
   fields.
+- **A references page** (`/{locale}/resources`) pointing at the four sources of
+  record — the CKA certification page, the CNCF curriculum repository, the
+  candidate handbook and the Linux Foundation exam tips — with a note that the
+  exam now runs for two hours, not the three older courses still quote.
 - **English and Uzbek**, switchable from the header. See below.
 
 ## Languages
@@ -197,6 +210,23 @@ progress logic (streak arithmetic across gaps, readiness weighting, lesson
 completion idempotence) and localisation (locale negotiation, per-field English
 fallback, and that translating a quiz never changes which answers are correct). They run against a dedicated `cka_prep_test` database
 on the same server, so your development data is never touched.
+
+## Deploying behind nginx
+
+[deploy/README.md](deploy/README.md) is a step-by-step for putting the stack on
+a server behind nginx with Let's Encrypt: the containers bind to `127.0.0.1`,
+nginx terminates TLS and splits one host by path (`/api/v1/` and `/docs` to the
+backend, everything else to Next.js). Because the browser stays on a single
+origin, CORS never applies.
+
+```bash
+cp .env.production.example .env     # then fill in the generated secrets
+docker compose up -d --build
+sudo cp deploy/nginx/*.conf /etc/nginx/sites-available/
+```
+
+`--build` matters: `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL` are compiled
+into the client bundle, so a restart alone keeps the old domain.
 
 ## Deploying to Kubernetes
 

@@ -10,6 +10,9 @@ export const en = {
     lessonsTitle: 'All lessons',
     lessonsDescription:
       'Every lesson in the CKA preparation roadmap, in curriculum order: cluster architecture, kubectl, Pods, workloads, networking, storage, cluster administration and troubleshooting.',
+    resourcesTitle: 'CKA exam references',
+    resourcesDescription:
+      'The official sources for the Certified Kubernetes Administrator exam: the certification page, the published curriculum, the candidate handbook and the Linux Foundation exam tips.',
   },
 
   common: {
@@ -42,6 +45,7 @@ export const en = {
     lessons: 'Lessons',
     quizzes: 'Quizzes',
     labs: 'Labs',
+    resources: 'References',
     dashboard: 'Dashboard',
     admin: 'Admin',
     profile: 'Profile',
@@ -53,6 +57,7 @@ export const en = {
 
   footer: {
     tagline: 'CKA Prep - an open study platform for the Kubernetes administrator exam.',
+    references: 'Official exam references',
     disclaimer: 'Not affiliated with the CNCF or the Linux Foundation.',
   },
 
@@ -214,6 +219,18 @@ export const en = {
     intro:
       'Where you are against the 20-week roadmap, and how ready the numbers say you are.',
     loading: 'Loading your progress…',
+
+    trackerHeading: '20-week progress tracker',
+    ringCaption: 'roadmap complete',
+    trackerLessons: '{done} of {total} lessons done',
+    weeksHeading: 'Week by week',
+    weekShort: 'W{number}',
+    weekComplete: 'Complete',
+    weekActive: 'In progress',
+    weekPending: 'Not started',
+    weekBarLabel: 'Status of each of the twenty weeks',
+    weekMeterLabel: 'Week {number} progress',
+
     readiness: 'Exam readiness',
     readinessCaption:
       'Each domain contributes in proportion to its share of the real exam. Quiz average carries three quarters of a domain, lesson completion the rest.',
@@ -362,7 +379,7 @@ export const en = {
     preview: 'preview',
     rendering: 'Rendering…',
     markdownHelp:
-      'Markdown with GFM tables. Callouts: :::tip, :::warning, :::exam-tip … closed with :::. Fenced code blocks get syntax highlighting and a copy button.',
+      'Markdown with GFM tables. Callouts: :::tip, :::warning, :::exam-tip … closed with :::. Fenced code blocks get syntax highlighting and a copy button. ::cluster-architecture inserts the clickable architecture diagram; each of its boxes jumps to the matching :::component{key=…} block.',
     slugImmutable:
       'Slug {slug} is immutable - it is the public URL and is referenced by progress records.',
     viewLive: 'View live ↗',
@@ -411,6 +428,44 @@ export const en = {
     loadFailed: 'Failed to load',
     createFailed: 'Could not create the lesson',
     deleteFailed: 'Could not delete',
+  },
+
+  /**
+   * The `::cluster-architecture` diagram's box labels are proper nouns and come
+   * from the component registry; only the caption is prose, so only it lives here.
+   */
+  architecture: {
+    caption:
+      'Cluster architecture: the control plane decides, the workers run. Select any box - including the two headers - to jump to its description below.',
+  },
+
+  resources: {
+    heading: 'CKA exam references',
+    intro:
+      'Everything else on this site is study material. These four pages are the sources of record - read them before you book a slot, and again in the week before you sit.',
+    noteLabel: 'Important update',
+    noteBody:
+      'The CKA now runs for 2 hours. Courses and videos recorded before the change still say 3 hours. Every lesson, quiz and lab here is written against the current 2-hour exam and the published curriculum.',
+    linksHeading: 'Official sources',
+    newTab: 'opens in a new tab',
+    items: {
+      official: {
+        title: 'Certified Kubernetes Administrator (CKA) official info',
+        body: 'The certification page itself: what the exam costs, how long it runs, how many attempts a registration buys, and how long the certificate stays valid.',
+      },
+      curriculum: {
+        title: 'Exam curriculum (topics)',
+        body: 'The CNCF curriculum repository - the exact domain list and percentage weights, versioned per release. The six phases of this roadmap are built from it.',
+      },
+      handbook: {
+        title: 'Candidate handbook',
+        body: 'The rules of the sitting: identification, room and workspace requirements, what you may keep open, and what gets a session terminated.',
+      },
+      tips: {
+        title: 'Exam tips',
+        body: 'Linux Foundation notes on the exam environment - terminal setup, copy and paste, and the documentation you are allowed to keep open while you work.',
+      },
+    },
   },
 
   notFound: {

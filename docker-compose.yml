@@ -21,7 +21,11 @@ services:
     ports:
       # For psql / GUI clients. Set POSTGRES_PORT_HOST if 5432 is already taken
       # on the host, or delete this block - nothing in the stack needs it.
-      - "${POSTGRES_PORT_HOST:-5432}:5432"
+      #
+      # On a public server set POSTGRES_BIND=127.0.0.1 (see .env.production.example)
+      # or drop this block entirely. The default binds every interface, which on
+      # a server means the database is reachable from the internet.
+      - "${POSTGRES_BIND:-0.0.0.0}:${POSTGRES_PORT_HOST:-5432}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cka} -d ${POSTGRES_DB:-cka_prep}"]
       interval: 5s
@@ -71,7 +75,9 @@ services:
       DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:-AdminPass123!}
     networks: [k8s]
     ports:
-      - "${BACKEND_PORT:-8000}:8000"
+      # Behind a reverse proxy, set BACKEND_BIND=127.0.0.1 so only nginx on the
+      # same host can reach it.
+      - "${BACKEND_BIND:-0.0.0.0}:${BACKEND_PORT:-8000}:8000"
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
       interval: 10s
@@ -106,7 +112,8 @@ services:
       HOSTNAME: 0.0.0.0
     networks: [k8s]
     ports:
-      - "${FRONTEND_PORT:-3000}:3000"
+      # Behind a reverse proxy, set FRONTEND_BIND=127.0.0.1.
+      - "${FRONTEND_BIND:-0.0.0.0}:${FRONTEND_PORT:-3000}:3000"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/healthz || exit 1"]
       interval: 10s

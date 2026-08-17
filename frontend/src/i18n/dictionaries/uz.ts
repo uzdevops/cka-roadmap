@@ -12,6 +12,9 @@ export const uz: Dictionary = {
     lessonsTitle: 'Barcha darslar',
     lessonsDescription:
       'CKA tayyorgarlik yo’l xaritasidagi barcha darslar o’quv tartibida: klaster arxitekturasi, kubectl, Pod’lar, workload’lar, tarmoq, saqlash, klaster administratsiyasi va nosozliklarni bartaraf etish.',
+    resourcesTitle: 'CKA imtihoni manbalari',
+    resourcesDescription:
+      'Certified Kubernetes Administrator imtihonining rasmiy manbalari: sertifikat sahifasi, chop etilgan kurikulum, nomzod qo’llanmasi va Linux Foundation’ning imtihon maslahatlari.',
   },
 
   common: {
@@ -44,6 +47,7 @@ export const uz: Dictionary = {
     lessons: 'Darslar',
     quizzes: 'Testlar',
     labs: 'Laboratoriyalar',
+    resources: 'Manbalar',
     dashboard: 'Panel',
     admin: 'Admin',
     profile: 'Profil',
@@ -55,6 +59,7 @@ export const uz: Dictionary = {
 
   footer: {
     tagline: 'CKA Prep - Kubernetes administratori imtihoni uchun ochiq o’quv platformasi.',
+    references: 'Rasmiy imtihon manbalari',
     disclaimer: 'CNCF yoki Linux Foundation bilan bog’liq emas.',
   },
 
@@ -217,6 +222,18 @@ export const uz: Dictionary = {
     intro:
       '20 haftalik yo’l xaritasida qayerdasiz va raqamlar tayyorligingiz haqida nima deydi.',
     loading: 'Progressingiz yuklanmoqda…',
+
+    trackerHeading: '20 haftalik progress',
+    ringCaption: 'yo’l xaritasi bajarildi',
+    trackerLessons: '{total} darsdan {done} tasi bajarildi',
+    weeksHeading: 'Hafta bo’yicha',
+    weekShort: '{number}-h',
+    weekComplete: 'Bajarildi',
+    weekActive: 'Jarayonda',
+    weekPending: 'Boshlanmagan',
+    weekBarLabel: 'Yigirma haftaning har birining holati',
+    weekMeterLabel: '{number}-hafta progressi',
+
     readiness: 'Imtihonga tayyorlik',
     readinessCaption:
       'Har bir soha haqiqiy imtihondagi ulushiga mutanosib hissa qo’shadi. Test o’rtachasi sohaning to’rtdan uch qismini, darslarni tugatish esa qolganini tashkil qiladi.',
@@ -365,7 +382,7 @@ export const uz: Dictionary = {
     preview: 'ko’rish',
     rendering: 'Chizilmoqda…',
     markdownHelp:
-      'GFM jadvallari bilan Markdown. Callout’lar: :::tip, :::warning, :::exam-tip … ::: bilan yopiladi. Kod bloklari sintaksis bo’yash va nusxalash tugmasini oladi.',
+      'GFM jadvallari bilan Markdown. Callout’lar: :::tip, :::warning, :::exam-tip … ::: bilan yopiladi. Kod bloklari sintaksis bo’yash va nusxalash tugmasini oladi. ::cluster-architecture bosiladigan arxitektura diagrammasini qo’yadi; uning har bir qutisi mos :::component{key=…} blokiga o’tkazadi.',
     slugImmutable:
       '{slug} slug’i o’zgarmas - u ommaviy URL va progress yozuvlarida ishlatiladi.',
     viewLive: 'Saytda ko’rish ↗',
@@ -414,6 +431,40 @@ export const uz: Dictionary = {
     loadFailed: 'Yuklab bo’lmadi',
     createFailed: 'Darsni yaratib bo’lmadi',
     deleteFailed: 'O’chirib bo’lmadi',
+  },
+
+  architecture: {
+    caption:
+      'Klaster arxitekturasi: control plane qaror qabul qiladi, worker’lar ishlatadi. Istalgan qutini - ikkita sarlavhani ham - bosing va quyidagi tavsifiga o’tasiz.',
+  },
+
+  resources: {
+    heading: 'CKA imtihoni manbalari',
+    intro:
+      'Bu saytdagi qolgan hamma narsa - o’quv materiali. Quyidagi to’rtta sahifa esa rasmiy manba: imtihonni band qilishdan oldin va topshirishdan bir hafta oldin ularni qayta o’qing.',
+    noteLabel: 'Muhim yangilanish',
+    noteBody:
+      'CKA endi 2 soat davom etadi. O’zgarishdan oldin yozilgan kurslar va videolar hamon 3 soat deydi. Bu yerdagi har bir dars, test va laboratoriya joriy 2 soatlik imtihon hamda chop etilgan kurikulumga mos yozilgan.',
+    linksHeading: 'Rasmiy manbalar',
+    newTab: 'yangi oynada ochiladi',
+    items: {
+      official: {
+        title: 'Certified Kubernetes Administrator (CKA) rasmiy ma’lumoti',
+        body: 'Sertifikat sahifasining o’zi: imtihon narxi, davomiyligi, bitta ro’yxatdan o’tish nechta urinish berishi va sertifikat qancha muddat amal qilishi.',
+      },
+      curriculum: {
+        title: 'Imtihon kurikulumi (mavzular)',
+        body: 'CNCF kurikulum repozitoriysi - sohalarning aniq ro’yxati va foiz og’irliklari, har bir reliz uchun alohida versiyalangan. Bu yo’l xaritasining olti bosqichi ana shundan qurilgan.',
+      },
+      handbook: {
+        title: 'Nomzod qo’llanmasi',
+        body: 'Topshirish qoidalari: shaxsni tasdiqlash, xona va ish joyiga qo’yiladigan talablar, nimani ochiq qoldirish mumkinligi va qanday hollarda seans to’xtatilishi.',
+      },
+      tips: {
+        title: 'Imtihon maslahatlari',
+        body: 'Linux Foundation’ning imtihon muhiti haqidagi eslatmalari - terminalni sozlash, nusxalash va joylashtirish hamda ish davomida ochiq turishi mumkin bo’lgan hujjatlar.',
+      },
+    },
   },
 
   notFound: {

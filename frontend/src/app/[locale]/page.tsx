@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { HomeSwitch } from '@/components/home-switch';
 import { ButtonLink } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getDictionary, fill } from '@/i18n';
@@ -25,7 +26,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
 
   const phases = (await serverFetch<PhaseSummary[]>('/roadmap/phases', locale)) ?? [];
 
-  return (
+  // Rendered on the server either way: guests and crawlers get this, and a
+  // signed-in visitor has it swapped for the dashboard once auth resolves.
+  const landing = (
     <div className="flex flex-col gap-16 py-4">
       <section className="mx-auto max-w-3xl text-center">
         <p className="text-sm font-medium uppercase tracking-wide text-[var(--accent)]">
@@ -156,4 +159,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
       </section>
     </div>
   );
+
+  return <HomeSwitch landing={landing} />;
 }

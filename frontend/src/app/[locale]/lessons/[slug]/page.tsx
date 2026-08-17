@@ -55,7 +55,7 @@ export default async function LessonPage({
   const lesson = await serverFetch<LessonDetail>(`/lessons/${params.slug}`, locale);
   if (!lesson) notFound();
 
-  const html = await renderMarkdown(lesson.content);
+  const html = await renderMarkdown(lesson.content, locale);
 
   const jsonLd = {
     '@context': 'https://schema.org',

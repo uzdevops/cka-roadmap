@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 const TRANSLATABLE = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
 
 export default function AdminLessonEditorPage({ params }: { params: { id: string } }) {
-  const { t, href, fill } = useI18n();
+  const { t, href, fill, locale } = useI18n();
 
   const [lesson, setLesson] = useState<AdminLesson | null>(null);
   const [content, setContent] = useState('');
@@ -56,14 +56,14 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
       const res = await fetch('/api/preview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ markdown: content }),
+        body: JSON.stringify({ markdown: content, locale }),
       });
       const data = await res.json();
       setPreviewHtml(data.html);
     } finally {
       setPreviewing(false);
     }
-  }, [content]);
+  }, [content, locale]);
 
   useEffect(() => {
     if (tab !== 'preview') return;

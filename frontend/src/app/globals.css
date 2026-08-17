@@ -282,6 +282,351 @@
   color: var(--accent);
 }
 
+/* --- Dashboard -------------------------------------------------------------
+   The tracker is the one place the app leans on glow. Both themes get the same
+   structure; only the tokens below differ, so light mode reads as a clean panel
+   rather than a dark design with the lights left on.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Light: a plain shadow. There is no glow to have against a white ground. */
+  --dash-glow: 0 1px 2px rgba(11, 11, 11, 0.05);
+  --dash-ring-glow: none;
+  --dash-seg-glow: none;
+  --dash-hero-wash: linear-gradient(180deg, rgba(42, 120, 214, 0.05), transparent 60%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --dash-glow: 0 0 0 1px rgba(57, 135, 229, 0.18), 0 0 32px -10px rgba(57, 135, 229, 0.55);
+    --dash-ring-glow: drop-shadow(0 0 6px rgba(57, 135, 229, 0.55));
+    --dash-seg-glow: 0 0 10px -2px rgba(57, 135, 229, 0.7);
+    --dash-hero-wash: linear-gradient(180deg, rgba(57, 135, 229, 0.1), transparent 65%);
+  }
+}
+
+:root[data-theme='dark'] {
+  --dash-glow: 0 0 0 1px rgba(57, 135, 229, 0.18), 0 0 32px -10px rgba(57, 135, 229, 0.55);
+  --dash-ring-glow: drop-shadow(0 0 6px rgba(57, 135, 229, 0.55));
+  --dash-seg-glow: 0 0 10px -2px rgba(57, 135, 229, 0.7);
+  --dash-hero-wash: linear-gradient(180deg, rgba(57, 135, 229, 0.1), transparent 65%);
+}
+
+.dash-hero {
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--dash-glow);
+  background-image: var(--dash-hero-wash);
+}
+
+.dash-ring-fill {
+  filter: var(--dash-ring-glow);
+  transition: stroke-dashoffset 700ms ease;
+}
+
+/* --- Twenty-segment status bar --- */
+
+.dash-seg {
+  display: block;
+  height: 0.6rem;
+  border-radius: 3px;
+  background: var(--track);
+}
+
+.dash-seg-complete {
+  background: var(--accent);
+  box-shadow: var(--dash-seg-glow);
+}
+
+.dash-seg-active {
+  background: var(--good);
+  box-shadow: var(--dash-seg-glow);
+}
+
+.dash-seg-pending {
+  background: var(--track);
+}
+
+/* Legend key, same three states. */
+.dash-key {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 3px;
+}
+
+.dash-key-complete { background: var(--accent); }
+.dash-key-active { background: var(--good); }
+.dash-key-pending { background: var(--track); }
+
+/* --- Week cards --- */
+
+.dash-week {
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-1);
+  padding: 0.85rem 0.9rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.dash-week:hover {
+  border-color: var(--week-tint, var(--accent));
+}
+
+/* The one week in play. Colour is doubled by the "In progress" label already
+   printed in the card, so this is emphasis rather than information. */
+.dash-week-active {
+  border-color: var(--accent);
+  box-shadow: var(--dash-glow);
+}
+
+.dash-week-complete {
+  background: var(--surface-2);
+}
+
+.dash-week-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: var(--week-tint, var(--accent));
+  background: color-mix(in srgb, var(--week-tint, var(--accent)) 14%, var(--surface-1));
+  border: 1px solid color-mix(in srgb, var(--week-tint, var(--accent)) 35%, transparent);
+}
+
+.dash-week-track {
+  display: block;
+  flex: 1;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.dash-week-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 500ms ease;
+}
+
+.dash-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-top: 0.15rem;
+  border: 1px solid var(--axis);
+  border-radius: 3px;
+  font-size: 0.6rem;
+  line-height: 1;
+  color: transparent;
+}
+
+.dash-check-on {
+  background: var(--good);
+  border-color: var(--good);
+  color: #ffffff;
+}
+
+/* --- Cluster architecture diagram ------------------------------------------
+   Rendered server-side by the `::cluster-architecture` markdown directive.
+   Clicking a box is a plain #hash link, so the highlight below is `:target` -
+   no JavaScript is involved at any point.
+   --------------------------------------------------------------------------- */
+
+.arch-figure {
+  margin-block: 1.6em;
+}
+
+/* The diagram needs more room than the prose measure. Give it the extra width
+   once the viewport can spare it, and scroll it inside its own box below that. */
+.arch-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-1);
+  padding: 0.75rem;
+}
+
+.arch-svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+@media (min-width: 1180px) {
+  .prose-lesson .arch-figure {
+    width: 840px;
+  }
+}
+
+.arch-caption {
+  margin-top: 0.7em;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Plane outlines and their header pills. */
+.arch-plane {
+  fill: none;
+  stroke: var(--axis);
+  stroke-width: 1.5;
+}
+
+.arch-pill {
+  fill: var(--surface-2);
+  stroke: var(--arch-tone);
+  stroke-width: 2;
+}
+
+.arch-pill-label {
+  fill: var(--text-primary);
+  font-size: 17px;
+  font-weight: 640;
+  letter-spacing: 0.01em;
+}
+
+/* Component boxes. Colour is identity only - the name is always spelled out,
+   and the fill stays light enough for --text-primary to clear AA in both
+   themes rather than relying on white-on-saturated. */
+.arch-node {
+  fill: color-mix(in srgb, var(--arch-tone) 14%, var(--surface-1));
+  stroke: var(--arch-tone);
+  stroke-width: 2;
+}
+
+.arch-node-label {
+  fill: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.arch-link {
+  cursor: pointer;
+}
+
+.arch-link:hover .arch-node {
+  fill: color-mix(in srgb, var(--arch-tone) 28%, var(--surface-1));
+}
+
+.arch-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* etcd members. */
+.arch-etcd-body {
+  fill: color-mix(in srgb, var(--arch-tone) 32%, var(--surface-1));
+  stroke: var(--arch-tone);
+  stroke-width: 1.5;
+}
+
+.arch-etcd-cap {
+  fill: var(--surface-1);
+  stroke: var(--arch-tone);
+  stroke-width: 1.5;
+}
+
+.arch-etcd-rib {
+  fill: none;
+  stroke: var(--arch-tone);
+  stroke-width: 1.2;
+}
+
+/* Arrows. */
+.arch-arrow {
+  fill: none;
+  stroke: var(--arch-tone);
+  stroke-width: 2;
+}
+
+.arch-head {
+  fill: var(--arch-tone);
+  stroke: none;
+}
+
+/* Tone slots. A custom property rather than `color`, so the row's prose keeps
+   its normal text colour while its chrome takes the palette slot. */
+.arch-tone-1 { --arch-tone: var(--series-1); }
+.arch-tone-2 { --arch-tone: var(--series-2); }
+.arch-tone-3 { --arch-tone: var(--series-3); }
+.arch-tone-4 { --arch-tone: var(--series-4); }
+.arch-tone-5 { --arch-tone: var(--series-5); }
+.arch-tone-6 { --arch-tone: var(--series-6); }
+.arch-tone-neutral { --arch-tone: var(--axis); }
+
+/* --- Architecture component rows ------------------------------------------- */
+
+.arch-row {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--arch-tone);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  background: var(--surface-1);
+  /* The site header is sticky; without this the jump hides the row's name. */
+  scroll-margin-top: 5rem;
+}
+
+.prose-lesson .arch-row + .arch-row {
+  margin-top: 0.8em;
+}
+
+.arch-row > *:not(.arch-row-head) + * {
+  margin-top: 0.7em;
+}
+
+.arch-row-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.arch-row-name {
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 640;
+}
+
+/* A grouping rather than a single process: heavier left edge and a tinted
+   ground, so the components that follow it read as its contents. */
+.arch-row-plane {
+  border-left-width: 5px;
+  background: var(--surface-2);
+}
+
+.arch-row-plane .arch-row-name {
+  font-size: 1.15rem;
+}
+
+/* Must out-specify `.arch-row + .arch-row` above, which would otherwise keep a
+   plane row tight against the component it follows. */
+.prose-lesson .arch-row + .arch-row-plane {
+  margin-top: 1.6em;
+}
+
+/* Landing here from the diagram. Transient by nature, so it reads as "this is
+   the one you picked" without becoming permanent page furniture. */
+.arch-row:target {
+  border-color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.arch-row:target .arch-row-name {
+  color: var(--accent);
+}
+
 /* --- Code blocks + Shiki dual theme ---------------------------------------- */
 
 .code-block {
