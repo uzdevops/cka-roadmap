@@ -1,0 +1,14 @@
+[Unit]
+Description=Check for CKA Prep updates every 5 minutes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=5min
+# Without this systemd is free to batch the wakeup up to a minute late.
+AccuracySec=15s
+# Catch up on a tick missed while the machine was off.
+Persistent=true
+Unit=cka-check.service
+
+[Install]
+WantedBy=timers.target

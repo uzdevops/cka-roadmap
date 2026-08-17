@@ -4,16 +4,26 @@ Setup for **https://cka-prep.yatm.uz**: the compose stack listens on the
 loopback interface only, and nginx on the same host terminates TLS and splits
 traffic by path.
 
+Two topologies, one routing table. Pick by where the certificate lives.
+
+**A — TLS terminates on a separate host** (what 192.168.121.52 runs):
+
 ```
-                    ┌─────────────── the server ───────────────┐
-  browser ──443──►  │  nginx                                   │
-                    │    /api/v1/, /docs  ──► 127.0.0.1:8000   │
-                    │    everything else  ──► 127.0.0.1:3000   │
-                    │                                          │
-                    │  compose network "k8s":                  │
-                    │    frontend ──► backend ──► db           │
-                    └──────────────────────────────────────────┘
+                  ┌── edge nginx ──┐      ┌─────────── app server ───────────┐
+  browser ──443──►│ cert for       │─80──►│ nginx :80                        │
+                  │ cka-prep…      │      │   /api/v1/, /docs ► 127.0.0.1:8000│
+                  └────────────────┘      │   everything else ► 127.0.0.1:3000│
+                                          │  compose net "k8s":              │
+                                          │    frontend ► backend ► db       │
+                                          └──────────────────────────────────┘
 ```
+
+Use `cka-prep.yatm.uz.http-only.conf`. No certificate and no port 443 on the app
+server, and **no HTTP→HTTPS redirect** — the edge already did that, and
+redirecting again would bounce its request straight back out.
+
+**B — this host terminates TLS itself:** use `cka-prep.yatm.uz.conf` and follow
+step 5.
 
 Everything the browser loads comes from one origin, so **CORS never applies**
 and `NEXT_PUBLIC_API_URL` is just the site URL. This is the same shape as
@@ -36,12 +46,17 @@ git clone <repo> && cd <repo>
 cp .env.production.example .env
 ```
 
-Then edit `.env` and fill in the placeholders. The two that matter most:
+Then fill in the two secrets. Generate them in place:
 
 ```bash
-openssl rand -base64 24   # -> POSTGRES_PASSWORD
-openssl rand -hex 32      # -> SECRET_KEY
+sed -i "s|^POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$(openssl rand -hex 24)|" .env
+sed -i "s|^SECRET_KEY=.*|SECRET_KEY=$(openssl rand -hex 32)|" .env
 ```
+
+Hex on purpose. The database password goes straight into the connection string
+`postgresql+asyncpg://user:PASSWORD@db:5432/cka_prep`, so a `/`, `+`, `@` or `:`
+from `openssl rand -base64` quietly produces a DSN that points somewhere else.
+A `$` is worse still: Docker Compose expands it while reading `.env`.
 
 Also change `DEMO_STUDENT_PASSWORD` and `DEMO_ADMIN_PASSWORD` **before the
 first start** — the defaults are published in this repo's README, and the admin
@@ -73,18 +88,78 @@ docker compose ps          # all three healthy
 
 ## 4. nginx
 
+Two configs ship here, and which one you start with depends on whether DNS
+already points at this host:
+
+| File | When |
+| --- | --- |
+| `cka-prep.yatm.uz.http-only.conf` | DNS not moved yet — HTTP only, no certificate needed |
+| `cka-prep.yatm.uz.conf` | DNS resolves here and you have a certificate |
+
+Both route identically, so switching is not a re-learn.
+
+On a Debian/Ubuntu nginx with `sites-available`:
+
 ```bash
-sudo apt install nginx
 sudo cp deploy/nginx/cka-prep.yatm.uz.conf /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/cka-prep.yatm.uz.conf /etc/nginx/sites-enabled/
-sudo mkdir -p /var/www/certbot
 ```
 
-The config references certificates that do not exist yet, so `nginx -t` fails
-until step 5. If you would rather have it up first, comment out the whole
-`listen 443` server block, reload, get the certificate, then put it back.
+On one that only includes `conf.d/*.conf` (the nginx.org packages, and what
+192.168.121.52 runs), copy it in with a name that sorts **last**:
 
-## 5. TLS
+```bash
+sudo cp deploy/nginx/cka-prep.yatm.uz.http-only.conf \
+        /etc/nginx/conf.d/zz-cka-prep.yatm.uz.conf
+```
+
+That prefix is not cosmetic. `conf.d/*.conf` is included alphabetically and the
+first server block on a listen address becomes the default for unmatched `Host`
+headers — drop in a `c…`-named file and it silently takes over from
+`default.conf`.
+
+```bash
+sudo mkdir -p /var/www/certbot
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+The TLS config references certificates, so `nginx -t` fails on it until step 5.
+
+### What the edge proxy must send (topology A)
+
+```nginx
+location / {
+    proxy_pass http://192.168.121.52:80;
+    proxy_set_header Host              $host;
+    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+All three matter, and the app config is built to cooperate with them:
+
+- **`Host`** picks the right `server_name` here.
+- **`X-Forwarded-For`** must *append*, not replace. Measured on this stack:
+  uvicorn 0.34 reads the **leftmost** entry, so the real client IP survives both
+  hops and the API's rate limiter throttles per user instead of per proxy.
+- **`X-Forwarded-Proto`** is how the backend learns the request was HTTPS.
+  Because `$scheme` on the app server is always `http`, the config maps the
+  incoming value through instead of hardcoding it — otherwise every redirect
+  FastAPI issues comes back as `http://`, and the browser takes an extra bounce
+  through the edge to get corrected.
+
+Verify from the app server, simulating the edge:
+
+```bash
+curl -sI -H 'Host: cka-prep.yatm.uz' -H 'X-Forwarded-Proto: https' \
+     http://127.0.0.1/api/v1/auth/me/ | grep -i location
+# location: https://cka-prep.yatm.uz/api/v1/auth/me   <- https, not http
+```
+
+If you change the nginx config, `systemctl reload` is asynchronous — sleep a
+couple of seconds before testing or you will measure the old workers.
+
+## 5. TLS (topology B only)
 
 ```bash
 sudo apt install certbot python3-certbot-nginx
@@ -109,7 +184,58 @@ sudo ufw allow 'Nginx Full'
 sudo ufw enable
 ```
 
-## Updating
+## Automatic deploys
+
+Two units in [systemd/](systemd/), driving two scripts in [bin/](bin/). The
+split is deliberate: polling is cheap and must never fail, deploying is
+expensive and its failures need to be attributable.
+
+| Unit | Type | Does |
+| --- | --- | --- |
+| `cka-check.timer` | timer, every 5 min | fires `cka-check.service` |
+| `cka-check.service` | oneshot | `git fetch`, compares `HEAD` with `origin/main`, and if they differ starts the deploy |
+| `cka-deploy.service` | oneshot | fast-forwards, `docker compose up -d --build`, waits for health |
+
+Install:
+
+```bash
+sudo install -m 0755 deploy/bin/cka-check-updates.sh /usr/local/bin/cka-check-updates
+sudo install -m 0755 deploy/bin/cka-deploy.sh        /usr/local/bin/cka-deploy
+sudo install -m 0644 deploy/systemd/cka-*            /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now cka-check.timer
+```
+
+Watch it:
+
+```bash
+systemctl list-timers cka-check.timer
+journalctl -u cka-check.service -f      # one line per poll
+journalctl -u cka-deploy.service -f     # build output
+sudo systemctl start cka-deploy         # deploy right now, skip the wait
+```
+
+### How it behaves
+
+**A dirty working tree stops the deploy.** A deploy target has to mirror the
+remote; fast-forwarding over local edits either fails outright or throws them
+away without saying so. So `cka-deploy` checks `git status --porcelain` first and
+refuses, naming the files. Fix it by committing and pushing the change, or by
+discarding it — then the next poll picks up where it left off.
+
+**A build outlasting the interval is fine.** The checker triggers with
+`systemctl start --no-block`, and starting an already-running oneshot unit is a
+no-op, so a ten-minute build does not stack up two deploys.
+
+**The pipeline updates itself.** After a successful deploy, `cka-deploy` copies
+`deploy/bin/*` and `deploy/systemd/*` out of the repo into their system
+locations and reloads systemd if anything changed. A commit can therefore change
+the deploy process, taking effect on the run after it lands.
+
+**Images are pruned, volumes never.** `docker image prune -f` runs after a
+successful deploy and only removes dangling layers from the build.
+
+### Manual updates
 
 ```bash
 git pull

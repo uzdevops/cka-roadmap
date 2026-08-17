@@ -91,7 +91,14 @@ services:
       dockerfile: Dockerfile
       args:
         # Baked into the client bundle at build time.
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+        #
+        # `-` rather than `:-` on purpose: an UNSET variable still gets the
+        # default, but an explicitly EMPTY one is passed through as empty, which
+        # makes the browser call /api/v1/... relative to whatever origin served
+        # the page. That is what you want behind a reverse proxy - it works over
+        # the IP and the domain, http and https, with no rebuild when either
+        # changes. Set an absolute URL only if the API lives on another host.
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL-http://localhost:8000}
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
         NEXT_PUBLIC_DEFAULT_LOCALE: ${NEXT_PUBLIC_DEFAULT_LOCALE:-en}
     image: ${FRONTEND_IMAGE:-cka-prep-frontend:latest}
@@ -102,7 +109,7 @@ services:
         condition: service_healthy
     environment:
       # Browser-side calls go to the published host port ...
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL-http://localhost:8000}
       # ... server-side rendering talks to the container directly.
       INTERNAL_API_URL: ${INTERNAL_API_URL:-http://backend:8000}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}

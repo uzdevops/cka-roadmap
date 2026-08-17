@@ -1,0 +1,14 @@
+[Unit]
+Description=Build and deploy CKA Prep
+Documentation=file:/opt/projects/cka-roadmap/deploy/README.md
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/cka-deploy
+# A cold build is npm ci + next build + pip install; 30 minutes is slack, not
+# an expectation.
+TimeoutStartSec=1800
+# Not enabled and has no [Install]: this unit is only ever triggered, either by
+# cka-check.timer or by hand.

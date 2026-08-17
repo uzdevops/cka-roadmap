@@ -1,0 +1,11 @@
+[Unit]
+Description=Check GitHub for new CKA Prep commits
+Documentation=file:/opt/projects/cka-roadmap/deploy/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/cka-check-updates
+# A fetch that hangs must not keep the timer's unit active until the next tick.
+TimeoutStartSec=120
