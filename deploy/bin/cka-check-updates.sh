@@ -15,14 +15,20 @@ git fetch --quiet origin
 
 local_rev=$(git rev-parse HEAD)
 remote_rev=$(git rev-parse '@{u}')
+built_rev=$(cat /var/lib/cka-deploy/deployed-rev 2>/dev/null || echo none)
 
-if [ "$local_rev" = "$remote_rev" ]; then
+if [ "$local_rev" != "$remote_rev" ]; then
+    echo "new commits upstream: ${local_rev:0:8} -> ${remote_rev:0:8}"
+    git --no-pager log --oneline "${local_rev}..${remote_rev}" | head -10
+elif [ "$built_rev" != "$local_rev" ]; then
+    # A `git pull` run by hand leaves HEAD matching the remote while the
+    # containers still run the old images. Comparing against what was actually
+    # built is what catches that.
+    echo "checked out ${local_rev:0:8} but last built ${built_rev:0:8} - rebuilding"
+else
     echo "up to date at ${local_rev:0:8}"
     exit 0
 fi
-
-echo "new commits upstream: ${local_rev:0:8} -> ${remote_rev:0:8}"
-git --no-pager log --oneline "${local_rev}..${remote_rev}" | head -10
 
 # --no-block so a build that outlasts the five-minute interval does not hold
 # this unit open. Re-triggering an already-running deploy is a no-op.

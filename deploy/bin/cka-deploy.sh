@@ -14,6 +14,13 @@ REPO="${CKA_REPO:-/opt/projects/cka-roadmap}"
 CONTAINERS="cka-db cka-backend cka-frontend"
 HEALTH_TIMEOUT=300
 
+# The revision that was last built and brought up healthy. Compared against
+# HEAD rather than against the remote, because a `git pull` run by hand moves
+# HEAD without building anything - and then a remote-only check sees "up to
+# date" forever and the new code never ships.
+STAMP_DIR=/var/lib/cka-deploy
+STAMP="$STAMP_DIR/deployed-rev"
+
 log() { printf '%s  %s\n' "$(date '+%H:%M:%S')" "$1"; }
 
 check_clean() {
@@ -80,18 +87,22 @@ main() {
 
     check_clean
 
-    local before after
+    local before after deployed
     before=$(git rev-parse HEAD)
     git fetch --quiet origin
     after=$(git rev-parse '@{u}')
 
-    if [ "$before" = "$after" ]; then
-        log "already at ${before:0:8} - nothing to deploy"
-        exit 0
+    if [ "$before" != "$after" ]; then
+        log "fast-forwarding ${before:0:8} -> ${after:0:8}"
+        git merge --ff-only '@{u}'
     fi
 
-    log "deploying ${before:0:8} -> ${after:0:8}"
-    git merge --ff-only '@{u}'
+    deployed=$(cat "$STAMP" 2>/dev/null || echo none)
+    log "checked out ${after:0:8}, last built ${deployed:0:8}"
+
+    # No early exit when they already match: a rebuild with nothing to do costs
+    # seconds against the layer cache, and running this by hand should always
+    # mean "make what is running match what is checked out".
 
     # --build because NEXT_PUBLIC_* values are compiled into the client bundle;
     # restarting a stale image would serve the old ones.
@@ -99,6 +110,9 @@ main() {
     docker compose up -d --build --remove-orphans
 
     wait_healthy
+
+    install -d "$STAMP_DIR"
+    printf '%s\n' "$after" > "$STAMP"
 
     # Only dangling layers from the build we just did. Never touches volumes.
     docker image prune -f >/dev/null 2>&1 || true
