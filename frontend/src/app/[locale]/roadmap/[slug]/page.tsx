@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { fill, getDictionary } from '@/i18n';
 import { localePath, LOCALES, normalizeLocale } from '@/i18n/config';
-import { serverFetch } from '@/lib/api';
+import { serverFetch } from '@/lib/server-api';
 import type { PhaseDetail } from '@/lib/types';
 import { formatMinutes, phaseColor } from '@/lib/utils';
 

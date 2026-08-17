@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import CurrentUser, Locale, OptionalUser, SessionDep
+from app.deps import CurrentUser, Locale, SessionDep
 from app.i18n import tr
 from app.repositories import quiz_repo
 from app.schemas.quiz import (
@@ -40,7 +40,7 @@ def _summary(quiz, best, counts, locked_ids, locale: str) -> QuizSummary:
 
 @router.get("", response_model=list[QuizSummary])
 async def list_quizzes(
-    session: SessionDep, user: OptionalUser, locale: Locale, phase: str | None = None
+    session: SessionDep, user: CurrentUser, locale: Locale, phase: str | None = None
 ) -> list[QuizSummary]:
     quizzes = await quiz_repo.list_quizzes(session, phase_slug=phase)
     best = await quiz_repo.best_scores(session, user.id) if user else {}
@@ -72,7 +72,7 @@ async def my_attempts(
 
 @router.get("/{slug}", response_model=QuizDetail)
 async def get_quiz(
-    slug: str, session: SessionDep, user: OptionalUser, locale: Locale
+    slug: str, session: SessionDep, user: CurrentUser, locale: Locale
 ) -> QuizDetail:
     quiz = await quiz_repo.get_quiz_by_slug(session, slug)
     if quiz is None or not quiz.is_published:

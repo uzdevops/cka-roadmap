@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import date, datetime
+from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from app.schemas.quiz import QuestionWrite
 
@@ -154,3 +155,45 @@ class AdminStats(BaseModel):
     labs: int
     quiz_attempts: int
     completed_lessons: int
+
+
+# --- Users ---------------------------------------------------------------
+
+
+class AdminUserRead(BaseModel):
+    """A user plus the progress numbers the admin list shows."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    email: str
+    full_name: str | None
+    role: str
+    is_active: bool
+    created_at: datetime
+    last_active: date | None = None
+
+    completed_lessons: int = 0
+    total_lessons: int = 0
+    progress_percent: float = 0.0
+    quiz_attempts: int = 0
+    quiz_average: float | None = None
+    completed_labs: int = 0
+    current_streak: int = 0
+
+
+class AdminUserCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=128)
+    full_name: str | None = Field(default=None, max_length=255)
+    role: Literal["student", "admin"] = "student"
+
+
+class AdminUserUpdate(BaseModel):
+    """Every field optional: this is a PATCH, and an omitted key means 'leave it'."""
+
+    full_name: str | None = Field(default=None, max_length=255)
+    role: Literal["student", "admin"] | None = None
+    is_active: bool | None = None
+    # Registration is closed, so resetting a forgotten password is an admin job.
+    password: str | None = Field(default=None, min_length=8, max_length=128)

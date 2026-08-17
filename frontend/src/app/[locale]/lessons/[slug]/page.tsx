@@ -7,7 +7,7 @@ import { MarkdownContent } from '@/components/markdown-content';
 import { Badge } from '@/components/ui/badge';
 import { getDictionary } from '@/i18n';
 import { localePath, LOCALES, normalizeLocale } from '@/i18n/config';
-import { serverFetch } from '@/lib/api';
+import { serverFetch } from '@/lib/server-api';
 import { renderMarkdown } from '@/lib/markdown';
 import type { LessonDetail } from '@/lib/types';
 import { formatMinutes } from '@/lib/utils';

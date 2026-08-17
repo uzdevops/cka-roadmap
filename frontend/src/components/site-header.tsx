@@ -85,9 +85,6 @@ export function SiteHeader() {
                 <ButtonLink href={href('/login')} variant="ghost" size="sm">
                   {t.nav.signIn}
                 </ButtonLink>
-                <ButtonLink href={href('/register')} size="sm">
-                  {t.nav.getStarted}
-                </ButtonLink>
               </div>
             )
           )}
@@ -141,20 +138,12 @@ export function SiteHeader() {
                   </button>
                 </>
               ) : (
-                <>
-                  <Link
-                    href={href('/login')}
-                    className="block rounded-lg px-3 py-2 text-sm text-ink-secondary"
-                  >
-                    {t.nav.signIn}
-                  </Link>
-                  <Link
-                    href={href('/register')}
-                    className="block rounded-lg px-3 py-2 text-sm text-ink-secondary"
-                  >
-                    {t.nav.getStarted}
-                  </Link>
-                </>
+                <Link
+                  href={href('/login')}
+                  className="block rounded-lg px-3 py-2 text-sm text-ink-secondary"
+                >
+                  {t.nav.signIn}
+                </Link>
               )}
             </div>
           </nav>

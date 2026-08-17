@@ -165,27 +165,27 @@ async def _seed(session) -> None:
 
 
 async def test_lesson_is_served_in_the_requested_locale(
-    client: AsyncClient, session
+    student_client: AsyncClient, session
 ) -> None:
     await _seed(session)
 
-    uz = (await client.get(f"{API}/lessons/translated?lang=uz")).json()
+    uz = (await student_client.get(f"{API}/lessons/translated?lang=uz")).json()
     assert uz["title"] == "Tarjima qilingan dars"
     assert uz["content"] == "# O'zbekcha matn"
     assert uz["content_translated"] is True
     assert uz["phase_title"] == "1-bosqich - Asoslar"
 
-    en = (await client.get(f"{API}/lessons/translated")).json()
+    en = (await student_client.get(f"{API}/lessons/translated")).json()
     assert en["title"] == "Translated lesson"
     assert en["content"] == "# English body"
 
 
 async def test_untranslated_lesson_falls_back_and_is_flagged(
-    client: AsyncClient, session
+    student_client: AsyncClient, session
 ) -> None:
     await _seed(session)
 
-    uz = (await client.get(f"{API}/lessons/untranslated?lang=uz")).json()
+    uz = (await student_client.get(f"{API}/lessons/untranslated?lang=uz")).json()
     assert uz["title"] == "Untranslated lesson"
     assert uz["content"] == "# English body only"
     # The flag lets the UI tell the reader the body is still English.
@@ -193,50 +193,50 @@ async def test_untranslated_lesson_falls_back_and_is_flagged(
 
 
 async def test_accept_language_header_selects_the_locale(
-    client: AsyncClient, session
+    student_client: AsyncClient, session
 ) -> None:
     await _seed(session)
-    resp = await client.get(
+    resp = await student_client.get(
         f"{API}/lessons/translated", headers={"Accept-Language": "uz-UZ,uz;q=0.9"}
     )
     assert resp.json()["title"] == "Tarjima qilingan dars"
 
 
 async def test_explicit_lang_beats_accept_language(
-    client: AsyncClient, session
+    student_client: AsyncClient, session
 ) -> None:
     await _seed(session)
-    resp = await client.get(
+    resp = await student_client.get(
         f"{API}/lessons/translated?lang=en", headers={"Accept-Language": "uz"}
     )
     assert resp.json()["title"] == "Translated lesson"
 
 
-async def test_unsupported_locale_serves_english(client: AsyncClient, session) -> None:
+async def test_unsupported_locale_serves_english(student_client: AsyncClient, session) -> None:
     await _seed(session)
-    resp = await client.get(f"{API}/lessons/translated?lang=klingon")
+    resp = await student_client.get(f"{API}/lessons/translated?lang=klingon")
     assert resp.json()["title"] == "Translated lesson"
 
 
-async def test_roadmap_and_phase_are_localised(client: AsyncClient, session) -> None:
+async def test_roadmap_and_phase_are_localised(student_client: AsyncClient, session) -> None:
     await _seed(session)
 
-    phases = (await client.get(f"{API}/roadmap/phases?lang=uz")).json()
+    phases = (await student_client.get(f"{API}/roadmap/phases?lang=uz")).json()
     assert phases[0]["title"] == "1-bosqich - Asoslar"
     # description has no Uzbek override, so English shows through.
     assert phases[0]["description"] == "English description"
 
-    detail = (await client.get(f"{API}/roadmap/phases/p1?lang=uz")).json()
+    detail = (await student_client.get(f"{API}/roadmap/phases/p1?lang=uz")).json()
     assert detail["weeks"][0]["title"] == "1-hafta"
     assert detail["weeks"][0]["lessons"][0]["title"] == "Tarjima qilingan dars"
 
 
 async def test_quiz_prompt_and_options_are_localised(
-    client: AsyncClient, session
+    student_client: AsyncClient, session
 ) -> None:
     await _seed(session)
 
-    uz = (await client.get(f"{API}/quizzes/q1?lang=uz")).json()
+    uz = (await student_client.get(f"{API}/quizzes/q1?lang=uz")).json()
     assert uz["title"] == "O'zbekcha test"
     question = uz["questions"][0]
     assert question["prompt"] == "O'zbekcha savol"
@@ -246,19 +246,15 @@ async def test_quiz_prompt_and_options_are_localised(
 
 
 async def test_grading_is_locale_independent(
-    client: AsyncClient, session, student_user
+    student_client: AsyncClient, session, student_user
 ) -> None:
     """Translating a quiz must not change which answers are correct."""
-    from tests.conftest import auth_header, login
-
     await _seed(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
-    quiz = (await client.get(f"{API}/quizzes/q1?lang=uz")).json()
+    quiz = (await student_client.get(f"{API}/quizzes/q1?lang=uz")).json()
     question_id = quiz["questions"][0]["id"]
 
-    resp = await client.post(
+    resp = await student_client.post(
         f"{API}/quizzes/q1/submit?lang=uz",
-        headers=auth_header(token),
         json={"answers": [{"question_id": question_id, "selected_options": ["a"]}]},
     )
     body = resp.json()

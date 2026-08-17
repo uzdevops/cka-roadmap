@@ -2,23 +2,34 @@
 
 from __future__ import annotations
 
+from collections import defaultdict
+from datetime import date
+from typing import Any
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import delete, func, select
 
 from app.deps import AdminUser, SessionDep, require_admin
 from app.models import (
     Lab,
+    LabProgress,
     Lesson,
+    LessonProgress,
     Phase,
     Question,
     Quiz,
     QuizAttempt,
+    StudyActivity,
     User,
+    UserRole,
     Week,
 )
-from app.repositories import progress_repo
+from app.repositories import progress_repo, user_repo
 from app.schemas.admin import (
     AdminLabRead,
+    AdminUserCreate,
+    AdminUserRead,
+    AdminUserUpdate,
     AdminLessonRead,
     AdminQuizRead,
     AdminStats,
@@ -30,6 +41,8 @@ from app.schemas.admin import (
     QuizUpdate,
 )
 from app.schemas.quiz import QuestionWrite
+from app.security import hash_password
+from app.services.progress_service import compute_streaks
 
 router = APIRouter(
     prefix="/admin",
@@ -311,3 +324,237 @@ async def structure(session: SessionDep, admin: AdminUser) -> list[dict]:
         }
         for p in phases
     ]
+
+
+# --- Users ---------------------------------------------------------------
+#
+# Self-registration is closed, so this is the only way an account comes into
+# existence. Every route here inherits the router's require_admin dependency.
+
+
+async def _user_stats(session: SessionDep) -> dict[int, dict[str, Any]]:
+    """Progress numbers for every user, as grouped aggregates.
+
+    One query per metric rather than per user: the admin list would otherwise
+    issue five round trips per row.
+    """
+    stats: dict[int, dict[str, Any]] = defaultdict(
+        lambda: {
+            "completed_lessons": 0,
+            "quiz_attempts": 0,
+            "completed_labs": 0,
+            "quiz_average": None,
+            "last_active": None,
+            "current_streak": 0,
+        }
+    )
+
+    lessons_done = await session.execute(
+        select(LessonProgress.user_id, func.count(LessonProgress.id))
+        .where(LessonProgress.completed.is_(True))
+        .group_by(LessonProgress.user_id)
+    )
+    for user_id, count in lessons_done:
+        stats[user_id]["completed_lessons"] = count
+
+    labs_done = await session.execute(
+        select(LabProgress.user_id, func.count(LabProgress.id))
+        .where(LabProgress.status == "completed")
+        .group_by(LabProgress.user_id)
+    )
+    for user_id, count in labs_done:
+        stats[user_id]["completed_labs"] = count
+
+    attempts = await session.execute(
+        select(QuizAttempt.user_id, func.count(QuizAttempt.id))
+        .group_by(QuizAttempt.user_id)
+    )
+    for user_id, count in attempts:
+        stats[user_id]["quiz_attempts"] = count
+
+    # Best score per quiz, then averaged - the same definition the student
+    # dashboard uses, so the two never disagree.
+    best = await session.execute(
+        select(QuizAttempt.user_id, QuizAttempt.quiz_id, func.max(QuizAttempt.score))
+        .group_by(QuizAttempt.user_id, QuizAttempt.quiz_id)
+    )
+    per_user: dict[int, list[float]] = defaultdict(list)
+    for user_id, _quiz_id, score in best:
+        per_user[user_id].append(score)
+    for user_id, scores in per_user.items():
+        stats[user_id]["quiz_average"] = round(sum(scores) / len(scores), 1)
+
+    activity = await session.execute(
+        select(StudyActivity.user_id, StudyActivity.activity_date)
+    )
+    days: dict[int, list[date]] = defaultdict(list)
+    for user_id, day in activity:
+        days[user_id].append(day)
+    for user_id, day_list in days.items():
+        stats[user_id]["last_active"] = max(day_list)
+        stats[user_id]["current_streak"] = compute_streaks(day_list).current_streak
+
+    return stats
+
+
+@router.get("/users", response_model=list[AdminUserRead])
+async def list_users(session: SessionDep) -> list[AdminUserRead]:
+    users = (
+        await session.execute(select(User).order_by(User.created_at.desc()))
+    ).scalars().all()
+    stats = await _user_stats(session)
+    total_lessons = (
+        await session.execute(select(func.count(Lesson.id)))
+    ).scalar_one()
+
+    out: list[AdminUserRead] = []
+    for user in users:
+        s = stats[user.id]
+        done = s["completed_lessons"]
+        out.append(
+            AdminUserRead(
+                id=user.id,
+                email=user.email,
+                full_name=user.full_name,
+                role=user.role,
+                is_active=user.is_active,
+                created_at=user.created_at,
+                last_active=s["last_active"],
+                completed_lessons=done,
+                total_lessons=total_lessons,
+                progress_percent=(
+                    round((done / total_lessons) * 100, 1) if total_lessons else 0.0
+                ),
+                quiz_attempts=s["quiz_attempts"],
+                quiz_average=s["quiz_average"],
+                completed_labs=s["completed_labs"],
+                current_streak=s["current_streak"],
+            )
+        )
+    return out
+
+
+@router.post("/users", response_model=AdminUserRead, status_code=status.HTTP_201_CREATED)
+async def create_user(payload: AdminUserCreate, session: SessionDep) -> AdminUserRead:
+    existing = await user_repo.get_by_email(session, payload.email)
+    if existing is not None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A user with that email already exists",
+        )
+
+    user = await user_repo.create(
+        session,
+        email=payload.email,
+        hashed_password=hash_password(payload.password),
+        full_name=payload.full_name,
+        role=payload.role,
+    )
+    await session.commit()
+    await session.refresh(user)
+
+    total_lessons = (await session.execute(select(func.count(Lesson.id)))).scalar_one()
+    return AdminUserRead(
+        id=user.id,
+        email=user.email,
+        full_name=user.full_name,
+        role=user.role,
+        is_active=user.is_active,
+        created_at=user.created_at,
+        total_lessons=total_lessons,
+    )
+
+
+@router.patch("/users/{user_id}", response_model=AdminUserRead)
+async def update_user(
+    user_id: int, payload: AdminUserUpdate, session: SessionDep, admin: AdminUser
+) -> AdminUserRead:
+    user = await user_repo.get_by_id(session, user_id)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    # Locking yourself out, or demoting yourself out of the panel you are
+    # standing in, is never what was meant.
+    if user.id == admin.id:
+        if payload.role is not None and payload.role != user.role:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="You cannot change your own role",
+            )
+        if payload.is_active is False:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="You cannot deactivate your own account",
+            )
+
+    if payload.role is not None and user.role == UserRole.ADMIN.value:
+        if payload.role != UserRole.ADMIN.value:
+            await _guard_last_admin(session, user.id)
+
+    if payload.full_name is not None:
+        user.full_name = payload.full_name
+    if payload.role is not None:
+        user.role = payload.role
+    if payload.is_active is not None:
+        user.is_active = payload.is_active
+    if payload.password is not None:
+        user.hashed_password = hash_password(payload.password)
+
+    await session.commit()
+    await session.refresh(user)
+
+    stats = await _user_stats(session)
+    s = stats[user.id]
+    total_lessons = (await session.execute(select(func.count(Lesson.id)))).scalar_one()
+    done = s["completed_lessons"]
+    return AdminUserRead(
+        id=user.id,
+        email=user.email,
+        full_name=user.full_name,
+        role=user.role,
+        is_active=user.is_active,
+        created_at=user.created_at,
+        last_active=s["last_active"],
+        completed_lessons=done,
+        total_lessons=total_lessons,
+        progress_percent=round((done / total_lessons) * 100, 1) if total_lessons else 0.0,
+        quiz_attempts=s["quiz_attempts"],
+        quiz_average=s["quiz_average"],
+        completed_labs=s["completed_labs"],
+        current_streak=s["current_streak"],
+    )
+
+
+async def _guard_last_admin(session: SessionDep, user_id: int) -> None:
+    remaining = (
+        await session.execute(
+            select(func.count(User.id)).where(
+                User.role == UserRole.ADMIN.value,
+                User.is_active.is_(True),
+                User.id != user_id,
+            )
+        )
+    ).scalar_one()
+    if remaining == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This is the last administrator - promote someone else first",
+        )
+
+
+@router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT, response_model=None)
+async def delete_user(user_id: int, session: SessionDep, admin: AdminUser) -> None:
+    user = await user_repo.get_by_id(session, user_id)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    if user.id == admin.id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="You cannot delete your own account",
+        )
+    if user.role == UserRole.ADMIN.value:
+        await _guard_last_admin(session, user.id)
+
+    # Progress rows are ON DELETE CASCADE, so this takes the whole history.
+    await session.delete(user)
+    await session.commit()

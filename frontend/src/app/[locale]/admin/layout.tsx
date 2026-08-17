@@ -15,6 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const tabs = [
     { path: '/admin', label: t.admin.tabs.overview },
+    { path: '/admin/users', label: t.admin.tabs.users },
     { path: '/admin/lessons', label: t.admin.tabs.lessons },
     { path: '/admin/quizzes', label: t.admin.tabs.quizzes },
     { path: '/admin/labs', label: t.admin.tabs.labs },

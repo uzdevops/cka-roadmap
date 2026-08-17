@@ -105,6 +105,36 @@ async def student_user(session: AsyncSession) -> User:
     return user
 
 
+@pytest_asyncio.fixture
+async def student_client(
+    client: AsyncClient, student_user: User
+) -> AsyncGenerator[AsyncClient, None]:
+    """A signed-in student.
+
+    Reading content needs an account now that the platform is closed, so the
+    tests that only care about *what* an endpoint returns use this and leave the
+    bare `client` to the tests that are specifically about being anonymous.
+    """
+    token = await login(client, "student@test.local", "StudentPass123!")
+    transport = ASGITransport(app=app)
+    async with AsyncClient(
+        transport=transport, base_url="http://test", headers=auth_header(token)
+    ) as ac:
+        yield ac
+
+
+@pytest_asyncio.fixture
+async def admin_client(
+    client: AsyncClient, admin_user: User
+) -> AsyncGenerator[AsyncClient, None]:
+    token = await login(client, "admin@test.local", "AdminPass123!")
+    transport = ASGITransport(app=app)
+    async with AsyncClient(
+        transport=transport, base_url="http://test", headers=auth_header(token)
+    ) as ac:
+        yield ac
+
+
 def auth_header(token: str) -> dict[str, str]:
     return {"Authorization": f"Bearer {token}"}
 

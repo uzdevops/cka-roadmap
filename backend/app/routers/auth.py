@@ -39,23 +39,25 @@ async def auth_config() -> AuthConfig:
     """Lets the UI hide the Google button when no credentials are configured."""
     return AuthConfig(
         google_oauth_enabled=settings.google_oauth_enabled,
-        registration_enabled=True,
+        registration_enabled=False,
         phase_unlock_enforced=settings.enforce_phase_unlock,
         locales=list(SUPPORTED_LOCALES),
         default_locale=DEFAULT_LOCALE,
     )
 
 
-@router.post("/register", response_model=TokenPair, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=None, include_in_schema=False)
 @limiter.limit(settings.auth_rate_limit)
-async def register(
-    request: Request,
-    response: Response,
-    payload: UserRegister,
-    session: SessionDep,
-) -> TokenPair:
-    user = await auth_service.register(session, payload)
-    return auth_service.issue_tokens(user)
+async def register(request: Request, response: Response) -> None:
+    """Self-registration is closed; accounts are created by an administrator.
+
+    Kept as a route that refuses rather than deleted, so an old client or a
+    bookmarked form gets a clear answer instead of a 404 that reads like a bug.
+    """
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Self-registration is disabled. Ask an administrator for an account.",
+    )
 
 
 @router.post("/login", response_model=TokenPair)

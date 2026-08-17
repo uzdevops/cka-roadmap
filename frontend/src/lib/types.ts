@@ -345,3 +345,27 @@ export interface StructurePhase {
   order_index: number;
   weeks: { id: number; number: number; title: string }[];
 }
+
+export interface AdminUser {
+  id: number;
+  email: string;
+  full_name: string | null;
+  role: Role;
+  is_active: boolean;
+  created_at: string;
+  last_active: string | null;
+  completed_lessons: number;
+  total_lessons: number;
+  progress_percent: number;
+  quiz_attempts: number;
+  quiz_average: number | null;
+  completed_labs: number;
+  current_streak: number;
+}
+
+export interface AdminUserCreate {
+  email: string;
+  password: string;
+  full_name?: string | null;
+  role?: Role;
+}

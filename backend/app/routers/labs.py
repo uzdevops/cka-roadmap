@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import CurrentUser, Locale, OptionalUser, SessionDep
+from app.deps import CurrentUser, Locale, SessionDep
 from app.i18n import tr
 from app.repositories import content_repo, progress_repo
 from app.schemas.content import LabDetail, LabProgressUpdate, LabSummary
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/labs", tags=["labs"])
 
 @router.get("", response_model=list[LabSummary])
 async def list_labs(
-    session: SessionDep, user: OptionalUser, locale: Locale, phase: str | None = None
+    session: SessionDep, user: CurrentUser, locale: Locale, phase: str | None = None
 ) -> list[LabSummary]:
     labs = await content_repo.list_labs(session, phase_slug=phase)
     statuses = await content_repo.lab_progress_map(session, user.id) if user else {}
@@ -36,7 +36,7 @@ async def list_labs(
 
 @router.get("/{slug}", response_model=LabDetail)
 async def get_lab(
-    slug: str, session: SessionDep, user: OptionalUser, locale: Locale
+    slug: str, session: SessionDep, user: CurrentUser, locale: Locale
 ) -> LabDetail:
     lab = await content_repo.get_lab_by_slug(session, slug)
     if lab is None or not lab.is_published:

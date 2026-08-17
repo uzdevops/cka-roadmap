@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import pytest
 from httpx import AsyncClient
 
 from app.config import settings
@@ -10,35 +11,23 @@ from tests.conftest import auth_header, login
 API = settings.api_v1_prefix
 
 
-async def test_register_returns_token_pair(client: AsyncClient) -> None:
+async def test_registration_is_closed(client: AsyncClient) -> None:
+    """Self-registration was removed; accounts come from an administrator."""
     resp = await client.post(
         f"{API}/auth/register",
-        json={
-            "email": "new@example.com",
-            "password": "SuperSecret1!",
-            "full_name": "New Learner",
-        },
+        json={"email": "new@example.com", "password": "SuperSecret1!"},
     )
-    assert resp.status_code == 201, resp.text
-    body = resp.json()
-    assert body["token_type"] == "bearer"
-    assert body["access_token"] and body["refresh_token"]
+    assert resp.status_code == 403
+    assert "administrator" in resp.json()["detail"].lower()
 
 
-async def test_register_rejects_duplicate_email(client: AsyncClient) -> None:
-    payload = {"email": "dupe@example.com", "password": "SuperSecret1!"}
-    first = await client.post(f"{API}/auth/register", json=payload)
-    assert first.status_code == 201
-
-    second = await client.post(f"{API}/auth/register", json=payload)
-    assert second.status_code == 409
-
-
-async def test_register_rejects_short_password(client: AsyncClient) -> None:
-    resp = await client.post(
-        f"{API}/auth/register", json={"email": "short@example.com", "password": "abc"}
-    )
-    assert resp.status_code == 422
+async def test_auth_config_advertises_that_registration_is_off(
+    client: AsyncClient,
+) -> None:
+    """The login page hides its sign-up link from this flag."""
+    resp = await client.get(f"{API}/auth/config")
+    assert resp.status_code == 200
+    assert resp.json()["registration_enabled"] is False
 
 
 async def test_login_and_fetch_profile(client: AsyncClient, student_user) -> None:
@@ -122,3 +111,27 @@ async def test_auth_config_reports_oauth_state(client: AsyncClient) -> None:
 async def test_google_authorize_404s_when_unconfigured(client: AsyncClient) -> None:
     resp = await client.get(f"{API}/auth/google/authorize")
     assert resp.status_code == 404
+
+
+# --- The platform is closed ----------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/roadmap",
+        "/roadmap/phases",
+        "/lessons",
+        "/quizzes",
+        "/labs",
+    ],
+)
+async def test_content_requires_authentication(client: AsyncClient, path: str) -> None:
+    """Hiding the UI is not access control - the API has to refuse too."""
+    resp = await client.get(f"{API}{path}")
+    assert resp.status_code == 401, f"{path} served content to an anonymous caller"
+
+
+async def test_content_is_served_once_signed_in(student_client: AsyncClient) -> None:
+    resp = await student_client.get(f"{API}/roadmap/phases")
+    assert resp.status_code == 200

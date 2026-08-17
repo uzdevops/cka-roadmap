@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import CurrentUser, Locale, OptionalUser, SessionDep
+from app.deps import CurrentUser, Locale, SessionDep
 from app.i18n import has_translation, tr
 from app.repositories import content_repo, progress_repo
 from app.schemas.content import (
@@ -19,7 +19,7 @@ router = APIRouter(prefix="/lessons", tags=["lessons"])
 
 @router.get("", response_model=list[LessonSummary])
 async def list_lessons(
-    session: SessionDep, user: OptionalUser, locale: Locale
+    session: SessionDep, user: CurrentUser, locale: Locale
 ) -> list[LessonSummary]:
     lessons = await content_repo.list_lessons_ordered(session)
     done = await content_repo.completed_lesson_ids(session, user.id) if user else set()
@@ -41,7 +41,7 @@ async def list_lessons(
 
 @router.get("/{slug}", response_model=LessonDetail)
 async def get_lesson(
-    slug: str, session: SessionDep, user: OptionalUser, locale: Locale
+    slug: str, session: SessionDep, user: CurrentUser, locale: Locale
 ) -> LessonDetail:
     lesson = await content_repo.get_lesson_by_slug(session, slug)
     if lesson is None or not lesson.is_published:

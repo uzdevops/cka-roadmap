@@ -145,10 +145,10 @@ async def _build_quiz(session) -> tuple[Quiz, list[int]]:
 
 
 async def test_quiz_detail_never_leaks_the_answer_key(
-    client: AsyncClient, session, student_user
+    student_client: AsyncClient, session, student_user
 ) -> None:
     await _build_quiz(session)
-    resp = await client.get(f"{API}/quizzes/scoring-quiz")
+    resp = await student_client.get(f"{API}/quizzes/scoring-quiz")
     assert resp.status_code == 200
 
     body = resp.json()

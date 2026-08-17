@@ -210,15 +210,15 @@ async def test_completion_can_be_undone(
 
 
 async def test_lesson_detail_carries_prev_next_links(
-    client: AsyncClient, session
+    student_client: AsyncClient, session
 ) -> None:
     await _seed_lessons(session)
 
-    first = (await client.get(f"{API}/lessons/lesson-one")).json()
+    first = (await student_client.get(f"{API}/lessons/lesson-one")).json()
     assert first["prev_slug"] is None
     assert first["next_slug"] == "lesson-two"
 
-    second = (await client.get(f"{API}/lessons/lesson-two")).json()
+    second = (await student_client.get(f"{API}/lessons/lesson-two")).json()
     assert second["prev_slug"] == "lesson-one"
     assert second["next_slug"] is None
 

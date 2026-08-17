@@ -59,55 +59,59 @@ function extractDetail(body: unknown): string | null {
 }
 
 /* --------------------------------------------------------------------------
-   Server-side fetching (public content only - no auth header)
-   -------------------------------------------------------------------------- */
-
-export async function serverFetch<T>(
-  path: string,
-  locale: Locale = DEFAULT_LOCALE,
-): Promise<T | null> {
-  const url = `${serverApiUrl()}${API_V1}${withLocale(path, locale)}`;
-  try {
-    // Always live: the backend is not reachable during the image build, so a
-    // prerendered page would bake in an empty state permanently. Pages using
-    // this also set `export const dynamic = 'force-dynamic'`.
-    const res = await fetch(url, {
-      headers: { Accept: 'application/json' },
-      cache: 'no-store',
-    });
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch {
-    // The backend may be briefly unavailable during a restart; pages that use
-    // this render an empty state rather than a 500.
-    return null;
-  }
-}
-
-/* --------------------------------------------------------------------------
    Browser-side fetching, with token refresh
    -------------------------------------------------------------------------- */
 
-const ACCESS_KEY = 'cka.access_token';
-const REFRESH_KEY = 'cka.refresh_token';
+export const ACCESS_COOKIE = 'cka.access_token';
+export const REFRESH_COOKIE = 'cka.refresh_token';
+
+/**
+ * Tokens live in cookies rather than localStorage.
+ *
+ * Nothing on this platform is public any more, and the gate that enforces that
+ * is `middleware.ts` - which runs on the server and can only read cookies.
+ * Server-rendered pages need them for the same reason: they fetch lesson and
+ * roadmap content from an API that now refuses anonymous callers.
+ *
+ * These are readable by JavaScript, exactly as localStorage was, so this is not
+ * a change in exposure. Making them HttpOnly would be a real improvement, but
+ * it needs the API to accept a cookie instead of a bearer header.
+ */
+function readCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${name.replace(/\./g, '\\.')}=([^;]*)`),
+  );
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function writeCookie(name: string, value: string, maxAgeSeconds: number): void {
+  const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie =
+    `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAgeSeconds}` +
+    `; SameSite=Lax${secure}`;
+}
+
+// Long enough that the cookie outlives the access token it carries: an expired
+// access token is refreshed on the first 401, but only if it is still here to
+// be sent.
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 export const tokenStore = {
   get access(): string | null {
-    if (typeof window === 'undefined') return null;
-    return window.localStorage.getItem(ACCESS_KEY);
+    return readCookie(ACCESS_COOKIE);
   },
   get refresh(): string | null {
-    if (typeof window === 'undefined') return null;
-    return window.localStorage.getItem(REFRESH_KEY);
+    return readCookie(REFRESH_COOKIE);
   },
   set(access: string, refresh: string) {
-    window.localStorage.setItem(ACCESS_KEY, access);
-    window.localStorage.setItem(REFRESH_KEY, refresh);
+    writeCookie(ACCESS_COOKIE, access, COOKIE_MAX_AGE);
+    writeCookie(REFRESH_COOKIE, refresh, COOKIE_MAX_AGE);
     window.dispatchEvent(new Event('cka:auth-changed'));
   },
   clear() {
-    window.localStorage.removeItem(ACCESS_KEY);
-    window.localStorage.removeItem(REFRESH_KEY);
+    writeCookie(ACCESS_COOKIE, '', 0);
+    writeCookie(REFRESH_COOKIE, '', 0);
     window.dispatchEvent(new Event('cka:auth-changed'));
   },
 };

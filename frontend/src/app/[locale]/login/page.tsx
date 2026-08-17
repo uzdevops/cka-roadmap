@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 
@@ -36,11 +35,6 @@ function LoginForm() {
     } finally {
       setBusy(false);
     }
-  };
-
-  const fillDemo = (role: 'student' | 'admin') => {
-    setEmail(role === 'student' ? 'student@demo.local' : 'admin@demo.local');
-    setPassword(role === 'student' ? 'DemoPass123!' : 'AdminPass123!');
   };
 
   return (
@@ -102,28 +96,10 @@ function LoginForm() {
             </>
           )}
 
-          <p className="mt-5 text-center text-sm text-ink-secondary">
-            {t.auth.noAccount}{' '}
-            <Link href={href('/register')} className="text-[var(--accent)] hover:underline">
-              {t.auth.createOne}
-            </Link>
-          </p>
+          {/* Self-registration is closed; accounts come from an administrator. */}
+          <p className="mt-5 text-center text-sm text-ink-muted">{t.auth.noSignUp}</p>
         </CardContent>
       </Card>
-
-      <div className="mt-6 rounded-card border border-line bg-surface p-4">
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
-          {t.auth.demoAccounts}
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Button variant="secondary" size="sm" onClick={() => fillDemo('student')}>
-            {t.auth.fillStudent}
-          </Button>
-          <Button variant="secondary" size="sm" onClick={() => fillDemo('admin')}>
-            {t.auth.fillAdmin}
-          </Button>
-        </div>
-      </div>
     </div>
   );
 }

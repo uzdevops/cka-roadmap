@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import Locale, OptionalUser, SessionDep
+from app.deps import CurrentUser, Locale, SessionDep
 from app.schemas.content import (
     LabSummary,
     PhaseDetail,
@@ -21,14 +21,14 @@ router = APIRouter(prefix="/roadmap", tags=["roadmap"])
 
 @router.get("/phases", response_model=list[PhaseSummary])
 async def list_phases(
-    session: SessionDep, user: OptionalUser, locale: Locale
+    session: SessionDep, user: CurrentUser, locale: Locale
 ) -> list[PhaseSummary]:
     return await roadmap_service.list_phases(session, user, locale)
 
 
 @router.get("", response_model=list[PhaseDetail])
 async def full_roadmap(
-    session: SessionDep, user: OptionalUser, locale: Locale
+    session: SessionDep, user: CurrentUser, locale: Locale
 ) -> list[PhaseDetail]:
     """The whole phase -> week -> lesson tree, with progress when signed in."""
     return await roadmap_service.get_roadmap(session, user, locale)
@@ -36,7 +36,7 @@ async def full_roadmap(
 
 @router.get("/phases/{slug}", response_model=PhaseDetail)
 async def get_phase(
-    slug: str, session: SessionDep, user: OptionalUser, locale: Locale
+    slug: str, session: SessionDep, user: CurrentUser, locale: Locale
 ) -> PhaseDetail:
     phase = await roadmap_service.get_phase(session, slug, user, locale)
     if phase is None:
@@ -86,7 +86,7 @@ async def get_phase(
 
 @router.get("/weeks/{number}/schedule", response_model=WeeklySchedule)
 async def week_schedule(
-    number: int, session: SessionDep, user: OptionalUser, locale: Locale
+    number: int, session: SessionDep, user: CurrentUser, locale: Locale
 ) -> WeeklySchedule:
     schedule = await roadmap_service.weekly_schedule(session, number, user, locale)
     if schedule is None:
