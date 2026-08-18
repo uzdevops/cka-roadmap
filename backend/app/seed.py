@@ -265,6 +265,7 @@ async def _seed_lesson(
                 is_published=True,
                 is_placeholder=not has_real_content,
                 references=references,
+                video_url=data.get("video_url"),
             )
         )
         counter.create("lessons")
@@ -276,6 +277,14 @@ async def _seed_lesson(
     if references and lesson.references != references:
         lesson.references = references
         counter.update("lesson references")
+
+    # Same reasoning as the links: a video URL is reference data the repo owns,
+    # so keep it current - but never blank one an admin set by hand just because
+    # the seed file has nothing to say about that lesson.
+    video_url = data.get("video_url")
+    if video_url and lesson.video_url != video_url:
+        lesson.video_url = video_url
+        counter.update("lesson videos")
 
     # Upgrade a placeholder in place once real markdown appears for its slug.
     if lesson.is_placeholder and has_real_content:
