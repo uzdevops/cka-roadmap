@@ -1,20 +1,15 @@
 export const en = {
   meta: {
-    siteName: 'CKA Prep',
-    titleDefault: 'CKA Prep - a 20-week Kubernetes administrator roadmap',
-    description:
-      'A structured 20-week study plan for the Certified Kubernetes Administrator exam: lessons, quizzes, hands-on labs and progress tracking weighted by the real exam domains.',
-    roadmapTitle: 'The 20-week CKA roadmap',
-    roadmapDescription:
-      'Six phases, twenty weeks, mapped to the Certified Kubernetes Administrator exam domains: foundations, workloads and scheduling, networking and storage, cluster architecture, troubleshooting, and mock exams.',
+    siteName: 'DevOps Platform',
+    titleDefault: 'DevOps Platform - study tracks for Kubernetes, Linux, cloud and CI/CD',
+    description: 'A structured DevOps learning platform. Certification tracks - CKA, CKS, LFCS, AWS, CompTIA - and topic tracks for Docker, Ansible, Terraform, Helm, CI/CD and monitoring, each with lessons, quizzes, hands-on labs and progress tracking.',
+    roadmapTitle: 'Roadmap',
+    roadmapDescription: 'The phases and weeks of this track, in curriculum order, with your progress against each one.',
     lessonsTitle: 'All lessons',
-    lessonsDescription:
-      'Every lesson in the CKA preparation roadmap, in curriculum order: cluster architecture, kubectl, Pods, workloads, networking, storage, cluster administration and troubleshooting.',
-    resourcesTitle: 'CKA exam references',
-    resourcesDescription:
-      'The official sources for the Certified Kubernetes Administrator exam: the certification page, the published curriculum, the candidate handbook and the Linux Foundation exam tips.',
+    lessonsDescription: 'Every lesson in this track, in curriculum order.',
+    resourcesTitle: 'References',
+    resourcesDescription: 'The official sources for this track: certification pages, published curricula, handbooks and vendor documentation.',
   },
-
   common: {
     loading: 'Loading…',
     saving: 'Saving…',
@@ -56,7 +51,7 @@ export const en = {
   },
 
   footer: {
-    tagline: 'CKA Prep - an open study platform for the Kubernetes administrator exam.',
+    tagline: 'DevOps Platform - open lessons, labs and certification tracks for the DevOps toolchain.',
     references: 'Official exam references',
     disclaimer: 'Not affiliated with the CNCF or the Linux Foundation.',
   },
@@ -157,6 +152,12 @@ export const en = {
     copyLabel: 'Copy code to clipboard',
     breadcrumbLabel: 'Lesson location',
     pagerLabel: 'Lesson navigation',
+    videoLabel: 'Video',
+    videoPlay: 'Play video: {title}',
+    videoPlayShort: 'Play video',
+    videoPrivacy: 'Nothing is requested from YouTube until you press play.',
+    videoLoadedNote: 'Player loaded from youtube-nocookie.com - press play inside it to start.',
+    videoOpenExternal: 'Open on YouTube',
   },
 
   quizzes: {
@@ -478,6 +479,20 @@ export const en = {
     loadFailed: 'Failed to load',
     createFailed: 'Could not create the lesson',
     deleteFailed: 'Could not delete',
+    consoleTitle: 'Admin console',
+    consoleTag: 'Admin area',
+    consoleHome: 'Console overview',
+    consoleNav: 'Admin sections',
+    groupPeople: 'People',
+    groupContent: 'Content',
+    session: 'Session',
+    pathLabel: 'Path',
+    backToSite: 'Student site',
+    backToSiteFull: 'Back to the student site',
+    videoUrl: 'Video URL',
+    videoUrlHint: 'Optional. A YouTube link in any of these shapes: youtube.com/watch?v=…, youtu.be/…, youtube.com/embed/… or youtube.com/shorts/…. A &t=90s start time is kept. Leave it empty for a lesson with no video.',
+    videoUrlOk: 'Recognised - video ID {id}. The lesson shows a player above the text.',
+    videoUrlInvalid: 'Not a YouTube link this player can read, so the lesson would show no video. Use a watch, youtu.be, embed or shorts link.',
   },
 
   /**
@@ -524,6 +539,8 @@ export const en = {
     body: 'That lesson, phase or lab does not exist. The roadmap is the best place to pick the thread back up.',
     toRoadmap: 'Go to the roadmap',
     home: 'Home',
+    bodyRoot: 'That page does not exist. The dashboard is the best place to pick the thread back up.',
+    goToSite: 'Go to {site}',
   },
 };
 

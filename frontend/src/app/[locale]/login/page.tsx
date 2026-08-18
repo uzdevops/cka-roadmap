@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 
+import { BrandMark } from '@/components/brand-mark';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { FieldError, Input, Label } from '@/components/ui/field';
 import { useI18n } from '@/i18n/provider';
@@ -53,8 +54,10 @@ function LoginForm() {
       <div aria-hidden className="auth-aurora" />
 
       <header className="flex flex-col items-center text-center">
-        <span aria-hidden className="auth-mark auth-mark-lg">
-          K8
+        {/* Same tile as the rail, three sizes up. The mark is decorative: the
+            product name is the <h1> directly beneath it. */}
+        <span aria-hidden className="auth-mark auth-mark-lg brand-tile">
+          <BrandMark size={60} />
         </span>
         <h1 className="mt-5 text-[28px] font-bold leading-none tracking-[-0.02em] text-ink">
           {t.meta.siteName}

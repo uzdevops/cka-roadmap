@@ -2155,3 +2155,668 @@
   background: var(--gradient-accent);
   opacity: 0.45;
 }
+
+/* ===== Brand mark ===== */
+
+/* ===== Brand mark ===== */
+
+/* The mark is an SVG now rather than two characters, so the plates that used to
+   set type for "K8" - .rail-mark at 28px, .auth-mark at 48px, .auth-mark-lg at
+   60px - become plain gradient tiles and their font rules go unused. The glyph
+   is sized by the plate rather than by a pixel value on the element itself, so
+   it keeps tracking the tile if a user's root font size grows the rem the tile
+   is measured in. */
+.brand-tile > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: none;
+}
+
+/* The wordmark that sits beside the mark and carries the product name as real
+   text. "DevOps Platform" is wider than the name it replaces and the rail is a
+   fixed 15rem, so the last resort is an ellipsis rather than a rail that grows
+   or a name that wraps underneath its own mark. */
+.brand-wordmark {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* ===== Admin console chrome ===== */
+
+/* --- Admin console (adm-) ---------------------------------------------------
+   The management surface, deliberately a different room in the same building.
+
+   The student site is a wide rail over an atmospheric ground. Management is
+   not browsing, so this inverts that arrangement: one dense header carries
+   identity, session, sections and the way out, the ground goes flat and
+   tinted with no dot grid or aurora behind it, the chrome is set in the mono
+   face and the radii tighten from 14px to 5px. Same tokens, same mark, same
+   icon set, same accent hairline - no colour is introduced here.
+   --------------------------------------------------------------------------- */
+
+/* The console owns the frame under /admin. The rail's entries - Panel,
+   Roadmap, Lessons, Labs, References - are read-only mirrors of the student
+   site and are what made the two surfaces indistinguishable; the top bar's
+   language and theme controls move into the console header instead. Scoped by
+   :has() on the console's own marker class, so nothing outside /admin is
+   touched, and a browser without :has() degrades to both frames rather than
+   to none. */
+body:has(.adm-console) .app-rail,
+body:has(.adm-console) .app-topbar {
+  display: none;
+}
+
+body:has(.adm-console) .app-main {
+  max-width: none;
+  padding: 0;
+}
+
+/* Opaque, so the body's dot grid and aurora stop at the console door. */
+.adm-console {
+  min-height: 100vh;
+  background: var(--surface-2);
+}
+
+/* --- Console header --------------------------------------------------------- */
+
+.adm-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--surface-1);
+  /* The axis weight rather than the hairline: this edge is structural. */
+  border-bottom: 1px solid var(--axis);
+}
+
+/* The gradient hairline welded to the top edge, as on the sign-in card - the
+   one piece of the student surface's warmth that the console keeps. */
+.adm-topbar::before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: var(--gradient-accent);
+}
+
+.adm-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.7rem;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 0.5rem 1.25rem;
+}
+
+.adm-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+/* .rail-mark's squared sibling: same mark, filed down. */
+.adm-mark {
+  display: flex;
+  height: 1.7rem;
+  width: 1.7rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: var(--gradient-accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.adm-lockup-text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.adm-lockup-product {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.adm-lockup-title {
+  font-size: 0.9rem;
+  font-weight: 640;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.adm-lockup:hover .adm-lockup-title {
+  color: var(--accent);
+}
+
+/* Standing on the console home: an underline, not a tint. */
+.adm-lockup[aria-current='page'] .adm-lockup-title {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+/* The administration signal, in words. */
+.adm-tag {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+  padding: 0.2rem 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.adm-tools {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* The language switcher and theme toggle are the app's own controls, borrowed
+   from the hidden top bar. Only their own trigger height and radius are pulled
+   into the console's tighter rhythm - the switcher's menu is left alone. */
+.adm-tools > button,
+.adm-tools > div > button {
+  height: 2rem;
+  border-radius: 6px;
+}
+
+.adm-session {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  height: 2rem;
+  max-width: 20rem;
+  padding: 0 0.5rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.adm-session:hover {
+  border-color: var(--border);
+  background: var(--surface-2);
+}
+
+.adm-session-label {
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.adm-session-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+/* Below 900px the label and the address collapse and only the avatar initial
+   is left, the same way `.rail-avatar` behaves. The link itself never goes
+   away - it is the only way to /profile from inside the admin console once the
+   rail is hidden. */
+/* The initial is the collapsed form; above the breakpoint the full address
+   shows instead. */
+.adm-session-initial {
+  display: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+@media (max-width: 899px) {
+  .adm-session-label,
+  .adm-session-value {
+    display: none;
+  }
+
+  .adm-session-initial {
+    display: block;
+  }
+
+  .adm-session {
+    justify-content: center;
+    width: 2rem;
+    padding: 0;
+  }
+}
+
+.adm-action {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  transition: color 120ms ease, border-color 150ms ease, background 120ms ease;
+}
+
+.adm-action:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+/* The door back to the student site is the one action worth a heavier edge. */
+.adm-exit {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+.adm-exit-arrow {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.adm-action-text {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .adm-action-text {
+    display: inline;
+  }
+}
+
+/* --- Section strip ---------------------------------------------------------- */
+
+.adm-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 0.15rem;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 0 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+/* Mono group labels: which sections are people and which are content, without
+   spending a second row on it. */
+.adm-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 0 0.5rem 0 0.35rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.adm-group:not(:first-child) {
+  margin-left: 0.5rem;
+  border-left: 1px solid var(--border);
+  padding-left: 0.85rem;
+}
+
+.adm-tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 2px solid transparent;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8125rem;
+  font-weight: 550;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.adm-tab:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+}
+
+/* The current section carries a bar and a weight change as well as the tint,
+   so it survives a colour-blind reading - and it is marked aria-current. */
+.adm-tab-active {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-bottom-color: var(--accent);
+  font-weight: 650;
+}
+
+.adm-tab-active svg {
+  color: var(--accent);
+}
+
+/* The header rows share the body's gutter, so the lockup, the section strip
+   and the page heading all sit on one left edge at every width. */
+@media (min-width: 1280px) {
+  .adm-bar,
+  .adm-nav {
+    padding-inline: 2rem;
+  }
+}
+
+/* --- Page head -------------------------------------------------------------- */
+
+.adm-body {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 1.15rem 1.25rem 3.5rem;
+}
+
+@media (min-width: 1280px) {
+  .adm-body {
+    padding-inline: 2rem;
+  }
+}
+
+.adm-head {
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.adm-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.8rem;
+}
+
+.adm-h1 {
+  font-size: 1.3rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.adm-path {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.adm-path-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.adm-path code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  padding: 0.1rem 0.35rem;
+  color: var(--text-primary);
+}
+
+.adm-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+  max-width: 100ch;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.adm-note-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--accent);
+}
+
+
+/* ===== Lesson video ===== */
+
+/* --- Lesson video (vid-) ----------------------------------------------------
+   A click-to-load YouTube facade above the lesson prose. Nothing here is a
+   third-party asset: the poster is the app's own surface with an inline SVG
+   glyph, and the player is only built after the reader asks for it.
+   --------------------------------------------------------------------------- */
+
+.vid-figure {
+  margin: 0;
+}
+
+/* The box is the right size before anything loads, so the prose below never
+   jumps. aspect-ratio, not a padding hack - the frame is a real child. */
+.vid-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.vid-frame {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* A real <button> filling the stage: keyboard reachable, named by the lesson
+   title, and the only thing standing between the reader and half a megabyte of
+   third-party player. */
+.vid-poster {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 1.1rem;
+  text-align: center;
+  cursor: pointer;
+  background:
+    radial-gradient(58% 58% at 50% 42%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+    var(--surface-2);
+  transition: box-shadow 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* The stage owns the border, so the hover edge is drawn as an inset ring
+   rather than a second, misaligned outline. */
+.vid-poster:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* The stage clips its children, and the global ring sits 2px outside the
+   button - so it is pulled inside, the way .res-row does it. */
+.vid-poster:focus-visible {
+  outline-offset: -3px;
+}
+
+.vid-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  background: var(--gradient-accent);
+  color: var(--accent-ink);
+  box-shadow: var(--glow-accent);
+  transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.vid-poster:hover .vid-play,
+.vid-poster:focus-visible .vid-play {
+  transform: scale(1.06);
+}
+
+.vid-poster-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+/* --text-secondary, not --text-muted: this sits on the tinted poster ground,
+   where muted would land on the 4.5:1 line instead of comfortably past it. */
+.vid-poster-note {
+  max-width: 44ch;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* --- Caption ---------------------------------------------------------------- */
+
+.vid-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  margin-top: 0.6rem;
+}
+
+.vid-caption-kind {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.vid-caption-glyph {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.vid-caption-note {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.vid-external {
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.vid-external:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Small phones: the 16:9 box is barely 170px tall, so the glyph gives up a
+   little room rather than the sentence being dropped. */
+@media (max-width: 30rem) {
+  .vid-play {
+    width: 2.9rem;
+    height: 2.9rem;
+  }
+
+  .vid-poster-note {
+    font-size: 0.7rem;
+  }
+}
+
+/* --- Admin: the video URL field --------------------------------------------- */
+
+/* Beats the field's own focus:border-accent, so a rejected link keeps saying
+   so while it is being corrected. */
+.vid-input-invalid,
+.vid-input-invalid:focus {
+  border-color: var(--critical);
+}
+
+/* State line under the field. The glyph and the sentence carry the verdict;
+   the colour only agrees with them. */
+.vid-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.vid-check-ok {
+  color: var(--good-text);
+}
+
+.vid-check-bad {
+  color: var(--critical);
+}
+
+.vid-check-glyph {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Confirmation-sized, not lesson-sized: enough to recognise the video. */
+.vid-admin-preview {
+  max-width: 22rem;
+  margin-top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vid-poster,
+  .vid-play {
+    transition: none;
+  }
+
+  .vid-poster:hover .vid-play,
+  .vid-poster:focus-visible .vid-play {
+    transform: none;
+  }
+}
+

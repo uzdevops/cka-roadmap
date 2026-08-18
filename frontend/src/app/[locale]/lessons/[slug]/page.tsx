@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 
 import { LessonGate } from '@/components/lesson-gate';
 import { LessonReferences } from '@/components/lesson-references';
+import { LessonVideo } from '@/components/lesson-video';
 import { MarkdownContent } from '@/components/markdown-content';
 import { Badge } from '@/components/ui/badge';
 import { getDictionary } from '@/i18n';
@@ -171,6 +172,15 @@ export default async function LessonPage({
           </p>
         )}
       </header>
+
+      {/* Above the prose, below the header: the video is context for the
+          reading, not a replacement for it. Renders nothing at all when the
+          link is missing or is not one this player can read. */}
+      {lesson.video_url && (
+        <div className="mt-8">
+          <LessonVideo url={lesson.video_url} title={lesson.title} />
+        </div>
+      )}
 
       <div className="mt-9">
         <MarkdownContent html={html} codeInfo={codeInfo} />

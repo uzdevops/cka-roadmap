@@ -40,6 +40,8 @@ export interface LessonSummary {
 
 export interface LessonDetail extends LessonSummary {
   content: string;
+  /** A YouTube link, shown as a player above the prose. Null for most lessons. */
+  video_url?: string | null;
   week_id: number;
   week_number: number | null;
   week_title: string | null;
@@ -290,6 +292,7 @@ export interface AdminLesson {
   title: string;
   summary: string;
   content: string;
+  video_url?: string | null;
   order_index: number;
   estimated_minutes: number;
   day_of_week: number | null;

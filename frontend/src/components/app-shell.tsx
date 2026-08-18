@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
 
+import { BrandMark } from '@/components/brand-mark';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { NavIcon, type IconName } from '@/components/nav-icons';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -80,10 +81,16 @@ function Rail({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       <Link href={href('/')} onClick={onNavigate} className="rail-brand">
-        <span aria-hidden className="rail-mark">
-          K8
+        {/* The tile keeps its gradient and its `--accent-ink` colour; the mark
+            inside it is drawn in currentColor, so both themes are already
+            handled by the tokens .rail-mark sets. */}
+        <span aria-hidden className="rail-mark brand-tile">
+          <BrandMark size={28} />
         </span>
-        <span>{t.meta.siteName}</span>
+        {/* The wordmark is the accessible name of this link, and the product
+            name is now long enough to reach the rail's edge on a narrow rem
+            scale, so it truncates rather than pushing the padding out. */}
+        <span className="brand-wordmark">{t.meta.siteName}</span>
       </Link>
 
       <nav className="mt-2 flex flex-1 flex-col gap-0.5 px-3">

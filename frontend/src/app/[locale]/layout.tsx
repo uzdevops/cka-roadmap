@@ -44,11 +44,23 @@ export async function generateMetadata({
     metadataBase: new URL(siteUrl),
     title: { default: t.meta.titleDefault, template: `%s | ${t.meta.siteName}` },
     description: t.meta.description,
+    // Product-level keywords: the tracks, not one exam. The certification
+    // acronyms stay because those tracks still exist - they are simply no
+    // longer the whole site.
     keywords: [
-      'CKA',
+      'DevOps',
       'Kubernetes',
-      'Certified Kubernetes Administrator',
-      'kubectl',
+      'Docker',
+      'Linux',
+      'Ansible',
+      'Terraform',
+      'Helm',
+      'CI/CD',
+      'AWS',
+      'CKA',
+      'CKS',
+      'LFCS',
+      'CompTIA',
       locale === 'uz' ? 'imtihonga tayyorgarlik' : 'exam preparation',
     ],
     alternates: {

@@ -2,21 +2,16 @@ import type { Dictionary } from '@/i18n/dictionaries/en';
 
 export const uz: Dictionary = {
   meta: {
-    siteName: 'CKA Prep',
-    titleDefault: 'CKA Prep - Kubernetes administratori uchun 20 haftalik yo’l xaritasi',
-    description:
-      'Certified Kubernetes Administrator imtihoniga 20 haftalik tizimli tayyorgarlik rejasi: darslar, testlar, amaliy laboratoriyalar va haqiqiy imtihon sohalari bo’yicha o’lchangan progress.',
-    roadmapTitle: '20 haftalik CKA yo’l xaritasi',
-    roadmapDescription:
-      'Olti bosqich, yigirma hafta - Certified Kubernetes Administrator imtihoni sohalariga moslangan: asoslar, workload’lar va rejalashtirish, tarmoq va saqlash, klaster arxitekturasi, nosozliklarni bartaraf etish hamda sinov imtihonlari.',
+    siteName: 'DevOps Platform',
+    titleDefault: 'DevOps Platform - Kubernetes, Linux, cloud va CI/CD bo’yicha o’quv yo’nalishlari',
+    description: 'Tizimli DevOps o’quv platformasi. Sertifikat yo’nalishlari - CKA, CKS, LFCS, AWS, CompTIA - va Docker, Ansible, Terraform, Helm, CI/CD hamda monitoring bo’yicha mavzu yo’nalishlari; har birida darslar, testlar, amaliy laboratoriyalar va progress kuzatuvi.',
+    roadmapTitle: 'Yo’l xaritasi',
+    roadmapDescription: 'Ushbu yo’nalishning bosqichlari va haftalari o’quv tartibida, har biri bo’yicha progressingiz bilan.',
     lessonsTitle: 'Barcha darslar',
-    lessonsDescription:
-      'CKA tayyorgarlik yo’l xaritasidagi barcha darslar o’quv tartibida: klaster arxitekturasi, kubectl, Pod’lar, workload’lar, tarmoq, saqlash, klaster administratsiyasi va nosozliklarni bartaraf etish.',
-    resourcesTitle: 'CKA imtihoni manbalari',
-    resourcesDescription:
-      'Certified Kubernetes Administrator imtihonining rasmiy manbalari: sertifikat sahifasi, chop etilgan kurikulum, nomzod qo’llanmasi va Linux Foundation’ning imtihon maslahatlari.',
+    lessonsDescription: 'Ushbu yo’nalishdagi barcha darslar o’quv tartibida.',
+    resourcesTitle: 'Manbalar',
+    resourcesDescription: 'Ushbu yo’nalishning rasmiy manbalari: sertifikat sahifalari, chop etilgan kurikulumlar, qo’llanmalar va vendor hujjatlari.',
   },
-
   common: {
     loading: 'Yuklanmoqda…',
     saving: 'Saqlanmoqda…',
@@ -58,7 +53,7 @@ export const uz: Dictionary = {
   },
 
   footer: {
-    tagline: 'CKA Prep - Kubernetes administratori imtihoni uchun ochiq o’quv platformasi.',
+    tagline: 'DevOps Platform - DevOps toolchain uchun ochiq darslar, laboratoriyalar va sertifikat yo’nalishlari.',
     references: 'Rasmiy imtihon manbalari',
     disclaimer: 'CNCF yoki Linux Foundation bilan bog’liq emas.',
   },
@@ -160,6 +155,12 @@ export const uz: Dictionary = {
     copyLabel: 'Kodni klipboardga nusxalash',
     breadcrumbLabel: 'Dars joylashuvi',
     pagerLabel: 'Darslar bo’ylab harakat',
+    videoLabel: 'Video',
+    videoPlay: 'Videoni ijro etish: {title}',
+    videoPlayShort: 'Videoni ijro etish',
+    videoPrivacy: 'Siz ijro tugmasini bosmaguningizcha YouTube’ga hech qanday so’rov yuborilmaydi.',
+    videoLoadedNote: 'Player youtube-nocookie.com’dan yuklandi - boshlash uchun uning ichidagi ijro tugmasini bosing.',
+    videoOpenExternal: 'YouTube’da ochish',
   },
 
   quizzes: {
@@ -481,6 +482,20 @@ export const uz: Dictionary = {
     loadFailed: 'Yuklab bo’lmadi',
     createFailed: 'Darsni yaratib bo’lmadi',
     deleteFailed: 'O’chirib bo’lmadi',
+    consoleTitle: 'Admin konsoli',
+    consoleTag: 'Admin hududi',
+    consoleHome: 'Konsol umumiy ko’rinishi',
+    consoleNav: 'Admin bo’limlari',
+    groupPeople: 'Odamlar',
+    groupContent: 'Kontent',
+    session: 'Sessiya',
+    pathLabel: 'Manzil',
+    backToSite: 'Talabalar sayti',
+    backToSiteFull: 'Talabalar saytiga qaytish',
+    videoUrl: 'Video havolasi',
+    videoUrlHint: 'Ixtiyoriy. Quyidagi ko’rinishlardagi YouTube havolasi: youtube.com/watch?v=…, youtu.be/…, youtube.com/embed/… yoki youtube.com/shorts/…. &t=90s boshlanish vaqti saqlanadi. Videosiz dars uchun bo’sh qoldiring.',
+    videoUrlOk: 'Tanildi - video ID {id}. Darsda matn tepasida player ko’rinadi.',
+    videoUrlInvalid: 'Bu havolani player o’qiy olmaydi, shuning uchun darsda video ko’rinmaydi. watch, youtu.be, embed yoki shorts havolasidan foydalaning.',
   },
 
   architecture: {
@@ -523,5 +538,7 @@ export const uz: Dictionary = {
     body: 'Bunday dars, bosqich yoki laboratoriya mavjud emas. Yo’l xaritasi - davom etish uchun eng yaxshi joy.',
     toRoadmap: 'Yo’l xaritasiga o’tish',
     home: 'Bosh sahifa',
+    bodyRoot: 'Bunday sahifa mavjud emas. Panel - davom etish uchun eng yaxshi joy.',
+    goToSite: '{site}’ga o’tish',
   },
 };

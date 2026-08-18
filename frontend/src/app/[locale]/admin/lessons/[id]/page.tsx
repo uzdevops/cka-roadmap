@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { LessonVideo, parseYouTubeUrl } from '@/components/lesson-video';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FieldError, Input, Label, Textarea } from '@/components/ui/field';
@@ -22,6 +23,7 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const [minutes, setMinutes] = useState(30);
   const [published, setPublished] = useState(true);
   const [translations, setTranslations] = useState<Record<string, Record<string, string>>>({});
@@ -41,12 +43,19 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
         setContent(data.content);
         setTitle(data.title);
         setSummary(data.summary);
+        setVideoUrl(data.video_url ?? '');
         setMinutes(data.estimated_minutes);
         setPublished(data.is_published);
         setTranslations((data.translations ?? {}) as Record<string, Record<string, string>>);
       })
       .catch((err) => setError(err instanceof Error ? err.message : t.admin.loadFailed));
   }, [params.id, t.admin.loadFailed]);
+
+  // The link is read with the same parser the lesson page uses, so what the
+  // editor calls valid is exactly what will render a player.
+  const trimmedVideo = videoUrl.trim();
+  const video = useMemo(() => parseYouTubeUrl(trimmedVideo), [trimmedVideo]);
+  const videoInvalid = trimmedVideo !== '' && video === null;
 
   // Preview goes through the same server pipeline the lesson page uses, so
   // Shiki highlighting and callouts render exactly as students will see them.
@@ -78,6 +87,13 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
   };
 
   const save = async () => {
+    // Saving an unreadable link would drop the video silently on the lesson
+    // page, so the editor stops here and says which shapes it can read.
+    if (videoInvalid) {
+      setError(t.admin.videoUrlInvalid);
+      return;
+    }
+
     setBusy(true);
     setError(null);
     setSaved(false);
@@ -88,6 +104,8 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
           title,
           summary,
           content,
+          // Stored as typed; an empty box clears the video.
+          video_url: trimmedVideo || null,
           estimated_minutes: minutes,
           is_published: published,
           translations,
@@ -137,6 +155,47 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
           <div className="sm:col-span-2">
             <Label htmlFor="summary">{t.admin.summary}</Label>
             <Input id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} />
+          </div>
+          <div className="sm:col-span-2">
+            <Label htmlFor="video-url">{t.admin.videoUrl}</Label>
+            <Input
+              id="video-url"
+              inputMode="url"
+              spellCheck={false}
+              placeholder="https://www.youtube.com/watch?v=…"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              aria-invalid={videoInvalid || undefined}
+              aria-describedby={
+                trimmedVideo ? 'video-url-hint video-url-state' : 'video-url-hint'
+              }
+              className={cn(videoInvalid && 'vid-input-invalid')}
+            />
+            <p id="video-url-hint" className="mt-1.5 text-xs text-ink-muted">
+              {t.admin.videoUrlHint}
+            </p>
+            {/* State is carried by a glyph and a sentence as well as the
+                colour, so it survives a monochrome or colour-blind read. */}
+            {trimmedVideo !== '' && (
+              <p
+                id="video-url-state"
+                className={cn('vid-check', videoInvalid ? 'vid-check-bad' : 'vid-check-ok')}
+              >
+                <span aria-hidden className="vid-check-glyph">
+                  {videoInvalid ? '✕' : '✓'}
+                </span>
+                {videoInvalid
+                  ? t.admin.videoUrlInvalid
+                  : fill(t.admin.videoUrlOk, { id: video?.id ?? '' })}
+              </p>
+            )}
+            {video && (
+              <div className="vid-admin-preview">
+                {/* Keyed by id, so pasting a different video hands back a
+                    fresh poster instead of leaving the old frame loaded. */}
+                <LessonVideo key={video.id} url={trimmedVideo} title={title || lesson.title} />
+              </div>
+            )}
           </div>
           <div>
             <Label htmlFor="minutes">{t.admin.estimatedMinutes}</Label>
