@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 
 import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
 import { ACCESS_COOKIE, serverApiUrl } from '@/lib/api';
+import { DEFAULT_TRACK, type TrackSlug } from '@/tracks/config';
 
 const API_V1 = '/api/v1';
 
@@ -15,9 +16,11 @@ const API_V1 = '/api/v1';
 export async function serverFetch<T>(
   path: string,
   locale: Locale = DEFAULT_LOCALE,
+  track: TrackSlug = DEFAULT_TRACK,
 ): Promise<T | null> {
   const separator = path.includes('?') ? '&' : '?';
-  const url = `${serverApiUrl()}${API_V1}${path}${separator}lang=${locale}`;
+  const url =
+    `${serverApiUrl()}${API_V1}${path}${separator}lang=${locale}&track=${track}`;
 
   const token = cookies().get(ACCESS_COOKIE)?.value;
 

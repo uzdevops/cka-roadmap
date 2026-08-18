@@ -7,6 +7,7 @@
  */
 
 import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { DEFAULT_TRACK, type TrackSlug } from '@/tracks/config';
 
 const API_V1 = '/api/v1';
 
@@ -20,10 +21,26 @@ export function setApiLocale(locale: Locale): void {
   activeLocale = locale;
 }
 
-/** Appends ?lang= without clobbering an existing query string. */
-function withLocale(path: string, locale: Locale): string {
+/**
+ * Track used for browser-side requests, set by the TrackProvider from the URL
+ * segment on mount - the same arrangement the locale already has, so call sites
+ * never pass either one.
+ *
+ * A module-level value is safe here and NOT on the server: this module only
+ * runs in the browser - one tab, one user. `server-api.ts` takes the track as an
+ * argument instead, because a module global there would be shared by every
+ * concurrent request and would cross-contaminate users.
+ */
+let activeTrack: TrackSlug = DEFAULT_TRACK;
+
+export function setApiTrack(track: TrackSlug): void {
+  activeTrack = track;
+}
+
+/** Appends ?lang= and ?track= without clobbering an existing query string. */
+function withScope(path: string, locale: Locale, track: TrackSlug): string {
   const separator = path.includes('?') ? '&' : '?';
-  return `${path}${separator}lang=${locale}`;
+  return `${path}${separator}lang=${locale}&track=${track}`;
 }
 
 export const BROWSER_API_URL =
@@ -163,7 +180,7 @@ export async function apiFetch<T>(
     if (body !== undefined) headers['Content-Type'] = 'application/json';
     if (token) headers.Authorization = `Bearer ${token}`;
 
-    return fetch(`${BROWSER_API_URL}${API_V1}${withLocale(path, activeLocale)}`, {
+    return fetch(`${BROWSER_API_URL}${API_V1}${withScope(path, activeLocale, activeTrack)}`, {
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),

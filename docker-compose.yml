@@ -88,6 +88,10 @@ services:
       # env defaults here against the ones in config.py. Without it that test
       # skips silently inside the container, which is where tests are run.
       - ./docker-compose.yml:/repo/docker-compose.yml:ro
+      # Same reason: tests/test_track_config_sync.py compares the frontend's
+      # hardcoded routing list against seed_data/tracks.json. Two named files
+      # rather than the repo root, so nothing else leaks into the container.
+      - ./frontend/src/tracks/config.ts:/repo/frontend/src/tracks/config.ts:ro
 
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
