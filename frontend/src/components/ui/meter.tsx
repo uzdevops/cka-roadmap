@@ -8,7 +8,7 @@ export function Meter({
   value,
   label,
   className,
-  height = 8,
+  height = 6,
 }: {
   value: number;
   label?: string;
@@ -27,8 +27,8 @@ export function Meter({
       aria-label={label}
     >
       <div
-        className="h-full rounded-full transition-[width] duration-500"
-        style={{ width: `${clamped}%`, background: 'var(--accent)' }}
+        className="meter-fill h-full rounded-full"
+        style={{ width: `${clamped}%` }}
       />
     </div>
   );

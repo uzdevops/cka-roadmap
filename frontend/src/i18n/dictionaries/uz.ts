@@ -120,7 +120,11 @@ export const uz: Dictionary = {
     quizMeta: '{count} savol · o’tish balli {score}%',
     quizMetaTimed: '{count} savol · o’tish balli {score}% · {minutes} daq',
     labMeta: '{difficulty} · {minutes}',
-    empty: 'Yo’l xaritasini yuklab bo’lmadi. API hali ishga tushayotgan bo’lishi mumkin.',
+    pathLabel: 'Yigirma haftalik yo\u2019l, bosqichma-bosqich',
+    nodeLabel: '{phase} \u2014 {done}/{total} dars',
+    youAreHere: 'SIZ SHU YERDA',
+    examCapsule: 'CKA IMTIHONI',
+    empty: 'Yo\u2019l xaritasini yuklab bo\u2019lmadi. API hali ishga tushayotgan bo\u2019lishi mumkin.',
   },
 
   lessons: {
@@ -150,6 +154,12 @@ export const uz: Dictionary = {
       'Bu darsning testidan o\u2019tdingiz. Istalgan vaqtda qayta ishlashingiz mumkin - eng yaxshi natija hisobga olinadi.',
     noQuizYet: 'Bu darsga hali test yozilmagan.',
     referencesHeading: 'Bu mavzu bo\u2019yicha rasmiy hujjatlar',
+    copy: 'Nusxalash',
+    copied: 'Nusxalandi',
+    copyManual: '⌘C bosing',
+    copyLabel: 'Kodni klipboardga nusxalash',
+    breadcrumbLabel: 'Dars joylashuvi',
+    pagerLabel: 'Darslar bo’ylab harakat',
   },
 
   quizzes: {
@@ -191,6 +201,11 @@ export const uz: Dictionary = {
     backToQuizzes: '← Barcha testlar',
     submitError: 'Testni yuborib bo\u2019lmadi',
     closeQuiz: '\u2190 Darsga qaytish',
+    optionYours: 'Sizning javobingiz',
+    optionCorrect: 'To’g’ri javob',
+    passMark: 'O’tish balli {score}%',
+    questionNav: 'Savolga o’tish',
+    questionLabel: '{n}-savol',
   },
 
   labs: {
@@ -223,6 +238,7 @@ export const uz: Dictionary = {
       advanced: 'yuqori',
     },
     saveError: 'Progressni saqlab bo’lmadi',
+    overviewMeta: '{total} ta laboratoriya · {done} tasi bajarildi',
   },
 
   dashboard: {
@@ -497,6 +513,7 @@ export const uz: Dictionary = {
         body: 'Linux Foundation’ning imtihon muhiti haqidagi eslatmalari - terminalni sozlash, nusxalash va joylashtirish hamda ish davomida ochiq turishi mumkin bo’lgan hujjatlar.',
       },
     },
+    docsBadge: 'Rasmiy manba',
   },
 
   notFound: {

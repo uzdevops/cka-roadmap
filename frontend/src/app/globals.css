@@ -11,109 +11,150 @@
    UI, so nothing drifts.
    --------------------------------------------------------------------------- */
 
+/* Light is the base; dark is redeclared under both the OS media query and the
+   explicit [data-theme] scope so the toggle wins in either direction. */
+
 :root {
   color-scheme: light;
 
-  --plane: #f9f9f7;
-  --surface-1: #fcfcfb;
-  --surface-2: #f2f1ed;
+  --plane: #f6f8fd;
+  --surface-1: #ffffff;
+  --surface-2: #eef2fb;
 
-  --text-primary: #0b0b0b;
-  --text-secondary: #52514e;
-  --text-muted: #898781;
+  --text-primary: #13233f;
+  --text-secondary: #45526b;
+  --text-muted: #636f88;
 
-  --grid: #e1e0d9;
-  --axis: #c3c2b7;
-  --border: rgba(11, 11, 11, 0.1);
+  --grid: #e3e9f6;
+  --axis: #c7d1e6;
+  --border: rgba(19, 35, 63, 0.12);
 
-  --accent: #2a78d6;
-  /* Meter/bar track: a step of the accent's own ramp that sits near the
-     surface, so an empty bar never reads as a full one. */
-  --track: #cde2fb;
-  /* Accent badge: the pair swaps in dark mode so both stay ~6.5:1. */
-  --accent-badge-bg: #cde2fb;
-  --accent-badge-text: #184f95;
+  --accent: #2f5fd8;
+  --accent-2: #0891b2;
+  --accent-3: #7c4fe0;
+  --track: #dbe3f5;
+  --badge-tint: 11%;
+  --accent-badge-bg: #dde7fb;
+  --accent-badge-text: #1d43a8;
   --accent-ink: #ffffff;
 
-  --good: #0ca30c;
-  --good-text: #006300;
-  --warning: #fab219;
-  --serious: #ec835a;
-  --critical: #d03b3b;
+  --good: #0f9d76;
+  --good-text: #0a7256;
+  --warning: #855c0c;
+  --serious: #9e4b1c;
+  --critical: #b62c41;
 
-  /* Categorical slots, fixed order - phase identity dots only, never a value ramp. */
-  --series-1: #2a78d6;
-  --series-2: #eb6834;
-  --series-3: #1baf7a;
-  --series-4: #eda100;
-  --series-5: #e87ba4;
-  --series-6: #008300;
+  /* Categorical slots, fixed order - identity only, never a value ramp. */
+  --series-1: #2f5fd8;
+  --series-2: #0891b2;
+  --series-3: #7c4fe0;
+  --series-4: #0f9d76;
+  --series-5: #b07a10;
+  --series-6: #d96a2b;
+
+  --gradient-accent: linear-gradient(90deg, #07819e, #2f5fd8 55%, #7c4fe0);
+  /* No glow on a white ground - a plain shadow reads as depth instead. */
+  --glow-accent: 0 1px 2px rgba(19, 35, 63, 0.06);
+  --glow-cyan: 0 1px 2px rgba(19, 35, 63, 0.06);
+
+  /* Background layers. */
+  --grid-dot: rgba(47, 95, 216, 0.1);
+  --aurora-1: rgba(47, 95, 216, 0.07);
+  --aurora-2: rgba(124, 79, 224, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
 
-    --plane: #0d0d0d;
-    --surface-1: #1a1a19;
-    --surface-2: #232322;
+    --plane: #070a12;
+    --surface-1: #0d1220;
+    --surface-2: #131a2c;
 
-    --text-primary: #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted: #898781;
+    --text-primary: #eef2ff;
+    --text-secondary: #93a0bd;
+    --text-muted: #76839c;
 
-    --grid: #2c2c2a;
-    --axis: #383835;
-    --border: rgba(255, 255, 255, 0.1);
+    --grid: #1b2337;
+    --axis: #2a3450;
+    --border: rgba(120, 150, 255, 0.16);
 
-    --accent: #3987e5;
-    /* Darkest step of the blue ramp: reads as a track, never as a fill. */
-    --track: #0d366b;
-    --accent-badge-bg: #184f95;
-    --accent-badge-text: #cde2fb;
-    --accent-ink: #ffffff;
+    --accent: #4f7dff;
+    --accent-2: #38e1ff;
+    --accent-3: #9a6bff;
+    --track: #16204a;
+    --badge-tint: 14%;
+    --accent-badge-bg: rgba(79, 125, 255, 0.16);
+    --accent-badge-text: #9db8ff;
+    --accent-ink: #070a12;
 
-    --good-text: #0ca30c;
+    --good: #22c58b;
+    --good-text: #22c58b;
+    --warning: #f5b942;
+    --serious: #ff8a5c;
+    --critical: #ff5d6c;
 
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --series-3: #199e70;
-    --series-4: #c98500;
-    --series-5: #d55181;
-    --series-6: #008300;
+    --series-1: #4f7dff;
+    --series-2: #38e1ff;
+    --series-3: #9a6bff;
+    --series-4: #22c58b;
+    --series-5: #f5b942;
+    --series-6: #ff8a5c;
+
+    --gradient-accent: linear-gradient(90deg, var(--accent-2), var(--accent) 55%, var(--accent-3));
+    --glow-accent: 0 0 24px -6px rgba(79, 125, 255, 0.55);
+    --glow-cyan: 0 0 20px -4px rgba(56, 225, 255, 0.5);
+
+    --grid-dot: rgba(120, 150, 255, 0.13);
+    --aurora-1: rgba(79, 125, 255, 0.14);
+    --aurora-2: rgba(154, 107, 255, 0.08);
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --plane: #0d0d0d;
-  --surface-1: #1a1a19;
-  --surface-2: #232322;
+  --plane: #070a12;
+  --surface-1: #0d1220;
+  --surface-2: #131a2c;
 
-  --text-primary: #ffffff;
-  --text-secondary: #c3c2b7;
-  --text-muted: #898781;
+  --text-primary: #eef2ff;
+  --text-secondary: #93a0bd;
+  --text-muted: #76839c;
 
-  --grid: #2c2c2a;
-  --axis: #383835;
-  --border: rgba(255, 255, 255, 0.1);
+  --grid: #1b2337;
+  --axis: #2a3450;
+  --border: rgba(120, 150, 255, 0.16);
 
-  --accent: #3987e5;
-  /* Darkest step of the blue ramp: reads as a track, never as a fill. */
-  --track: #0d366b;
-  --accent-badge-bg: #184f95;
-  --accent-badge-text: #cde2fb;
-  --accent-ink: #ffffff;
+  --accent: #4f7dff;
+  --accent-2: #38e1ff;
+  --accent-3: #9a6bff;
+  --track: #16204a;
+  --badge-tint: 14%;
+  --accent-badge-bg: rgba(79, 125, 255, 0.16);
+  --accent-badge-text: #9db8ff;
+  --accent-ink: #070a12;
 
-  --good-text: #0ca30c;
+  --good: #22c58b;
+  --good-text: #22c58b;
+  --warning: #f5b942;
+  --serious: #ff8a5c;
+  --critical: #ff5d6c;
 
-  --series-1: #3987e5;
-  --series-2: #d95926;
-  --series-3: #199e70;
-  --series-4: #c98500;
-  --series-5: #d55181;
-  --series-6: #008300;
+  --series-1: #4f7dff;
+  --series-2: #38e1ff;
+  --series-3: #9a6bff;
+  --series-4: #22c58b;
+  --series-5: #f5b942;
+  --series-6: #ff8a5c;
+
+  --gradient-accent: linear-gradient(90deg, var(--accent-2), var(--accent) 55%, var(--accent-3));
+  --glow-accent: 0 0 24px -6px rgba(79, 125, 255, 0.55);
+  --glow-cyan: 0 0 20px -4px rgba(56, 225, 255, 0.5);
+
+  --grid-dot: rgba(120, 150, 255, 0.13);
+  --aurora-1: rgba(79, 125, 255, 0.14);
+  --aurora-2: rgba(154, 107, 255, 0.08);
 }
 
 @layer base {
@@ -124,7 +165,32 @@
   body {
     background-color: var(--plane);
     color: var(--text-primary);
+    font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* Two fixed layers behind everything: a telemetry dot grid and an aurora
+     wash at the top. Pure CSS, no images, and both read from tokens so they
+     follow the theme. Cards stay opaque so the grid never fights text. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.4px);
+    background-size: 22px 22px;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 40% at 50% -8%, var(--aurora-1), transparent 60%),
+      radial-gradient(35% 30% at 85% 0%, var(--aurora-2), transparent 60%);
   }
 
   *:focus-visible {
@@ -180,11 +246,13 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  background: var(--accent);
+  border-radius: 9px;
+  background: var(--gradient-accent);
   color: var(--accent-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .rail-link {
@@ -220,7 +288,7 @@
   height: 1.15rem;
   width: 3px;
   border-radius: 0 3px 3px 0;
-  background: var(--accent);
+  background: var(--gradient-accent);
   transform: translateY(-50%);
   box-shadow: var(--dash-seg-glow);
 }
@@ -269,7 +337,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  height: 3.25rem;
+  height: 3rem;
   padding: 0 1.25rem;
   border-bottom: 1px solid var(--border);
   background: color-mix(in srgb, var(--plane) 88%, transparent);
@@ -456,26 +524,26 @@
 
 :root {
   /* Light: a plain shadow. There is no glow to have against a white ground. */
-  --dash-glow: 0 1px 2px rgba(11, 11, 11, 0.05);
+  --dash-glow: 0 1px 2px rgba(19, 35, 63, 0.05);
   --dash-ring-glow: none;
   --dash-seg-glow: none;
-  --dash-hero-wash: linear-gradient(180deg, rgba(42, 120, 214, 0.05), transparent 60%);
+  --dash-hero-wash: linear-gradient(135deg, rgba(47, 95, 216, 0.06), rgba(124, 79, 224, 0.03) 60%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --dash-glow: 0 0 0 1px rgba(57, 135, 229, 0.18), 0 0 32px -10px rgba(57, 135, 229, 0.55);
-    --dash-ring-glow: drop-shadow(0 0 6px rgba(57, 135, 229, 0.55));
-    --dash-seg-glow: 0 0 10px -2px rgba(57, 135, 229, 0.7);
-    --dash-hero-wash: linear-gradient(180deg, rgba(57, 135, 229, 0.1), transparent 65%);
+    --dash-glow: 0 0 0 1px rgba(79, 125, 255, 0.18), 0 0 32px -10px rgba(79, 125, 255, 0.55);
+    --dash-ring-glow: drop-shadow(0 0 7px rgba(56, 225, 255, 0.55));
+    --dash-seg-glow: 0 0 10px -2px rgba(79, 125, 255, 0.7);
+    --dash-hero-wash: linear-gradient(135deg, rgba(79, 125, 255, 0.12), rgba(154, 107, 255, 0.05) 60%, transparent);
   }
 }
 
 :root[data-theme='dark'] {
-  --dash-glow: 0 0 0 1px rgba(57, 135, 229, 0.18), 0 0 32px -10px rgba(57, 135, 229, 0.55);
-  --dash-ring-glow: drop-shadow(0 0 6px rgba(57, 135, 229, 0.55));
-  --dash-seg-glow: 0 0 10px -2px rgba(57, 135, 229, 0.7);
-  --dash-hero-wash: linear-gradient(180deg, rgba(57, 135, 229, 0.1), transparent 65%);
+  --dash-glow: 0 0 0 1px rgba(79, 125, 255, 0.18), 0 0 32px -10px rgba(79, 125, 255, 0.55);
+  --dash-ring-glow: drop-shadow(0 0 7px rgba(56, 225, 255, 0.55));
+  --dash-seg-glow: 0 0 10px -2px rgba(79, 125, 255, 0.7);
+  --dash-hero-wash: linear-gradient(135deg, rgba(79, 125, 255, 0.12), rgba(154, 107, 255, 0.05) 60%, transparent);
 }
 
 .dash-hero {
@@ -500,7 +568,7 @@
 }
 
 .dash-seg-complete {
-  background: var(--accent);
+  background: var(--gradient-accent);
   box-shadow: var(--dash-seg-glow);
 }
 
@@ -521,7 +589,7 @@
   border-radius: 3px;
 }
 
-.dash-key-complete { background: var(--accent); }
+.dash-key-complete { background: var(--gradient-accent); }
 .dash-key-active { background: var(--good); }
 .dash-key-pending { background: var(--track); }
 
@@ -560,9 +628,15 @@
   font-size: 0.7rem;
   font-weight: 650;
   letter-spacing: 0.02em;
-  color: var(--week-tint, var(--accent));
+  color: var(--text-primary);
   background: color-mix(in srgb, var(--week-tint, var(--accent)) 14%, var(--surface-1));
   border: 1px solid color-mix(in srgb, var(--week-tint, var(--accent)) 35%, transparent);
+}
+
+/* The phase glyph keeps the tint - it is a graphic, judged at 3:1, and it is
+   what makes one phase's chips tell apart from another's. */
+.dash-week-badge svg {
+  color: var(--week-tint, var(--accent));
 }
 
 .dash-week-track {
@@ -578,7 +652,7 @@
   display: block;
   height: 100%;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--gradient-accent);
   transition: width 500ms ease;
 }
 
@@ -853,4 +927,1231 @@
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
   }
+}
+
+
+/* --- Control Plane kit -----------------------------------------------------
+   Shared surfaces and motion. Everything reads tokens; nothing here hardcodes
+   a colour, so the theme swap needs no second copy.
+   --------------------------------------------------------------------------- */
+
+/* Mono "tech label": eyebrows, meta rows, data captions. */
+.tech-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.tech-label-sm {
+  font-size: 9px;
+}
+
+/* Glass: reserved for hero panels, where the aurora is allowed to show through.
+   Ordinary cards stay opaque so the dot grid never sits behind body text. */
+.panel-glass {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(79, 125, 255, 0.12), rgba(154, 107, 255, 0.05) 60%, transparent),
+    var(--surface-1);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  box-shadow: var(--glow-accent);
+}
+
+:root:not([data-theme='dark']) .panel-glass {
+  background:
+    linear-gradient(135deg, rgba(47, 95, 216, 0.07), rgba(124, 79, 224, 0.03) 60%, transparent),
+    var(--surface-1);
+}
+
+/* Interactive card lift. */
+.card-hover {
+  transition: border-color 150ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card-hover:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  transform: translateY(-1px);
+}
+
+/* The live dot on a "current" badge. One of only three infinite animations in
+   the app; see the reduced-motion block at the foot of this file. */
+@keyframes cp-pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
+}
+
+.badge-live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--good);
+  animation: cp-pulse-dot 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+/* The ring around the phase node you are standing on. */
+@keyframes cp-pulse-ring {
+  0%, 100% { transform: scale(1); opacity: 0.25; }
+  50% { transform: scale(1.12); opacity: 0.9; }
+}
+
+.node-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cp-pulse-ring 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+/* Motion budget: everything that repeats forever stops here. Opacity fades and
+   one-shot transitions are left alone - they carry meaning, not decoration. */
+@media (prefers-reduced-motion: reduce) {
+  .badge-live-dot,
+  .node-pulse,
+  .cursor-blink {
+    animation: none !important;
+  }
+
+  .roadmap-progress {
+    transition: none !important;
+  }
+}
+
+/* --- Buttons, meters, badges ------------------------------------------------ */
+
+.btn-base {
+  transition: filter 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 150ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  box-shadow: var(--glow-accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: transparent;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+.meter-fill {
+  background: var(--gradient-accent);
+  box-shadow: var(--glow-cyan);
+  transition: width 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Status pills: a 14% wash of their own colour rather than the flat surface,
+   so the tint reads at a glance without the text losing contrast. */
+.badge-good { background: color-mix(in srgb, var(--good) var(--badge-tint), transparent); }
+.badge-warning { background: color-mix(in srgb, var(--warning) var(--badge-tint), transparent); }
+.badge-critical { background: color-mix(in srgb, var(--critical) var(--badge-tint), transparent); }
+
+/* --- Roadmap serpentine ----------------------------------------------------- */
+
+.roadmap-progress {
+  transition: stroke-dasharray 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root[data-theme='dark'] .roadmap-progress {
+  filter: drop-shadow(0 0 6px rgba(56, 225, 255, 0.55));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .roadmap-progress {
+    filter: drop-shadow(0 0 6px rgba(56, 225, 255, 0.55));
+  }
+}
+
+.roadmap-node {
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.roadmap-node:hover {
+  transform: scale(1.08);
+}
+
+.roadmap-node-glyph {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.roadmap-eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  fill: var(--text-muted);
+}
+
+.roadmap-name {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--text-primary);
+}
+
+.roadmap-here,
+.roadmap-exam-text {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.roadmap-exam-text {
+  font-size: 11px;
+}
+
+/* Tooltip is positioned in percentages of the SVG box, so it tracks the node
+   as the drawing scales. */
+.roadmap-tip {
+  position: absolute;
+  z-index: 10;
+  width: 190px;
+  transform: translateX(-50%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-2);
+  padding: 0.7rem 0.85rem;
+  box-shadow: var(--glow-accent);
+  pointer-events: none;
+}
+
+.roadmap-tip-track {
+  margin-top: 0.5rem;
+  display: block;
+  height: 4px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--track);
+}
+
+/* Mobile: the same states, stacked. */
+.roadmap-vrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-1);
+  padding: 0.8rem 0.9rem;
+}
+
+.roadmap-vdot {
+  margin-top: 0.15rem;
+  height: 14px;
+  width: 14px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 2.5px solid var(--axis);
+  background: var(--surface-1);
+}
+
+.roadmap-vrow[data-state='done'] .roadmap-vdot {
+  border-color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 30%, var(--surface-1));
+}
+
+.roadmap-vrow[data-state='current'] {
+  border-color: var(--accent);
+  box-shadow: var(--glow-accent);
+}
+
+.roadmap-vrow[data-state='current'] .roadmap-vdot {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* ===== Lessons list ===== */
+
+/* --- Lessons list ------------------------------------------------------------
+   Grouped by phase: a gradient phase node, a thin meter, then a card grid.
+   ---------------------------------------------------------------------------- */
+
+/* Cards claim their own columns. min() keeps the 320px floor from overflowing
+   a narrow phone. */
+.lsn-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+}
+
+/* The phase header node: 24px, gradient-filled, carrying the phase number. */
+.lsn-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--gradient-accent);
+  box-shadow: var(--glow-accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* The meter sits between the phase name and its x/y count, taking whatever
+   room is left before it wraps. */
+.lsn-phase-track {
+  flex: 1 1 120px;
+  min-width: 96px;
+  max-width: 240px;
+}
+
+/* One lesson. The whole card is the link, so the hit target is the card. */
+.lsn-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-1);
+}
+
+/* Where the reader stands. Paired with the live dot and its "in progress"
+   label, so the tint is never the only signal. */
+.lsn-card-current {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* Locked: dimmed and dashed, and rendered as a plain <li> - there is no link
+   to press, so nothing here is focusable. */
+.lsn-card-locked {
+  border-style: dashed;
+  background: var(--surface-2);
+}
+
+/* Status slot. currentColor is what the padlock draws itself in. */
+.lsn-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+
+.lsn-check {
+  color: var(--good);
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* "Not started" is a ring rather than a tint, so the state reads as a shape. */
+.lsn-ring {
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid var(--axis);
+  border-radius: 999px;
+}
+
+/* ===== Lesson detail ===== */
+
+/* --- Lesson detail (lsnd-) --------------------------------------------------
+   Header, code-block headers, references and the completion gate. Tokens only;
+   every new class is prefixed. The four unprefixed rules at the foot are
+   deliberate overrides of selectors that already exist.
+   --------------------------------------------------------------------------- */
+
+/* Accent hairline: under the lesson header, and above a card's list. */
+.lsnd-rule {
+  height: 1px;
+  border-radius: 999px;
+  background: var(--gradient-accent);
+  opacity: 0.55;
+}
+
+/* Breadcrumb eyebrow. .tech-label carries the type; these carry the state. */
+.lsnd-crumb {
+  color: var(--text-muted);
+  transition: color 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lsnd-crumb:hover {
+  color: var(--accent);
+}
+
+.lsnd-crumb-sep {
+  color: var(--axis);
+}
+
+/* "Still in English" - information, not a fault, so it takes the accent edge
+   rather than a status colour. */
+.lsnd-notice {
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+
+/* --- Code block header ------------------------------------------------------
+   Added client-side, and only when the fence actually declared a language or a
+   filename. No chip at all is better than the wrong one.
+   --------------------------------------------------------------------------- */
+
+.lsnd-code-head {
+  display: flex;
+  align-items: center;
+  min-height: 2rem;
+  /* The right pad keeps a long filename clear of the copy button. */
+  padding: 0.3rem 4.75rem 0.3rem 0.9rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.lsnd-code-chip {
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* A filename is a name, not a label - it keeps its own casing. */
+.lsnd-code-chip-file {
+  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+/* Where there is a header strip, the copy button rides in it rather than
+   sitting over the first line of code. */
+.lsnd-code-titled .copy-button {
+  top: 0.32rem;
+  right: 0.4rem;
+}
+
+/* --- References ------------------------------------------------------------- */
+
+.lsnd-ref {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  transition: background-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lsnd-ref:hover {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+
+.lsnd-ref-icon {
+  color: var(--text-muted);
+}
+
+.lsnd-ref:hover .lsnd-ref-icon {
+  color: var(--accent);
+}
+
+.lsnd-ref-title {
+  color: var(--text-secondary);
+}
+
+.lsnd-ref:hover .lsnd-ref-title {
+  color: var(--text-primary);
+}
+
+.lsnd-ref-arrow {
+  margin-left: 0.3rem;
+  font-size: 0.85em;
+  color: var(--accent);
+}
+
+/* --- Completion gate -------------------------------------------------------- */
+
+/* A gradient rule across the flat part of the card's top edge. It is inset by
+   the card radius rather than clipped, because `overflow: hidden` here would
+   create a scroll container and kill the quiz runner's sticky progress bar,
+   which lives inside this card. */
+.lsnd-gate {
+  position: relative;
+}
+
+.lsnd-gate::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  inset-inline: 14px;
+  height: 2px;
+  border-radius: 0 0 999px 999px;
+  background: var(--gradient-accent);
+}
+
+.lsnd-error {
+  color: var(--critical);
+}
+
+.lsnd-next-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.lsnd-next-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* --- Previous / next -------------------------------------------------------- */
+
+.lsnd-pager {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-1);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  /* Restates .card-hover's transition because it also has to carry colour;
+     one-shot only, so the reduced-motion budget is untouched. */
+  transition: color 150ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 150ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lsnd-pager:hover {
+  color: var(--text-primary);
+}
+
+.lsnd-pager-next {
+  color: var(--accent);
+}
+
+.lsnd-pager-next:hover {
+  color: var(--accent);
+}
+
+/* --- Intentional overrides of existing selectors ---------------------------- */
+
+/* Code should be set in the app's own mono, like every other identifier and
+   number on the site. The rule it replaces hardcoded a system stack. */
+.prose-lesson pre code {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* The copy button already appears on hover and on its own focus ring. Shiki
+   makes the <pre> focusable, so reveal it for keyboard users reaching the
+   code itself, not just the button. */
+.code-block:focus-within .copy-button {
+  opacity: 1;
+}
+
+/* Exam tips are the one callout that earns a glow, and only where there is a
+   dark ground for it to sit on. */
+:root[data-theme='dark'] .callout-exam-tip {
+  box-shadow: var(--glow-accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .callout-exam-tip {
+    box-shadow: var(--glow-accent);
+  }
+}
+
+/* ===== Quiz runner ===== */
+
+/* --- Quiz runner -----------------------------------------------------------
+   Options are cards, not radio rows: the whole card is the hit target, a letter
+   chip gives every option a handle, and every state is spelled out by a glyph
+   and a word as well as by its tint. All tokens, so the theme swap is free.
+   --------------------------------------------------------------------------- */
+
+/* The sticky answer bar. Translucent enough that the questions scrolling under
+   it read as motion, opaque enough that its own text never fights them. */
+.quiz-progress {
+  background: color-mix(in srgb, var(--surface-1) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+/* The bar sits over the top of the page, so anchors have to clear it. */
+.quiz-q {
+  scroll-margin-top: 9rem;
+}
+
+/* Jump grid. "Answered" is carried by the border style as well as the tint, so
+   a monochrome reading still separates the two states. */
+.quiz-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.5rem;
+  padding-inline: 0.35rem;
+  border: 1px dashed var(--axis);
+  border-radius: 6px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  transition: border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.quiz-chip:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.quiz-chip-done {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+}
+
+/* --- Option cards ---------------------------------------------------------- */
+
+.quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-1);
+  padding: 0.7rem 0.85rem;
+  transition: border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Only the pre-grading cards are pickable; the review renders the same card
+   as a static div. */
+.quiz-option-live {
+  cursor: pointer;
+}
+
+.quiz-option-live:not(.quiz-option-selected):hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: var(--surface-2);
+}
+
+/* The real radio/checkbox stays in the DOM - it keeps the keyboard, the group
+   semantics and the accessible name. Only its default box leaves the layout. */
+.quiz-option-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ...which means the focus ring has to be put back on the card standing for it. */
+.quiz-option:has(.quiz-option-input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.quiz-option-key {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.05rem;
+  border: 1px solid var(--axis);
+  border-radius: 7px;
+  background: var(--surface-2);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Round for "pick one", square for "pick any" - the shape language of the
+   native controls these cards replace. */
+.quiz-option-key-round {
+  border-radius: 999px;
+}
+
+.quiz-option-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.7rem;
+  min-width: 0;
+}
+
+.quiz-option-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.quiz-option-tick {
+  flex: none;
+  margin-left: auto;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.quiz-option-tick-on {
+  opacity: 1;
+}
+
+/* Picked, before grading. */
+.quiz-option-selected {
+  border-color: var(--accent);
+  background: var(--accent-badge-bg);
+}
+
+.quiz-option-selected .quiz-option-key {
+  border-color: transparent;
+  background: var(--gradient-accent);
+  color: var(--accent-ink);
+}
+
+.quiz-option-selected .quiz-option-text {
+  color: var(--text-primary);
+}
+
+/* Graded: a 14% wash of the status colour, doubled by the marker word. */
+.quiz-option-good {
+  border-color: var(--good);
+  background: color-mix(in srgb, var(--good) 14%, transparent);
+}
+
+.quiz-option-good .quiz-option-key {
+  border-color: var(--good);
+  background: color-mix(in srgb, var(--good) 22%, transparent);
+  color: var(--good-text);
+}
+
+.quiz-option-good .quiz-option-text {
+  color: var(--text-primary);
+}
+
+.quiz-option-bad {
+  border-color: var(--critical);
+  background: color-mix(in srgb, var(--critical) 14%, transparent);
+}
+
+.quiz-option-bad .quiz-option-key {
+  border-color: var(--critical);
+  background: color-mix(in srgb, var(--critical) 22%, transparent);
+  color: var(--critical);
+}
+
+.quiz-option-bad .quiz-option-text {
+  color: var(--text-primary);
+}
+
+/* Neither picked nor right: still legible, just not competing for attention. */
+.quiz-option-idle {
+  background: transparent;
+  border-style: dashed;
+}
+
+/* The word that carries the state next to the tint. */
+.quiz-marker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.quiz-marker-good {
+  color: var(--good-text);
+}
+
+.quiz-marker-bad {
+  color: var(--critical);
+}
+
+/* --- Fill in the command ---------------------------------------------------
+   The input keeps its own border and its own focus ring; the prompt sigil is
+   painted over the padding rather than wrapping the control. */
+
+.quiz-cmd {
+  position: relative;
+}
+
+.quiz-cmd-sigil {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translateY(-50%);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-2);
+  pointer-events: none;
+}
+
+.quiz-cmd-input {
+  padding-left: 1.9rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  background: var(--surface-2);
+}
+
+/* --- Result ---------------------------------------------------------------- */
+
+.quiz-score {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-score-pass {
+  color: var(--good-text);
+}
+
+.quiz-score-fail {
+  color: var(--critical);
+}
+
+.quiz-score-unit {
+  margin-left: 0.15rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* The bar, plus a tick at the mark the score had to clear. */
+.quiz-meter {
+  position: relative;
+}
+
+.quiz-passmark {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: var(--text-secondary);
+}
+
+.quiz-review {
+  border-left-width: 3px;
+}
+
+.quiz-review-good {
+  border-left-color: var(--good);
+}
+
+.quiz-review-bad {
+  border-left-color: var(--critical);
+}
+
+.quiz-code {
+  display: inline-block;
+  margin: 0 0.35rem 0.35rem 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-2);
+  padding: 0.15rem 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+}
+
+.quiz-code-good {
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+  background: color-mix(in srgb, var(--good) 12%, transparent);
+}
+
+.quiz-code-bad {
+  border-color: color-mix(in srgb, var(--critical) 45%, transparent);
+  background: color-mix(in srgb, var(--critical) 12%, transparent);
+}
+
+/* ===== Labs ===== */
+
+/* --- Labs ------------------------------------------------------------------
+   A lab is a terminal session against your own cluster, so both lab surfaces
+   open with the same window strip: three dots, the path, the difficulty. The
+   dots sit at 70% of the status colours so they read as window chrome rather
+   than as an alarm, and nothing here is the sole carrier of meaning - every
+   tint is printed as a word beside it.
+   --------------------------------------------------------------------------- */
+
+.lab-dots {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+}
+
+.lab-dots > span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.lab-dots > span:nth-child(1) {
+  background: color-mix(in srgb, var(--critical) 70%, transparent);
+}
+.lab-dots > span:nth-child(2) {
+  background: color-mix(in srgb, var(--warning) 70%, transparent);
+}
+.lab-dots > span:nth-child(3) {
+  background: color-mix(in srgb, var(--good) 70%, transparent);
+}
+
+/* The path in the strip. Mono like `.tech-label` but deliberately not
+   uppercased - a path is typed exactly as it is written. */
+.lab-path {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+/* Difficulty ramp, worn on the badge. Serious rather than critical at the top
+   end: an advanced lab is hard, not broken. Unknown values from the API keep
+   the neutral chip. */
+.lab-difficulty {
+  border-color: var(--axis);
+  background: var(--surface-1);
+  color: var(--text-secondary);
+}
+
+.lab-difficulty-beginner {
+  border-color: color-mix(in srgb, var(--good) 38%, transparent);
+  background: color-mix(in srgb, var(--good) 12%, transparent);
+  color: var(--good-text);
+}
+
+.lab-difficulty-intermediate {
+  border-color: color-mix(in srgb, var(--warning) 38%, transparent);
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--warning);
+}
+
+.lab-difficulty-advanced {
+  border-color: color-mix(in srgb, var(--serious) 38%, transparent);
+  background: color-mix(in srgb, var(--serious) 12%, transparent);
+  color: var(--serious);
+}
+
+/* Section titles on the detail page take the accent tick. */
+.lab-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.lab-heading::before {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: 3px;
+  height: 1.05em;
+  border-radius: 999px;
+  background: var(--gradient-accent);
+}
+
+/* Task rail: 01, 02, 03 down the left edge, joined by a hairline so the tasks
+   read as one run rather than a stack of loose cards. */
+.lab-tasks {
+  display: flex;
+  flex-direction: column;
+}
+
+.lab-task {
+  display: flex;
+  gap: 1rem;
+}
+
+.lab-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.lab-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  transition: border-color 150ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Reading or operating a task lights its number, including via the keyboard. */
+.lab-task:hover .lab-num,
+.lab-task:focus-within .lab-num {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.lab-rail-line {
+  display: block;
+  flex: 1;
+  width: 1px;
+  margin: 0.4rem 0 0.35rem;
+  background: var(--border);
+}
+
+@media (max-width: 640px) {
+  .lab-task {
+    gap: 0.7rem;
+  }
+
+  .lab-num {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+}
+
+/* ===== Resources ===== */
+
+/* --- References rows --------------------------------------------------------
+   Four links read faster as one divided list than as a grid of cards. The mono
+   glyph chip is the fixed left edge the eye runs down; the arrow is decoration
+   and only shows on pointer hover or keyboard focus, so a resting row is quiet.
+   --------------------------------------------------------------------------- */
+
+.res-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1rem 1.15rem;
+  transition: background 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.res-row:hover,
+.res-row:focus-visible {
+  background: var(--surface-2);
+}
+
+/* The list clips to the card radius, so the global focus ring is drawn just
+   inside the row instead of 2px outside it, where the clip would eat it. */
+.res-row:focus-visible {
+  outline-offset: -3px;
+}
+
+.res-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 16px mono chip: {K} docs, {>} video, {flask} practice - see KIND_GLYPH. */
+.res-glyph {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.9rem;
+  height: 2.1rem;
+  padding-inline: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  transition: background 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* The row ground becomes --surface-2 on hover, so the chip swaps to the card
+   ground to stay a distinct object rather than dissolving into the row. */
+.res-row:hover .res-glyph,
+.res-row:focus-visible .res-glyph {
+  background: var(--surface-1);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+.res-arrow {
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0;
+  transform: translate(-2px, 2px);
+  transition: opacity 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.res-row:hover .res-arrow,
+.res-row:focus-visible .res-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Touch has no hover state to reveal it, so there it simply stays put. */
+@media (hover: none) {
+  .res-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .res-row,
+  .res-glyph,
+  .res-arrow {
+    transition: none;
+  }
+
+  .res-arrow,
+  .res-row:hover .res-arrow,
+  .res-row:focus-visible .res-arrow {
+    transform: none;
+  }
+}
+
+/* ===== Login and profile ===== */
+
+/* --- Auth: sign-in stage, brand mark, profile identity ----------------------
+   Owned by /login and /profile. Tokens only, so one set of rules covers both
+   themes.
+   --------------------------------------------------------------------------- */
+
+/* The sign-in screen renders without the navigation rail, so it centres itself
+   in whatever height is left under the bare-layout header strip. min-height
+   only: taller content grows the box rather than being clipped by the centring. */
+.auth-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 5rem);
+  min-height: calc(100dvh - 5rem);
+  padding-block: 2rem 3rem;
+}
+
+/* A second aurora, layered over the global body::after wash so this one page
+   reads at roughly double strength: another pass across the top, plus a bloom
+   behind the card and a corner light at the foot. Fixed and pointer-events:
+   none so it covers the viewport without ever intercepting a click; z-index -1
+   keeps it behind every piece of content. */
+.auth-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 40% at 50% -8%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    radial-gradient(35% 30% at 85% 0%, color-mix(in srgb, var(--accent-3) 8%, transparent), transparent 60%),
+    radial-gradient(46% 34% at 50% 40%, color-mix(in srgb, var(--accent-2) 6%, transparent), transparent 68%),
+    radial-gradient(38% 30% at 8% 82%, color-mix(in srgb, var(--accent-3) 6%, transparent), transparent 65%);
+}
+
+/* The brand mark - .rail-mark's bigger sibling. Reused on the profile page as
+   the account avatar, where it carries the initial instead of "K8". */
+.auth-mark {
+  display: inline-flex;
+  height: 3rem;
+  width: 3rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: var(--gradient-accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  box-shadow: var(--glow-accent);
+}
+
+.auth-mark-lg {
+  height: 3.75rem;
+  width: 3.75rem;
+  border-radius: 18px;
+  font-size: 21px;
+}
+
+/* Sign-in panel: a gradient hairline welded to the top edge. overflow clips it
+   to the card radius; the padding inside is wide enough that focus rings on the
+   fields are never cut by it. */
+.auth-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+}
+
+/* Hairline that runs from the panel's eyebrow to its right edge. */
+.auth-rule {
+  flex: 1;
+  min-width: 0;
+  height: 1px;
+  border-radius: 1px;
+  background: var(--gradient-accent);
+  opacity: 0.45;
 }

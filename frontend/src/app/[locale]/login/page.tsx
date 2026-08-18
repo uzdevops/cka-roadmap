@@ -3,13 +3,24 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { FieldError, Input, Label } from '@/components/ui/field';
 import { useI18n } from '@/i18n/provider';
 import { BROWSER_API_URL } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
+import { cn } from '@/lib/utils';
 
+/**
+ * Sign in - the one screen that renders without the navigation rail, so it is
+ * also the one screen that gets the aurora at full strength: `.auth-aurora` is
+ * a second, page-local wash layered over the global one, with the form floating
+ * on a glass panel above it.
+ *
+ * Behaviour is unchanged: the `next` query parameter still decides where a
+ * successful sign in lands, Google only appears when the server says it is
+ * configured, and there is deliberately no sign-up path - accounts come from an
+ * administrator.
+ */
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
@@ -38,75 +49,96 @@ function LoginForm() {
   };
 
   return (
-    <div className="mx-auto max-w-md py-8">
-      <h1 className="text-2xl font-semibold tracking-tight text-ink">{t.auth.signInHeading}</h1>
-      <p className="mt-2 text-sm text-ink-secondary">{t.auth.signInSubtitle}</p>
+    <div className="auth-stage w-full max-w-[26rem]">
+      <div aria-hidden className="auth-aurora" />
 
-      <Card className="mt-6">
-        <CardContent className="pt-5">
-          <form onSubmit={submit} noValidate>
-            <div className="mb-4">
-              <Label htmlFor="email">{t.auth.email}</Label>
-              <Input
-                id="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-              />
+      <header className="flex flex-col items-center text-center">
+        <span aria-hidden className="auth-mark auth-mark-lg">
+          K8
+        </span>
+        <h1 className="mt-5 text-[28px] font-bold leading-none tracking-[-0.02em] text-ink">
+          {t.meta.siteName}
+        </h1>
+        <p className="mt-3 text-sm text-ink-secondary">{t.auth.signInSubtitle}</p>
+      </header>
+
+      <div className="auth-card panel-glass mt-8 rounded-card p-6 sm:p-7">
+        <div className="flex items-center gap-3">
+          <h2 className="tech-label">{t.auth.signInHeading}</h2>
+          <span aria-hidden className="auth-rule" />
+        </div>
+
+        <form className="mt-5" onSubmit={submit} noValidate>
+          <div className="mb-4">
+            <Label htmlFor="email">{t.auth.email}</Label>
+            <Input
+              id="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="font-mono"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div className="mb-2">
+            <Label htmlFor="password">{t.auth.password}</Label>
+            <Input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              className="font-mono"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+          </div>
+
+          <FieldError>{error}</FieldError>
+
+          <Button type="submit" size="lg" className="mt-5 w-full" disabled={busy}>
+            {busy ? t.auth.signingIn : t.auth.signInButton}
+          </Button>
+        </form>
+
+        {config?.google_oauth_enabled && (
+          <>
+            <div className="my-5 flex items-center gap-3">
+              <span aria-hidden className="h-px flex-1 bg-line" />
+              <span className="tech-label">{t.common.or}</span>
+              <span aria-hidden className="h-px flex-1 bg-line" />
             </div>
+            <a
+              href={`${BROWSER_API_URL}/api/v1/auth/google/authorize`}
+              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full')}
+            >
+              {t.auth.google}
+            </a>
+          </>
+        )}
+      </div>
 
-            <div className="mb-2">
-              <Label htmlFor="password">{t.auth.password}</Label>
-              <Input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-              />
-            </div>
+      {/* Self-registration is closed; accounts come from an administrator. */}
+      <p className="mt-5 text-center text-xs leading-relaxed text-ink-muted">{t.auth.noSignUp}</p>
+    </div>
+  );
+}
 
-            <FieldError>{error}</FieldError>
-
-            <Button type="submit" className="mt-4 w-full" disabled={busy}>
-              {busy ? t.auth.signingIn : t.auth.signInButton}
-            </Button>
-          </form>
-
-          {config?.google_oauth_enabled && (
-            <>
-              <div className="my-5 flex items-center gap-3">
-                <span className="h-px flex-1 bg-[var(--border)]" />
-                <span className="text-xs uppercase tracking-wide text-ink-muted">
-                  {t.common.or}
-                </span>
-                <span className="h-px flex-1 bg-[var(--border)]" />
-              </div>
-              <a
-                href={`${BROWSER_API_URL}/api/v1/auth/google/authorize`}
-                className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-line text-sm font-medium text-ink transition-colors hover:bg-[var(--surface-2)]"
-              >
-                {t.auth.google}
-              </a>
-            </>
-          )}
-
-          {/* Self-registration is closed; accounts come from an administrator. */}
-          <p className="mt-5 text-center text-sm text-ink-muted">{t.auth.noSignUp}</p>
-        </CardContent>
-      </Card>
+function LoginFallback() {
+  const { t } = useI18n();
+  return (
+    <div className="auth-stage w-full max-w-[26rem] text-center text-sm text-ink-muted">
+      {t.common.loading}
     </div>
   );
 }
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="py-16 text-center text-ink-muted" />}>
+    <Suspense fallback={<LoginFallback />}>
       <LoginForm />
     </Suspense>
   );

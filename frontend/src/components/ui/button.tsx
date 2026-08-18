@@ -5,16 +5,15 @@ import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap',
+  'btn-base inline-flex items-center justify-center gap-2 rounded-[10px] font-semibold whitespace-nowrap disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        primary: 'bg-[var(--accent)] text-[var(--accent-ink)] hover:opacity-90',
-        secondary:
-          'bg-[var(--surface-2)] text-ink border border-line hover:bg-[var(--surface-1)]',
+        primary: 'btn-primary text-[var(--accent-ink)]',
+        secondary: 'btn-secondary border border-line text-ink',
         outline: 'border border-line text-ink hover:bg-[var(--surface-2)]',
         ghost: 'text-ink-secondary hover:bg-[var(--surface-2)] hover:text-ink',
-        danger: 'bg-[var(--critical)] text-white hover:opacity-90',
+        danger: 'bg-[var(--critical)] text-[var(--accent-ink)] hover:opacity-90',
       },
       size: {
         sm: 'h-8 px-3 text-sm',

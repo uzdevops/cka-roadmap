@@ -32,6 +32,12 @@ export function ProgressRing({
       aria-label={`${label}: ${Math.round(clamped)}%`}
     >
       <svg viewBox={`0 0 ${size} ${size}`} className="h-full w-full -rotate-90">
+        <defs>
+          <linearGradient id="gradRing" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="var(--accent-2)" />
+            <stop offset="100%" stopColor="var(--accent-3)" />
+          </linearGradient>
+        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -47,7 +53,7 @@ export function ProgressRing({
           r={radius}
           fill="none"
           strokeWidth={thickness}
-          stroke="var(--accent)"
+          stroke="url(#gradRing)"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
@@ -55,12 +61,12 @@ export function ProgressRing({
       </svg>
 
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-4xl font-semibold leading-none tracking-tight text-ink tabular-nums">
+        <span className="text-4xl font-bold leading-none tracking-[-0.02em] text-ink tabular-nums">
           {Math.round(clamped)}
           <span className="ml-0.5 text-xl font-medium text-ink-muted">%</span>
         </span>
         {caption && (
-          <span className="mt-1.5 max-w-[70%] text-[11px] font-medium uppercase leading-tight tracking-wide text-ink-muted">
+          <span className="tech-label mt-1.5 max-w-[70%] leading-tight">
             {caption}
           </span>
         )}

@@ -24,6 +24,8 @@ const config: Config = {
         axis: 'var(--axis)',
         accent: {
           DEFAULT: 'var(--accent)',
+          2: 'var(--accent-2)',
+          3: 'var(--accent-3)',
           ink: 'var(--accent-ink)',
         },
         track: 'var(--track)',
@@ -33,11 +35,11 @@ const config: Config = {
         critical: 'var(--critical)',
       },
       fontFamily: {
-        sans: ['system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
-        card: '12px',
+        card: '14px',
       },
       maxWidth: {
         prose: '72ch',

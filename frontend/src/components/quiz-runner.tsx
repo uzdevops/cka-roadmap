@@ -4,17 +4,50 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Button, ButtonLink } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/field';
 import { Meter } from '@/components/ui/meter';
+import type { Dictionary } from '@/i18n';
 import { useI18n } from '@/i18n/provider';
 import { apiFetch } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
-import type { QuizDetail, QuizResult } from '@/lib/types';
+import type { QuestionType, QuizDetail, QuizResult } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type Answers = Record<number, { selected: string[]; text: string }>;
+
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+/** A, B, C ... - a stable handle for an option that is not its opaque id. */
+const optionKey = (index: number) => LETTERS[index] ?? String(index + 1);
+
+/** Question counters line up in a column, so they are zero padded. */
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** The one-line instruction for a question type. Always from the dictionary. */
+function typeHint(t: Dictionary, type: QuestionType): string {
+  if (type === 'single_choice') return t.quizzes.chooseOne;
+  if (type === 'multi_select') return t.quizzes.chooseAll;
+  return t.quizzes.typeCommand;
+}
+
+function Dot() {
+  return (
+    <span aria-hidden className="text-ink-muted">
+      ·
+    </span>
+  );
+}
+
+/** A question counts as answered once it has a pick, or a non-blank command. */
+function hasAnswer(
+  entry: { selected: string[]; text: string } | undefined,
+  type: QuestionType,
+): boolean {
+  if (!entry) return false;
+  return type === 'fill_command' ? entry.text.trim().length > 0 : entry.selected.length > 0;
+}
 
 export function QuizRunner({
   quiz,
@@ -32,12 +65,7 @@ export function QuizRunner({
   const [error, setError] = useState<string | null>(null);
 
   const answeredCount = useMemo(
-    () =>
-      quiz.questions.filter((q) => {
-        const a = answers[q.id];
-        if (!a) return false;
-        return q.type === 'fill_command' ? a.text.trim().length > 0 : a.selected.length > 0;
-      }).length,
+    () => quiz.questions.filter((q) => hasAnswer(answers[q.id], q.type)).length,
     [answers, quiz.questions],
   );
 
@@ -94,19 +122,18 @@ export function QuizRunner({
     return <QuizResultView quiz={quiz} result={result} onRetake={retake} />;
   }
 
+  const total = quiz.questions.length;
+
   return (
     <div>
-
-      <header className="mt-4 max-w-3xl">
-        <h1 className="text-3xl font-semibold tracking-tight text-ink">{quiz.title}</h1>
+      <header className="max-w-3xl">
+        <p className="tech-label">{t.nav.quizzes}</p>
+        <h1 className="mt-2 text-[28px] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
+          {quiz.title}
+        </h1>
         <p className="mt-3 text-ink-secondary">{quiz.description}</p>
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <Badge variant="outline">
-            {quiz.questions.length} {t.common.questions}
-          </Badge>
-          <Badge variant="outline">
-            {fill(t.quizzes.meta, { count: quiz.questions.length, score: quiz.pass_score })}
-          </Badge>
+          <Badge variant="accent">{fill(t.quizzes.meta, { count: total, score: quiz.pass_score })}</Badge>
           {quiz.time_limit_minutes && (
             <Badge variant="outline">
               {quiz.time_limit_minutes} {t.common.minutes}
@@ -115,86 +142,132 @@ export function QuizRunner({
         </div>
       </header>
 
-      <div className="sticky top-14 z-20 -mx-4 mt-8 border-y border-line bg-[var(--plane)]/95 px-4 py-3 backdrop-blur">
+      {/* Answer telemetry: count, meter, and a jump grid for long quizzes. */}
+      <div className="quiz-progress sticky top-12 z-20 mt-7 rounded-card border border-line px-4 py-3">
         <div className="flex items-center gap-4">
-          <span className="shrink-0 text-sm tabular-nums text-ink-secondary">
-            {fill(t.quizzes.answered, {
-              answered: answeredCount,
-              total: quiz.questions.length,
-            })}
+          <span className="tech-label shrink-0 tabular-nums">
+            {fill(t.quizzes.answered, { answered: answeredCount, total })}
           </span>
           <Meter
-            value={(answeredCount / Math.max(1, quiz.questions.length)) * 100}
+            value={(answeredCount / Math.max(1, total)) * 100}
             label={t.quizzes.answered}
             className="flex-1"
             height={6}
           />
         </div>
+
+        <nav aria-label={t.quizzes.questionNav} className="mt-3 hidden flex-wrap gap-1.5 sm:flex">
+          {quiz.questions.map((question, index) => (
+            <a
+              key={question.id}
+              href={`#quiz-q-${question.id}`}
+              aria-label={fill(t.quizzes.questionLabel, { n: index + 1 })}
+              className={cn(
+                'quiz-chip',
+                hasAnswer(answers[question.id], question.type) && 'quiz-chip-done',
+              )}
+            >
+              <span aria-hidden>{pad(index + 1)}</span>
+            </a>
+          ))}
+        </nav>
       </div>
 
-      <ol className="mt-8 flex flex-col gap-5">
+      <ol className="mt-6 flex flex-col gap-4">
         {quiz.questions.map((question, index) => {
           const answer = answers[question.id] ?? { selected: [], text: '' };
           const multi = question.type === 'multi_select';
 
           return (
-            <li key={question.id}>
+            <li key={question.id} id={`quiz-q-${question.id}`} className="quiz-q">
               <Card>
                 <CardContent className="pt-5">
-                  <div className="flex items-baseline gap-3">
-                    <span className="shrink-0 text-sm tabular-nums text-ink-muted">
-                      {index + 1}.
+                  <p className="tech-label flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="tabular-nums">
+                      {pad(index + 1)} / {pad(total)}
                     </span>
-                    <div className="flex-1">
-                      <p className="font-medium text-ink">{question.prompt}</p>
-                      <p className="mt-1 text-xs text-ink-muted">
-                        {question.type === 'single_choice' && t.quizzes.chooseOne}
-                        {multi && t.quizzes.chooseAll}
-                        {question.type === 'fill_command' && t.quizzes.typeCommand}
-                        {question.points > 1 &&
-                          ` · ${fill(t.quizzes.points, { count: question.points })}`}
-                      </p>
+                    <Dot />
+                    <span>{typeHint(t, question.type)}</span>
+                    {question.points > 1 && (
+                      <>
+                        <Dot />
+                        <span className="tabular-nums">
+                          {fill(t.quizzes.points, { count: question.points })}
+                        </span>
+                      </>
+                    )}
+                  </p>
 
-                      {question.type === 'fill_command' ? (
-                        <Input
-                          className="mt-3 font-mono"
-                          spellCheck={false}
-                          autoCapitalize="off"
-                          autoCorrect="off"
-                          placeholder="kubectl ..."
-                          value={answer.text}
-                          onChange={(e) => setText(question.id, e.target.value)}
-                        />
-                      ) : (
-                        <ul className="mt-3 flex flex-col gap-2">
-                          {question.options.map((option) => {
-                            const checked = answer.selected.includes(option.id);
-                            return (
-                              <li key={option.id}>
-                                <label
+                  <p
+                    id={`quiz-p-${question.id}`}
+                    className="mt-2 text-[15px] font-semibold leading-relaxed text-ink"
+                  >
+                    {question.prompt}
+                  </p>
+
+                  {question.type === 'fill_command' ? (
+                    <div className="quiz-cmd mt-4 max-w-xl">
+                      <span aria-hidden className="quiz-cmd-sigil">
+                        $
+                      </span>
+                      <Input
+                        className="quiz-cmd-input"
+                        spellCheck={false}
+                        autoCapitalize="off"
+                        autoCorrect="off"
+                        autoComplete="off"
+                        aria-labelledby={`quiz-p-${question.id}`}
+                        placeholder="kubectl ..."
+                        value={answer.text}
+                        onChange={(e) => setText(question.id, e.target.value)}
+                      />
+                    </div>
+                  ) : (
+                    <ul className="mt-4 flex flex-col gap-2">
+                      {question.options.map((option, optionIndex) => {
+                        const checked = answer.selected.includes(option.id);
+                        return (
+                          <li key={option.id}>
+                            <label
+                              className={cn(
+                                'quiz-option quiz-option-live',
+                                checked && 'quiz-option-selected',
+                              )}
+                            >
+                              <input
+                                type={multi ? 'checkbox' : 'radio'}
+                                name={`q-${question.id}`}
+                                className="quiz-option-input"
+                                checked={checked}
+                                onChange={() => setSelected(question.id, option.id, multi)}
+                              />
+                              <span
+                                aria-hidden
+                                className={cn(
+                                  'quiz-option-key',
+                                  !multi && 'quiz-option-key-round',
+                                )}
+                              >
+                                {optionKey(optionIndex)}
+                              </span>
+                              <span className="quiz-option-body">
+                                <span className="quiz-option-text">{option.text}</span>
+                                <span
+                                  aria-hidden
                                   className={cn(
-                                    'flex cursor-pointer items-start gap-3 rounded-lg border p-3 text-sm transition-colors',
-                                    checked
-                                      ? 'border-[var(--accent)] bg-[var(--surface-2)]'
-                                      : 'border-line hover:bg-[var(--surface-2)]',
+                                    'quiz-option-tick',
+                                    checked && 'quiz-option-tick-on',
                                   )}
                                 >
-                                  <input
-                                    type={multi ? 'checkbox' : 'radio'}
-                                    name={`q-${question.id}`}
-                                    className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--accent)]"
-                                    checked={checked}
-                                    onChange={() => setSelected(question.id, option.id, multi)}
-                                  />
-                                  <span className="text-ink-secondary">{option.text}</span>
-                                </label>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
+                                  ✓
+                                </span>
+                              </span>
+                            </label>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             </li>
@@ -202,7 +275,7 @@ export function QuizRunner({
         })}
       </ol>
 
-      <div className="mt-8 max-w-prose">
+      <div className="mt-7 max-w-prose">
         {!user ? (
           <Card>
             <CardContent className="pt-5 text-sm text-ink-secondary">
@@ -217,16 +290,16 @@ export function QuizRunner({
           </Card>
         ) : (
           <>
-            <Button size="lg" onClick={submit} disabled={busy}>
-              {busy ? t.quizzes.grading : t.quizzes.submit}
-            </Button>
-            {answeredCount < quiz.questions.length && (
-              <p className="mt-3 text-sm text-ink-muted">
-                {fill(t.quizzes.unanswered, {
-                  count: quiz.questions.length - answeredCount,
-                })}
-              </p>
-            )}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <Button variant="primary" size="lg" onClick={submit} disabled={busy}>
+                {busy ? t.quizzes.grading : t.quizzes.submit}
+              </Button>
+              {answeredCount < total && (
+                <p className="text-sm text-ink-muted">
+                  {fill(t.quizzes.unanswered, { count: total - answeredCount })}
+                </p>
+              )}
+            </div>
             {error && (
               <p role="alert" className="mt-3 text-sm text-[var(--critical)]">
                 {error}
@@ -255,110 +328,196 @@ function QuizResultView({
     return question?.options.find((o) => o.id === optionId)?.text ?? optionId;
   };
 
+  const passMark = Math.max(0, Math.min(100, quiz.pass_score));
+  const total = result.results.length;
+
   return (
     <div>
+      <section className="panel-glass rounded-card p-6">
+        <p className="tech-label">{result.quiz_title}</p>
 
-      <Card>
-        <CardContent className="pt-6">
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
-            {result.quiz_title}
+        <div className="mt-3 flex flex-wrap items-end gap-x-8 gap-y-4">
+          <p
+            className={cn(
+              'quiz-score',
+              result.passed ? 'quiz-score-pass' : 'quiz-score-fail',
+            )}
+          >
+            {result.score.toFixed(0)}
+            <span className="quiz-score-unit">%</span>
           </p>
-          <div className="mt-2 flex flex-wrap items-end gap-x-6 gap-y-2">
-            <p
-              className="text-6xl font-semibold leading-none tracking-tight"
-              style={{ color: result.passed ? 'var(--good-text)' : 'var(--critical)' }}
-            >
-              {result.score.toFixed(0)}
-              <span className="ml-1 text-2xl font-medium text-ink-muted">%</span>
+          <div className="pb-1">
+            <Badge variant={result.passed ? 'good' : 'critical'}>
+              <span aria-hidden>{result.passed ? '✓' : '✕'}</span>
+              {result.passed ? t.quizzes.passed : fill(t.quizzes.failed, { score: quiz.pass_score })}
+            </Badge>
+            <p className="mt-2 text-sm text-ink-secondary">
+              {fill(t.quizzes.resultSummary, {
+                correct: result.correct_count,
+                total: result.question_count,
+                earned: result.earned_points,
+                possible: result.total_points,
+              })}
             </p>
-            <div className="mb-1">
-              <p className="font-medium text-ink">
-                {result.passed
-                  ? t.quizzes.passed
-                  : fill(t.quizzes.failed, { score: quiz.pass_score })}
-              </p>
-              <p className="text-sm text-ink-secondary">
-                {fill(t.quizzes.resultSummary, {
-                  correct: result.correct_count,
-                  total: result.question_count,
-                  earned: result.earned_points,
-                  possible: result.total_points,
-                })}
-              </p>
-            </div>
           </div>
+        </div>
 
-          <div className="mt-5">
-            <Meter value={result.score} label={t.quizzes.colScore} height={10} />
-          </div>
+        {/* The bar plus the pass mark it had to clear. */}
+        <div className="quiz-meter mt-6">
+          <Meter value={result.score} label={t.quizzes.colScore} height={10} />
+          <span aria-hidden className="quiz-passmark" style={{ left: `${passMark}%` }} />
+        </div>
+        <p className="tech-label mt-2 tabular-nums">
+          {fill(t.quizzes.passMark, { score: quiz.pass_score })}
+        </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button onClick={onRetake} variant="secondary">
-              {t.quizzes.retakeButton}
-            </Button>
-            <Link
-              href={href('/dashboard')}
-              className="inline-flex h-10 items-center rounded-lg px-4 text-sm text-[var(--accent)] hover:underline"
-            >
-              {t.quizzes.toDashboard}
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Button onClick={onRetake} variant="secondary">
+            {t.quizzes.retakeButton}
+          </Button>
+          <ButtonLink href={href('/dashboard')} variant="ghost">
+            {t.quizzes.toDashboard}
+          </ButtonLink>
+        </div>
+      </section>
 
-      <h2 className="mt-10 text-lg font-semibold tracking-tight text-ink">
+      <h2 className="mt-9 text-lg font-semibold tracking-tight text-ink">
         {t.quizzes.reviewHeading}
       </h2>
 
       <ol className="mt-4 flex flex-col gap-4">
-        {result.results.map((answer, index) => (
-          <li key={answer.question_id}>
-            <Card
-              style={{
-                borderLeftWidth: 3,
-                borderLeftColor: answer.is_correct ? 'var(--good)' : 'var(--critical)',
-              }}
-            >
-              <CardContent className="pt-5">
-                <div className="flex items-baseline gap-3">
-                  <span className="shrink-0 text-sm tabular-nums text-ink-muted">
-                    {index + 1}.
-                  </span>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <p className="font-medium text-ink">{answer.prompt}</p>
-                      <Badge variant={answer.is_correct ? 'good' : 'critical'}>
-                        {answer.is_correct
-                          ? `✓ ${answer.points_earned}/${answer.points_possible}`
-                          : `✕ 0/${answer.points_possible}`}
-                      </Badge>
-                    </div>
+        {result.results.map((answer, index) => {
+          const question = quiz.questions.find((q) => q.id === answer.question_id);
+          const given = answer.given.filter(Boolean);
+          const showOptionCards = answer.type !== 'fill_command' && (question?.options.length ?? 0) > 0;
 
-                    <dl className="mt-3 flex flex-col gap-2 text-sm">
-                      <div className="flex flex-wrap gap-x-2">
-                        <dt className="text-ink-muted">{t.quizzes.yourAnswer}</dt>
-                        <dd className="text-ink-secondary">
-                          {answer.given.filter(Boolean).length === 0
-                            ? t.quizzes.notAnswered
-                            : answer.type === 'fill_command'
-                              ? answer.given.map((g) => (
-                                  <code key={g} className="font-mono">
-                                    {g}
-                                  </code>
-                                ))
-                              : answer.given
-                                  .map((id) => optionText(answer.question_id, id))
-                                  .join(', ')}
+          return (
+            <li key={answer.question_id}>
+              <Card
+                className={cn(
+                  'quiz-review',
+                  answer.is_correct ? 'quiz-review-good' : 'quiz-review-bad',
+                )}
+              >
+                <CardContent className="pt-5">
+                  <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                    <p className="tech-label flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <span className="tabular-nums">
+                        {pad(index + 1)} / {pad(total)}
+                      </span>
+                      <Dot />
+                      <span>{typeHint(t, answer.type)}</span>
+                    </p>
+                    <Badge variant={answer.is_correct ? 'good' : 'critical'}>
+                      <span aria-hidden>{answer.is_correct ? '✓' : '✕'}</span>
+                      <span className="tabular-nums">
+                        {answer.points_earned}/{answer.points_possible}
+                      </span>
+                    </Badge>
+                  </div>
+
+                  <p className="mt-2 text-[15px] font-semibold leading-relaxed text-ink">
+                    {answer.prompt}
+                  </p>
+
+                  {/* Nothing was picked: the option cards alone would not say so. */}
+                  {showOptionCards && given.length === 0 && (
+                    <p className="tech-label mt-3">
+                      {t.quizzes.yourAnswer} {t.quizzes.notAnswered}
+                    </p>
+                  )}
+
+                  {showOptionCards ? (
+                    <ul
+                      className={cn(
+                        'flex flex-col gap-2',
+                        given.length === 0 ? 'mt-3' : 'mt-4',
+                      )}
+                    >
+                      {(question?.options ?? []).map((option, optionIndex) => {
+                        const isRight = answer.correct.includes(option.id);
+                        const isGiven = given.includes(option.id);
+                        const marker = isGiven
+                          ? isRight
+                            ? `${t.quizzes.optionYours} · ${t.quizzes.optionCorrect}`
+                            : t.quizzes.optionYours
+                          : isRight
+                            ? t.quizzes.optionCorrect
+                            : null;
+
+                        return (
+                          <li key={option.id}>
+                            <div
+                              className={cn(
+                                'quiz-option',
+                                isRight && 'quiz-option-good',
+                                !isRight && isGiven && 'quiz-option-bad',
+                                !isRight && !isGiven && 'quiz-option-idle',
+                              )}
+                            >
+                              <span
+                                aria-hidden
+                                className={cn(
+                                  'quiz-option-key',
+                                  answer.type === 'single_choice' && 'quiz-option-key-round',
+                                )}
+                              >
+                                {optionKey(optionIndex)}
+                              </span>
+                              <span className="quiz-option-body">
+                                <span className="quiz-option-text">{option.text}</span>
+                                {marker && (
+                                  <span
+                                    className={cn(
+                                      'quiz-marker',
+                                      isRight ? 'quiz-marker-good' : 'quiz-marker-bad',
+                                    )}
+                                  >
+                                    <span aria-hidden>{isRight ? '✓' : '✕'}</span>
+                                    {marker}
+                                  </span>
+                                )}
+                              </span>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    /* Fill-in-the-command, or a question whose options are no
+                       longer in the payload: fall back to the plain listing so
+                       nothing is lost. */
+                    <dl className="mt-4 flex flex-col gap-3">
+                      <div>
+                        <dt className="tech-label">{t.quizzes.yourAnswer}</dt>
+                        <dd className="mt-1.5 text-sm text-ink-secondary">
+                          {given.length === 0 ? (
+                            <span className="text-ink-muted">{t.quizzes.notAnswered}</span>
+                          ) : answer.type === 'fill_command' ? (
+                            given.map((g) => (
+                              <code
+                                key={g}
+                                className={cn(
+                                  'quiz-code',
+                                  answer.is_correct ? 'quiz-code-good' : 'quiz-code-bad',
+                                )}
+                              >
+                                {g}
+                              </code>
+                            ))
+                          ) : (
+                            given.map((id) => optionText(answer.question_id, id)).join(', ')
+                          )}
                         </dd>
                       </div>
 
                       {!answer.is_correct && (
-                        <div className="flex flex-wrap gap-x-2">
-                          <dt className="text-ink-muted">{t.quizzes.correctAnswer}</dt>
-                          <dd className="text-ink-secondary">
+                        <div>
+                          <dt className="tech-label">{t.quizzes.correctAnswer}</dt>
+                          <dd className="mt-1.5 text-sm text-ink-secondary">
                             {answer.type === 'fill_command'
                               ? answer.correct.map((c) => (
-                                  <code key={c} className="mr-2 font-mono">
+                                  <code key={c} className="quiz-code quiz-code-good">
                                     {c}
                                   </code>
                                 ))
@@ -369,18 +528,18 @@ function QuizResultView({
                         </div>
                       )}
                     </dl>
+                  )}
 
-                    {answer.explanation && (
-                      <p className="mt-3 border-t border-line pt-3 text-sm text-ink-secondary">
-                        {answer.explanation}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
+                  {answer.explanation && (
+                    <p className="mt-4 border-t border-line pt-3 text-sm text-ink-secondary">
+                      {answer.explanation}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

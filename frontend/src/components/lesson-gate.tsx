@@ -62,23 +62,33 @@ export function LessonGate({ slug }: { slug: string }) {
     };
 
     return (
-      <Card>
-        <CardContent className="flex flex-wrap items-center gap-3 pt-5">
-          <Button
-            variant={lesson.completed ? 'outline' : 'primary'}
-            onClick={() => void toggle()}
-            disabled={busy}
-          >
-            {lesson.completed ? t.lessons.completed : t.lessons.markComplete}
-          </Button>
-          <p className="text-xs text-ink-muted">{t.lessons.noQuizYet}</p>
-          {error && <p className="text-sm text-[var(--critical)]">{error}</p>}
+      <Card className="lsnd-gate">
+        <CardContent className="pt-5">
+          <h2 className="tech-label">{t.lessons.quizHeading}</h2>
+
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <Button
+              variant={lesson.completed ? 'outline' : 'primary'}
+              onClick={() => void toggle()}
+              disabled={busy}
+            >
+              {lesson.completed ? t.lessons.completed : t.lessons.markComplete}
+            </Button>
+            <p className="text-xs text-ink-muted">{t.lessons.noQuizYet}</p>
+          </div>
+
+          {error && (
+            <p role="alert" className="lsnd-error mt-3 text-sm">
+              {error}
+            </p>
+          )}
         </CardContent>
       </Card>
     );
   }
 
   const pass = lesson.quiz_pass_score ?? 90;
+  const best = lesson.quiz_best_score ?? 0;
 
   const startQuiz = async () => {
     setBusy(true);
@@ -108,77 +118,79 @@ export function LessonGate({ slug }: { slug: string }) {
   if (running && quiz) {
     return (
       <div ref={box}>
-      <Card>
-        <CardContent className="pt-5">
-          <QuizRunner quiz={quiz} onResult={onResult} />
-          <button
-            type="button"
-            onClick={() => setRunning(false)}
-            className="mt-4 text-sm text-ink-muted hover:text-ink"
-          >
-            {t.quizzes.closeQuiz}
-          </button>
-        </CardContent>
-      </Card>
+        <Card className="lsnd-gate">
+          <CardContent className="pt-5">
+            <QuizRunner quiz={quiz} onResult={onResult} />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="mt-4 -ml-3"
+              onClick={() => setRunning(false)}
+            >
+              {t.quizzes.closeQuiz}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
     <div ref={box}>
-    <Card>
-      <CardContent className="pt-5">
-        <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-lg font-semibold text-ink">{t.lessons.quizHeading}</h2>
-          {lesson.completed ? (
-            <Badge variant="good">{t.lessons.completed}</Badge>
-          ) : (
-            <Badge variant="outline">{fill(t.lessons.quizRequirement, { score: pass })}</Badge>
-          )}
-        </div>
-
-        <p className="mt-2 max-w-prose text-sm text-ink-secondary">
-          {lesson.completed
-            ? t.lessons.quizPassedBody
-            : fill(t.lessons.quizIntro, { score: pass })}
-        </p>
-
-        {lesson.quiz_attempts > 0 && (
-          <div className="mt-4 max-w-sm">
-            <div className="mb-1.5 flex items-baseline justify-between gap-3 text-sm">
-              <span className="text-ink-secondary">{t.quizzes.best.replace('{score}', '')}</span>
-              <span className="font-semibold tabular-nums text-ink">
-                {lesson.quiz_best_score ?? 0}%
-              </span>
-            </div>
-            <Meter value={lesson.quiz_best_score ?? 0} label={t.lessons.quizHeading} />
-            <p className="mt-1.5 text-xs text-ink-muted">
-              {fill(t.quizzes.metaAttempts, { count: lesson.quiz_attempts })}
-            </p>
+      <Card className="lsnd-gate">
+        <CardContent className="pt-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="tech-label">{t.lessons.quizHeading}</h2>
+            {lesson.completed ? (
+              <Badge variant="good">{t.lessons.completed}</Badge>
+            ) : (
+              <Badge variant="outline">{fill(t.lessons.quizRequirement, { score: pass })}</Badge>
+            )}
           </div>
-        )}
 
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Button onClick={() => void startQuiz()} disabled={busy}>
-            {busy
-              ? t.common.loading
-              : lesson.quiz_attempts > 0
-                ? t.quizzes.retakeButton
-                : t.quizzes.start}
-          </Button>
-          {lesson.completed && lesson.next_slug && (
-            <Link
-              href={href(`/lessons/${lesson.next_slug}`)}
-              className="text-sm text-[var(--accent)] hover:underline"
-            >
-              {t.lessons.next}
-            </Link>
+          <p className="mt-3 text-sm leading-relaxed text-ink-secondary">
+            {lesson.completed
+              ? t.lessons.quizPassedBody
+              : fill(t.lessons.quizIntro, { score: pass })}
+          </p>
+
+          {lesson.quiz_attempts > 0 && (
+            <div className="mt-5 max-w-sm rounded-[10px] border border-line bg-surface-2 px-3.5 py-3">
+              <div className="mb-2 flex items-baseline justify-between gap-3">
+                <span className="tech-label">{t.quizzes.colScore}</span>
+                <span className="font-mono text-sm font-semibold tabular-nums text-ink">
+                  {best}%
+                </span>
+              </div>
+              <Meter value={best} label={t.quizzes.colScore} />
+              <p className="tech-label mt-2">
+                {fill(t.quizzes.metaAttempts, { count: lesson.quiz_attempts })}
+              </p>
+            </div>
           )}
-        </div>
 
-        {error && <p className="mt-3 text-sm text-[var(--critical)]">{error}</p>}
-      </CardContent>
-    </Card>
+          <div className="mt-5 flex flex-wrap items-center gap-4">
+            <Button onClick={() => void startQuiz()} disabled={busy}>
+              {busy
+                ? t.common.loading
+                : lesson.quiz_attempts > 0
+                  ? t.quizzes.retakeButton
+                  : t.quizzes.start}
+            </Button>
+            {lesson.completed && lesson.next_slug && (
+              <Link href={href(`/lessons/${lesson.next_slug}`)} className="lsnd-next-link">
+                {t.lessons.next}
+              </Link>
+            )}
+          </div>
+
+          {error && (
+            <p role="alert" className="lsnd-error mt-3 text-sm">
+              {error}
+            </p>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

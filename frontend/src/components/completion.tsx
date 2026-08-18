@@ -61,7 +61,7 @@ export function CompletionDot({ slug }: { slug: string }) {
       style={{
         borderColor: done ? 'var(--good)' : 'var(--axis)',
         background: done ? 'var(--good)' : 'transparent',
-        color: '#ffffff',
+        color: 'var(--accent-ink)',
       }}
     >
       {done ? '✓' : ''}

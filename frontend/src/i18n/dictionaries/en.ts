@@ -117,6 +117,10 @@ export const en = {
     quizMeta: '{count} questions · pass at {score}%',
     quizMetaTimed: '{count} questions · pass at {score}% · {minutes} min',
     labMeta: '{difficulty} · {minutes}',
+    pathLabel: 'The twenty-week path, phase by phase',
+    nodeLabel: '{phase} — {done}/{total} lessons',
+    youAreHere: 'YOU ARE HERE',
+    examCapsule: 'CKA EXAM',
     empty: 'Could not load the roadmap. The API may still be starting.',
   },
 
@@ -147,6 +151,12 @@ export const en = {
       'You passed this lesson\u2019s quiz. Retake it any time - your best score is the one that counts.',
     noQuizYet: 'No quiz has been written for this lesson yet.',
     referencesHeading: 'Official documentation for this topic',
+    copy: 'Copy',
+    copied: 'Copied',
+    copyManual: 'Press ⌘C',
+    copyLabel: 'Copy code to clipboard',
+    breadcrumbLabel: 'Lesson location',
+    pagerLabel: 'Lesson navigation',
   },
 
   quizzes: {
@@ -188,6 +198,11 @@ export const en = {
     backToQuizzes: '← All quizzes',
     submitError: 'Could not submit the quiz',
     closeQuiz: '\u2190 Back to the lesson',
+    optionYours: 'Your answer',
+    optionCorrect: 'Correct answer',
+    passMark: 'Pass mark {score}%',
+    questionNav: 'Jump to a question',
+    questionLabel: 'Question {n}',
   },
 
   labs: {
@@ -220,6 +235,7 @@ export const en = {
       advanced: 'advanced',
     },
     saveError: 'Could not save progress',
+    overviewMeta: '{total} labs · {done} completed',
   },
 
   dashboard: {
@@ -498,6 +514,7 @@ export const en = {
         body: 'Linux Foundation notes on the exam environment - terminal setup, copy and paste, and the documentation you are allowed to keep open while you work.',
       },
     },
+    docsBadge: 'Official source',
   },
 
   notFound: {

@@ -28,8 +28,8 @@ export function StatTile({
 
   return (
     <div className={cn('rounded-card border border-line bg-surface p-4', className)}>
-      <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">{label}</p>
-      <p className="mt-2 text-2xl font-semibold leading-none" style={{ color: valueColor }}>
+      <p className="tech-label">{label}</p>
+      <p className="mt-2 text-2xl font-bold leading-none tracking-[-0.01em]" style={{ color: valueColor }}>
         {value}
       </p>
       {hint && <p className="mt-2 text-xs text-ink-secondary">{hint}</p>}

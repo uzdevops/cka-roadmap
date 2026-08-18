@@ -153,6 +153,9 @@ function buildProcessor(locale: Locale) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .use(rehypeShiki as any, {
       themes: { light: 'github-light', dark: 'github-dark' },
+      // github-dark renders comments at #6a737d on #24292e - 3.05:1, under AA.
+      // Nothing else in either theme falls short.
+      colorReplacements: { 'github-dark': { '#6a737d': '#879099' } },
       defaultColor: 'light',
       // Everything a CKA lesson realistically contains.
       langs: ['bash', 'shell', 'yaml', 'json', 'text', 'diff', 'ini', 'go'],

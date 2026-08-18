@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { CompletionProvider, WeekProgress } from '@/components/completion';
+import { Serpentine } from '@/components/roadmap/serpentine';
 import { Card, CardContent } from '@/components/ui/card';
 import { fill, getDictionary } from '@/i18n';
 import { localePath, LOCALES, normalizeLocale } from '@/i18n/config';
@@ -35,15 +36,40 @@ export default async function RoadmapPage({ params }: { params: { locale: string
 
   const phases = (await serverFetch<PhaseDetail[]>('/roadmap', locale)) ?? [];
 
+  // The header stat line, from the same data the path is drawn from.
+  const totalLessons = phases.reduce((n, p) => n + p.total_lessons, 0);
+  const doneLessons = phases.reduce((n, p) => n + p.completed_lessons, 0);
+  const overallPercent = totalLessons ? Math.round((doneLessons / totalLessons) * 100) : 0;
+  const currentWeek =
+    phases
+      .flatMap((p) => p.weeks)
+      .sort((a, b) => a.number - b.number)
+      .find((w) => w.completed_lessons < w.total_lessons)?.number ??
+    phases.at(-1)?.week_end ??
+    1;
+
   return (
     <CompletionProvider>
       <div className="py-4">
-        <header className="max-w-3xl">
-          <h1 className="text-3xl font-semibold tracking-tight text-ink">
-            {t.roadmap.heading}
-          </h1>
-          <p className="mt-3 text-ink-secondary">{t.roadmap.intro}</p>
+        <header className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-3xl">
+            <h1 className="text-[28px] font-bold tracking-[-0.02em] text-ink">
+              {t.roadmap.heading}
+            </h1>
+            <p className="mt-2 text-ink-secondary">{t.roadmap.intro}</p>
+          </div>
+          {phases.length > 0 && (
+            <p className="font-mono text-xs text-ink-muted">
+              {overallPercent}% · {doneLessons}/{totalLessons} {t.common.lessons} · W{currentWeek}
+            </p>
+          )}
         </header>
+
+        {phases.length > 0 && (
+          <div className="panel-glass mt-6 rounded-card px-4 py-6 sm:px-8">
+            <Serpentine phases={phases} overallPercent={overallPercent} />
+          </div>
+        )}
 
         {phases.length === 0 ? (
           <Card className="mt-8">

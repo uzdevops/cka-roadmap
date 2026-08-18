@@ -89,6 +89,16 @@ export function ScoreTrendChart({ points }: { points: QuizScorePoint[] }) {
             onMouseMove={onMove}
             onMouseLeave={() => setActive(null)}
           >
+            <defs>
+              <linearGradient id="gradScoreLine" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="var(--accent-2)" />
+                <stop offset="100%" stopColor="var(--accent)" />
+              </linearGradient>
+              <linearGradient id="gradScoreArea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--accent-2)" stopOpacity={0.12} />
+                <stop offset="100%" stopColor="var(--accent-2)" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             {/* Gridlines: solid hairlines, one step off surface. */}
             {[0, 25, 50, 75, 100].map((tick) => {
               const y = PAD.top + plotH - (tick / 100) * plotH;
@@ -135,12 +145,12 @@ export function ScoreTrendChart({ points }: { points: QuizScorePoint[] }) {
               strokeWidth={1}
             />
 
-            {areaPath && <path d={areaPath} fill="var(--accent)" opacity={0.1} />}
+            {areaPath && <path d={areaPath} fill="url(#gradScoreArea)" />}
 
             <path
               d={linePath}
               fill="none"
-              stroke="var(--accent)"
+              stroke="url(#gradScoreLine)"
               strokeWidth={2}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -177,7 +187,7 @@ export function ScoreTrendChart({ points }: { points: QuizScorePoint[] }) {
               fontSize={12}
               fontWeight={600}
               fill="var(--text-primary)"
-              style={{ fontVariantNumeric: 'tabular-nums' }}
+              fontFamily="var(--font-mono), ui-monospace, monospace"
             >
               {last.point.score.toFixed(0)}%
             </text>

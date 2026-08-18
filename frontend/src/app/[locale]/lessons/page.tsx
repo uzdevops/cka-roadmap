@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { CompletionDot, CompletionProvider } from '@/components/completion';
-import { Badge } from '@/components/ui/badge';
+import { CompletionProvider } from '@/components/completion';
+import { LessonCard } from '@/components/lessons/lesson-card';
+import type { LessonState } from '@/components/lessons/lesson-status';
+import { PhaseProgress } from '@/components/lessons/phase-progress';
 import { Card, CardContent } from '@/components/ui/card';
 import { fill, getDictionary } from '@/i18n';
 import { localePath, LOCALES, normalizeLocale } from '@/i18n/config';
 import { serverFetch } from '@/lib/server-api';
-import type { PhaseDetail } from '@/lib/types';
-import { formatMinutes, phaseColor } from '@/lib/utils';
+import type { LessonSummary, PhaseDetail } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,79 +30,109 @@ export async function generateMetadata({
   };
 }
 
+/** One lesson, flattened out of the phase -> week -> lesson tree. */
+interface Row {
+  lesson: LessonSummary;
+  week: number;
+  locked: boolean;
+}
+
+const byOrder = <T extends { order_index: number }>(items: T[]): T[] =>
+  [...items].sort((a, b) => a.order_index - b.order_index);
+
 export default async function LessonsPage({ params }: { params: { locale: string } }) {
   const locale = normalizeLocale(params.locale);
   const t = getDictionary(locale);
   const href = (path: string) => localePath(path, locale);
 
   const phases = (await serverFetch<PhaseDetail[]>('/roadmap', locale)) ?? [];
-  const totalLessons = phases.reduce(
-    (sum, phase) => sum + phase.weeks.reduce((n, week) => n + week.lessons.length, 0),
-    0,
-  );
+
+  /**
+   * Curriculum order, phase by phase.
+   *
+   * Locked is taken straight from `phase.locked` - the API's own phase-unlock
+   * gate, which is off unless the deployment enforces it. A draft lesson
+   * (`is_placeholder`) is NOT locked: the page's own intro promises drafts you
+   * can still navigate, so those stay open and are marked with a badge.
+   */
+  const groups = byOrder(phases).map((phase) => ({
+    phase,
+    rows: byOrder(phase.weeks).flatMap((week) =>
+      byOrder(week.lessons).map<Row>((lesson) => ({
+        lesson,
+        week: week.number,
+        locked: phase.locked,
+      })),
+    ),
+  }));
+
+  const rows = groups.flatMap((group) => group.rows);
+  const totalLessons = rows.length;
+  const doneLessons = rows.filter((row) => row.lesson.completed).length;
+  const overallPercent = totalLessons ? Math.round((doneLessons / totalLessons) * 100) : 0;
+
+  // Where the reader stands: the first lesson they can open and have not done.
+  const currentSlug = rows.find((row) => !row.locked && !row.lesson.completed)?.lesson.slug;
+
+  const stateOf = (row: Row): LessonState => {
+    if (row.locked) return 'locked';
+    if (row.lesson.completed) return 'done';
+    return row.lesson.slug === currentSlug ? 'current' : 'todo';
+  };
 
   return (
     <CompletionProvider>
       <div className="py-4">
-        <header className="max-w-3xl">
-          <h1 className="text-3xl font-semibold tracking-tight text-ink">
-            {t.lessons.heading}
-          </h1>
-          <p className="mt-3 text-ink-secondary">
-            {fill(t.lessons.intro, { count: totalLessons })}
-          </p>
+        <header className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-3xl">
+            <h1 className="text-[28px] font-bold tracking-[-0.02em] text-ink">
+              {t.lessons.heading}
+            </h1>
+            <p className="mt-2 text-ink-secondary">
+              {fill(t.lessons.intro, { count: totalLessons })}
+            </p>
+          </div>
+          {totalLessons > 0 && (
+            <p className="font-mono text-xs tabular-nums text-ink-muted">
+              {overallPercent}% · {doneLessons}/{totalLessons} {t.common.lessons}
+            </p>
+          )}
         </header>
 
-        {phases.length === 0 ? (
+        {groups.length === 0 ? (
           <Card className="mt-8">
-            <CardContent className="pt-5 text-sm text-ink-muted">
-              {t.lessons.empty}
-            </CardContent>
+            <CardContent className="pt-5 text-sm text-ink-muted">{t.lessons.empty}</CardContent>
           </Card>
         ) : (
-          <div className="mt-10 flex flex-col gap-8">
-            {phases.map((phase) => (
+          <div className="mt-9 flex flex-col gap-9">
+            {groups.map(({ phase, rows: phaseRows }) => (
               <section key={phase.slug}>
-                <div className="flex items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: phaseColor(phase.order_index) }}
-                  />
-                  <h2 className="text-lg font-semibold tracking-tight text-ink">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <span aria-hidden className="lsn-node">
+                    {phase.order_index}
+                  </span>
+                  <h2 className="text-base font-semibold tracking-[-0.01em] text-ink">
                     <Link href={href(`/roadmap/${phase.slug}`)} className="hover:underline">
                       {phase.title}
                     </Link>
                   </h2>
+                  <PhaseProgress
+                    phase={phase.title}
+                    slugs={phaseRows.map((row) => row.lesson.slug)}
+                    fallbackDone={phaseRows.filter((row) => row.lesson.completed).length}
+                  />
                 </div>
 
-                <ul className="mt-3 divide-y divide-[var(--border)] rounded-card border border-line bg-surface px-4">
-                  {phase.weeks.flatMap((week) =>
-                    week.lessons.map((lesson) => (
-                      <li key={lesson.slug}>
-                        <Link
-                          href={href(`/lessons/${lesson.slug}`)}
-                          className="flex items-center gap-3 py-3"
-                        >
-                          <CompletionDot slug={lesson.slug} />
-                          <span className="w-20 shrink-0 text-xs text-ink-muted">
-                            {fill(t.lessons.week, { number: week.number })}
-                          </span>
-                          <span className="flex-1 text-sm text-ink-secondary hover:text-ink">
-                            {lesson.title}
-                          </span>
-                          {lesson.is_placeholder && (
-                            <Badge variant="outline" className="shrink-0">
-                              {t.common.draft}
-                            </Badge>
-                          )}
-                          <span className="hidden shrink-0 text-xs tabular-nums text-ink-muted sm:inline">
-                            {formatMinutes(lesson.estimated_minutes, t.common.minutes)}
-                          </span>
-                        </Link>
-                      </li>
-                    )),
-                  )}
+                <ul className="lsn-grid mt-4">
+                  {phaseRows.map((row) => (
+                    <LessonCard
+                      key={row.lesson.slug}
+                      lesson={row.lesson}
+                      week={row.week}
+                      locale={locale}
+                      state={stateOf(row)}
+                    />
+                  ))}
                 </ul>
               </section>
             ))}

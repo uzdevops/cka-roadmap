@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
 import { notFound } from 'next/navigation';
 
 import { AppShell } from '@/components/app-shell';
@@ -9,6 +10,23 @@ import { I18nProvider } from '@/i18n/provider';
 import { AuthProvider } from '@/lib/auth-context';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+
+// Self-hosted by next/font at build time: no network call from the browser and
+// no layout shift. Exposed as CSS variables so globals.css stays the single
+// source of truth for typography as well as colour.
+const sans = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -62,7 +80,7 @@ export default function LocaleLayout({
   const locale = params.locale as Locale;
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>

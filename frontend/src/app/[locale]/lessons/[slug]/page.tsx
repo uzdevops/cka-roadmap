@@ -15,6 +15,45 @@ import { formatMinutes } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
+/** An opening or closing code fence, with whatever follows it on the line. */
+const FENCE = /^ {0,3}(`{3,}|~{3,})(.*)$/;
+
+/**
+ * The info string of every fenced code block, in document order.
+ *
+ * Shiki rewrites the whole `<pre>`, so the rendered HTML no longer says which
+ * language a block was highlighted as. The source markdown is the only place
+ * that survives, and this page already has it, so the labels are read here and
+ * matched to the rendered blocks by position on the client - which drops them
+ * all rather than guessing if the two counts ever disagree.
+ */
+function codeFenceInfo(markdown: string): string[] {
+  const infos: string[] = [];
+  let open: string | null = null;
+
+  for (const line of markdown.split('\n')) {
+    const match = FENCE.exec(line);
+    if (!match) continue;
+    const [, run, rest] = match;
+
+    if (open) {
+      // A closing fence is the same character, at least as long, and bare.
+      if (run[0] === open[0] && run.length >= open.length && rest.trim() === '') {
+        open = null;
+      }
+      continue;
+    }
+
+    // A backtick info string may not itself contain a backtick.
+    if (run[0] === '`' && rest.includes('`')) continue;
+
+    open = run;
+    infos.push(rest.trim());
+  }
+
+  return infos;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -57,6 +96,7 @@ export default async function LessonPage({
   if (!lesson) notFound();
 
   const html = await renderMarkdown(lesson.content, locale);
+  const codeInfo = codeFenceInfo(lesson.content);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -71,35 +111,49 @@ export default async function LessonPage({
   };
 
   return (
-    <article className="mx-auto max-w-4xl py-4">
+    <article className="mx-auto max-w-prose py-2">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-muted">
-        <Link href={href('/roadmap')} className="hover:text-ink">
-          {t.nav.roadmap}
-        </Link>
-        {lesson.phase_slug && (
-          <>
-            <span aria-hidden>/</span>
-            <Link href={href(`/roadmap/${lesson.phase_slug}`)} className="hover:text-ink">
-              {lesson.phase_title}
-            </Link>
-          </>
-        )}
-        {lesson.week_title && (
-          <>
-            <span aria-hidden>/</span>
-            <span>{lesson.week_title}</span>
-          </>
-        )}
-      </nav>
+      <header>
+        {/* Where this lesson sits in the cluster of phases and weeks. */}
+        <nav
+          aria-label={t.lessons.breadcrumbLabel}
+          className="tech-label flex flex-wrap items-center gap-x-2 gap-y-1"
+        >
+          <Link href={href('/roadmap')} className="lsnd-crumb">
+            {t.nav.roadmap}
+          </Link>
+          {lesson.phase_slug && (
+            <>
+              <span aria-hidden className="lsnd-crumb-sep">
+                /
+              </span>
+              <Link href={href(`/roadmap/${lesson.phase_slug}`)} className="lsnd-crumb">
+                {lesson.phase_title}
+              </Link>
+            </>
+          )}
+          {lesson.week_title && (
+            <>
+              <span aria-hidden className="lsnd-crumb-sep">
+                /
+              </span>
+              <span>{lesson.week_title}</span>
+            </>
+          )}
+        </nav>
 
-      <header className="mt-4 max-w-prose">
-        <h1 className="text-3xl font-semibold tracking-tight text-ink">{lesson.title}</h1>
-        {lesson.summary && <p className="mt-3 text-lg text-ink-secondary">{lesson.summary}</p>}
+        <h1 className="mt-3 text-[28px] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
+          {lesson.title}
+        </h1>
+
+        {lesson.summary && (
+          <p className="mt-3 text-base leading-relaxed text-ink-secondary">{lesson.summary}</p>
+        )}
+
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <Badge variant="outline">
             {formatMinutes(lesson.estimated_minutes, t.common.minutes)}
@@ -107,20 +161,22 @@ export default async function LessonPage({
           {lesson.is_placeholder && <Badge variant="warning">{t.lessons.draftBadge}</Badge>}
         </div>
 
+        <div aria-hidden className="lsnd-rule mt-6" />
+
         {/* The body fell back to English for this locale - say so rather than
             letting the reader wonder why the language changed mid-page. */}
         {!lesson.content_translated && (
-          <p className="mt-4 rounded-lg border border-line bg-[var(--surface-2)] px-4 py-3 text-sm text-ink-secondary">
+          <p className="lsnd-notice mt-6 px-4 py-3 text-sm text-ink-secondary">
             {t.lessons.notTranslated}
           </p>
         )}
       </header>
 
-      <div className="mt-10">
-        <MarkdownContent html={html} />
+      <div className="mt-9">
+        <MarkdownContent html={html} codeInfo={codeInfo} />
       </div>
 
-      <div className="mt-10 max-w-prose">
+      <div className="mt-10">
         <LessonReferences
           heading={t.lessons.referencesHeading}
           newTab={t.resources.newTab}
@@ -128,15 +184,18 @@ export default async function LessonPage({
         />
       </div>
 
-      <div className="mt-6 max-w-prose">
+      <div className="mt-6">
         <LessonGate slug={lesson.slug} />
       </div>
 
-      <nav className="mt-8 flex max-w-prose flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:justify-between">
+      <nav
+        aria-label={t.lessons.pagerLabel}
+        className="mt-10 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between"
+      >
         {lesson.prev_slug ? (
           <Link
             href={href(`/lessons/${lesson.prev_slug}`)}
-            className="text-sm text-ink-secondary hover:text-ink"
+            className="lsnd-pager card-hover"
           >
             {t.lessons.prev}
           </Link>
@@ -146,7 +205,7 @@ export default async function LessonPage({
         {lesson.next_slug && (
           <Link
             href={href(`/lessons/${lesson.next_slug}`)}
-            className="text-sm text-[var(--accent)] hover:underline sm:text-right"
+            className="lsnd-pager lsnd-pager-next card-hover"
           >
             {t.lessons.next}
           </Link>

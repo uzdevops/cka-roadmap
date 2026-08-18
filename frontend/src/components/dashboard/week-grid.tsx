@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import { PhaseGlyph } from '@/components/dashboard/phase-glyph';
+import { Badge } from '@/components/ui/badge';
 import { useI18n } from '@/i18n/provider';
 import type { WeekRow, WeekState } from '@/lib/weeks';
 import { cn, phaseColor } from '@/lib/utils';
@@ -60,9 +61,13 @@ function WeekCard({ week }: { week: WeekRow }) {
             <PhaseGlyph index={week.phaseIndex} size={14} />
             <span>{fill(t.dashboard.weekShort, { number: week.number })}</span>
           </span>
-          <span className="ml-auto shrink-0 text-[11px] font-medium uppercase tracking-wide text-ink-muted">
-            {stateLabel(week.state, t)}
-          </span>
+          {week.state === 'active' ? (
+            <Badge variant="live" className="ml-auto shrink-0">
+              {stateLabel(week.state, t)}
+            </Badge>
+          ) : (
+            <span className="tech-label ml-auto shrink-0">{stateLabel(week.state, t)}</span>
+          )}
         </div>
 
         <Link
