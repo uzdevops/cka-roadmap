@@ -186,7 +186,11 @@ async def _load_quiz(session, quiz_id: int) -> Quiz:
 async def list_quizzes(session: SessionDep) -> list[AdminQuizRead]:
     from app.repositories import quiz_repo
 
-    quizzes = await quiz_repo.list_quizzes(session)
+    # Everything, including lesson gates and unpublished drafts - this is the
+    # only place they can be edited.
+    quizzes = await quiz_repo.list_quizzes(
+        session, published_only=False, standalone_only=False
+    )
     return [_quiz_read(q) for q in quizzes]
 
 

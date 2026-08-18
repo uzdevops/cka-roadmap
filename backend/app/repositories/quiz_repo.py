@@ -9,20 +9,38 @@ from sqlalchemy.orm import selectinload
 from app.models import Phase, Question, Quiz, QuizAttempt
 
 
-async def list_quizzes(session: AsyncSession, phase_slug: str | None = None) -> list[Quiz]:
-    """Standalone quizzes only.
+async def list_quizzes(
+    session: AsyncSession,
+    phase_slug: str | None = None,
+    *,
+    published_only: bool = True,
+    standalone_only: bool = True,
+) -> list[Quiz]:
+    """Quizzes, filtered for whoever is asking.
 
-    A quiz bound to a lesson is that lesson's gate and is taken from inside it;
-    listing it here as well would put the same twelve questions in two places
-    and make the roadmap look like it has twelve quizzes instead of two.
+    The defaults are the student view: published quizzes that are not bound to a
+    lesson. A quiz with a `lesson_id` is that lesson's gate and is taken from
+    inside the lesson; listing it on the roadmap as well would put the same
+    questions in two places and make a phase look like it has sixty quizzes
+    instead of two.
+
+    Both filters are arguments rather than baked in because the admin panel has
+    to see and edit every quiz - with them hardcoded it could reach only 20 of
+    the 78 that exist, and the other 58 were uneditable with nothing to say so.
+
+    The join is an outer join: `phase_id` is nullable, and a quiz with no phase
+    should still be visible to an admin who has to go and fix it.
     """
     stmt = (
         select(Quiz)
-        .join(Phase, Quiz.phase_id == Phase.id)
+        .outerjoin(Phase, Quiz.phase_id == Phase.id)
         .options(selectinload(Quiz.questions), selectinload(Quiz.phase))
-        .where(Quiz.is_published.is_(True), Quiz.lesson_id.is_(None))
         .order_by(Phase.order_index, Quiz.order_index, Quiz.id)
     )
+    if published_only:
+        stmt = stmt.where(Quiz.is_published.is_(True))
+    if standalone_only:
+        stmt = stmt.where(Quiz.lesson_id.is_(None))
     if phase_slug:
         stmt = stmt.where(Phase.slug == phase_slug)
     return list((await session.execute(stmt)).scalars().unique().all())
