@@ -33,6 +33,17 @@ class LessonDetail(LessonSummary):
     # False when the body fell back to English for the requested locale.
     content_translated: bool = True
 
+    # The gate on finishing this lesson. `quiz_slug` is null for a lesson that
+    # has no quiz yet, and such a lesson is completed with a plain button.
+    quiz_slug: str | None = None
+    quiz_pass_score: float | None = None
+    quiz_best_score: float | None = None
+    quiz_passed: bool = False
+    quiz_attempts: int = 0
+
+    # Official documentation for the topic, shown at the end of the lesson.
+    references: list[dict[str, str]] = Field(default_factory=list)
+
 
 class WeekRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)

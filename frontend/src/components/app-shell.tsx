@@ -38,7 +38,6 @@ function useNav(): { main: NavItem[]; admin: NavItem[] } {
       { path: '/dashboard', label: t.nav.dashboard, icon: 'dashboard' },
       { path: '/roadmap', label: t.nav.roadmap, icon: 'roadmap' },
       { path: '/lessons', label: t.nav.lessons, icon: 'lessons' },
-      { path: '/quizzes', label: t.nav.quizzes, icon: 'quizzes' },
       { path: '/labs', label: t.nav.labs, icon: 'labs' },
       { path: '/resources', label: t.nav.resources, icon: 'resources' },
     ],

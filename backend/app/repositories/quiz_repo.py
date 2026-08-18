@@ -10,11 +10,17 @@ from app.models import Phase, Question, Quiz, QuizAttempt
 
 
 async def list_quizzes(session: AsyncSession, phase_slug: str | None = None) -> list[Quiz]:
+    """Standalone quizzes only.
+
+    A quiz bound to a lesson is that lesson's gate and is taken from inside it;
+    listing it here as well would put the same twelve questions in two places
+    and make the roadmap look like it has twelve quizzes instead of two.
+    """
     stmt = (
         select(Quiz)
         .join(Phase, Quiz.phase_id == Phase.id)
         .options(selectinload(Quiz.questions), selectinload(Quiz.phase))
-        .where(Quiz.is_published.is_(True))
+        .where(Quiz.is_published.is_(True), Quiz.lesson_id.is_(None))
         .order_by(Phase.order_index, Quiz.order_index, Quiz.id)
     )
     if phase_slug:
@@ -102,3 +108,26 @@ async def count_quizzes(session: AsyncSession) -> int:
 
 async def count_questions(session: AsyncSession) -> int:
     return int((await session.execute(select(func.count(Question.id)))).scalar_one())
+
+
+async def get_lesson_quiz(session: AsyncSession, lesson_id: int) -> Quiz | None:
+    """The published quiz that gates a lesson, if one has been written yet."""
+    stmt = (
+        select(Quiz)
+        .where(Quiz.lesson_id == lesson_id, Quiz.is_published.is_(True))
+        .order_by(Quiz.order_index, Quiz.id)
+        .options(selectinload(Quiz.questions))
+        .limit(1)
+    )
+    return (await session.execute(stmt)).scalars().first()
+
+
+async def attempt_stats_for_quiz(
+    session: AsyncSession, user_id: int, quiz_id: int
+) -> tuple[float | None, int]:
+    """(best score, attempt count) for one user on one quiz."""
+    stmt = select(
+        func.max(QuizAttempt.score), func.count(QuizAttempt.id)
+    ).where(QuizAttempt.user_id == user_id, QuizAttempt.quiz_id == quiz_id)
+    best, count = (await session.execute(stmt)).one()
+    return (float(best) if best is not None else None, int(count or 0))

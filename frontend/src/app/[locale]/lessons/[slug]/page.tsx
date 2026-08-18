@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { LessonCompleteButton } from '@/components/lesson-complete-button';
+import { LessonGate } from '@/components/lesson-gate';
+import { LessonReferences } from '@/components/lesson-references';
 import { MarkdownContent } from '@/components/markdown-content';
 import { Badge } from '@/components/ui/badge';
 import { getDictionary } from '@/i18n';
@@ -119,8 +120,16 @@ export default async function LessonPage({
         <MarkdownContent html={html} />
       </div>
 
-      <div className="mt-12 max-w-prose">
-        <LessonCompleteButton slug={lesson.slug} />
+      <div className="mt-10 max-w-prose">
+        <LessonReferences
+          heading={t.lessons.referencesHeading}
+          newTab={t.resources.newTab}
+          references={lesson.references ?? []}
+        />
+      </div>
+
+      <div className="mt-6 max-w-prose">
+        <LessonGate slug={lesson.slug} />
       </div>
 
       <nav className="mt-8 flex max-w-prose flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:justify-between">

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { QuizRunner } from '@/components/quiz-runner';
 import { Card, CardContent } from '@/components/ui/card';
 import { useI18n } from '@/i18n/provider';
-import { apiPublic } from '@/lib/api';
+import { apiFetch } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import type { QuizDetail } from '@/lib/types';
 
@@ -19,7 +19,7 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
   useEffect(() => {
     if (authLoading) return;
     let cancelled = false;
-    void apiPublic<QuizDetail>(`/quizzes/${params.slug}`)
+    void apiFetch<QuizDetail>(`/quizzes/${params.slug}`)
       .then((data) => !cancelled && setQuiz(data))
       .catch((err) => !cancelled && setError(err instanceof Error ? err.message : 'Failed'));
     return () => {
@@ -35,10 +35,10 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
             <h1 className="font-semibold text-ink">{t.quizzes.cannotOpen}</h1>
             <p className="mt-2 text-sm text-ink-secondary">{error}</p>
             <Link
-              href={href('/quizzes')}
+              href={href('/roadmap')}
               className="mt-4 inline-block text-sm text-[var(--accent)]"
             >
-              {t.quizzes.backToQuizzes}
+              {t.roadmap.allPhases}
             </Link>
           </CardContent>
         </Card>

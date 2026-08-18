@@ -42,6 +42,12 @@ class Quiz(Base, TimestampMixin):
     week_id: Mapped[int | None] = mapped_column(
         ForeignKey("weeks.id", ondelete="SET NULL"), index=True, nullable=True
     )
+    # Set makes this a lesson quiz: the gate a reader passes to finish that
+    # lesson. Null leaves it a week/phase quiz, which is what every quiz was
+    # before lesson quizzes existed.
+    lesson_id: Mapped[int | None] = mapped_column(
+        ForeignKey("lessons.id", ondelete="CASCADE"), index=True, nullable=True
+    )
     slug: Mapped[str] = mapped_column(String(160), unique=True, index=True, nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, default="", nullable=False)
@@ -55,6 +61,7 @@ class Quiz(Base, TimestampMixin):
     )
 
     phase: Mapped["Phase"] = relationship(back_populates="quizzes")
+    lesson: Mapped["Lesson | None"] = relationship(back_populates="quizzes")
     questions: Mapped[list["Question"]] = relationship(
         back_populates="quiz",
         cascade="all, delete-orphan",

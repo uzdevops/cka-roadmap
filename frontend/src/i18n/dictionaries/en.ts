@@ -139,6 +139,14 @@ export const en = {
     notTranslated:
       'This lesson has not been translated yet, so it is shown in English. The rest of the interface stays in your chosen language.',
     saveError: 'Could not save progress',
+    quizHeading: 'Finish this lesson',
+    quizRequirement: 'Pass at {score}%',
+    quizIntro:
+      'Answer the questions below. Scoring {score}% or more marks this lesson complete; anything less, and you can read back over the parts you missed and try again.',
+    quizPassedBody:
+      'You passed this lesson\u2019s quiz. Retake it any time - your best score is the one that counts.',
+    noQuizYet: 'No quiz has been written for this lesson yet.',
+    referencesHeading: 'Official documentation for this topic',
   },
 
   quizzes: {
@@ -179,6 +187,7 @@ export const en = {
     cannotOpen: 'Cannot open this quiz',
     backToQuizzes: '← All quizzes',
     submitError: 'Could not submit the quiz',
+    closeQuiz: '\u2190 Back to the lesson',
   },
 
   labs: {

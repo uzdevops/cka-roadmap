@@ -16,7 +16,14 @@ import { cn } from '@/lib/utils';
 
 type Answers = Record<number, { selected: string[]; text: string }>;
 
-export function QuizRunner({ quiz }: { quiz: QuizDetail }) {
+export function QuizRunner({
+  quiz,
+  onResult,
+}: {
+  quiz: QuizDetail;
+  /** Fires after every graded submission, so the lesson can update its gate. */
+  onResult?: (result: QuizResult) => void;
+}) {
   const { user } = useAuth();
   const { t, href, fill } = useI18n();
   const [answers, setAnswers] = useState<Answers>({});
@@ -69,7 +76,7 @@ export function QuizRunner({ quiz }: { quiz: QuizDetail }) {
         body: payload,
       });
       setResult(data);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      onResult?.(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.quizzes.submitError);
     } finally {
@@ -88,10 +95,7 @@ export function QuizRunner({ quiz }: { quiz: QuizDetail }) {
   }
 
   return (
-    <div className="py-4">
-      <Link href={href('/quizzes')} className="text-sm text-ink-muted hover:text-ink">
-        {t.quizzes.backToQuizzes}
-      </Link>
+    <div>
 
       <header className="mt-4 max-w-3xl">
         <h1 className="text-3xl font-semibold tracking-tight text-ink">{quiz.title}</h1>
@@ -252,12 +256,9 @@ function QuizResultView({
   };
 
   return (
-    <div className="py-4">
-      <Link href={href('/quizzes')} className="text-sm text-ink-muted hover:text-ink">
-        {t.quizzes.backToQuizzes}
-      </Link>
+    <div>
 
-      <Card className="mt-4">
+      <Card>
         <CardContent className="pt-6">
           <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
             {result.quiz_title}

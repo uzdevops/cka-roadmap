@@ -141,7 +141,15 @@ export const uz: Dictionary = {
     draftBadge: 'Qoralama matn',
     notTranslated:
       'Bu dars hali tarjima qilinmagan, shuning uchun ingliz tilida ko’rsatilmoqda. Interfeysning qolgan qismi siz tanlagan tilda qoladi.',
-    saveError: 'Progressni saqlab bo’lmadi',
+    saveError: 'Progressni saqlab bo\u2019lmadi',
+    quizHeading: 'Darsni yakunlang',
+    quizRequirement: '{score}% dan o\u2019tish',
+    quizIntro:
+      'Quyidagi savollarga javob bering. {score}% va undan yuqori natija darsni bajarilgan deb belgilaydi; past bo\u2019lsa, xato qilgan joylaringizni qayta o\u2019qib, yana urinib ko\u2019rasiz.',
+    quizPassedBody:
+      'Bu darsning testidan o\u2019tdingiz. Istalgan vaqtda qayta ishlashingiz mumkin - eng yaxshi natija hisobga olinadi.',
+    noQuizYet: 'Bu darsga hali test yozilmagan.',
+    referencesHeading: 'Bu mavzu bo\u2019yicha rasmiy hujjatlar',
   },
 
   quizzes: {
@@ -181,7 +189,8 @@ export const uz: Dictionary = {
     notAnswered: 'javob berilmagan',
     cannotOpen: 'Bu testni ochib bo’lmadi',
     backToQuizzes: '← Barcha testlar',
-    submitError: 'Testni yuborib bo’lmadi',
+    submitError: 'Testni yuborib bo\u2019lmadi',
+    closeQuiz: '\u2190 Darsga qaytish',
   },
 
   labs: {

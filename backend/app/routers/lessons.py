@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from app.deps import CurrentUser, Locale, SessionDep
 from app.i18n import has_translation, tr
-from app.repositories import content_repo, progress_repo
+from app.repositories import content_repo, progress_repo, quiz_repo
 from app.schemas.content import (
     LessonCompleteResponse,
     LessonDetail,
@@ -60,6 +60,13 @@ async def get_lesson(
 
     done = await content_repo.completed_lesson_ids(session, user.id) if user else set()
 
+    quiz = await quiz_repo.get_lesson_quiz(session, lesson.id)
+    best_score = attempts = None
+    if quiz is not None:
+        best_score, attempts = await quiz_repo.attempt_stats_for_quiz(
+            session, user.id, quiz.id
+        )
+
     return LessonDetail(
         id=lesson.id,
         slug=lesson.slug,
@@ -83,6 +90,14 @@ async def get_lesson(
         ),
         prev_slug=prev_slug,
         next_slug=next_slug,
+        quiz_slug=quiz.slug if quiz else None,
+        quiz_pass_score=quiz.pass_score if quiz else None,
+        quiz_best_score=best_score,
+        quiz_passed=(
+            best_score is not None and quiz is not None and best_score >= quiz.pass_score
+        ),
+        quiz_attempts=attempts or 0,
+        references=list(lesson.references or []),
     )
 
 
@@ -109,6 +124,30 @@ async def _set_completion(
 async def complete_lesson(
     slug: str, session: SessionDep, user: CurrentUser
 ) -> LessonCompleteResponse:
+    """Marks a lesson done.
+
+    A lesson that has a quiz cannot be finished this way: passing the quiz is
+    what completes it, and the API records that itself when the attempt is
+    scored. Refusing here keeps the button from quietly bypassing the gate.
+    """
+    lesson = await content_repo.get_lesson_by_slug(session, slug)
+    if lesson is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found"
+        )
+
+    quiz = await quiz_repo.get_lesson_quiz(session, lesson.id)
+    if quiz is not None:
+        best, _ = await quiz_repo.attempt_stats_for_quiz(session, user.id, quiz.id)
+        if best is None or best < quiz.pass_score:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail=(
+                    f"This lesson is completed by scoring at least "
+                    f"{quiz.pass_score:.0f}% on its quiz."
+                ),
+            )
+
     return await _set_completion(session, user, slug, True)
 
 

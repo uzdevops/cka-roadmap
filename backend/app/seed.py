@@ -33,11 +33,19 @@ from app.security import hash_password
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s seed: %(message)s")
 log = logging.getLogger("seed")
 
+
 DATA_DIR = Path(__file__).parent / "seed_data"
 LESSON_DIR = DATA_DIR / "lessons"
 QUIZ_DIR = DATA_DIR / "quizzes"
 LAB_DIR = DATA_DIR / "labs"
 I18N_DIR = DATA_DIR / "i18n"
+REFERENCES_FILE = DATA_DIR / "references.json"
+# {lesson_slug: [{"title", "url"}]}
+_REFERENCES: dict[str, list[dict[str, str]]] = (
+    json.loads(REFERENCES_FILE.read_text(encoding="utf-8"))
+    if REFERENCES_FILE.is_file()
+    else {}
+)
 
 
 class Counter:
@@ -166,6 +174,8 @@ async def _seed_lesson(
         else _placeholder_content(data["title"], data.get("summary", ""), phase.title)
     )
 
+    references = _REFERENCES.get(slug, [])
+
     lesson = (
         await session.execute(select(Lesson).where(Lesson.slug == slug))
     ).scalar_one_or_none()
@@ -183,10 +193,18 @@ async def _seed_lesson(
                 day_of_week=data.get("day_of_week"),
                 is_published=True,
                 is_placeholder=not has_real_content,
+                references=references,
             )
         )
         counter.create("lessons")
         return
+
+    # Links are reference data, not authored content: keep them current even on
+    # a lesson somebody has edited, but never clobber a non-empty list with an
+    # empty one.
+    if references and lesson.references != references:
+        lesson.references = references
+        counter.update("lesson references")
 
     # Upgrade a placeholder in place once real markdown appears for its slug.
     if lesson.is_placeholder and has_real_content:
@@ -199,7 +217,7 @@ async def _seed_lesson(
 
 
 async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
-    for path in sorted(QUIZ_DIR.glob("*.json")):
+    for path in sorted(QUIZ_DIR.rglob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
 
         phase = (
@@ -208,6 +226,24 @@ async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
         if phase is None:
             log.warning("skipping quiz %s - phase %s missing", data["slug"], data["phase_slug"])
             continue
+
+        # A quiz naming a lesson becomes that lesson's gate; one without a
+        # lesson stays the week/phase quiz it always was.
+        lesson_id = None
+        if data.get("lesson_slug"):
+            lesson = (
+                await session.execute(
+                    select(Lesson).where(Lesson.slug == data["lesson_slug"])
+                )
+            ).scalar_one_or_none()
+            if lesson is None:
+                log.warning(
+                    "skipping quiz %s - lesson %s missing",
+                    data["slug"],
+                    data["lesson_slug"],
+                )
+                continue
+            lesson_id = lesson.id
 
         week_id = None
         if data.get("week_number"):
@@ -226,6 +262,7 @@ async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
             quiz = Quiz(
                 phase_id=phase.id,
                 week_id=week_id,
+                lesson_id=lesson_id,
                 slug=data["slug"],
                 title=data["title"],
                 description=data.get("description", ""),
@@ -237,6 +274,9 @@ async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
             session.add(quiz)
             await session.flush()
             counter.create("quizzes")
+        elif quiz.lesson_id != lesson_id and lesson_id is not None:
+            quiz.lesson_id = lesson_id
+            counter.update("quizzes")
 
         existing_keys = set(
             (
@@ -403,7 +443,7 @@ async def _seed_structure_translations(
 async def _seed_quiz_translations(
     session: AsyncSession, counter: Counter, locale: str, root: Path
 ) -> None:
-    for path in sorted((root / "quizzes").glob("*.json")):
+    for path in sorted((root / "quizzes").rglob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
         quiz = (
             await session.execute(select(Quiz).where(Quiz.slug == path.stem))

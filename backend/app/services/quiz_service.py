@@ -169,6 +169,12 @@ async def score_submission(
 
     score = round((earned / total) * 100, 2) if total else 0.0
     now = datetime.now(UTC)
+
+    # Passing a lesson quiz is what completes the lesson. Doing it here rather
+    # than leaving it to the client means the two can never disagree.
+    if quiz.lesson_id is not None and score >= quiz.pass_score:
+        await progress_repo.set_lesson_completed(session, user.id, quiz.lesson_id, True)
+
     attempt = QuizAttempt(
         user_id=user.id,
         quiz_id=quiz.id,

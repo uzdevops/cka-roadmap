@@ -48,6 +48,12 @@ export interface LessonDetail extends LessonSummary {
   prev_slug: string | null;
   next_slug: string | null;
   content_translated: boolean;
+  quiz_slug: string | null;
+  quiz_pass_score: number | null;
+  quiz_best_score: number | null;
+  quiz_passed: boolean;
+  quiz_attempts: number;
+  references: { title: string; url: string }[];
 }
 
 export interface Week {

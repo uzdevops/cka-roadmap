@@ -91,12 +91,22 @@ class Lesson(Base, TimestampMixin):
     day_of_week: Mapped[int | None] = mapped_column(Integer, nullable=True)
     is_published: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     is_placeholder: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+    # [{"title": ..., "url": ...}] - official documentation for this topic,
+    # shown at the end of the lesson. Structured rather than written into the
+    # body so it survives an edit and works for generated placeholder lessons.
+    references: Mapped[list[dict[str, Any]]] = mapped_column(
+        JSONB, default=list, nullable=False
+    )
     # Per-locale overrides; English lives in the columns above.
     translations: Mapped[dict[str, Any]] = mapped_column(
         JSONB, default=dict, nullable=False
     )
 
     week: Mapped["Week"] = relationship(back_populates="lessons")
+    quizzes: Mapped[list["Quiz"]] = relationship(
+        back_populates="lesson", cascade="all, delete-orphan"
+    )
     progress: Mapped[list["LessonProgress"]] = relationship(
         back_populates="lesson", cascade="all, delete-orphan"
     )

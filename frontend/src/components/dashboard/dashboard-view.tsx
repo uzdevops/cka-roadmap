@@ -276,7 +276,7 @@ function NextSteps({ data }: { data: Dashboard }) {
 
       {data.attempted_quizzes === 0 ? (
         <Bullet>
-          <Link href={href('/quizzes')} className="text-[var(--accent)] hover:underline">
+          <Link href={href('/lessons')} className="text-[var(--accent)] hover:underline">
             {t.dashboard.quizWord}
           </Link>{' '}
           — {t.dashboard.nextFirstQuiz}
