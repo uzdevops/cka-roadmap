@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: taint va toleration",
+  "description": "Pod’larni node’lardan uzoq tutish bo’yicha beshta savol.",
+  "questions": {
+    "q1-direction": {
+      "prompt": "Taint bilan toleration o’rtasidagi munosabat qanday?",
+      "options": [
+        {"id": "a", "text": "Taint Pod’larni o’ziga tortadi; toleration esa ularni itaradi"},
+        {"id": "b", "text": "Node’dagi taint Pod’larni itaradi; Pod’dagi toleration esa unga o’sha taint’ga e’tibor bermaslik imkonini beradi"},
+        {"id": "c", "text": "Ikkalasi ham Pod’da yashaydi"},
+        {"id": "d", "text": "Ikkalasi ham node’da yashaydi"}
+      ],
+      "explanation": "Taint’lar node tomonida turadi va itaradi. Toleration’lar Pod tomonida turadi va istisno beradi - ular o’ziga tortmaydi."
+    },
+    "q2-effects": {
+      "prompt": "Qaysi taint effekti allaqachon ishlab turgan Pod’larni chiqarib yuboradi?",
+      "options": [
+        {"id": "a", "text": "NoSchedule"},
+        {"id": "b", "text": "PreferNoSchedule"},
+        {"id": "c", "text": "NoExecute"},
+        {"id": "d", "text": "NoAdmission"}
+      ],
+      "explanation": "NoSchedule faqat yangi joylashtirishni to’sadi. NoExecute esa bundan tashqari uni tolerate qilmaydigan Pod’larni chiqarib ham yuboradi."
+    },
+    "q3-taint": {
+      "prompt": "worker-2 node’iga key=gpu, value=true dan foydalanib, oddiy Pod’lar u yerga rejalashtirilmaydigan qilib taint qo’yadigan buyruqni yozing.",
+      "explanation": "Uni olib tashlash uchun oxiriga minus qo’shing - `gpu=true:NoSchedule-`."
+    },
+    "q4-control-plane": {
+      "prompt": "Nega Pod odatda control plane node’iga rejalashtirilmaydi?",
+      "options": [
+        {"id": "a", "text": "kubelet uni rad etadi"},
+        {"id": "b", "text": "Unda node-role.kubernetes.io/control-plane:NoSchedule taint’i bor"},
+        {"id": "c", "text": "Control plane node’larida CPU qolmagan"},
+        {"id": "d", "text": "RBAC buni taqiqlaydi"}
+      ],
+      "explanation": "Aynan o’sha taint tufayli ikki node’li klaster yarim bo’sh ko’rinib turishi mumkin, ayni paytda Pod esa Pending holatda o’tiraveradi."
+    },
+    "q5-toleration-exists": {
+      "prompt": "`operator: Exists` bilan yozilgan va qiymati ko’rsatilmagan toleration nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "U hech narsani tolerate qilmaydi"},
+        {"id": "b", "text": "U o’sha kalit uchun istalgan qiymatni tolerate qiladi"},
+        {"id": "c", "text": "U faqat bo’sh qiymatni tolerate qiladi"},
+        {"id": "d", "text": "U noto’g’ri yozilgan"}
+      ],
+      "explanation": "Exists qiymatga e’tibor bermaydi. Kalitni ham tushirib qoldirsangiz, u har qanday taint’ni tolerate qiladi - ba’zi tizim DaemonSet’lari hamma joyda shu tarzda ishlaydi."
+    }
+  }
+}

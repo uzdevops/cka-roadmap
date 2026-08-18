@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: node’ga xizmat ko’rsatish",
+  "description": "Node’ni xavfsiz tarzda xizmatdan chiqarish bo’yicha beshta savol.",
+  "questions": {
+    "q1-cordon": {
+      "prompt": "`kubectl cordon` nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Har bir Pod’ni evict qiladi"},
+        {"id": "b", "text": "Node’ni schedule qilinmaydigan deb belgilaydi, ishlayotgan Pod’larga tegmaydi"},
+        {"id": "c", "text": "Node’ni qayta yuklaydi"},
+        {"id": "d", "text": "Node’ni o’chirib tashlaydi"}
+      ],
+      "explanation": "Cordon - bu «yangi ish qabul qilinmasin» tugmasi. Mavjud Pod’larni haqiqatan ko’chiradigani esa drain."
+    },
+    "q2-drain": {
+      "prompt": "worker-3 node’ini emptyDir ishlatayotgan Pod’lar bilan birga drain qiladigan buyruqni yozing.",
+      "explanation": "--delete-emptydir-data bo’lmasa, drain ma’lumotni jimgina yo’qotish o’rniga bajarishdan bosh tortadi."
+    },
+    "q3-daemonsets": {
+      "prompt": "Nega drain’ga --ignore-daemonsets kerak?",
+      "options": [
+        {"id": "a", "text": "DaemonSet Pod’lari doim ishdan chiqadi"},
+        {"id": "b", "text": "Ular darhol o’sha node’da qayta yaratilaverar edi, shuning uchun ularni tashlab ketish aytilmaguncha drain bajarishdan bosh tortadi"},
+        {"id": "c", "text": "Ularning egasi yo’q"},
+        {"id": "d", "text": "Ularni o’chirib bo’lmaydi"}
+      ],
+      "explanation": "DaemonSet Pod’i ta’rifiga ko’ra o’sha node’ga tegishli; uni evict qilishning ma’nosi yo’q."
+    },
+    "q4-pdb": {
+      "prompt": "Drain hech narsani evict qilmay osilib qoldi. Odatdagi sabab nima?",
+      "options": [
+        {"id": "a", "text": "API server ishlamayapti"},
+        {"id": "b", "text": "PodDisruptionBudget navbatdagi evict’ga ruxsat bermayapti"},
+        {"id": "c", "text": "Node allaqachon cordon qilingan"},
+        {"id": "d", "text": "Pod’larda yorliqlar yo’q"}
+      ],
+      "explanation": "Bu PDB o’z vazifasini bajarayotgani. Uni majburlashdan oldin boshqa joyda yetarlicha replika borligini tekshiring."
+    },
+    "q5-after": {
+      "prompt": "Xizmat ko’rsatib bo’lgach, node’ni ishga qaytaradigan nima?",
+      "options": [
+        {"id": "a", "text": "kubectl drain --undo"},
+        {"id": "b", "text": "kubectl uncordon"},
+        {"id": "c", "text": "kubelet’ni qayta ishga tushirish"},
+        {"id": "d", "text": "kubectl taint --remove"}
+      ],
+      "explanation": "Uncordon schedule qilinmaydigan bayroqni olib tashlaydi; scheduler u yerga yana ish joylashtira boshlaydi."
+    }
+  }
+}

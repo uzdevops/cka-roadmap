@@ -1,0 +1,120 @@
+{
+  "title": "6-hafta takrori - konfiguratsiya",
+  "description": "ConfigMap, Secret va resurslar bo’yicha oltita savol.",
+  "questions": {
+    "w6-q1": {
+      "prompt": "ConfigMap o’zgardi. Qaysi iste’molchilar qayta ishga tushirilmasdan yangi qiymatni ko’radi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Muhit o’zgaruvchilari (env)"
+        },
+        {
+          "id": "b",
+          "text": "Volume orqali mount qilingan kalitlar"
+        },
+        {
+          "id": "c",
+          "text": "Ikkalasi ham"
+        },
+        {
+          "id": "d",
+          "text": "Hech qaysi"
+        }
+      ],
+      "explanation": "Env o’zgaruvchilari konteyner umri davomida o’zgarmay qoladi."
+    },
+    "w6-q2": {
+      "prompt": "Secret ma’lumotlari obyekt ichida qanday kodlanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Shifrlangan holda"
+        },
+        {
+          "id": "b",
+          "text": "base64 bilan, bu esa shifrlash emas"
+        },
+        {
+          "id": "c",
+          "text": "Xeshlangan holda"
+        },
+        {
+          "id": "d",
+          "text": "Ochiq matn sifatida"
+        }
+      ],
+      "explanation": "Diskda shifrlash (encryption at rest) - bu API server’ning alohida sozlamasi."
+    },
+    "w6-q3": {
+      "prompt": "Har bir resurs va har bir konteyner uchun requests limits’ga teng bo’lsa, qaysi QoS klassi beriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "BestEffort"
+        },
+        {
+          "id": "b",
+          "text": "Burstable"
+        },
+        {
+          "id": "c",
+          "text": "Guaranteed"
+        },
+        {
+          "id": "d",
+          "text": "Reserved"
+        }
+      ],
+      "explanation": "Xotira tanqisligida esa bunday Pod eng oxirida evict qilinadi."
+    },
+    "w6-q4": {
+      "prompt": "Konteyner o’zining xotira limitidan oshib ketdi. Nima bo’ladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "U throttle qilinadi"
+        },
+        {
+          "id": "b",
+          "text": "U OOMKilled bo’ladi"
+        },
+        {
+          "id": "c",
+          "text": "U evict qilinadi"
+        },
+        {
+          "id": "d",
+          "text": "Hech nima"
+        }
+      ],
+      "explanation": "CPU siqiladigan resurs bo’lgani uchun throttle qilinadi; xotira esa unday emas."
+    },
+    "w6-q5": {
+      "prompt": "token=abc123 qiymati bilan api-key nomli Secret yaratadigan buyruqni yozing.",
+      "explanation": "generic, docker-registry va tls - mavjud uchta subbuyruq."
+    },
+    "w6-q6": {
+      "prompt": "requests ko’rsatmagan Pod’larga standart qiymatlarni qaysi obyekt beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ResourceQuota"
+        },
+        {
+          "id": "b",
+          "text": "LimitRange"
+        },
+        {
+          "id": "c",
+          "text": "PriorityClass"
+        },
+        {
+          "id": "d",
+          "text": "HPA"
+        }
+      ],
+      "explanation": "Kvota namespace bo’yicha umumiy chegarani qo’yadi; LimitRange esa har bir Pod uchun standart qiymatlarni to’ldiradi."
+    }
+  }
+}

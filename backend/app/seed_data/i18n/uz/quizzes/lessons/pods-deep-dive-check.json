@@ -1,0 +1,98 @@
+{
+  "title": "Tekshiruv: Pod’lar",
+  "description": "Eng kichik joylashtiriladigan birlik va Pod ichidagi konteynerlar nimani baham ko’rishi haqida beshta savol.",
+  "questions": {
+    "q1-shared": {
+      "prompt": "Bitta Pod ichidagi konteynerlar nimani baham ko’radi? Barcha to’g’rilarini tanlang.",
+      "explanation": "Pod ichidagi konteynerlar tarmoq namespace’i va volume’larni baham ko’radi va doim bitta node’ga birga joylashtiriladi. Har biri o’z image’idan kelgan fayl tizimi ildizini saqlaydi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tarmoq namespace’i, ya’ni bir-biriga localhost orqali murojaat qiladi"
+        },
+        {
+          "id": "b",
+          "text": "Pod’ning volume’lari"
+        },
+        {
+          "id": "c",
+          "text": "Fayl tizimi ildizi"
+        },
+        {
+          "id": "d",
+          "text": "Bir xil hayotiy sikl - ular birga rejalashtiriladi"
+        }
+      ]
+    },
+    "q2-init-container": {
+      "prompt": "Init konteynerning o’ziga xosligi nimada?",
+      "explanation": "Init konteynerlar tartib bilan, har biri yakunigacha, birorta ilova konteyneri boshlanishidan oldin ishlaydi. Shuning uchun ular bog’liqlikni kutish yoki volume tayyorlash uchun mos.",
+      "options": [
+        {
+          "id": "a",
+          "text": "U ilova konteynerlari bilan yonma-yon ishlaydi"
+        },
+        {
+          "id": "b",
+          "text": "U ilova konteynerlari boshlanishidan oldin yakunigacha ishlaydi"
+        },
+        {
+          "id": "c",
+          "text": "Pod qayta ishga tushganda u ham qayta ishga tushadi"
+        },
+        {
+          "id": "d",
+          "text": "U volume ulay olmaydi"
+        }
+      ]
+    },
+    "q3-restart-policy": {
+      "prompt": "Pod’ning `restartPolicy` qiymati `Always`. Bu qaysi kontroller uchun noto’g’ri bo’lardi?",
+      "explanation": "Job Pod’larni yakunigacha ishlatadi, `Always` esa muvaffaqiyatli tugagan konteynerni qayta ishga tushirardi. Job’lar `OnFailure` yoki `Never` ishlatadi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deployment"
+        },
+        {
+          "id": "b",
+          "text": "ReplicaSet"
+        },
+        {
+          "id": "c",
+          "text": "Job"
+        },
+        {
+          "id": "d",
+          "text": "DaemonSet"
+        }
+      ]
+    },
+    "q4-logs": {
+      "prompt": "web nomli Pod’da ikkita konteyner bor. sidecar nomli konteynerning loglarini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Bittadan ortiq konteyner bo’lsa, `kubectl logs` qaysi biri ekanini bilishi uchun `-c` kerak."
+    },
+    "q5-pending": {
+      "prompt": "Pod Pending holatida qotib qoldi. Dars avval qayerga qarashni aytadi?",
+      "explanation": "Pending - u hech qachon rejalashtirilmagan degani, ya’ni hali konteyner loglari yo’q. Scheduler o’zini hodisalarda tushuntiradi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Konteyner loglariga"
+        },
+        {
+          "id": "b",
+          "text": "Hodisalarga, `kubectl describe pod` orqali"
+        },
+        {
+          "id": "c",
+          "text": "Kubelet journalga"
+        },
+        {
+          "id": "d",
+          "text": "Image registriga"
+        }
+      ]
+    }
+  }
+}

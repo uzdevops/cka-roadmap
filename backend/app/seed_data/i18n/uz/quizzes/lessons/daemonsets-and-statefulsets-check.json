@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: DaemonSet va StatefulSet",
+  "description": "Deployment bo’lmagan ikkita kontroller bo’yicha beshta savol.",
+  "questions": {
+    "q1-daemonset": {
+      "prompt": "DaemonSet nimani kafolatlaydi?",
+      "options": [
+        {"id": "a", "text": "Butun klaster bo’yicha qat’iy belgilangan sondagi Pod"},
+        {"id": "b", "text": "Mos keladigan har bir node’da bittadan Pod"},
+        {"id": "c", "text": "Pod’lar oxirigacha bajarilishi"},
+        {"id": "d", "text": "Pod’lar barqaror tarmoq identifikatorini olishi"}
+      ],
+      "explanation": "DaemonSet o’z selektoriga mos keladigan har bir node’ga nusxa joylashtiradi va yangi node qo’shilganda avtomatik ravishda yana bittasini qo’shadi - shuning uchun log yig’uvchilar va CNI agentlari undan foydalanadi."
+    },
+    "q2-statefulset": {
+      "prompt": "StatefulSet Pod’ga Deployment bermaydigan nimani beradi? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {"id": "a", "text": "web-0 kabi barqaror, tartib raqamli nom"},
+        {"id": "b", "text": "Barqaror tarmoq identifikatori"},
+        {"id": "c", "text": "volumeClaimTemplates orqali o’zining PersistentVolumeClaim’i"},
+        {"id": "d", "text": "Tezroq rejalashtirish"}
+      ],
+      "explanation": "Barqaror identifikator va har bir Pod uchun alohida saqlash - butun mohiyati shu. StatefulSet’da rejalashtirishni tezlashtiradigan hech narsa yo’q."
+    },
+    "q3-ordering": {
+      "prompt": "Sukut bo’yicha StatefulSet qanday kattalashadi?",
+      "options": [
+        {"id": "a", "text": "Barcha Pod’lar bir vaqtda"},
+        {"id": "b", "text": "Tartib bilan: avval 0, keyin 1, keyin 2 - har birining Ready bo’lishini kutib"},
+        {"id": "c", "text": "Teskari tartibda"},
+        {"id": "d", "text": "Tasodifiy"}
+      ],
+      "explanation": "Tartib bilan, birma-bir: har biri oldingisining Running va Ready bo’lishini kutadi. Kichraytirish teskari tartibda ketadi. `podManagementPolicy: Parallel` bundan voz kechish imkonini beradi."
+    },
+    "q4-headless": {
+      "prompt": "Barqaror DNS nomlari uchun StatefulSet’ga qanday Service kerak?",
+      "options": [
+        {"id": "a", "text": "LoadBalancer Service"},
+        {"id": "b", "text": "NodePort Service"},
+        {"id": "c", "text": "Headless Service (clusterIP: None)"},
+        {"id": "d", "text": "Umuman Service kerak emas"}
+      ],
+      "explanation": "Headless Service ular orasida yukni taqsimlash o’rniga har bir Pod’ga o’z DNS yozuvini beradi - web-0.svc, web-1.svc."
+    },
+    "q5-pvc-deletion": {
+      "prompt": "Siz StatefulSet’ni o’chirdingiz. U yaratgan PVC’larga nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Ular u bilan birga o’chiriladi"},
+        {"id": "b", "text": "Ular saqlanib qoladi, shuning uchun ma’lumot omon qoladi"},
+        {"id": "c", "text": "Ular default namespace’ga ko’chiriladi"},
+        {"id": "d", "text": "Ular faqat o’qish uchun bo’lib qoladi"}
+      ],
+      "explanation": "volumeClaimTemplates’dan kelib chiqqan PVC’lar StatefulSet’dan ataylab uzoqroq yashaydi - ma’lumotni o’chirish hech qachon yon ta’sir bo’lmasligi kerak. Chindan xohlasangiz, ularni qo’lda olib tashlaysiz."
+    }
+  }
+}

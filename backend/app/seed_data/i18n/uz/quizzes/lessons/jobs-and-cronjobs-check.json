@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: Job va CronJob",
+  "description": "Ishni oxirigacha bajarish va uni jadval bo’yicha ishga tushirish haqida beshta savol.",
+  "questions": {
+    "q1-restart-policy": {
+      "prompt": "Job’ning Pod shablonida qaysi restartPolicy qiymatlari to’g’ri hisoblanadi?",
+      "options": [
+        {"id": "a", "text": "Always yoki OnFailure"},
+        {"id": "b", "text": "OnFailure yoki Never"},
+        {"id": "c", "text": "Faqat Always"},
+        {"id": "d", "text": "Uchtasidan istalgani"}
+      ],
+      "explanation": "`Always` muvaffaqiyatli tugagan konteynerni ham qaytadan ishga tushirar edi, bu esa ishni oxirigacha bajarish g’oyasiga zid keladi - shuning uchun API uni Job’lar uchun rad etadi."
+    },
+    "q2-completions": {
+      "prompt": "`completions: 5` va `parallelism: 2` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Besh Pod bir vaqtda ishga tushadi"},
+        {"id": "b", "text": "Besh marta muvaffaqiyatli yakunlanish, bir vaqtning o’zida ko’pi bilan ikkitasi ishlaydi"},
+        {"id": "c", "text": "Ikkita Pod har biri besh martadan ishlaydi"},
+        {"id": "d", "text": "Besh Pod, ulardan ikkitasi muvaffaqiyatsiz tugashi mumkin"}
+      ],
+      "explanation": "completions - talab qilinadigan muvaffaqiyatli yakunlanishlarning umumiy soni; parallelism esa bir vaqtda nechtasi ishlashini cheklaydi."
+    },
+    "q3-backofflimit": {
+      "prompt": "`backoffLimit` nimani boshqaradi?",
+      "options": [
+        {"id": "a", "text": "Pod qancha vaqt ishlashi mumkinligini"},
+        {"id": "b", "text": "Job failed deb belgilanmasidan oldin necha marta qayta urinishini"},
+        {"id": "c", "text": "CronJob nechta Job saqlashini"},
+        {"id": "d", "text": "CronJob ishga tushishlari orasidagi kechikishni"}
+      ],
+      "explanation": "Sukut bo’yicha 6. Umumiy ishlash vaqtini cheklaydigani esa `activeDeadlineSeconds`."
+    },
+    "q4-create-cronjob": {
+      "prompt": "busybox image’ida har besh daqiqada `date` ni ishga tushiradigan, report nomli CronJob yaratadigan imperativ buyruqni yozing.",
+      "explanation": "Vaqt tig’izligida YAML’ni qo’lda yozgandan ko’ra uni generatsiya qilib, keyin tahrirlash afzal."
+    },
+    "q5-concurrency": {
+      "prompt": "CronJob’ning oldingi ishga tushishi hali tugamagan, navbatdagisining vaqti keldi va sizda ikkitasi bir vaqtda ishlamasligi kerak. Qaysi maydon?",
+      "options": [
+        {"id": "a", "text": "suspend: true"},
+        {"id": "b", "text": "concurrencyPolicy: Forbid"},
+        {"id": "c", "text": "backoffLimit: 0"},
+        {"id": "d", "text": "startingDeadlineSeconds: 0"}
+      ],
+      "explanation": "Forbid bittasi faol turganda yangi ishga tushirishni o’tkazib yuboradi. Replace eskisini to’xtatadi; Allow (sukut bo’yicha) esa ularning ustma-ust ishlashiga yo’l qo’yadi."
+    }
+  }
+}

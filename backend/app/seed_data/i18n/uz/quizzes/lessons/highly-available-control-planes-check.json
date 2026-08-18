@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: HA control plane",
+  "description": "Yagona nosozlik nuqtasini yo’qotish bo’yicha beshta savol.",
+  "questions": {
+    "q1-topologies": {
+      "prompt": "kubeadm’ning ikkita HA topologiyasi qaysilar?",
+      "options": [
+        {"id": "a", "text": "Active/passive va active/active"},
+        {"id": "b", "text": "Stacked etcd va tashqi (external) etcd"},
+        {"id": "c", "text": "Bitta va ko’p regionli"},
+        {"id": "d", "text": "Boshqariladigan (managed) va o’zi joylashtirilgan (self-hosted)"}
+      ],
+      "explanation": "Stacked etcd’ni control plane node’larining o’ziga joylaydi; external esa uni alohida mashinalarda ishlatadi - buning evaziga xostlar soni ortadi."
+    },
+    "q2-count": {
+      "prompt": "HA klasterda nechta control plane node bo’lishi kerak?",
+      "options": [
+        {"id": "a", "text": "Ikkita"},
+        {"id": "b", "text": "Toq son, odatda uchta"},
+        {"id": "c", "text": "Istalgan son"},
+        {"id": "d", "text": "To’rtta"}
+      ],
+      "explanation": "Cheklov etcd’ning Raft kvorumidan kelib chiqadi. Uchta node bitta nosozlikka chidaydi; ikkitasi esa hech biriga chidamaydi."
+    },
+    "q3-loadbalancer": {
+      "prompt": "API serverlar oldida nima turadi?",
+      "options": [
+        {"id": "a", "text": "Ingress"},
+        {"id": "b", "text": "6443-portdagi load balancer - uning manzili control plane endpoint bo’ladi"},
+        {"id": "c", "text": "CoreDNS"},
+        {"id": "d", "text": "kube-proxy"}
+      ],
+      "explanation": "`--control-plane-endpoint` init paytidayoq o’sha load balancer’ga ishora qilishi kerak, aks holda keyinchalik control plane node qo’sha olmaysiz."
+    },
+    "q4-quorum-loss": {
+      "prompt": "Uch node’li stacked klaster ikkita control plane node’ini yo’qotdi. Holat qanday?",
+      "options": [
+        {"id": "a", "text": "To’liq ishlaydi"},
+        {"id": "b", "text": "etcd’da kvorum yo’q, shuning uchun API server yozuv so’rovlariga xizmat qila olmaydi"},
+        {"id": "c", "text": "Faqat scheduler to’xtaydi"},
+        {"id": "d", "text": "Worker’lar Pod’larni ishlatishni to’xtatadi"}
+      ],
+      "explanation": "Kvorumsiz yozuv yo’q. Mavjud Pod’lar ishlashda davom etadi - data plane control plane’ga bog’liq emas."
+    },
+    "q5-scheduler-ha": {
+      "prompt": "Bir nechta control plane node bo’lganda scheduler va controller manager o’zini qanday tutadi?",
+      "options": [
+        {"id": "a", "text": "Barcha nusxalar bir vaqtda ishlaydi"},
+        {"id": "b", "text": "Ular lider saylaydi; faqat bittasi faol bo’ladi"},
+        {"id": "c", "text": "Ular ishni o’zaro bo’lishadi"},
+        {"id": "d", "text": "Faqat bittasini joylashtirish mumkin"}
+      ],
+      "explanation": "Lider saylovi ikkita scheduler bir Pod’ni ikki marta bind qilishining oldini oladi."
+    }
+  }
+}

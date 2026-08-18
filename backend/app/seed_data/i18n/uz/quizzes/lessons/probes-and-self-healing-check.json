@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: probe’lar",
+  "description": "liveness, readiness va startup probe’lar bo’yicha beshta savol.",
+  "questions": {
+    "q1-liveness": {
+      "prompt": "Muvaffaqiyatsiz liveness probe nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Pod’ni Service endpoint’laridan olib tashlaydi"},
+        {"id": "b", "text": "Konteynerni qayta ishga tushiradi"},
+        {"id": "c", "text": "Pod’ni chiqarib yuboradi"},
+        {"id": "d", "text": "Node’ni NotReady deb belgilaydi"}
+      ],
+      "explanation": "Liveness 'bu jarayon qotib qoldimi?' degan savolga javob beradi va davosi - qayta ishga tushirish. Endpoint’lardan olib tashlash esa readiness’ning ishi."
+    },
+    "q2-readiness": {
+      "prompt": "Muvaffaqiyatsiz readiness probe nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Konteynerni qayta ishga tushiradi"},
+        {"id": "b", "text": "Probe o’tguncha Pod’ni Service endpoint’laridan chiqarib turadi"},
+        {"id": "c", "text": "Pod’ni o’chiradi"},
+        {"id": "d", "text": "Hech nima"}
+      ],
+      "explanation": "Readiness hayot siklini emas, trafikni boshqaradi. Pod tirik, lekin tayyor bo’lmasligi mumkin - masalan, keshni to’ldirayotgan bo’lsa."
+    },
+    "q3-startup": {
+      "prompt": "Startup probe qaysi muammoni hal qiladi?",
+      "options": [
+        {"id": "a", "text": "Image’ning sekin tortilishini"},
+        {"id": "b", "text": "Sekin ishga tushadigan ilovaning o’zining liveness probe’i tomonidan o’ldirilishini"},
+        {"id": "c", "text": "Node’larda xotira tugab qolishini"},
+        {"id": "d", "text": "Yuklanish paytidagi DNS hal qilinishini"}
+      ],
+      "explanation": "Startup probe ishlab turgan vaqtda liveness va readiness ushlab turiladi - shuning uchun ishga tushishda saxiy, keyin esa qat’iy bo’lishingiz mumkin."
+    },
+    "q4-crashloop": {
+      "prompt": "Konteyner ishga tushgandan ko’p o’tmay CrashLoopBackOff holatiga tushyapti va uning liveness probe’i juda qattiq sozlangan. Ehtimoliy yechim nima?",
+      "options": [
+        {"id": "a", "text": "readiness’ni olib tashlash"},
+        {"id": "b", "text": "initialDelaySeconds’ni oshirish yoki startup probe qo’shish"},
+        {"id": "c", "text": "CPU limitini oshirish"},
+        {"id": "d", "text": "restartPolicy: Never qo’yish"}
+      ],
+      "explanation": "Probe ilovani u ishga tushib bo’lmasidan oldin o’ldirmoqda. Unga vaqt bering yoki uni startup probe ortiga qo’ying."
+    },
+    "q5-types": {
+      "prompt": "Kubernetes qaysi probe handler turlarini qo’llab-quvvatlaydi? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {"id": "a", "text": "httpGet"},
+        {"id": "b", "text": "exec"},
+        {"id": "c", "text": "tcpSocket"},
+        {"id": "d", "text": "dnsLookup"}
+      ],
+      "explanation": "httpGet, exec, tcpSocket va grpc. DNS probe turi umuman mavjud emas."
+    }
+  }
+}

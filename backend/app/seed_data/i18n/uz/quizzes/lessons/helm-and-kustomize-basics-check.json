@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: Helm va Kustomize",
+  "description": "Manifestlarni paketlash va qatlamlash bo’yicha beshta savol.",
+  "questions": {
+    "q1-difference": {
+      "prompt": "Helm bilan Kustomize o’rtasidagi asosiy farq nima?",
+      "options": [
+        {"id": "a", "text": "Helm manifestlarni shablonlashtiradi; Kustomize esa oddiy YAML ustiga shablonsiz overlay qo’yadi"},
+        {"id": "b", "text": "Kustomize - paket menejeri, Helm esa emas"},
+        {"id": "c", "text": "Helm faqat Deployment’lar bilan ishlaydi"},
+        {"id": "d", "text": "Ular bir xil vosita"}
+      ],
+      "explanation": "Helm qiymatlar (values) asosida Go shablonlarini render qiladi. Kustomize esa haqiqiy, to’g’ri YAML’ga overlay’lar bilan patch qo’yadi - hech qayerda joy egallovchi belgilar yo’q."
+    },
+    "q2-builtin": {
+      "prompt": "Ikkalasidan qaysi biri kubectl ichida keladi?",
+      "options": [
+        {"id": "a", "text": "Helm"},
+        {"id": "b", "text": "Kustomize"},
+        {"id": "c", "text": "Ikkalasi ham"},
+        {"id": "d", "text": "Hech qaysisi"}
+      ],
+      "explanation": "`kubectl apply -k` va `kubectl kustomize` ichiga o’rnatilgan. Helm esa alohida binary."
+    },
+    "q3-apply-k": {
+      "prompt": "Joriy katalogdagi kustomization’ni qo’llaydigan buyruqni yozing.",
+      "explanation": "`kubectl kustomize .` uni qo’llamasdan stdout’ga render qiladi - bu xavfsizroq birinchi qadam."
+    },
+    "q4-kustomization": {
+      "prompt": "Kustomize katalogda qaysi faylni qidiradi?",
+      "options": [
+        {"id": "a", "text": "values.yaml"},
+        {"id": "b", "text": "kustomization.yaml"},
+        {"id": "c", "text": "Chart.yaml"},
+        {"id": "d", "text": "manifest.yaml"}
+      ],
+      "explanation": "Unda resurslar, patch’lar, image’lar va generatorlar sanab o’tiladi. Chart.yaml va values.yaml esa Helm’niki."
+    },
+    "q5-helm-release": {
+      "prompt": "Helm nimani o’rnatganini kuzatib borish uchun klasterda nimani saqlaydi?",
+      "options": [
+        {"id": "a", "text": "Hech nimani - u faqat mijoz tomonida ishlaydi"},
+        {"id": "b", "text": "Namespace ichidagi Secret’da yozib qo’yilgan release’ni"},
+        {"id": "c", "text": "CustomResourceDefinition’ni"},
+        {"id": "d", "text": "kube-system’dagi ConfigMap’ni"}
+      ],
+      "explanation": "Helm 3 release holatini har bir namespace’dagi har bir release uchun alohida Secret’da saqlaydi - aynan shu `helm rollback` ni mumkin qiladi."
+    }
+  }
+}

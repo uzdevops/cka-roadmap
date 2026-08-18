@@ -1,0 +1,44 @@
+{
+  "title": "Tekshiruv: 1-sinov imtihoni tahlili",
+  "description": "Ushbu simulyatsiya mashq qildiradigan topshiriqlar bo’yicha beshta savol.",
+  "questions": {
+    "q1-create-pod": {
+      "prompt": "nginx image’idan nginx nomli Pod yaratadigan eng tez buyruqni yozing.",
+      "explanation": "`kubectl run` Pod yaratadi; `kubectl create deployment` esa Deployment yaratadi. Qaysi biri nima qilishini bilish keyin tuzatish bilan ovora bo’lishdan saqlaydi."
+    },
+    "q2-scale": {
+      "prompt": "web Deployment’ini 5 ta replikaga masshtablaydigan buyruqni yozing.",
+      "explanation": "Vaqt tig’izligida imperativ masshtablash YAML tahrirlashdan ancha tez."
+    },
+    "q3-output-file": {
+      "prompt": "Topshiriq natijani faylga saqlashni aytmoqda. Xavf nimada?",
+      "options": [
+        {"id": "a", "text": "Hech qanday xavf yo’q"},
+        {"id": "b", "text": "Noto’g’ri yo’lga yoki noto’g’ri node’ga yozish buyruq to’g’ri bo’lsa ham nol ball beradi"},
+        {"id": "c", "text": "Fayl yaratib bo’lmaydi"},
+        {"id": "d", "text": "Fayl oxirida o’chirib yuboriladi"}
+      ],
+      "explanation": "Yo’lni so’zma-so’z o’qing va keyin `cat` bilan tekshiring. Baholovchilar aynan o’zlari aytgan joyga qaraydi."
+    },
+    "q4-verify": {
+      "prompt": "Topshiriqni bajarib bo’lgach, doim nima qilish kerak?",
+      "options": [
+        {"id": "a", "text": "Darhol keyingisiga o’tish"},
+        {"id": "b", "text": "get yoki describe bilan klaster so’ralgan holatda ekanini tasdiqlash"},
+        {"id": "c", "text": "Obyektni o’chirib, hammasini qaytadan qilish"},
+        {"id": "d", "text": "kubelet’ni qayta ishga tushirish"}
+      ],
+      "explanation": "Bir marta ham qarab qo’ymagan bitta xato harf butun topshiriqni yo’qotadi. Tekshirish esa bir necha soniya oladi."
+    },
+    "q5-imperative": {
+      "prompt": "Nega --dry-run=client -o yaml bilan imperativ buyruqlarni afzal ko’rish kerak?",
+      "options": [
+        {"id": "a", "text": "Chunki bu yagona qo’llab-quvvatlanadigan usul"},
+        {"id": "b", "text": "Chunki ular to’g’ri qolipni tez beradi, siz esa uni keyin tahrirlaysiz"},
+        {"id": "c", "text": "Chunki ular RBAC’ni chetlab o’tadi"},
+        {"id": "d", "text": "Chunki ular admission control’ni o’tkazib yuboradi"}
+      ],
+      "explanation": "Maydon nomlarini yoddan bilmasdan ham to’g’ri YAML olasiz, so’ng faqat muhim ikki qatorni o’zgartirasiz."
+    }
+  }
+}

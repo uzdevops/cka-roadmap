@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: joylashtirish",
+  "description": "Pod’larni node’lar tomon va bir-biriga nisbatan yo’naltirish bo’yicha beshta savol.",
+  "questions": {
+    "q1-nodeselector": {
+      "prompt": "`nodeSelector` nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Node’da sanab o’tilgan yorliqlar bo’lishini talab qiladi"},
+        {"id": "b", "text": "O’sha yorliqlarga ega node’larni afzal ko’radi"},
+        {"id": "c", "text": "O’sha yorliqlarga ega node’larni chetlab o’tadi"},
+        {"id": "d", "text": "Node’larni emas, Pod’larni tanlaydi"}
+      ],
+      "explanation": "nodeSelector - bu qat’iy talab va eng oddiy shakl. Node affinity esa uning ifodali, kengaytirilgan varianti."
+    },
+    "q2-required-vs-preferred": {
+      "prompt": "`preferredDuringSchedulingIgnoredDuringExecution` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Qoida mos kelmasa, Pod umuman rejalashtirilmaydi"},
+        {"id": "b", "text": "Scheduler qoidaga rioya qilishga harakat qiladi, lekin uddasidan chiqmasa ham Pod’ni baribir joylashtiradi"},
+        {"id": "c", "text": "Qoida mos kelmay qolsa, Pod chiqarib yuboriladi"},
+        {"id": "d", "text": "Qoida faqat chiqarib yuborish paytida qo’llanadi"}
+      ],
+      "explanation": "'Preferred' - bu yumshoq vazn. 'IgnoredDuringExecution' esa Pod ishga tushgandan keyin qoida qayta tekshirilmasligini bildiradi."
+    },
+    "q3-podantiaffinity": {
+      "prompt": "Siz ikkita replika hech qachon bitta node’da bo’lmasligini xohlaysiz. Qaysi birini ishlatasiz?",
+      "options": [
+        {"id": "a", "text": "topologyKey kubernetes.io/hostname bilan podAffinity"},
+        {"id": "b", "text": "topologyKey kubernetes.io/hostname bilan podAntiAffinity"},
+        {"id": "c", "text": "nodeSelector"},
+        {"id": "d", "text": "Taint"}
+      ],
+      "explanation": "Anti-affinity itaradi; topologyKey esa 'bir xil joy' nimani anglatishini belgilaydi - bu yerda bitta va o’sha node’ni."
+    },
+    "q4-topologykey": {
+      "prompt": "topologyKey aslida nimani nomlaydi?",
+      "options": [
+        {"id": "a", "text": "Pod yorlig’ini"},
+        {"id": "b", "text": "Nosozlik domenini belgilaydigan node yorlig’ini"},
+        {"id": "c", "text": "Namespace’ni"},
+        {"id": "d", "text": "Scheduler profilini"}
+      ],
+      "explanation": "Keng tarqalgan qiymatlar - kubernetes.io/hostname (har bir node uchun) va topology.kubernetes.io/zone (har bir zona uchun)."
+    },
+    "q5-label-node": {
+      "prompt": "worker-1 nomli node’ga disk=ssd yorlig’ini qo’yadigan buyruqni yozing.",
+      "explanation": "Yorliq allaqachon mavjud bo’lsa, `--overwrite` ni qo’shing."
+    }
+  }
+}

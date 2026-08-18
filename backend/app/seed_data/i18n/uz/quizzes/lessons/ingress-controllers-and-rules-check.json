@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: Ingress",
+  "description": "Klaster ichiga HTTP trafikni yo’naltirish bo’yicha beshta savol.",
+  "questions": {
+    "q1-controller": {
+      "prompt": "Siz Ingress yaratdingiz, lekin hech nima sodir bo’lmadi. Eng ehtimoliy sabab nima?",
+      "options": [
+        {"id": "a", "text": "Ingress’ga NodePort turidagi Service kerak"},
+        {"id": "b", "text": "Klasterda ingress controller o’rnatilmagan"},
+        {"id": "c", "text": "Ingress Gateway API’ni talab qiladi"},
+        {"id": "d", "text": "Ingress noto’g’ri namespace’da"}
+      ],
+      "explanation": "Ingress obyekti - bu shunchaki qoida. Uni kuzatib turadigan controller bo’lmasa - ingress-nginx, Traefik - hech kim unga amal qilmaydi."
+    },
+    "q2-ingressclass": {
+      "prompt": "`ingressClassName` nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Backend Service’ni nomlaydi"},
+        {"id": "b", "text": "Bu Ingress’ni qaysi controller boshqarishini tanlaydi"},
+        {"id": "c", "text": "TLS shifr to’plamini belgilaydi"},
+        {"id": "d", "text": "Namespace’ni tanlaydi"}
+      ],
+      "explanation": "Klaster bir nechta controller ishlata olishi va ular har bir qoidani o’zimniki deb talashib qolmasligi aynan shu orqali ta’minlanadi."
+    },
+    "q3-tls": {
+      "prompt": "Ingress sertifikatini qayerdan oladi?",
+      "options": [
+        {"id": "a", "text": "Controller’ning o’z omboridan"},
+        {"id": "b", "text": "spec.tls da ko’rsatilgan kubernetes.io/tls turidagi Secret’dan"},
+        {"id": "c", "text": "ConfigMap’dan"},
+        {"id": "d", "text": "U avtomatik generatsiya qilinadi"}
+      ],
+      "explanation": "Secret ichida tls.crt va tls.key bo’ladi va u Ingress bilan bir xil namespace’da turishi shart."
+    },
+    "q4-pathtype": {
+      "prompt": "`/api` yo’li uchun `pathType: Prefix` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Faqat /api mos keladi"},
+        {"id": "b", "text": "/api va uning ostidagi hamma narsa mos keladi, taqqoslash yo’l segmentlari bo’yicha bo’linadi"},
+        {"id": "c", "text": "Tarkibida 'api' bo’lgan har qanday yo’l mos keladi"},
+        {"id": "d", "text": "Bu muntazam ifoda (regex)"}
+      ],
+      "explanation": "Exact faqat aynan o’sha yo’lning o’ziga mos keladi; ImplementationSpecific esa qarorni controller ixtiyoriga qoldiradi."
+    },
+    "q5-backend": {
+      "prompt": "Ingress qoidasi tayyor endpoint’lari yo’q Service’ga ishora qilyapti. Mijoz nimani ko’radi?",
+      "options": [
+        {"id": "a", "text": "Controller’dan 404"},
+        {"id": "b", "text": "Odatda controller’dan 502 yoki 503"},
+        {"id": "c", "text": "So’rov abadiy osilib qoladi"},
+        {"id": "d", "text": "Standart backend’ga yo’naltirish"}
+      ],
+      "explanation": "Sog’lom backend yo’qligi gateway xatosini beradi. Ingress’ni ayblashdan oldin Service’ning EndpointSlice’larini tekshiring."
+    }
+  }
+}

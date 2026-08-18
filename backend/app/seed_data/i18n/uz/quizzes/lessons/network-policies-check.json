@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: NetworkPolicy",
+  "description": "Pod trafigini cheklash bo’yicha beshta savol.",
+  "questions": {
+    "q1-default": {
+      "prompt": "Namespace’da birorta ham NetworkPolicy bo’lmasa, qanday trafikka ruxsat beriladi?",
+      "options": [
+        {"id": "a", "text": "Hech qandayiga"},
+        {"id": "b", "text": "Hammasiga - Pod’lar sukut bo’yicha izolyatsiya qilinmagan"},
+        {"id": "c", "text": "Faqat o’sha namespace ichidagi trafikka"},
+        {"id": "d", "text": "Faqat kiruvchi (ingress) trafikka"}
+      ],
+      "explanation": "Kubernetes’da biror siyosat Pod’ni tanlamaguncha hammasiga ruxsat beriladi. Tanlangan paytdan boshlab Pod siyosat ko’rsatgan yo’nalishlar bo’yicha izolyatsiya qilinadi."
+    },
+    "q2-deny-all": {
+      "prompt": "Qaysi siyosat namespace’dagi har bir Pod uchun barcha kiruvchi trafikni taqiqlaydi?",
+      "options": [
+        {"id": "a", "text": "Bo’sh podSelector, policyTypes: [Ingress] va birorta ham ingress qoidasi yo’q"},
+        {"id": "b", "text": "ingress: [] bo’lgan va podSelector maydoni umuman yo’q siyosat"},
+        {"id": "c", "text": "CNI plaginni o’chirib tashlash"},
+        {"id": "d", "text": "Namespace’ga yorliq qo’yish"}
+      ],
+      "explanation": "`podSelector: {}` har bir Pod’ni tanlaydi; policyTypes ichida Ingress ko’rsatilib, birorta qoida berilmasa - hech narsaga ruxsat berilmaydi."
+    },
+    "q3-additive": {
+      "prompt": "Ikkita siyosat bitta Pod’ni tanlaydi: biri 80-portga, ikkinchisi 443-portga ruxsat beradi. Nimaga ruxsat bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Faqat 80-portga"},
+        {"id": "b", "text": "Faqat 443-portga"},
+        {"id": "c", "text": "Ikkalasiga ham, chunki siyosatlar bir-biriga qo’shiladi"},
+        {"id": "d", "text": "Hech biriga"}
+      ],
+      "explanation": "Bu yerda taqiqlash qoidasi ham, tartib ham yo’q. Mos keladigan barcha siyosatlarning birlashmasi - ruxsat berilgan narsa."
+    },
+    "q4-enforcement": {
+      "prompt": "NetworkPolicy’ni amalda kim majburiy qilib qo’llaydi?",
+      "options": [
+        {"id": "a", "text": "API server"},
+        {"id": "b", "text": "kube-proxy"},
+        {"id": "c", "text": "CNI plagin"},
+        {"id": "d", "text": "kubelet"}
+      ],
+      "explanation": "CNI plagini NetworkPolicy’ni amalga oshirmaydigan klaster obyektni qabul qiladi, lekin hech nimani qo’llamaydi - bu xavfli, jimgina hech narsa qilmaydigan holat."
+    },
+    "q5-dns": {
+      "prompt": "Siz sukut bo’yicha taqiqlovchi (default-deny) egress siyosatini qo’lladingiz va ilovalar darhol ishdan chiqdi. Nimani unutdingiz?",
+      "options": [
+        {"id": "a", "text": "CoreDNS’ga 53-port orqali chiquvchi trafikka ruxsat berishni"},
+        {"id": "b", "text": "Pod’larni qayta ishga tushirishni"},
+        {"id": "c", "text": "Namespace’ga yorliq qo’yishni"},
+        {"id": "d", "text": "NodePort diapazonini ochishni"}
+      ],
+      "explanation": "Nomlarni hal qilish ham chiquvchi trafik. Uni taqiqlash birorta ulanish urinishidan ham oldinroq hamma narsani buzadi."
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "title": "11-hafta takrori - saqlash",
+  "description": "Volume’lar, claim’lar va storage class’lar bo’yicha oltita savol.",
+  "questions": {
+    "w11-q1": {
+      "prompt": "emptyDir qancha yashaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Abadiy"
+        },
+        {
+          "id": "b",
+          "text": "Pod o’sha node’da yashab turgunicha"
+        },
+        {
+          "id": "c",
+          "text": "Konteyner yashab turgunicha"
+        },
+        {
+          "id": "d",
+          "text": "Qayta yuklashgacha"
+        }
+      ],
+      "explanation": "U konteynerning qayta ishga tushishidan omon chiqadi, lekin Pod o’chirilishidan emas."
+    },
+    "w11-q2": {
+      "prompt": "ReadWriteOnce nimani anglatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Umuman bitta Pod"
+        },
+        {
+          "id": "b",
+          "text": "Bitta node’dagi Pod’lar tomonidan o’qish va yozish"
+        },
+        {
+          "id": "c",
+          "text": "Bir marta o’qish"
+        },
+        {
+          "id": "d",
+          "text": "Bir marta yozish"
+        }
+      ],
+      "explanation": "ReadWriteOncePod - bu yangiroq va qat’iyroq rejim."
+    },
+    "w11-q3": {
+      "prompt": "reclaimPolicy: Delete bo’lgan PVC o’chirildi. Saqlash joyi bilan nima bo’ladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Saqlanib qoladi"
+        },
+        {
+          "id": "b",
+          "text": "U bilan birga o’chiriladi"
+        },
+        {
+          "id": "c",
+          "text": "Released holatiga o’tadi"
+        },
+        {
+          "id": "d",
+          "text": "Faqat o’qish uchun bo’lib qoladi"
+        }
+      ],
+      "explanation": "Retain - uni qo’lda ishlov berish uchun saqlab qoladigan siyosat."
+    },
+    "w11-q4": {
+      "prompt": "storageClassName: \"\" nimani anglatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Standart class ishlatilsin"
+        },
+        {
+          "id": "b",
+          "text": "Dinamik ta’minlash yo’q; faqat mos keladigan mavjud PV’ga bog’lansin"
+        },
+        {
+          "id": "c",
+          "text": "Istalgan class"
+        },
+        {
+          "id": "d",
+          "text": "Yaroqsiz qiymat"
+        }
+      ],
+      "explanation": "Bu maydonni umuman yozmaslikdan farq qiladi - yozilmasa, standart class ishlatiladi."
+    },
+    "w11-q5": {
+      "prompt": "volumeBindingMode: WaitForFirstConsumer nima qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Darhol bog’laydi"
+        },
+        {
+          "id": "b",
+          "text": "Pod rejalashtirilgunicha bog’lashni kechiktiradi"
+        },
+        {
+          "id": "c",
+          "text": "Kengaytirishni o’chirib qo’yadi"
+        },
+        {
+          "id": "d",
+          "text": "ReadWriteMany’ni majburlaydi"
+        }
+      ],
+      "explanation": "Bu zonaga bog’liq volume Pod ishlay olmaydigan joyda yaratilib qolishining oldini oladi."
+    },
+    "w11-q6": {
+      "prompt": "PVC Pending holatida qolyapti. Eng ehtimoliy sabab nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pod hali ishga tushmagan"
+        },
+        {
+          "id": "b",
+          "text": "Mos PV yo’q va uni ta’minlay oladigan class ham yo’q"
+        },
+        {
+          "id": "c",
+          "text": "Yorliqlar yetishmayapti"
+        },
+        {
+          "id": "d",
+          "text": "Namespace to’lib ketgan"
+        }
+      ],
+      "explanation": "`kubectl describe pvc` sababni aniq nomlab beradi."
+    }
+  }
+}

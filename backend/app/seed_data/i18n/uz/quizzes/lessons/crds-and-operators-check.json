@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: CRD’lar va operatorlar",
+  "description": "API’ni kengaytirish bo’yicha beshta savol.",
+  "questions": {
+    "q1-crd": {
+      "prompt": "CustomResourceDefinition sizga nima beradi?",
+      "options": [
+        {"id": "a", "text": "Yangi kontroller"},
+        {"id": "b", "text": "API’da yangi resurs turi - u ichki turlar kabi saqlanadi va xizmat qilinadi"},
+        {"id": "c", "text": "Yangi admission webhook"},
+        {"id": "d", "text": "Yangi namespace"}
+      ],
+      "explanation": "CRD turni qo’shadi. O’z-o’zidan esa siz yaratgan obyektlar ustida hech kim hech qanday amal bajarmaydi."
+    },
+    "q2-operator": {
+      "prompt": "Operator nima?",
+      "options": [
+        {"id": "a", "text": "Inson - administrator"},
+        {"id": "b", "text": "Custom resursni moslashtiruvchi va operatsion bilimni o’ziga singdirgan kontroller"},
+        {"id": "c", "text": "kubectl plagini"},
+        {"id": "d", "text": "Service turlaridan biri"}
+      ],
+      "explanation": "CRD ustiga kontroller. Bu naqsh - ichki kontrollerlar ishlatadigan aynan o’sha reconciliation sikli."
+    },
+    "q3-list-crds": {
+      "prompt": "Klasterdagi CustomResourceDefinition’larni ro’yxatlaydigan buyruqni yozing.",
+      "explanation": "So’ngra `kubectl api-resources` custom turlarni ichki turlar bilan yonma-yon ko’rsatadi."
+    },
+    "q4-validation": {
+      "prompt": "CRD o’z obyektlarining shaklini qanday cheklaydi?",
+      "options": [
+        {"id": "a", "text": "Cheklay olmaydi"},
+        {"id": "b", "text": "CRD versiyalari ichidagi OpenAPI v3 sxemasi bilan"},
+        {"id": "c", "text": "Faqat webhook bilan"},
+        {"id": "d", "text": "Yorliqlar bilan"}
+      ],
+      "explanation": "Aynan strukturaviy sxema tufayli `kubectl explain` custom resurslar uchun ham ishlaydi."
+    },
+    "q5-scope": {
+      "prompt": "CRD `scope: Namespaced` deb e’lon qilgan. Bundan nima kelib chiqadi?",
+      "options": [
+        {"id": "a", "text": "Uning obyektlari namespace’larda yashaydi va har bir namespace bo’yicha ro’yxatlanadi"},
+        {"id": "b", "text": "Undan faqat kube-system foydalana oladi"},
+        {"id": "c", "text": "Uning status’i bo’lishi mumkin emas"},
+        {"id": "d", "text": "U faqat adminlarga ko’rinadi"}
+      ],
+      "explanation": "Muqobili - Cluster, xuddi Node yoki PersistentVolume kabi."
+    }
+  }
+}

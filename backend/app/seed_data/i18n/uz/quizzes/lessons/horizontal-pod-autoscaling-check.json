@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: avtomatik masshtablash",
+  "description": "Metrikalar asosida replikalar sonini o’zgartirish bo’yicha beshta savol.",
+  "questions": {
+    "q1-prereq": {
+      "prompt": "CPU bo’yicha HPA ishlashi uchun oldindan nima ishlab turishi kerak?",
+      "options": [
+        {"id": "a", "text": "Prometheus"},
+        {"id": "b", "text": "metrics-server"},
+        {"id": "c", "text": "Gateway API"},
+        {"id": "d", "text": "LoadBalancer"}
+      ],
+      "explanation": "HPA metrics API’dan o’qiydi, uni esa metrics-server taqdim etadi. Usiz HPA joriy metrika o’rnida <unknown> ko’rsatadi."
+    },
+    "q2-requests": {
+      "prompt": "HPA 50% CPU’ni maqsad qilib qo’ygan. Bu nimaning foizi?",
+      "options": [
+        {"id": "a", "text": "Node’ning CPU’sining"},
+        {"id": "b", "text": "Pod’ning CPU limitining"},
+        {"id": "c", "text": "Pod’ning CPU request’ining"},
+        {"id": "d", "text": "Bitta to’liq yadroning"}
+      ],
+      "explanation": "Foydalanish darajasi request’ga nisbatan o’lchanadi - shuning uchun CPU request’i yo’q Pod ustidagi HPA maqsadni hisoblab chiqa olmaydi."
+    },
+    "q3-create": {
+      "prompt": "web nomli Deployment’ni 80% CPU’da 2 va 10 replika orasida avtomatik masshtablaydigan buyruqni yozing.",
+      "explanation": "Tez teriladi va keyin tahrirlash oson - yaxshi imtihon odati."
+    },
+    "q4-conflict": {
+      "prompt": "HPA Deployment’ni boshqarib turganda siz unga qo’shimcha ravishda `replicas: 3` ni ham qo’ydingiz. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "HPA o’chib qoladi"},
+        {"id": "b", "text": "Ular kurashadi - HPA replika sonini qayta-qayta ustiga yozaveradi"},
+        {"id": "c", "text": "Deployment butunlay g’olib chiqadi"},
+        {"id": "d", "text": "API server HPA’ni rad etadi"}
+      ],
+      "explanation": "Bitta maydonga ikkita kontrollerning yozishi - bu tsikl. HPA workload’ni o’z qo’liga olgandan keyin replikalarni qo’lda qo’yishni bas qiling."
+    },
+    "q5-scaledown": {
+      "prompt": "Nega HPA kattalashtirishga qaraganda sekinroq kichraytiradi?",
+      "options": [
+        {"id": "a", "text": "Barqarorlashtirish oynasi qisqa muddatli pasayishlarni tekislab, tebranishning oldini oladi"},
+        {"id": "b", "text": "Kichraytirish qo’lda tasdiqlashni talab qiladi"},
+        {"id": "c", "text": "API server uni tezlik bo’yicha cheklaydi"},
+        {"id": "d", "text": "Sekinroq emas - ikkalasi ham bir xil tezlikda"}
+      ],
+      "explanation": "Sukut bo’yicha barqarorlashtirish oynasi kichraytirishda besh daqiqa, kattalashtirishda esa nol: yukka tez javob ber, chekinishga esa shoshilma."
+    }
+  }
+}

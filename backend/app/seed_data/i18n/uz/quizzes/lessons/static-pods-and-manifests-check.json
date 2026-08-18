@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: static Pod’lar",
+  "description": "kubelet o’zi ishga tushiradigan Pod’lar bo’yicha beshta savol.",
+  "questions": {
+    "q1-who-runs": {
+      "prompt": "Static Pod’ni kim ishga tushiradi?",
+      "options": [
+        {"id": "a", "text": "Scheduler"},
+        {"id": "b", "text": "kubelet - diskdagi katalogdan"},
+        {"id": "c", "text": "Controller manager"},
+        {"id": "d", "text": "kubectl"}
+      ],
+      "explanation": "Bunda na scheduler, na API server ishtirok etadi - aynan shu tufayli control plane hali control plane yo’q paytda ham ishga tusha oladi."
+    },
+    "q2-directory": {
+      "prompt": "Qaysi kubelet sozlamasi o’sha katalogni ko’rsatadi?",
+      "options": [
+        {"id": "a", "text": "podManifestPath"},
+        {"id": "b", "text": "staticPodPath"},
+        {"id": "c", "text": "manifestDir"},
+        {"id": "d", "text": "podDir"}
+      ],
+      "explanation": "kubelet konfiguratsiyasidagi `staticPodPath`, an’anaga ko’ra /etc/kubernetes/manifests."
+    },
+    "q3-mirror": {
+      "prompt": "Static Pod ishlaganda API’da nima paydo bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Hech nima"},
+        {"id": "b", "text": "Faqat o’qish uchun mo’ljallangan mirror Pod"},
+        {"id": "c", "text": "Deployment"},
+        {"id": "d", "text": "DaemonSet"}
+      ],
+      "explanation": "Uni kubectl orqali ko’rish mumkin, lekin mirror’ni o’chirish uni to’xtatmaydi - kubelet uni fayldan qayta yaratadi."
+    },
+    "q4-delete": {
+      "prompt": "Static Pod’ni haqiqatan qanday to’xtatasiz?",
+      "options": [
+        {"id": "a", "text": "kubectl delete pod"},
+        {"id": "b", "text": "Uning manifest faylini ko’chirib yoki o’chirib tashlash"},
+        {"id": "c", "text": "Node’ni cordon qilish"},
+        {"id": "d", "text": "Uni nolga scale qilish"}
+      ],
+      "explanation": "Haqiqat manbayi - fayl. Uni chetga surib qo’yish buzilgan API serverni tuzatishning standart usuli."
+    },
+    "q5-typo": {
+      "prompt": "kube-apiserver.yaml ni tahrirlab, xato yozib qo’ydingiz. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "O’zgarish rad etiladi"},
+        {"id": "b", "text": "API server qayta ishga tushadi, ishga tusha olmaydi va kubectl ishlamay qoladi"},
+        {"id": "c", "text": "Eski Pod ishlashda davom etadi"},
+        {"id": "d", "text": "kubelet faylni e’tiborsiz qoldiradi"}
+      ],
+      "explanation": "Zaxira nusxa saqlang. kubectl ishlamay qolgan bo’lsa ham konteyner loglarini `crictl logs` bilan o’qish mumkin."
+    }
+  }
+}

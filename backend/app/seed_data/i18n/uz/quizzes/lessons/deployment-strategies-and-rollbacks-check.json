@@ -1,0 +1,44 @@
+{
+  "title": "Tekshiruv: rollout va rollback",
+  "description": "Rolling update, surge va rollback bo’yicha beshta savol.",
+  "questions": {
+    "q1-default-strategy": {
+      "prompt": "Deployment sukut bo’yicha qaysi yangilash strategiyasidan foydalanadi?",
+      "options": [
+        {"id": "a", "text": "Recreate"},
+        {"id": "b", "text": "RollingUpdate"},
+        {"id": "c", "text": "OnDelete"},
+        {"id": "d", "text": "Blue/green"}
+      ],
+      "explanation": "RollingUpdate Pod’larni bosqichma-bosqich almashtiradi, shuning uchun ilova ishlashda davom etadi. Recreate esa avval hammasini o’chiradi va faqat ikki versiya hech qachon bir vaqtda ishlamasligi shart bo’lganda to’g’ri keladi."
+    },
+    "q2-surge-unavailable": {
+      "prompt": "3 replikali Deployment’da `maxSurge: 1` va `maxUnavailable: 0` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Rollout davomida ko’pi bilan 2 ta Pod ishlaydi"},
+        {"id": "b", "text": "4 tagacha Pod ishlashi mumkin va butun davomida 3 tasi mavjud bo’lib turadi"},
+        {"id": "c", "text": "Yangi Pod yaratilishidan oldin bittasi o’chiriladi"},
+        {"id": "d", "text": "Rollout bitta Pod’dan keyin to’xtatib turiladi"}
+      ],
+      "explanation": "maxSurge kerakli sondan yuqoriga qo’shimcha quvvat qo’shadi; maxUnavailable 0 esa mavjud uchtadan hech biri o’rnini bosuvchi tayyor bo’lmaguncha yo’qolmasligini bildiradi."
+    },
+    "q3-undo": {
+      "prompt": "api nomli Deployment’ni oldingi reviziyaga qaytaradigan buyruqni yozing.",
+      "explanation": "Eski ReplicaSet’lar aynan shuning uchun saqlanadi - rollback bu shunchaki oldingisini qaytadan kattalashtirish (scale-up)."
+    },
+    "q4-history": {
+      "prompt": "O’sha Deployment’ning reviziyalar tarixini ro’yxatlab beradigan buyruqni yozing.",
+      "explanation": "`revisionHistoryLimit` nechta eski ReplicaSet saqlanishini, demak qanchalik orqaga qayta olishingizni belgilaydi."
+    },
+    "q5-stuck": {
+      "prompt": "Rollout qotib qoldi va `kubectl rollout status` hech qachon qaytmayapti. Avval qayerga qaraysiz?",
+      "options": [
+        {"id": "a", "text": "Deployment’ning YAML’iga"},
+        {"id": "b", "text": "Yangi Pod’da `kubectl describe pod` - hodisalarni ko’rish uchun"},
+        {"id": "c", "text": "kubelet loglariga"},
+        {"id": "d", "text": "etcd’ga"}
+      ],
+      "explanation": "Qotib qolgan rollout deyarli har doim yangi Pod’lar Ready bo’la olmayotganini anglatadi - image tortishdagi nosozlik, muvaffaqiyatsiz probe yoki rejalashtirib bo’lmaslik. Hodisalar qaysi biri ekanini aytib beradi."
+    }
+  }
+}

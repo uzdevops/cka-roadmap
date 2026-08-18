@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: Pod’larni debug qilish",
+  "description": "Nosoz workload ichiga kirib borish bo’yicha beshta savol.",
+  "questions": {
+    "q1-crashloop": {
+      "prompt": "CrashLoopBackOff nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Image’ni tortib olib bo’lmayapti"},
+        {"id": "b", "text": "Konteyner ishga tushadi, chiqib ketadi va tobora uzayib boradigan backoff bilan qayta ishga tushirilaveradi"},
+        {"id": "c", "text": "Pod’ni rejalashtirib bo’lmayapti"},
+        {"id": "d", "text": "Volume mount bo’lmayapti"}
+      ],
+      "explanation": "Kalit oldingi konteynerning loglarida, hozirgisida emas - hozirgisi hali ishga tushib ham ulgurmagan bo’lishi mumkin."
+    },
+    "q2-exec": {
+      "prompt": "web Pod’ining app konteynerida shell ochadigan buyruqni yozing.",
+      "explanation": "`--` dan keyingi hamma narsa - bajariladigan buyruq; usiz kubectl flag’larni o’zi talqin qilishga urinadi."
+    },
+    "q3-distroless": {
+      "prompt": "Image’da shell yo’q, shuning uchun exec ishlamayapti. Zamonaviy yechim qaysi?",
+      "options": [
+        {"id": "a", "text": "Image’ni shell bilan birga qayta yig’ish"},
+        {"id": "b", "text": "kubectl debug orqali efemer debug konteyneri"},
+        {"id": "c", "text": "Konteynerga hostPath ulash"},
+        {"id": "d", "text": "Yechim yo’q"}
+      ],
+      "explanation": "`kubectl debug -it web --image=busybox --target=app` jarayonlar namespace’ini birgalikda ishlatadigan konteynerni ulaydi."
+    },
+    "q4-imagepullbackoff": {
+      "prompt": "ImagePullBackOff. Qaysi sabablar ishonarli ko’rinadi?",
+      "options": [
+        {"id": "a", "text": "Probe muvaffaqiyatsiz bo’layapti"},
+        {"id": "b", "text": "Image nomi yoki tegi noto’g’ri, yoki registry uchun credential yo’q"},
+        {"id": "c", "text": "Node cordon qilingan"},
+        {"id": "d", "text": "Service’da endpoint yo’q"}
+      ],
+      "explanation": "`kubectl describe pod` registry’ning o’z xato xabarini chiqaradi va u odatda muammoni aniq nomlab beradi."
+    },
+    "q5-oomkilled": {
+      "prompt": "Konteynerning oxirgi holati - OOMKilled. Bu sizga nimani aytadi?",
+      "options": [
+        {"id": "a", "text": "Node’da disk tugagan"},
+        {"id": "b", "text": "U o’z xotira limitidan oshib ketgan va yadro uni o’ldirgan"},
+        {"id": "c", "text": "Liveness probe muvaffaqiyatsiz tugagan"},
+        {"id": "d", "text": "Image buzilgan"}
+      ],
+      "explanation": "Xotira siqib bo’lmaydigan resurs: limitdan oshish throttling emas, o’ldirilish demakdir. Limitni oshiring yoki xotira oqishini (leak) tuzating."
+    }
+  }
+}

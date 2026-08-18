@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: tarmoq nosozliklarini bartaraf etish",
+  "description": "Ulanish nosozligini izolyatsiya qilish bo’yicha beshta savol.",
+  "questions": {
+    "q1-dns-or-net": {
+      "prompt": "Service nomi bo’yicha curl ishlamayapti; ClusterIP bo’yicha curl ishlaydi. Nima buzilgan?",
+      "options": [
+        {"id": "a", "text": "kube-proxy"},
+        {"id": "b", "text": "DNS nom yechimi (resolution)"},
+        {"id": "c", "text": "CNI plagini"},
+        {"id": "d", "text": "Ingress"}
+      ],
+      "explanation": "IP orqali yo’l ishlayotgani isbotlangan. Faqat nomni izlash ishlamayapti - bu esa CoreDNS’ga yoki Pod’ning `resolv.conf` fayliga ishora qiladi."
+    },
+    "q2-clusterip-fails": {
+      "prompt": "Service nomi ham, ClusterIP ham ishlamayapti, lekin Pod IP’si ishlaydi. Nima buzilgan?",
+      "options": [
+        {"id": "a", "text": "DNS"},
+        {"id": "b", "text": "kube-proxy yoki Service ta’rifi"},
+        {"id": "c", "text": "CNI plagini"},
+        {"id": "d", "text": "Konteynerning o’zi"}
+      ],
+      "explanation": "Pod IP’siga yetib borish CNI ham, konteyner ham sog’lom ekanini isbotlaydi. Service’ning virtual IP’lari esa kube-proxy zimmasidagi ish."
+    },
+    "q3-check-dns": {
+      "prompt": "Bir martalik Pod yordamida klaster ichidan DNS’ni tekshiradigan buyruqni yozing.",
+      "explanation": "`kubernetes.default` doim mavjud, shuning uchun u yerdagi nosozlik sizning Service’ingiz emas, DNS’ning o’zi muammosi ekanini bildiradi."
+    },
+    "q4-policy": {
+      "prompt": "NetworkPolicy qo’llanganidan keyin darhol ulanish uzildi. Birinchi gumondor kim?",
+      "options": [
+        {"id": "a", "text": "CNI plagini ishdan chiqqan"},
+        {"id": "b", "text": "Policy Pod’larni izolyatsiya qildi va sizga kerak bo’lgan trafikka - ko’pincha DNS’ga - ruxsat bermayapti"},
+        {"id": "c", "text": "kube-proxy qayta ishga tushgan"},
+        {"id": "d", "text": "Service o’z selektorini yo’qotgan"}
+      ],
+      "explanation": "NetworkPolicy’lar - bir-birini to’ldiruvchi ruxsat ro’yxatlari. Biror policy Pod’ni tanlagan zahoti, ruxsat berilmagan hamma narsa taqiqlanadi."
+    },
+    "q5-nodeport-one-node": {
+      "prompt": "NodePort bitta node’da javob beryapti, boshqasida esa yo’q. Bu nimadan darak beradi?",
+      "options": [
+        {"id": "a", "text": "Service noto’g’ri sozlangan"},
+        {"id": "b", "text": "Ishlamayotgan node’da kube-proxy nosog’lom"},
+        {"id": "c", "text": "DNS ishlamayapti"},
+        {"id": "d", "text": "Pod tayyor emas"}
+      ],
+      "explanation": "Har bir node NodePort’ni uzatishi kerak. Node’dan node’ga farq qiladigan xatti-harakat esa har bir node’da alohida ishlaydigan komponentga ishora qiladi."
+    }
+  }
+}

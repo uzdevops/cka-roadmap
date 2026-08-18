@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: control plane nosozliklari",
+  "description": "Klasterning o’z komponentlarini diagnostika qilish bo’yicha beshta savol.",
+  "questions": {
+    "q1-kubectl-dead": {
+      "prompt": "kubectl API serverga murojaat qilganda 'connection refused' qaytaryapti. Avval qayerga qaraysiz?",
+      "options": [
+        {"id": "a", "text": "kubectl orqali Pod loglariga"},
+        {"id": "b", "text": "Control plane node’idagi crictl’ga va static Pod manifestiga"},
+        {"id": "c", "text": "kubectl orqali etcd metrikalariga"},
+        {"id": "d", "text": "Ingress’ga"}
+      ],
+      "explanation": "kubectl ishlamay qolganda node darajasiga tushasiz: `crictl ps -a`, `crictl logs` va `/etc/kubernetes/manifests/`."
+    },
+    "q2-etcd-down": {
+      "prompt": "etcd ishdan chiqdi. Nima ishlashda davom etadi?",
+      "options": [
+        {"id": "a", "text": "Hech nima"},
+        {"id": "b", "text": "Ishlayotgan Pod’lar ishlashda davom etadi; klaster holatini na o’qib, na yozib bo’ladi"},
+        {"id": "c", "text": "Faqat o’qish"},
+        {"id": "d", "text": "Faqat scheduler"}
+      ],
+      "explanation": "Data plane mustaqil ishlaydi. API’ga muhtoj bo’lgan hamma narsa esa to’xtaydi."
+    },
+    "q3-scheduler-down": {
+      "prompt": "Yangi Pod’lar Pending, mavjudlari sog’lom va `kubectl get nodes` ishlayapti. Qaysi komponent aybdor?",
+      "options": [
+        {"id": "a", "text": "etcd"},
+        {"id": "b", "text": "Scheduler"},
+        {"id": "c", "text": "kube-proxy"},
+        {"id": "d", "text": "CoreDNS"}
+      ],
+      "explanation": "API ishlayotgani etcd va API serverni gumondorlar ro’yxatidan chiqaradi. Node tayinlanmagan holdagi Pending esa - scheduler’ning imzosi."
+    },
+    "q4-cert-expiry": {
+      "prompt": "Bir yil e’tiborsiz qolgandan keyin kubectl sertifikat xatosini qaytaryapti. Ehtimoliy sabab va yechim nima?",
+      "options": [
+        {"id": "a", "text": "Soatlar farqi; NTP’ni sinxronlash kerak"},
+        {"id": "b", "text": "kubeadm sertifikatlari muddati tugagan; kubeadm certs renew bilan yangilanadi"},
+        {"id": "c", "text": "CA o’chirib yuborilgan; klasterni qaytadan o’rnatish kerak"},
+        {"id": "d", "text": "RBAC o’zgargan"}
+      ],
+      "explanation": "kubeadm sertifikatlari bir yil amal qiladi. `kubeadm certs check-expiration` buni uzilishga aylanmasidan oldin aytib beradi."
+    },
+    "q5-crictl-logs": {
+      "prompt": "Chiqib ketgan (exited) konteynerlarni ham ro’yxatlaydigan crictl buyrug’ini yozing.",
+      "explanation": "Keyin `crictl logs <id>` kubectl ishlamayotgan paytda control plane konteynerining chiqishini o’qib beradi."
+    }
+  }
+}

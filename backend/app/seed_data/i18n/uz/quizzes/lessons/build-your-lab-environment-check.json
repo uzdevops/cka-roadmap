@@ -1,0 +1,98 @@
+{
+  "title": "Tekshiruv: amaliyot klasteringiz",
+  "description": "kind, minikube va imtihon qadrlaydigan odatlar bo’yicha beshta savol.",
+  "questions": {
+    "q1-kind-vs-minikube": {
+      "prompt": "kind klaster node’larini nima orqali ishlatadi?",
+      "explanation": "kind - 'Kubernetes IN Docker': har bir node konteyner, shuning uchun ko’p node’li klasterni yaratish va tashlab yuborish arzon.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Har bir node uchun virtual mashina"
+        },
+        {
+          "id": "b",
+          "text": "Node sifatida Docker konteynerlari"
+        },
+        {
+          "id": "c",
+          "text": "Xostdagi systemd unitlari"
+        },
+        {
+          "id": "d",
+          "text": "Uzoqdagi bulut instansiyasi"
+        }
+      ]
+    },
+    "q2-loadbalancer-pending": {
+      "prompt": "Lokal klasterda `type: LoadBalancer` Service’ning tashqi IP’si `<pending>` bo’lib qolyapti. Nega?",
+      "explanation": "Bu to’g’ri xatti-harakat, xato emas. Lokalda Service’ga NodePort, `kubectl port-forward` yoki `minikube tunnel` orqali murojaat qilasiz.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Service noto’g’ri sozlangan"
+        },
+        {
+          "id": "b",
+          "text": "Load balancer yaratadigan bulut kontrolleri yo’q"
+        },
+        {
+          "id": "c",
+          "text": "kube-proxy ishlamayapti"
+        },
+        {
+          "id": "d",
+          "text": "Klasterda node port qolmagan"
+        }
+      ]
+    },
+    "q3-context": {
+      "prompt": "Hozir kubectl qaysi klasterga qaraganini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Imtihonda buni noto’g’ri qilish - to’g’ri ishni noto’g’ri klasterda bajarish demak. Boshlashdan oldin tekshiring."
+    },
+    "q4-time": {
+      "prompt": "Imtihon atigi ikki soat bo’lgani uchun dars bitta odatni alohida ta’kidlaydi. Qaysi?",
+      "explanation": "Ikki soat ko’p emas. Tugma bosishni tejaydigan sozlash o’zini ko’p marta oqlaydi, va o’sha odatlar amaliyot klasteringizda ham bo’lishi kerak.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Har bir YAML maydonini yodlash"
+        },
+        {
+          "id": "b",
+          "text": "Birinchi daqiqada alias va avtotoldirishni sozlash"
+        },
+        {
+          "id": "c",
+          "text": "Savollar orasida klasterni qayta qurish"
+        },
+        {
+          "id": "d",
+          "text": "Avval butun hujjatni o’qib chiqish"
+        }
+      ]
+    },
+    "q5-practice": {
+      "prompt": "O’qish davomida lokal klaster ishlatishning yaxshi sabablari qaysilar? Barcha to’g’rilarini tanlang.",
+      "explanation": "Imtihon - terminal. Buyruq haqida o’qish uni yuz marta yozgan bo’lish bilan bir xil emas.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Narsalarni ataylab sindirib, nosozlikni aniqlash mumkin"
+        },
+        {
+          "id": "b",
+          "text": "Bu hujjatni o’qishning yagona yo’li"
+        },
+        {
+          "id": "c",
+          "text": "Buyruqlarni mushak xotirasiga aylanguncha mashq qilish mumkin"
+        },
+        {
+          "id": "d",
+          "text": "Klasterni tashlab, toza boshlash mumkin"
+        }
+      ]
+    }
+  }
+}

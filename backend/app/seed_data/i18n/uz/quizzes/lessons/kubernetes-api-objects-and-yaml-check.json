@@ -1,0 +1,98 @@
+{
+  "title": "Tekshiruv: API obyektlari va YAML",
+  "description": "Har bir obyektning umumiy shakli va maydonlar ma’nosi bo’yicha beshta savol.",
+  "questions": {
+    "q1-four-fields": {
+      "prompt": "Deyarli har bir Kubernetes obyekti qaysi yuqori darajadagi maydonlarni tashiydi? Barcha to’g’rilarini tanlang.",
+      "explanation": "apiVersion, kind, metadata va spec - siz yozadigan shakl. `status` ham bor, lekin uni klaster egallaydi, siz yozmaysiz.",
+      "options": [
+        {
+          "id": "a",
+          "text": "apiVersion"
+        },
+        {
+          "id": "b",
+          "text": "kind"
+        },
+        {
+          "id": "c",
+          "text": "metadata"
+        },
+        {
+          "id": "d",
+          "text": "faqat status"
+        }
+      ]
+    },
+    "q2-spec-vs-status": {
+      "prompt": "`spec` va `status` o’rtasidagi farq nima?",
+      "explanation": "Siz `spec` yozasiz. Kontrollerlar `status` yozadi. Butun tizim - ikkinchisini birinchisiga moslashtirishga urinuvchi sikl.",
+      "options": [
+        {
+          "id": "a",
+          "text": "`spec` ixtiyoriy, `status` majburiy"
+        },
+        {
+          "id": "b",
+          "text": "`spec` - siz xohlagan narsa; `status` - klaster kuzatgan narsa"
+        },
+        {
+          "id": "c",
+          "text": "Bu bir narsaning ikki nomi"
+        },
+        {
+          "id": "d",
+          "text": "`status` faqat Pod’larda ishlatiladi"
+        }
+      ]
+    },
+    "q3-apiversion": {
+      "prompt": "Deployment manifestida `apiVersion: v1` ishlatilgan. Nima bo’ladi?",
+      "explanation": "apiVersion kind tegishli bo’lgan guruh va versiyani nomlaydi. Deployment’lar apps guruhida, ya’ni `apps/v1`.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ishlaydi - v1 hamma narsa uchun standart"
+        },
+        {
+          "id": "b",
+          "text": "Rad etiladi: Deployment apps/v1 da yashaydi"
+        },
+        {
+          "id": "c",
+          "text": "Jimgina apps/v1 ga o’zgartiriladi"
+        },
+        {
+          "id": "d",
+          "text": "Uning o’rniga Pod yaratiladi"
+        }
+      ]
+    },
+    "q4-explain-fields": {
+      "prompt": "Deployment’ning spec’i ostidagi maydonlarni ro’yxatlaydigan buyruqni yozing.",
+      "explanation": "`kubectl explain` - har doim mavjud bo’lgan sxema ma’lumotnomasi, imtihon terminalida ham."
+    },
+    "q5-namespace-field": {
+      "prompt": "Obyektning namespace’i manifestda qayerda turadi?",
+      "explanation": "Namespace - metadata, name, labels va annotations bilan bir qatorda.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yuqori darajada, kind yonida"
+        },
+        {
+          "id": "b",
+          "text": "metadata ostida"
+        },
+        {
+          "id": "c",
+          "text": "spec ostida"
+        },
+        {
+          "id": "d",
+          "text": "Manifestda belgilab bo’lmaydi"
+        }
+      ]
+    }
+  }
+}

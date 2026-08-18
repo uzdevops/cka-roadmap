@@ -1,0 +1,98 @@
+{
+  "title": "Tekshiruv: namespace, kontekst va kvotalar",
+  "description": "Ko’lam, almashtirish va cheklash bo’yicha beshta savol.",
+  "questions": {
+    "q1-what-namespaces-do": {
+      "prompt": "Namespace’lar nima beradi?",
+      "explanation": "Namespace’lar nomlarni cheklaydi va RBAC hamda ResourceQuota biriktiriladigan narsani beradi. Ular tarmoq chegarasi emas - bu NetworkPolicy’ning ishi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pod’lar o’rtasida tarmoq izolyatsiyasi"
+        },
+        {
+          "id": "b",
+          "text": "Nomlar uchun ko’lam, hamda kvota va kirish nazorati uchun tayanch"
+        },
+        {
+          "id": "c",
+          "text": "Har bir jamoa uchun alohida fizik node’lar"
+        },
+        {
+          "id": "d",
+          "text": "Har bir jamoa uchun shifrlangan saqlash"
+        }
+      ]
+    },
+    "q2-not-namespaced": {
+      "prompt": "Quyidagilardan qaysilari namespace’ga emas, klasterga tegishli? Barcha to’g’rilarini tanlang.",
+      "explanation": "`kubectl api-resources --namespaced=false` ularni ro’yxatlaydi. ConfigMap namespace’ga tegishli; node, PV va namespace’larning o’zi esa yo’q.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Node"
+        },
+        {
+          "id": "b",
+          "text": "PersistentVolume"
+        },
+        {
+          "id": "c",
+          "text": "ConfigMap"
+        },
+        {
+          "id": "d",
+          "text": "Namespace"
+        }
+      ]
+    },
+    "q3-set-namespace": {
+      "prompt": "Joriy kontekst uchun `dev` ni standart namespace qiladigan buyruqni yozing.",
+      "explanation": "Buni bir marta qo’yish har bir buyruqqa `-n dev` yozishdan yaxshi, va vaqt cheklangan imtihonda eng qimmatli odatlardan biri."
+    },
+    "q4-quota-effect": {
+      "prompt": "Namespace’da CPU uchun ResourceQuota bor. Resurs so’rovlarisiz Pod yaratildi. Nima bo’ladi?",
+      "explanation": "Kvota resursni qamrab olgach, o’sha namespace’dagi har bir Pod u uchun so’rov e’lon qilishi shart - aks holda kvotani qo’llab bo’lmaydi. Standart qiymatlarni LimitRange bera oladi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "U odatdagidek rejalashtiriladi"
+        },
+        {
+          "id": "b",
+          "text": "U rad etiladi, chunki kvota so’rovlar belgilanishini talab qiladi"
+        },
+        {
+          "id": "c",
+          "text": "U namespace standarti bo’yicha bitta CPU oladi"
+        },
+        {
+          "id": "d",
+          "text": "Pod’lar uchun kvota e’tiborga olinmaydi"
+        }
+      ]
+    },
+    "q5-delete-namespace": {
+      "prompt": "O’chirilgan namespace ichidagi obyektlarga nima bo’ladi?",
+      "explanation": "Namespace’ni o’chirish ichidagi hamma narsani o’chiradi. Bu eng tez tozalash usuli va saqlamoqchi bo’lgan ishni yo’qotishning eng oson yo’li.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ular `default` ga ko’chiriladi"
+        },
+        {
+          "id": "b",
+          "text": "Ular u bilan birga o’chiriladi"
+        },
+        {
+          "id": "c",
+          "text": "Ular alohida o’chirilgunicha qoladi"
+        },
+        {
+          "id": "d",
+          "text": "Faqat Pod’lar o’chiriladi"
+        }
+      ]
+    }
+  }
+}

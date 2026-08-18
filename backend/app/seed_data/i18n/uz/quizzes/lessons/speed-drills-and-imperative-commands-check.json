@@ -1,0 +1,32 @@
+{
+  "title": "Tekshiruv: tezlik mashqlari",
+  "description": "Barmoqlaringiz yoddan bilishi kerak bo’lgan buyruqlar bo’yicha beshta savol.",
+  "questions": {
+    "q1-deploy-dry": {
+      "prompt": "nginx image’i bilan web uchun Deployment manifestini, uni yaratmasdan turib, generatsiya qiladigan buyruqni yozing.",
+      "explanation": "Uni faylga yo’naltiring, ikkita maydonni tahrirlang va apply qiling. Bu YAML’ni noldan yozishdan ancha tez."
+    },
+    "q2-expose": {
+      "prompt": "web Deployment’ini 80-portda NodePort Service sifatida ochadigan buyruqni yozing.",
+      "explanation": "Konteyner boshqa portni tinglayotgan bo’lsa, --target-port ni ham qo’shing."
+    },
+    "q3-set-image": {
+      "prompt": "web Deployment’idagi nginx konteynerini nginx:1.27 image’iga yangilaydigan buyruqni yozing.",
+      "explanation": "`kubectl set` shuningdek resources, env va serviceaccount bilan ham ishlaydi - bularning hammasi qo’lda tahrirlashdan tez."
+    },
+    "q4-ns-default": {
+      "prompt": "dev namespace’ini joriy context uchun standart namespace qiladigan buyruqni yozing.",
+      "explanation": "Vaqt cheklangan imtihondagi eng foydali odatlardan biri: keyingi har bir buyruqdan -n ni olib tashlaydi."
+    },
+    "q5-force-delete": {
+      "prompt": "Pod Terminating holatida tiqilib qoldi va topshiriq uni hoziroq yo’qotishni talab qilmoqda. Buyruq qanday ko’rinishda bo’ladi?",
+      "options": [
+        {"id": "a", "text": "kubectl delete pod web"},
+        {"id": "b", "text": "kubectl delete pod web --force --grace-period=0"},
+        {"id": "c", "text": "kubectl drain"},
+        {"id": "d", "text": "kubectl replace"}
+      ],
+      "explanation": "Buni bilib turib ishlating: majburiy o’chirish nafis (graceful) to’xtatishni o’tkazib yuboradi, StatefulSet a’zosi uchun esa bu ma’lumot yo’qolishi degani bo’lishi mumkin."
+    }
+  }
+}

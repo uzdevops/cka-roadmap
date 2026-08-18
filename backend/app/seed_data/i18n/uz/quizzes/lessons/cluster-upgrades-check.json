@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: yangilashlar",
+  "description": "Klasterni yangi versiyaga ko’chirish bo’yicha beshta savol.",
+  "questions": {
+    "q1-order": {
+      "prompt": "Klasterni yangilashda to’g’ri tartib qanday?",
+      "options": [
+        {"id": "a", "text": "Avval worker’lar, keyin control plane"},
+        {"id": "b", "text": "Avval control plane, keyin worker’lar birma-bir"},
+        {"id": "c", "text": "Hammasi bir vaqtda"},
+        {"id": "d", "text": "etcd eng oxirida"}
+      ],
+      "explanation": "Control plane kubelet’lardan oldinda bo’lishi mumkin, lekin hech qachon ortda emas. Avval uni yangilang, so’ng har bir worker’ni drain qilib yangilang."
+    },
+    "q2-skew": {
+      "prompt": "kubelet API serverdan qancha orqada qolishi mumkin?",
+      "options": [
+        {"id": "a", "text": "Umuman emas - versiyalar mos bo’lishi shart"},
+        {"id": "b", "text": "Uchtagacha minor versiya"},
+        {"id": "c", "text": "Bitta minor versiya"},
+        {"id": "d", "text": "Istalgan masofada"}
+      ],
+      "explanation": "Zamonaviy siyosat kubelet’larga API serverdan uchtagacha minor versiya eski bo’lishga ruxsat beradi, lekin hech qachon yangiroq bo’lishga emas."
+    },
+    "q3-skip": {
+      "prompt": "kubeadm bilan 1.30 dan to’g’ridan-to’g’ri 1.32 ga yangilash mumkinmi?",
+      "options": [
+        {"id": "a", "text": "Ha, kubeadm istalgan sakrashni uddalaydi"},
+        {"id": "b", "text": "Yo’q - bir vaqtda bitta minor versiya: 1.30 dan 1.31 ga, keyin 1.32 ga"},
+        {"id": "c", "text": "Faqat --force bilan"},
+        {"id": "d", "text": "Faqat control plane uchun"}
+      ],
+      "explanation": "kubeadm bunday sakrashni rad etadi. Minor versiyalar birma-bir bosib o’tilishi kerak."
+    },
+    "q4-drain": {
+      "prompt": "worker-1 node’ining kubelet’ini yangilashdan oldin uni xavfsiz drain qiladigan buyruqni yozing.",
+      "explanation": "--ignore-daemonsets kerak, chunki DaemonSet Pod’lari ataylab evict qilinmaydigan qilib qo’yilgan."
+    },
+    "q5-plan": {
+      "prompt": "Qaysi buyruq joriy versiyadan mavjud yangilash yo’llarini ko’rsatadi?",
+      "options": [
+        {"id": "a", "text": "kubeadm upgrade apply"},
+        {"id": "b", "text": "kubeadm upgrade plan"},
+        {"id": "c", "text": "kubectl version"},
+        {"id": "d", "text": "kubeadm config view"}
+      ],
+      "explanation": "`plan` qaysi versiyalarga o’tish mumkinligini va nima o’zgarishini aytadi; `apply` esa uni bajaradi."
+    }
+  }
+}

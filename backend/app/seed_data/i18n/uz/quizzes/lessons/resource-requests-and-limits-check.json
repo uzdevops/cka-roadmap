@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: request, limit va QoS",
+  "description": "Pod resurslarni qanday so’rashi va qanday cheklanishi bo’yicha beshta savol.",
+  "questions": {
+    "q1-request-vs-limit": {
+      "prompt": "Request bilan limit orasidagi farq nima?",
+      "options": [
+        {"id": "a", "text": "Request - bu cheklov; limit - bu zaxiraga olish"},
+        {"id": "b", "text": "Request - scheduler zaxiraga oladigan narsa; limit - runtime majburiy qo’llaydigan narsa"},
+        {"id": "c", "text": "Ular bir xil narsa"},
+        {"id": "d", "text": "Rejalashtirishga faqat limit’lar ta’sir qiladi"}
+      ],
+      "explanation": "Pod qayerga sig’ishini hal qilayotganda scheduler faqat request’larga qaraydi. Limit’larni esa Pod ishga tushgandan keyin konteyner runtime’i majburiy qo’llaydi."
+    },
+    "q2-guaranteed": {
+      "prompt": "Qaysi Pod Guaranteed QoS sinfini oladi?",
+      "options": [
+        {"id": "a", "text": "Request va limit’lari umuman yo’q Pod"},
+        {"id": "b", "text": "Har bir konteyneri cpu va memory uchun request’ni limit’ga teng qilib qo’ygan Pod"},
+        {"id": "c", "text": "Request’lari bor, lekin limit’lari yo’q Pod"},
+        {"id": "d", "text": "Faqat memory’ga limit qo’yilgan Pod"}
+      ],
+      "explanation": "Guaranteed uchun har bir konteynerda ikkala resurs bo’yicha ham request == limit bo’lishi kerak. Request’lar bor, lekin mos kelmasa - Burstable; umuman hech narsa bo’lmasa - BestEffort."
+    },
+    "q3-eviction": {
+      "prompt": "Node’da xotira tugadi. Qaysi Pod’lar birinchi bo’lib chiqarib yuboriladi?",
+      "options": [
+        {"id": "a", "text": "Guaranteed"},
+        {"id": "b", "text": "Burstable"},
+        {"id": "c", "text": "BestEffort"},
+        {"id": "d", "text": "Eng yangi Pod"}
+      ],
+      "explanation": "Avval BestEffort, keyin o’z request’laridan oshib ketgan Burstable, so’ng Guaranteed. QoS - bu aynan chiqarib yuborish tartibi."
+    },
+    "q4-cpu-limit": {
+      "prompt": "Konteyner o’zining CPU limitidan oshib ketdi. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "U to’xtatiladi"},
+        {"id": "b", "text": "U sekinlashtiriladi (throttling)"},
+        {"id": "c", "text": "Pod chiqarib yuboriladi"},
+        {"id": "d", "text": "Limit oshiriladi"}
+      ],
+      "explanation": "CPU siqiluvchan resurs, shuning uchun u sekinlashtiriladi. Xotira esa bunday emas - memory limitidan oshish OOMKill degani."
+    },
+    "q5-limitrange": {
+      "prompt": "Qaysi obyekt request va limit ko’rsatmagan Pod’larga standart qiymatlarni beradi?",
+      "options": [
+        {"id": "a", "text": "ResourceQuota"},
+        {"id": "b", "text": "LimitRange"},
+        {"id": "c", "text": "PriorityClass"},
+        {"id": "d", "text": "PodDisruptionBudget"}
+      ],
+      "explanation": "LimitRange har bir namespace uchun standart qiymatlarni va min/maks chegaralarni belgilaydi. ResourceQuota esa namespace’ning umumiy hajmini cheklaydi."
+    }
+  }
+}

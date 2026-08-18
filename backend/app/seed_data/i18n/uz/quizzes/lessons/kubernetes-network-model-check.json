@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: tarmoq modeli",
+  "description": "Yassi (flat) tarmoq va uni ta’minlaydigan plagin bo’yicha beshta savol.",
+  "questions": {
+    "q1-rules": {
+      "prompt": "Kubernetes tarmoq modeli qaysi qoidalarni talab qiladi? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {"id": "a", "text": "Har bir Pod o’zining IP manzilini oladi"},
+        {"id": "b", "text": "Pod’lar bir-biriga NAT’siz murojaat qila oladi"},
+        {"id": "c", "text": "Node’dagi agentlar o’sha node’ning barcha Pod’lariga yeta oladi"},
+        {"id": "d", "text": "Barcha trafik shifrlangan bo’lishi shart"}
+      ],
+      "explanation": "Ana shu uchtasi - har bir CNI plagin bajarishi shart bo’lgan shartnoma. Shifrlash esa plaginning qo’shimcha imkoniyati, modelning qismi emas."
+    },
+    "q2-cni": {
+      "prompt": "Pod tarmog’ini nima ta’minlaydi?",
+      "options": [
+        {"id": "a", "text": "kube-proxy"},
+        {"id": "b", "text": "Calico, Cilium yoki Flannel kabi CNI plagin"},
+        {"id": "c", "text": "CoreDNS"},
+        {"id": "d", "text": "Faqat konteyner runtime’ning o’zi"}
+      ],
+      "explanation": "CNI plagin Pod’larga manzil beradi va pod’dan-pod’ga trafikni ishlaydigan qiladi. kube-proxy esa Service VIP’lari bilan shug’ullanadi - bu boshqa vazifa."
+    },
+    "q3-notready": {
+      "prompt": "Yangi qurilgan kubeadm klasterida barcha node’lar NotReady bo’lib turibdi. Nega?",
+      "options": [
+        {"id": "a", "text": "kubelet noto’g’ri sozlangan"},
+        {"id": "b", "text": "Hech qanday CNI plagin o’rnatilmagan, shuning uchun NetworkReady false"},
+        {"id": "c", "text": "etcd ishga tushmagan"},
+        {"id": "d", "text": "Node’larni qayta yuklash kerak"}
+      ],
+      "explanation": "Bu kutilgan xatti-harakat, buzilgan klaster emas. `kubectl describe node` bu holatni ochiq matnda ko’rsatib beradi."
+    },
+    "q4-podcidr": {
+      "prompt": "Pod CIDR nima?",
+      "options": [
+        {"id": "a", "text": "Service’lar ajratiladigan diapazon"},
+        {"id": "b", "text": "Pod IP’lari ajratiladigan diapazon"},
+        {"id": "c", "text": "Node’lar joylashgan subnet"},
+        {"id": "d", "text": "DNS qidiruv domeni"}
+      ],
+      "explanation": "kubeadm init dagi `--pod-network-cidr` CNI plagin kutayotgan diapazon bilan mos kelishi kerak, aks holda Pod’lar hech qayerga marshrutlanmaydigan manzil oladi."
+    },
+    "q5-samepod": {
+      "prompt": "Bitta Pod ichidagi ikkita konteyner nima orqali muloqot qiladi?",
+      "options": [
+        {"id": "a", "text": "Service VIP orqali"},
+        {"id": "b", "text": "localhost orqali, chunki ular bitta tarmoq namespace’ini baham ko’radi"},
+        {"id": "c", "text": "Faqat umumiy volume orqali"},
+        {"id": "d", "text": "Node IP orqali"}
+      ],
+      "explanation": "Har bir Pod uchun bitta IP. Ichidagi konteynerlar namespace’ni baham ko’radi, shuning uchun ikkalasi bir xil portni band qilmasligi kerak."
+    }
+  }
+}

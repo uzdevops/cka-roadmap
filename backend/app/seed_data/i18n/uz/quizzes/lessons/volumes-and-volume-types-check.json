@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: volume’lar",
+  "description": "Pod’ga xotira (storage) ulash bo’yicha beshta savol.",
+  "questions": {
+    "q1-emptydir": {
+      "prompt": "emptyDir volume qancha vaqt yashaydi?",
+      "options": [
+        {"id": "a", "text": "Abadiy"},
+        {"id": "b", "text": "Pod o’sha node’da yashaguncha"},
+        {"id": "c", "text": "Konteyner yashaguncha"},
+        {"id": "d", "text": "Node qayta yuklanguncha"}
+      ],
+      "explanation": "U konteyner qayta ishga tushishlaridan omon qoladi, lekin Pod bilan birga o’ladi. Vaqtinchalik joy uchun va bitta Pod ichidagi konteynerlar orasida fayl almashish uchun qulay."
+    },
+    "q2-hostpath": {
+      "prompt": "hostPath nega xavfli?",
+      "options": [
+        {"id": "a", "text": "U sekin"},
+        {"id": "b", "text": "U Pod’ni bitta node’ga bog’lab qo’yadi va node fayl tizimini ochib beradi"},
+        {"id": "c", "text": "Uni faqat o’qish rejimida ishlatib bo’lmaydi"},
+        {"id": "d", "text": "Unga StorageClass kerak"}
+      ],
+      "explanation": "U ko’chuvchanlikni buzadi va node’dan qochib chiqishning yaxshi ma’lum yo’li hisoblanadi. Node agentlari uchun maqbul, ilovalar uchun noto’g’ri."
+    },
+    "q3-projected": {
+      "prompt": "projected volume nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Volume’ni boshqa node’ga nusxalaydi"},
+        {"id": "b", "text": "Bir nechta manbani - Secret, ConfigMap, serviceAccountToken - bitta katalogga birlashtiradi"},
+        {"id": "c", "text": "PVC’ni boshqa namespace’ga proyeksiya qiladi"},
+        {"id": "d", "text": "Volume’ni siqadi"}
+      ],
+      "explanation": "Zamonaviy ServiceAccount tokeni aynan shu yo’l bilan, audience va amal qilish muddati bilan birga yetkaziladi."
+    },
+    "q4-shared": {
+      "prompt": "Bitta Pod ichidagi ikkita konteyner fayllarni baham ko’rishi kerak. Eng oddiy volume qaysi?",
+      "options": [
+        {"id": "a", "text": "PersistentVolumeClaim"},
+        {"id": "b", "text": "emptyDir"},
+        {"id": "c", "text": "hostPath"},
+        {"id": "d", "text": "configMap"}
+      ],
+      "explanation": "Ikkalasi ham bitta emptyDir’ni mount qiladi. Provizioning ham, tozalash ham kerak emas, u Pod bilan birga yo’qoladi."
+    },
+    "q5-subpath": {
+      "prompt": "volumeMount ichidagi `subPath` nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Butun volume o’rniga bitta faylni yoki ostki katalogni mount qiladi"},
+        {"id": "b", "text": "Volume’ning kirish rejimini (access mode) o’zgartiradi"},
+        {"id": "c", "text": "Node’da katalog yaratadi"},
+        {"id": "d", "text": "Volume’ni faqat o’qish uchun mount qiladi"}
+      ],
+      "explanation": "Katalogda allaqachon turgan qolgan narsalarni berkitib qo’ymasdan, unga bitta konfiguratsiya faylini joylash uchun keng qo’llaniladi."
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: imtihon kuni",
+  "description": "Qoidalar va imtihon muhiti bo’yicha beshta savol.",
+  "questions": {
+    "q1-duration": {
+      "prompt": "CKA imtihoni qancha davom etadi?",
+      "options": [
+        {"id": "a", "text": "Bir soat"},
+        {"id": "b", "text": "Ikki soat"},
+        {"id": "c", "text": "Uch soat"},
+        {"id": "d", "text": "To’rt soat"}
+      ],
+      "explanation": "Ilgari u uch soat edi. O’zgarishdan oldin yozilgan kurslar hanuz shunday deydi - hozirgi imtihon ikki soat."
+    },
+    "q2-docs": {
+      "prompt": "Imtihon davomida qaysi hujjatlardan foydalanishingiz mumkin?",
+      "options": [
+        {"id": "a", "text": "Hech qandayidan"},
+        {"id": "b", "text": "Rasmiy Kubernetes hujjatlaridan, brauzerning bitta qo’shimcha tab’ida"},
+        {"id": "c", "text": "Istalgan veb-saytdan"},
+        {"id": "d", "text": "Faqat shaxsiy qaydlardan"}
+      ],
+      "explanation": "kubernetes.io hujjatlari, blogi va GitHub’i. Kerakli sahifani tez topishni mashq qiling - qidiruvni uddalay olmaslik sizda umuman yo’q daqiqalarni yeb qo’yadi."
+    },
+    "q3-context": {
+      "prompt": "Har bir topshiriq sizga klaster context’ini berish bilan boshlanadi. Bu nega muhim?",
+      "options": [
+        {"id": "a", "text": "U imtihon taymerini o’rnatadi"},
+        {"id": "b", "text": "Noto’g’ri klasterda bajarilgan to’g’ri ish hech qanday ball keltirmaydi"},
+        {"id": "c", "text": "U kubectl versiyasini o’zgartiradi"},
+        {"id": "d", "text": "U qaysi hujjatlardan foydalanishni tanlaydi"}
+      ],
+      "explanation": "Berilgan `kubectl config use-context` buyrug’ini har safar, istisnosiz, eng birinchi bo’lib bajaring."
+    },
+    "q4-first-minute": {
+      "prompt": "Birinchi daqiqada qiladigan eng qimmatli ish qaysi?",
+      "options": [
+        {"id": "a", "text": "Barcha savollarni o’qib chiqish"},
+        {"id": "b", "text": "Alias va avtoto’ldirishni sozlash"},
+        {"id": "c", "text": "Klaster versiyasini tekshirish"},
+        {"id": "d", "text": "Namespace yaratish"}
+      ],
+      "explanation": "`alias k=kubectl` va avtoto’ldirish ikki soatlik terminal imtihonida o’ziga ketgan vaqtni ko’p karra qoplaydi."
+    },
+    "q5-skip": {
+      "prompt": "Katta vaznli topshiriqda tiqilib qoldingiz, oldinda esa hali ko’p savol bor. To’g’ri harakat qaysi?",
+      "options": [
+        {"id": "a", "text": "Ishlab ketmaguncha davom etish"},
+        {"id": "b", "text": "Uni belgilab qo’yib, keyingisiga o’tish va qolgan vaqtda qaytib kelish"},
+        {"id": "c", "text": "Klasterni qayta ishga tushirish"},
+        {"id": "d", "text": "Taxmin qilib topshirib yuborish"}
+      ],
+      "explanation": "Ballar har bir topshiriq bo’yicha alohida beriladi. Tiqilib qolgan joyda sarflangan vaqt - bu boshqa joyda yig’ilmay qolgan ball."
+    }
+  }
+}

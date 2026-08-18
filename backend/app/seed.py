@@ -418,6 +418,23 @@ async def _seed_structure_translations(
         if changed:
             counter.update(f"week translations ({locale})")
 
+    # Localised documentation titles, if this locale supplies them. The URLs
+    # stay the same - kubernetes.io has no Uzbek edition - so only the labels
+    # in the list are translated.
+    ref_file = root / "references.json"
+    if ref_file.is_file():
+        for slug, refs in json.loads(ref_file.read_text(encoding="utf-8")).items():
+            lesson = (
+                await session.execute(select(Lesson).where(Lesson.slug == slug))
+            ).scalar_one_or_none()
+            if lesson is None or not refs:
+                continue
+            lesson.translations, changed = _fill(
+                lesson.translations, locale, {"references": refs}
+            )
+            if changed:
+                counter.update(f"lesson references ({locale})")
+
     lesson_dir = root / "lessons"
     for slug, values in (data.get("lessons") or {}).items():
         lesson = (

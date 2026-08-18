@@ -1,0 +1,116 @@
+{
+  "title": "Tekshiruv: Kubernetes nima",
+  "description": "Orkestratsiya, deklarativ model va reconciliation sikli bo’yicha beshta savol.",
+  "questions": {
+    "q1-why-orchestration": {
+      "prompt": "Konteynerlar paketlash muammosini yechdi. Qaysi muammoni ular YECHMAGAN?",
+      "explanation": "Paketlash - aynan konteyner image hal qiladigan narsa. `docker run` dan keyin sodir bo’ladigani - qayta ishga tushirish, qayta rejalashtirish, rollout va service discovery - orkestratsiya qo’shadigan qism.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ilovani bog’liqliklari bilan birga paketlash"
+        },
+        {
+          "id": "b",
+          "text": "Ularni ishlatayotgan node ishdan chiqqanda workload’larni qayta ishga tushirish"
+        },
+        {
+          "id": "c",
+          "text": "CI va ishlab chiqarishda bir xil ishlaydigan image tayyorlash"
+        },
+        {
+          "id": "d",
+          "text": "Bir xostdagi jarayonlarni bir-biridan izolyatsiya qilish"
+        }
+      ]
+    },
+    "q2-declarative": {
+      "prompt": "Deklarativ va imperativ tizim o’rtasidagi asosiy farq nima?",
+      "explanation": "Imperativ tizim buyruqni bir marta bajaradi. Deklarativi esa natija tavsifini saqlaydi va haqiqatni unga moslashtirish uchun abadiy ishlaydi - o’chirilgan Pod shuning uchun qaytib keladi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deklarativ tizimlar YAML’da, imperativlari JSON’da yoziladi"
+        },
+        {
+          "id": "b",
+          "text": "Deklarativ tizim kerakli natijani saqlaydi va unga moslashtirish uchun doimiy ishlaydi"
+        },
+        {
+          "id": "c",
+          "text": "Imperativ tizim doim tezroq"
+        },
+        {
+          "id": "d",
+          "text": "Deklarativ tizim buyruqlarni belgilangan tartibda bajaradi"
+        }
+      ]
+    },
+    "q3-replicas": {
+      "prompt": "Deployment `replicas: 3` deb e’lon qilgan va siz uning bitta Pod’ini o’chirdingiz. Nima bo’ladi?",
+      "explanation": "`replicas: 3` - bu bir martalik ko’rsatma emas, kerakli holat. Kontroller uchta bo’lishi kerak joyda ikkitasini ko’radi va farqni yopadi; siz hech qayerda 'qayta ishga tushir' deb yozmaysiz.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hech nima - uchta nusxa yaratish buyrug’i allaqachon bajarilgan"
+        },
+        {
+          "id": "b",
+          "text": "Kontroller kamomadni sezadi va o’rniga yangisini yaratadi"
+        },
+        {
+          "id": "c",
+          "text": "Qayta apply qilmaguningizcha Deployment failed deb belgilanadi"
+        },
+        {
+          "id": "d",
+          "text": "Qolgan ikkita Pod qayta ishga tushiriladi"
+        }
+      ]
+    },
+    "q4-reconciliation": {
+      "prompt": "Quyidagilardan qaysilari reconciliation siklidan kelib chiqadi? Barcha to’g’rilarini tanlang.",
+      "explanation": "Reconciliation - kontroller klasterni e’lon qilingan holatga doimiy ravishda yaqinlashtirishi. Unda o’zgarishni ikki marta qo’llash talab qilinmaydi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bo’shatilgan node’ning Pod’lari boshqa joyda qayta yaratiladi"
+        },
+        {
+          "id": "b",
+          "text": "Ishdan chiqqan konteyner qayta ishga tushiriladi"
+        },
+        {
+          "id": "c",
+          "text": "Har bir o’zgarish kuchga kirishi uchun ikki marta apply qilinishi kerak"
+        },
+        {
+          "id": "d",
+          "text": "Klaster siz e’lon qilgan holatga yaqinlashadi"
+        }
+      ]
+    },
+    "q5-exam-habit": {
+      "prompt": "Dars imtihon savollari uchun bir odatni tavsiya qiladi. Qaysi?",
+      "explanation": "Savolni qayta o’qing va 'kerakli holat nima?' deb so’rang. Javob deyarli har doim kichik YAML o’zgarishi va `kubectl apply`, qo’lda bajariladigan qadamlar ketma-ketligi emas.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Avval `kubectl edit` ga murojaat qilish"
+        },
+        {
+          "id": "b",
+          "text": "Kerakli holat nima deb so’rash, so’ng kichik YAML o’zgarishi qilib apply qilish"
+        },
+        {
+          "id": "c",
+          "text": "Har qanday o’zgarishdan oldin kubelet’ni qayta ishga tushirish"
+        },
+        {
+          "id": "d",
+          "text": "Doim obyektni o’chirib qayta yaratish"
+        }
+      ]
+    }
+  }
+}

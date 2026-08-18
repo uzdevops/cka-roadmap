@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: taqsimlash va prioritet",
+  "description": "Bir tekis joylashtirish va klaster to’lib qolganda nima bo’lishi haqida beshta savol.",
+  "questions": {
+    "q1-maxskew": {
+      "prompt": "Topology spread cheklovida `maxSkew` nimani boshqaradi?",
+      "options": [
+        {"id": "a", "text": "Pod’larning umumiy sonini"},
+        {"id": "b", "text": "Topologiya domenlari o’rtasidagi Pod sonining ruxsat etilgan eng katta farqini"},
+        {"id": "c", "text": "Rejalashtirish qancha vaqt olishi mumkinligini"},
+        {"id": "d", "text": "Zonalar sonini"}
+      ],
+      "explanation": "Zonalar bo’ylab maxSkew: 1 - hech bir zonada eng kam to’ldirilganidan bittadan ortiq Pod bo’lmasligi kerak degani."
+    },
+    "q2-unsatisfiable": {
+      "prompt": "`whenUnsatisfiable: DoNotSchedule` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Cheklovni bajarib bo’lmasa, Pod istalgan joyga rejalashtiriladi"},
+        {"id": "b", "text": "Cheklovni bajarib bo’lmasa, Pod Pending holatida qoladi"},
+        {"id": "c", "text": "Mavjud Pod’lar chiqarib yuboriladi"},
+        {"id": "d", "text": "Cheklov o’tkazib yuboriladi"}
+      ],
+      "explanation": "Muqobil variant - ScheduleAnyway, u cheklovni shunchaki ball qo’yishdagi afzallikka tushiradi."
+    },
+    "q3-priorityclass": {
+      "prompt": "Klaster to’lib qolganda yuqoriroq prioritetli PriorityClass nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Hech nima - prioritet faqat navbat tartibiga ta’sir qiladi"},
+        {"id": "b", "text": "U past prioritetli Pod’larni preempt qilib, joy bo’shatish uchun ularni chiqarib yuborishi mumkin"},
+        {"id": "c", "text": "U Pod’ning CPU limitini oshiradi"},
+        {"id": "d", "text": "U Pod’ni boshqa klasterga ko’chiradi"}
+      ],
+      "explanation": "Preemption yuqori prioritetli Pod sig’ishi uchun past prioritetlilarini chiqarib yuboradi. `preemptionPolicy: Never` bundan voz kechish imkonini beradi."
+    },
+    "q4-globaldefault": {
+      "prompt": "PriorityClass’dagi `globalDefault: true` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Har bir Pod preempt qilinadi"},
+        {"id": "b", "text": "priorityClassName ko’rsatilmagan Pod’lar shu prioritetni oladi"},
+        {"id": "c", "text": "U faqat kube-system ichida qo’llanadi"},
+        {"id": "d", "text": "U preemption’ni o’chirib qo’yadi"}
+      ],
+      "explanation": "Klasterda uni faqat bitta PriorityClass o’rnata oladi."
+    },
+    "q5-pdb": {
+      "prompt": "Qaysi obyekt ixtiyoriy uzilish bir vaqtning o’zida juda ko’p replikani o’chirib qo’yishining oldini oladi?",
+      "options": [
+        {"id": "a", "text": "ResourceQuota"},
+        {"id": "b", "text": "PodDisruptionBudget"},
+        {"id": "c", "text": "LimitRange"},
+        {"id": "d", "text": "PriorityClass"}
+      ],
+      "explanation": "Aynan PDB tufayli `kubectl drain` hammasini birdan chiqarib yuborish o’rniga kutib turadi. U node ishdan chiqishi kabi ixtiyorsiz uzilishlarni cheklamaydi."
+    }
+  }
+}

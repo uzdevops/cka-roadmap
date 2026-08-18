@@ -1,0 +1,614 @@
+{
+  "what-is-kubernetes": [
+    {
+      "title": "Kubernetes nima?",
+      "url": "https://kubernetes.io/docs/concepts/overview/"
+    },
+    {
+      "title": "Kubernetes obyektlari",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/"
+    }
+  ],
+  "kubernetes-architecture-overview": [
+    {
+      "title": "Klaster arxitekturasi",
+      "url": "https://kubernetes.io/docs/concepts/architecture/"
+    },
+    {
+      "title": "Node’lar",
+      "url": "https://kubernetes.io/docs/concepts/architecture/nodes/"
+    }
+  ],
+  "control-plane-components": [
+    {
+      "title": "Control plane komponentlari",
+      "url": "https://kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "title": "kube-apiserver ma’lumotnomasi",
+      "url": "https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/"
+    },
+    {
+      "title": "etcd klasterlarini boshqarish",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/"
+    }
+  ],
+  "build-your-lab-environment": [
+    {
+      "title": "Vositalarni o’rnatish",
+      "url": "https://kubernetes.io/docs/tasks/tools/"
+    },
+    {
+      "title": "kind - tezkor boshlash",
+      "url": "https://kind.sigs.k8s.io/docs/user/quick-start/"
+    },
+    {
+      "title": "minikube - boshlash",
+      "url": "https://minikube.sigs.k8s.io/docs/start/"
+    }
+  ],
+  "kubectl-fundamentals": [
+    {
+      "title": "kubectl haqida umumiy ma’lumot",
+      "url": "https://kubernetes.io/docs/reference/kubectl/"
+    },
+    {
+      "title": "kubectl qo’llanma varag’i",
+      "url": "https://kubernetes.io/docs/reference/kubectl/quick-reference/"
+    },
+    {
+      "title": "kubectl buyruqlar ma’lumotnomasi",
+      "url": "https://kubernetes.io/docs/reference/kubectl/generated/kubectl/"
+    }
+  ],
+  "kubernetes-api-objects-and-yaml": [
+    {
+      "title": "Kubernetes obyektlarini boshqarish",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/"
+    },
+    {
+      "title": "API haqida umumiy ma’lumot",
+      "url": "https://kubernetes.io/docs/reference/using-api/"
+    },
+    {
+      "title": "kubectl explain",
+      "url": "https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain/"
+    }
+  ],
+  "pods-deep-dive": [
+    {
+      "title": "Pod’lar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/"
+    },
+    {
+      "title": "Pod hayotiy sikli",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"
+    },
+    {
+      "title": "Init konteynerlar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+    }
+  ],
+  "labels-selectors-annotations": [
+    {
+      "title": "Yorliqlar va selektorlar",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+    },
+    {
+      "title": "Annotatsiyalar",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/"
+    }
+  ],
+  "deployments-and-replicasets": [
+    {
+      "title": "Deployment’lar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "title": "ReplicaSet",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+    }
+  ],
+  "namespaces-and-context": [
+    {
+      "title": "Namespace’lar",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+    },
+    {
+      "title": "Resurs kvotalari",
+      "url": "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+    },
+    {
+      "title": "Bir nechta klasterga kirishni sozlash",
+      "url": "https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/"
+    }
+  ],
+  "deployment-strategies-and-rollbacks": [
+    {
+      "title": "Deployment strategiyalari",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy"
+    },
+    {
+      "title": "Deployment’ni orqaga qaytarish",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment"
+    }
+  ],
+  "daemonsets-and-statefulsets": [
+    {
+      "title": "DaemonSet",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/"
+    },
+    {
+      "title": "StatefulSet’lar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    }
+  ],
+  "jobs-and-cronjobs": [
+    {
+      "title": "Job’lar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+    },
+    {
+      "title": "CronJob",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+    }
+  ],
+  "configmaps-in-practice": [
+    {
+      "title": "ConfigMap’lar",
+      "url": "https://kubernetes.io/docs/concepts/configuration/configmap/"
+    },
+    {
+      "title": "Pod’da ConfigMap’dan foydalanish",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/"
+    }
+  ],
+  "secrets-and-encryption": [
+    {
+      "title": "Secret’lar",
+      "url": "https://kubernetes.io/docs/concepts/configuration/secret/"
+    },
+    {
+      "title": "Maxfiy ma’lumotlarni saqlashda shifrlash",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/"
+    }
+  ],
+  "resource-requests-and-limits": [
+    {
+      "title": "Pod va konteynerlar uchun resurs boshqaruvi",
+      "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    },
+    {
+      "title": "Pod QoS sinflari",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/"
+    },
+    {
+      "title": "LimitRange",
+      "url": "https://kubernetes.io/docs/concepts/policy/limit-range/"
+    }
+  ],
+  "node-selectors-and-affinity": [
+    {
+      "title": "Pod’larni node’larga tayinlash",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+    },
+    {
+      "title": "Affinity va anti-affinity",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity"
+    }
+  ],
+  "taints-and-tolerations": [
+    {
+      "title": "Taint va toleration’lar",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+    }
+  ],
+  "topology-spread-and-priority": [
+    {
+      "title": "Pod topologiyasi bo’yicha taqsimlash cheklovlari",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/"
+    },
+    {
+      "title": "Pod prioriteti va preemption",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/"
+    }
+  ],
+  "horizontal-pod-autoscaling": [
+    {
+      "title": "Horizontal Pod Autoscaling",
+      "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"
+    },
+    {
+      "title": "HorizontalPodAutoscaler - amaliy qo’llanma",
+      "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/"
+    }
+  ],
+  "probes-and-self-healing": [
+    {
+      "title": "Liveness, readiness va startup probe’larni sozlash",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+    },
+    {
+      "title": "Pod hayotiy sikli: konteyner probe’lari",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes"
+    }
+  ],
+  "helm-and-kustomize-basics": [
+    {
+      "title": "Kustomize bilan deklarativ boshqaruv",
+      "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+    },
+    {
+      "title": "Helm hujjatlari",
+      "url": "https://helm.sh/docs/"
+    }
+  ],
+  "kubernetes-network-model": [
+    {
+      "title": "Klaster tarmog’i",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/networking/"
+    },
+    {
+      "title": "Tarmoq plaginlari",
+      "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/"
+    }
+  ],
+  "services-clusterip-nodeport-loadbalancer": [
+    {
+      "title": "Service",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "title": "Service’larni ochish (ServiceType’lar)",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types"
+    }
+  ],
+  "coredns-and-service-discovery": [
+    {
+      "title": "Service va Pod’lar uchun DNS",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"
+    },
+    {
+      "title": "DNS nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/"
+    }
+  ],
+  "ingress-controllers-and-rules": [
+    {
+      "title": "Ingress",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/ingress/"
+    },
+    {
+      "title": "Ingress kontrollerlari",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/"
+    }
+  ],
+  "gateway-api-introduction": [
+    {
+      "title": "Gateway API",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/gateway/"
+    },
+    {
+      "title": "Gateway API hujjatlari",
+      "url": "https://gateway-api.sigs.k8s.io/"
+    }
+  ],
+  "network-policies": [
+    {
+      "title": "NetworkPolicy’lar",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+    },
+    {
+      "title": "NetworkPolicy e’lon qilish",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/"
+    }
+  ],
+  "volumes-and-volume-types": [
+    {
+      "title": "Volume’lar",
+      "url": "https://kubernetes.io/docs/concepts/storage/volumes/"
+    },
+    {
+      "title": "Vaqtinchalik volume’lar",
+      "url": "https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/"
+    }
+  ],
+  "persistent-volumes-and-claims": [
+    {
+      "title": "PersistentVolume’lar",
+      "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+    },
+    {
+      "title": "Pod’da saqlash uchun volume’dan foydalanish",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/"
+    }
+  ],
+  "storage-classes-and-dynamic-provisioning": [
+    {
+      "title": "StorageClass’lar",
+      "url": "https://kubernetes.io/docs/concepts/storage/storage-classes/"
+    },
+    {
+      "title": "Volume’larni dinamik yaratish",
+      "url": "https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/"
+    }
+  ],
+  "stateful-workloads-with-storage": [
+    {
+      "title": "StatefulSet asoslari",
+      "url": "https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/"
+    },
+    {
+      "title": "StatefulSet’lar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    }
+  ],
+  "troubleshooting-network-and-storage": [
+    {
+      "title": "Service nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/"
+    },
+    {
+      "title": "Klaster nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/"
+    }
+  ],
+  "phase-3-consolidation": [
+    {
+      "title": "Service’lar va tarmoq",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/"
+    },
+    {
+      "title": "Saqlash",
+      "url": "https://kubernetes.io/docs/concepts/storage/"
+    }
+  ],
+  "kubeadm-cluster-bootstrap": [
+    {
+      "title": "kubeadm bilan klaster yaratish",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/"
+    },
+    {
+      "title": "kubeadm o’rnatish",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/"
+    }
+  ],
+  "cluster-upgrades": [
+    {
+      "title": "kubeadm klasterlarini yangilash",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/"
+    },
+    {
+      "title": "Versiyalar farqi siyosati",
+      "url": "https://kubernetes.io/releases/version-skew-policy/"
+    }
+  ],
+  "highly-available-control-planes": [
+    {
+      "title": "Yuqori mavjudlik topologiyalari",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/"
+    },
+    {
+      "title": "kubeadm bilan yuqori mavjudlikdagi klaster yaratish",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/"
+    }
+  ],
+  "etcd-backup-and-restore": [
+    {
+      "title": "Kubernetes uchun etcd klasterlarini boshqarish",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/"
+    },
+    {
+      "title": "etcd klasterining zaxira nusxasi",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster"
+    }
+  ],
+  "certificates-and-kubeconfig": [
+    {
+      "title": "PKI sertifikatlari va talablari",
+      "url": "https://kubernetes.io/docs/setup/best-practices/certificates/"
+    },
+    {
+      "title": "kubeadm bilan sertifikatlarni boshqarish",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/"
+    },
+    {
+      "title": "kubeconfig orqali klasterga kirishni tashkil qilish",
+      "url": "https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/"
+    }
+  ],
+  "static-pods-and-manifests": [
+    {
+      "title": "Static Pod’lar",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/"
+    }
+  ],
+  "rbac-roles-and-bindings": [
+    {
+      "title": "RBAC avtorizatsiyasidan foydalanish",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+    },
+    {
+      "title": "Avtorizatsiya haqida umumiy ma’lumot",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/authorization/"
+    }
+  ],
+  "service-accounts-and-tokens": [
+    {
+      "title": "ServiceAccount’lar",
+      "url": "https://kubernetes.io/docs/concepts/security/service-accounts/"
+    },
+    {
+      "title": "Pod’lar uchun ServiceAccount sozlash",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/"
+    }
+  ],
+  "admission-control-basics": [
+    {
+      "title": "Admission kontrollerlari ma’lumotnomasi",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/"
+    },
+    {
+      "title": "Dinamik admission control",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/"
+    }
+  ],
+  "node-maintenance-cordon-drain": [
+    {
+      "title": "Node’ni xavfsiz bo’shatish",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/"
+    },
+    {
+      "title": "Uzilishlar",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+    }
+  ],
+  "crds-and-operators": [
+    {
+      "title": "Maxsus resurslar",
+      "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/"
+    },
+    {
+      "title": "Operator namunasi",
+      "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/operator/"
+    }
+  ],
+  "cluster-observability": [
+    {
+      "title": "Kubernetes tizim komponentlari metrikalari",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/system-metrics/"
+    },
+    {
+      "title": "Loglash arxitekturasi",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+    }
+  ],
+  "troubleshooting-methodology": [
+    {
+      "title": "Nosozliklarni aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/"
+    },
+    {
+      "title": "Ishlayotgan Pod’lar nosozligini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/"
+    }
+  ],
+  "debugging-pods-and-containers": [
+    {
+      "title": "Pod nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/"
+    },
+    {
+      "title": "Ishlayotgan konteynerga shell ochish",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/get-shell-running-container/"
+    },
+    {
+      "title": "Vaqtinchalik debug konteynerlari",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container"
+    }
+  ],
+  "control-plane-failures": [
+    {
+      "title": "Klaster nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/"
+    },
+    {
+      "title": "kubeadm nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/"
+    }
+  ],
+  "node-not-ready": [
+    {
+      "title": "Node holati va shartlari",
+      "url": "https://kubernetes.io/docs/concepts/architecture/nodes/#node-status"
+    },
+    {
+      "title": "Klaster nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/"
+    }
+  ],
+  "network-troubleshooting": [
+    {
+      "title": "Service nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/"
+    },
+    {
+      "title": "DNS nosozliklarini aniqlash",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/"
+    }
+  ],
+  "monitoring-and-log-aggregation": [
+    {
+      "title": "Loglash arxitekturasi",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+    },
+    {
+      "title": "Resurslarni monitoring qilish vositalari",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/"
+    }
+  ],
+  "exam-day-logistics": [
+    {
+      "title": "CKA sertifikatsiyasi",
+      "url": "https://www.cncf.io/certification/cka/"
+    },
+    {
+      "title": "Nomzod qo’llanmasi",
+      "url": "https://www.cncf.io/certification/candidate-handbook"
+    },
+    {
+      "title": "Muhim imtihon maslahatlari",
+      "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD"
+    }
+  ],
+  "mock-exam-one": [
+    {
+      "title": "Imtihon kurikulumi",
+      "url": "https://github.com/cncf/curriculum"
+    },
+    {
+      "title": "kubectl qo’llanma varag’i",
+      "url": "https://kubernetes.io/docs/reference/kubectl/quick-reference/"
+    }
+  ],
+  "mock-exam-two": [
+    {
+      "title": "Imtihon kurikulumi",
+      "url": "https://github.com/cncf/curriculum"
+    },
+    {
+      "title": "Vazifalar",
+      "url": "https://kubernetes.io/docs/tasks/"
+    }
+  ],
+  "speed-drills-and-imperative-commands": [
+    {
+      "title": "kubectl tezkor ma’lumotnomasi",
+      "url": "https://kubernetes.io/docs/reference/kubectl/quick-reference/"
+    },
+    {
+      "title": "Obyektlarni imperativ buyruqlar bilan boshqarish",
+      "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/"
+    }
+  ],
+  "weak-domain-review": [
+    {
+      "title": "Imtihon kurikulumi",
+      "url": "https://github.com/cncf/curriculum"
+    },
+    {
+      "title": "Kubernetes tushunchalari",
+      "url": "https://kubernetes.io/docs/concepts/"
+    }
+  ],
+  "final-checklist": [
+    {
+      "title": "Nomzod qo’llanmasi",
+      "url": "https://www.cncf.io/certification/candidate-handbook"
+    },
+    {
+      "title": "Muhim imtihon maslahatlari",
+      "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD"
+    }
+  ]
+}

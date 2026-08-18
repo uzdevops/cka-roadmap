@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: StorageClass’lar",
+  "description": "Volume’larni talabga ko’ra yaratish bo’yicha beshta savol.",
+  "questions": {
+    "q1-purpose": {
+      "prompt": "StorageClass nima qiladi?",
+      "options": [
+        {"id": "a", "text": "Ma’lumotni o’zi saqlaydi"},
+        {"id": "b", "text": "Xotira turini va uni talabga ko’ra yaratadigan provisioner’ni tavsiflaydi"},
+        {"id": "c", "text": "Namespace qancha xotira ishlata olishini cheklaydi"},
+        {"id": "d", "text": "Volume’larni shifrlaydi"}
+      ],
+      "explanation": "U administrator PV’larni oldindan yaratib qo’yishi zaruratini yo’qotadi: PVC klass nomini ko’rsatadi va PV o’zi paydo bo’ladi."
+    },
+    "q2-default": {
+      "prompt": "PVC’da storageClassName umuman ko’rsatilmagan. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "U darhol xato bilan tugaydi"},
+        {"id": "b", "text": "Agar biror klass standart deb belgilangan bo’lsa, klasterning standart StorageClass’i ishlatiladi"},
+        {"id": "c", "text": "U istalgan bo’sh PV’ga bog’lanadi"},
+        {"id": "d", "text": "U hostPath’dan foydalanadi"}
+      ],
+      "explanation": "Buning uchun storageclass.kubernetes.io/is-default-class annotatsiyasi qo’yiladi. Standart klass ham, mos PV ham bo’lmasa, PVC Pending holatida qolib ketadi."
+    },
+    "q3-empty-string": {
+      "prompt": "`storageClassName: \"\"` nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Standart klassdan foydalanish"},
+        {"id": "b", "text": "Dinamik provizioningni o’chirish va faqat oldindan yaratilgan mos PV’ga bog’lanish"},
+        {"id": "c", "text": "Har qanday klass yaraydi"},
+        {"id": "d", "text": "Bu yaroqsiz qiymat"}
+      ],
+      "explanation": "Aniq yozilgan bo’sh satr - standart klassdan voz kechish usuli; bu maydonni umuman yozmaslik bilan bir xil emas."
+    },
+    "q4-binding-mode": {
+      "prompt": "`volumeBindingMode: WaitForFirstConsumer` nimani o’zgartiradi?",
+      "options": [
+        {"id": "a", "text": "PVC darhol bog’lanadi"},
+        {"id": "b", "text": "Bog’lanish PVC’dan foydalanadigan Pod rejalashtirilgunicha kutib turadi"},
+        {"id": "c", "text": "U kengaytirishni o’chiradi"},
+        {"id": "d", "text": "U volume’ni faqat o’qish uchun qiladi"}
+      ],
+      "explanation": "Aynan shu narsa zonaga bog’langan volume’ning Pod ishlay olmaydigan zonada yaratilishiga yo’l qo’ymaydi."
+    },
+    "q5-list": {
+      "prompt": "Klasterdagi StorageClass’lar ro’yxatini chiqaradigan buyruqni yozing.",
+      "explanation": "Standart klass NAME ustunida '(default)' deb belgilab qo’yiladi."
+    }
+  }
+}

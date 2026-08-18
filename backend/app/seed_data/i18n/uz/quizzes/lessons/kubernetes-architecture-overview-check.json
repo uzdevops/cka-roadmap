@@ -1,0 +1,98 @@
+{
+  "title": "Tekshiruv: klaster arxitekturasi",
+  "description": "Ikki xil node roli, API serverning o’rni va `kubectl apply` yo’li bo’yicha beshta savol.",
+  "questions": {
+    "q1-two-roles": {
+      "prompt": "Control plane node’ini worker node’idan nima ajratib turadi?",
+      "explanation": "Bo’linish javobgarlik bo’yicha, apparat bo’yicha emas. Va node ikkalasi ham bo’lishi mumkin - bitta node’li kind yoki minikube klasterida aynan shunday.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Control plane node’larida ko’proq xotira bo’ladi"
+        },
+        {
+          "id": "b",
+          "text": "Control plane qaror qabul qiladi, worker’lar sizning konteynerlaringizni ishlatadi"
+        },
+        {
+          "id": "c",
+          "text": "Worker’larda hech qanday Kubernetes komponenti ishlay olmaydi"
+        },
+        {
+          "id": "d",
+          "text": "Node faqat bittasi bo’la oladi"
+        }
+      ]
+    },
+    "q2-only-door": {
+      "prompt": "Qaysi komponent etcd bilan gaplashadigan yagona komponent?",
+      "explanation": "Qolgan hamma narsa - kubectl, scheduler, kontrollerlar, har bir kubelet - o’sha bitta REST API’ning klienti. Aynan shu kirish nazorati, audit va validatsiyani bitta joyga jamlaydi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Scheduler"
+        },
+        {
+          "id": "b",
+          "text": "kubelet"
+        },
+        {
+          "id": "c",
+          "text": "API server"
+        },
+        {
+          "id": "d",
+          "text": "Controller manager"
+        }
+      ]
+    },
+    "q3-apiserver-down": {
+      "prompt": "API server ishlamayapti, ilovangiz esa hali ham trafikka xizmat qilyapti. Bu ziddiyatmi?",
+      "explanation": "Data plane (kubelet, kube-proxy, konteynerlaringiz) ishlashda davom etadi. Control plane shunchaki yangi qaror qabul qila olmaydi va o’zgarishlarni qabul qilmaydi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ha - API serversiz hech narsa ishlamaydi"
+        },
+        {
+          "id": "b",
+          "text": "Yo’q - data plane ishlashda davom etadi, faqat yangi qarorlar to’xtaydi"
+        },
+        {
+          "id": "c",
+          "text": "Ha - kubelet 30 soniyadan keyin Pod’larni to’xtatadi"
+        },
+        {
+          "id": "d",
+          "text": "Yo’q - lekin faqat scheduler ham ishlamasa"
+        }
+      ]
+    },
+    "q4-apply-path": {
+      "prompt": "`kubectl apply` API serverga yetib bordi. So’rov saqlanishidan oldin qaysi bosqichlardan o’tadi? Barcha to’g’rilarini tanlang.",
+      "explanation": "Autentifikatsiya, avtorizatsiya va admission - hammasi obyekt validatsiya qilinib etcd’ga yozilishidan oldin ishlaydi. Rejalashtirish keyinroq, scheduler node’siz Pod’ni sezganda bo’ladi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Autentifikatsiya"
+        },
+        {
+          "id": "b",
+          "text": "Avtorizatsiya"
+        },
+        {
+          "id": "c",
+          "text": "Admission control"
+        },
+        {
+          "id": "d",
+          "text": "Rejalashtirish"
+        }
+      ]
+    },
+    "q5-events": {
+      "prompt": "Dars imtihondagi eng qimmatli yagona buyruq deb atagan buyruqni yozing: hodisalarni eng eskisidan boshlab ro’yxatlash.",
+      "explanation": "Rejalashtirish, image tortish, probe va volume mount nosozliklari - hammasi avval hodisalarda o’zini bildiradi."
+    }
+  }
+}

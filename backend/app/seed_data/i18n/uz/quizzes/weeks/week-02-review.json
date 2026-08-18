@@ -1,0 +1,102 @@
+{
+  "title": "2-hafta takrori - lab va kubectl",
+  "description": "Mashq klasteringiz, kubectl va obyekt modeli bo’yicha oltita savol.",
+  "questions": {
+    "w2-q1": {
+      "prompt": "kubectl hozir qaysi klasterga qarab turganini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Noto’g’ri context - bu to’g’ri bajarilgan ishning noto’g’ri klasterda qolishi degani."
+    },
+    "w2-q2": {
+      "prompt": "nginx uchun Pod manifestini yaratmasdan turib generatsiya qiladigan buyruqni yozing.",
+      "explanation": "Generatsiya qil, tahrirla, apply qil - vaqt tig’izligidagi eng tez va xavfsiz sikl."
+    },
+    "w2-q3": {
+      "prompt": "Esingizda qolmagan maydonni qaysi buyruq tushuntirib beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl describe"
+        },
+        {
+          "id": "b",
+          "text": "kubectl explain"
+        },
+        {
+          "id": "c",
+          "text": "kubectl get -o yaml"
+        },
+        {
+          "id": "d",
+          "text": "kubectl api-versions"
+        }
+      ],
+      "explanation": "`kubectl explain pod.spec.containers` terminaldan chiqmasdan sxema bo’ylab yurib beradi."
+    },
+    "w2-q4": {
+      "prompt": "Deyarli har bir obyektda uchraydigan maydonlar qaysilari? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text": "apiVersion"
+        },
+        {
+          "id": "b",
+          "text": "kind"
+        },
+        {
+          "id": "c",
+          "text": "metadata"
+        },
+        {
+          "id": "d",
+          "text": "replicas"
+        }
+      ],
+      "explanation": "replicas ayrim spec’larga tegishli, har bir obyektga emas."
+    },
+    "w2-q5": {
+      "prompt": "`spec` va `status` - qaysi birini kim yozadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ikkalasini ham siz yozasiz"
+        },
+        {
+          "id": "b",
+          "text": "spec’ni siz yozasiz; status’ni kontrollerlar yozadi"
+        },
+        {
+          "id": "c",
+          "text": "Ikkalasini ham kontrollerlar yozadi"
+        },
+        {
+          "id": "d",
+          "text": "spec’ni kubelet yozadi"
+        }
+      ],
+      "explanation": "Aynan shu taqsimot - reconciliation siklining bir gapdagi ta’rifi."
+    },
+    "w2-q6": {
+      "prompt": "Nega lokal klasterda `type: LoadBalancer` Service <pending> holatida qotib qoladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kube-proxy ishlamayapti"
+        },
+        {
+          "id": "b",
+          "text": "Uni ta’minlab beradigan cloud controller yo’q"
+        },
+        {
+          "id": "c",
+          "text": "Service’da selector yo’q"
+        },
+        {
+          "id": "d",
+          "text": "Port band"
+        }
+      ],
+      "explanation": "kind yoki minikube’da bu to’g’ri xatti-harakat; NodePort yoki port-forward ishlating."
+    }
+  }
+}

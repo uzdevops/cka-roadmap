@@ -1,89 +1,176 @@
 {
-  "title": "kubectl, Pod'lar va Deployment'lar",
-  "description": "CLI, Pod hayot sikli, probe'lar, label'lar va Deployment ReplicaSet'larni qanday boshqarishini qamrab oluvchi o'nta savol. Buyruq yozish savollari fuzzy moslash bilan baholanadi.",
+  "title": "kubectl, Pod’lar va Deployment’lar",
+  "description": "CLI, Pod hayot sikli, probe’lar, label’lar va Deployment ReplicaSet’larni qanday boshqarishini qamrab oluvchi o’nta savol. Buyruq yozish savollari fuzzy moslash bilan baholanadi.",
   "questions": {
     "q01-crashloop-logs": {
-      "prompt": "'api' nomli Pod CrashLoopBackOff holatida. Endigina ishdan chiqqan konteyner nusxasining loglarini ko'rsatadigan buyruqni yozing.",
-      "explanation": "Joriy konteyner endigina ishga tushgan va foydali hech narsa chiqarmagan. --previous (-p) tugagan nusxa chiqishini ko'rsatadi - haqiqiy xato o'sha yerda."
+      "prompt": "'api' nomli Pod CrashLoopBackOff holatida. Endigina ishdan chiqqan konteyner nusxasining loglarini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Joriy konteyner endigina ishga tushgan va foydali hech narsa chiqarmagan. --previous (-p) tugagan nusxa chiqishini ko’rsatadi - haqiqiy xato o’sha yerda."
     },
     "q02-probe-difference": {
-      "prompt": "Pod Running holatida va konteyneri sog'lom, lekin oldidagi Service unga trafik yubormayapti. Avval qaysi probe'ni tekshirasiz?",
+      "prompt": "Pod Running holatida va konteyneri sog’lom, lekin oldidagi Service unga trafik yubormayapti. Avval qaysi probe’ni tekshirasiz?",
       "options": [
-        {"id": "a", "text": "livenessProbe"},
-        {"id": "b", "text": "readinessProbe"},
-        {"id": "c", "text": "startupProbe"},
-        {"id": "d", "text": "Hech qaysi - probe'lar Service marshrutlashiga ta'sir qilmaydi"}
+        {
+          "id": "a",
+          "text": "livenessProbe"
+        },
+        {
+          "id": "b",
+          "text": "readinessProbe"
+        },
+        {
+          "id": "c",
+          "text": "startupProbe"
+        },
+        {
+          "id": "d",
+          "text": "Hech qaysi - probe’lar Service marshrutlashiga ta’sir qilmaydi"
+        }
       ],
-      "explanation": "Muvaffaqiyatsiz readiness probe Pod'ni qayta ishga tushirmasdan Service endpoint'laridan olib tashlaydi - aynan shu alomat. Muvaffaqiyatsiz liveness probe esa konteynerni qayta ishga tushirardi."
+      "explanation": "Muvaffaqiyatsiz readiness probe Pod’ni qayta ishga tushirmasdan Service endpoint’laridan olib tashlaydi - aynan shu alomat. Muvaffaqiyatsiz liveness probe esa konteynerni qayta ishga tushirardi."
     },
     "q03-oomkilled": {
-      "prompt": "kubectl describe pod chiqishida Last State: Terminated, Reason: OOMKilled, Exit Code: 137 ko'rinmoqda. Nima sodir bo'lgan?",
+      "prompt": "kubectl describe pod chiqishida Last State: Terminated, Reason: OOMKilled, Exit Code: 137 ko’rinmoqda. Nima sodir bo’lgan?",
       "options": [
-        {"id": "a", "text": "Konteyner CPU limitidan oshdi va to'xtaguncha cheklandi"},
-        {"id": "b", "text": "Konteyner xotira limitidan oshdi va yadro uni o'ldirdi"},
-        {"id": "c", "text": "Liveness probe ketma-ket uch marta muvaffaqiyatsiz bo'ldi"},
-        {"id": "d", "text": "Node'da disk tugadi va Pod chiqarib yuborildi"}
+        {
+          "id": "a",
+          "text": "Konteyner CPU limitidan oshdi va to’xtaguncha cheklandi"
+        },
+        {
+          "id": "b",
+          "text": "Konteyner xotira limitidan oshdi va yadro uni o’ldirdi"
+        },
+        {
+          "id": "c",
+          "text": "Liveness probe ketma-ket uch marta muvaffaqiyatsiz bo’ldi"
+        },
+        {
+          "id": "d",
+          "text": "Node’da disk tugadi va Pod chiqarib yuborildi"
+        }
       ],
-      "explanation": "137 chiqish kodi 128 + 9 (SIGKILL), OOMKilled esa sababni aytadi. CPU limitidan oshish faqat konteynerni cheklaydi - CPU uchun hech qachon o'ldirilmaydi."
+      "explanation": "137 chiqish kodi 128 + 9 (SIGKILL), OOMKilled esa sababni aytadi. CPU limitidan oshish faqat konteynerni cheklaydi - CPU uchun hech qachon o’ldirilmaydi."
     },
     "q04-dry-run": {
-      "prompt": "Klasterda hech narsa yaratmasdan, nginx image'i va 3 replikali 'web' nomli Deployment YAML'ini chiqaradigan buyruqni yozing.",
-      "explanation": "--dry-run=client -o yaml imtihonda eng ko'p vaqt tejaydigan usul: generatsiya qiling, faylga yo'naltiring, generator chiqara olmaydigan maydonlarni tahrirlang, keyin apply qiling."
+      "prompt": "Klasterda hech narsa yaratmasdan, nginx image’i va 3 replikali 'web' nomli Deployment YAML’ini chiqaradigan buyruqni yozing.",
+      "explanation": "--dry-run=client -o yaml imtihonda eng ko’p vaqt tejaydigan usul: generatsiya qiling, faylga yo’naltiring, generator chiqara olmaydigan maydonlarni tahrirlang, keyin apply qiling."
     },
     "q05-deployment-replicasets": {
-      "prompt": "3 replikali Deployment image'i bir marta o'zgartirildi. Rollout tugagach nimani ko'rasiz?",
+      "prompt": "3 replikali Deployment image’i bir marta o’zgartirildi. Rollout tugagach nimani ko’rasiz?",
       "options": [
-        {"id": "a", "text": "3 replikali bitta ReplicaSet; eskisi o'chirilgan"},
-        {"id": "b", "text": "Ikkita ReplicaSet: yangisi 3 replika bilan, eskisi 0 ga tushirilgan"},
-        {"id": "c", "text": "Ikkita ReplicaSet, har birida 3 replika"},
-        {"id": "d", "text": "Pod shabloni joyida yangilangan bitta ReplicaSet"}
+        {
+          "id": "a",
+          "text": "3 replikali bitta ReplicaSet; eskisi o’chirilgan"
+        },
+        {
+          "id": "b",
+          "text": "Ikkita ReplicaSet: yangisi 3 replika bilan, eskisi 0 ga tushirilgan"
+        },
+        {
+          "id": "c",
+          "text": "Ikkita ReplicaSet, har birida 3 replika"
+        },
+        {
+          "id": "d",
+          "text": "Pod shabloni joyida yangilangan bitta ReplicaSet"
+        }
       ],
-      "explanation": "Har bir shablon o'zgarishi yangi ReplicaSet yaratadi. Eskisi nol replika bilan saqlanadi (revisionHistoryLimit gacha) - aynan shu kubectl rollout undo'ni bir zumda ishlatadi."
+      "explanation": "Har bir shablon o’zgarishi yangi ReplicaSet yaratadi. Eskisi nol replika bilan saqlanadi (revisionHistoryLimit gacha) - aynan shu kubectl rollout undo’ni bir zumda ishlatadi."
     },
     "q06-selector-immutable": {
-      "prompt": "Mavjud Deployment'da spec.selector.matchLabels'ni o'zgartirmoqchisiz va API server rad etdi. Nega?",
+      "prompt": "Mavjud Deployment’da spec.selector.matchLabels’ni o’zgartirmoqchisiz va API server rad etdi. Nega?",
       "options": [
-        {"id": "a", "text": "Selector yaratilgandan keyin o'zgarmas"},
-        {"id": "b", "text": "Selector'ni patch qilish uchun RBAC ruxsati yo'q"},
-        {"id": "c", "text": "Selector'ni faqat Deployment pauzada bo'lganda o'zgartirish mumkin"},
-        {"id": "d", "text": "O'zgarish to'g'ri; xato label'lar noto'g'ri formatda ekanini bildiradi"}
+        {
+          "id": "a",
+          "text": "Selector yaratilgandan keyin o’zgarmas"
+        },
+        {
+          "id": "b",
+          "text": "Selector’ni patch qilish uchun RBAC ruxsati yo’q"
+        },
+        {
+          "id": "c",
+          "text": "Selector’ni faqat Deployment pauzada bo’lganda o’zgartirish mumkin"
+        },
+        {
+          "id": "d",
+          "text": "O’zgarish to’g’ri; xato label’lar noto’g’ri formatda ekanini bildiradi"
+        }
       ],
-      "explanation": "spec.selector Deployment, ReplicaSet, StatefulSet va DaemonSet'da o'zgarmas. Uni o'zgartirish uchun obyektni o'chirib qaytadan yaratish kerak."
+      "explanation": "spec.selector Deployment, ReplicaSet, StatefulSet va DaemonSet’da o’zgarmas. Uni o’zgartirish uchun obyektni o’chirib qaytadan yaratish kerak."
     },
     "q07-labels-selection": {
-      "prompt": "Label va annotation haqidagi qaysi fikrlar to'g'ri? (Barcha to'g'ri javoblarni tanlang.)",
+      "prompt": "Label va annotation haqidagi qaysi fikrlar to’g’ri? (Barcha to’g’ri javoblarni tanlang.)",
       "options": [
-        {"id": "a", "text": "Label'lardan selector'da foydalanish mumkin, annotation'lardan esa yo'q"},
-        {"id": "b", "text": "Annotation qiymatlari label qiymatlaridan ancha katta bo'lishi mumkin"},
-        {"id": "c", "text": "Service'ning spec.selector'i matchExpressions'ni qo'llab-quvvatlaydi"},
-        {"id": "d", "text": "kubectl label pod web env- buyrug'i env label'ini olib tashlaydi"}
+        {
+          "id": "a",
+          "text": "Label’lardan selector’da foydalanish mumkin, annotation’lardan esa yo’q"
+        },
+        {
+          "id": "b",
+          "text": "Annotation qiymatlari label qiymatlaridan ancha katta bo’lishi mumkin"
+        },
+        {
+          "id": "c",
+          "text": "Service’ning spec.selector’i matchExpressions’ni qo’llab-quvvatlaydi"
+        },
+        {
+          "id": "d",
+          "text": "kubectl label pod web env- buyrug’i env label’ini olib tashlaydi"
+        }
       ],
-      "explanation": "Service selector'i faqat tenglik bo'yicha moslashni qo'llab-quvvatlaydigan oddiy map; matchExpressions Deployment, ReplicaSet va NetworkPolicy'da mavjud. Oxiridagi chiziqcha label yoki annotation'ni olib tashlaydi."
+      "explanation": "Service selector’i faqat tenglik bo’yicha moslashni qo’llab-quvvatlaydigan oddiy map; matchExpressions Deployment, ReplicaSet va NetworkPolicy’da mavjud. Oxiridagi chiziqcha label yoki annotation’ni olib tashlaydi."
     },
     "q08-restart-for-config": {
-      "prompt": "Environment o'zgaruvchisi sifatida ishlatiladigan ConfigMap o'zgardi. 'web' Deployment Pod'larini yangi qiymatlarni olishi uchun qayta yaratadigan buyruqni yozing.",
-      "explanation": "Environment o'zgaruvchilari konteyner ishga tushganda kiritiladi va joyida yangilanmaydi. rollout restart shablonni o'zgartirmasdan oddiy rolling almashtirishni boshlaydi."
+      "prompt": "Environment o’zgaruvchisi sifatida ishlatiladigan ConfigMap o’zgardi. 'web' Deployment Pod’larini yangi qiymatlarni olishi uchun qayta yaratadigan buyruqni yozing.",
+      "explanation": "Environment o’zgaruvchilari konteyner ishga tushganda kiritiladi va joyida yangilanmaydi. rollout restart shablonni o’zgartirmasdan oddiy rolling almashtirishni boshlaydi."
     },
     "q09-pending-causes": {
-      "prompt": "Bulardan qaysilari Pod'ni Pending holatida qoldirishi mumkin? (Barcha to'g'ri javoblarni tanlang.)",
+      "prompt": "Bulardan qaysilari Pod’ni Pending holatida qoldirishi mumkin? (Barcha to’g’ri javoblarni tanlang.)",
       "options": [
-        {"id": "a", "text": "Har bir node'da yetarli CPU yoki xotira yo'qligi"},
-        {"id": "b", "text": "Hech bir node'da bo'lmagan nodeSelector label'i"},
-        {"id": "c", "text": "Bog'lanmagan PersistentVolumeClaim"},
-        {"id": "d", "text": "Pod qabul qilmaydigan taint"},
-        {"id": "e", "text": "Muvaffaqiyatsiz liveness probe"}
+        {
+          "id": "a",
+          "text": "Har bir node’da yetarli CPU yoki xotira yo’qligi"
+        },
+        {
+          "id": "b",
+          "text": "Hech bir node’da bo’lmagan nodeSelector label’i"
+        },
+        {
+          "id": "c",
+          "text": "Bog’lanmagan PersistentVolumeClaim"
+        },
+        {
+          "id": "d",
+          "text": "Pod qabul qilmaydigan taint"
+        },
+        {
+          "id": "e",
+          "text": "Muvaffaqiyatsiz liveness probe"
+        }
       ],
-      "explanation": "Pending - Pod node'ga bog'lanmagan degani, shuning uchun har bir sabab rejalashtirish cheklovidir. Liveness probe konteyner ishga tushgandan keyingina ishlaydi, ya'ni u Pending emas, qayta ishga tushishga sabab bo'ladi."
+      "explanation": "Pending - Pod node’ga bog’lanmagan degani, shuning uchun har bir sabab rejalashtirish cheklovidir. Liveness probe konteyner ishga tushgandan keyingina ishlaydi, ya’ni u Pending emas, qayta ishga tushishga sabab bo’ladi."
     },
     "q10-progress-deadline": {
       "prompt": "Deployment Progressing=False va sabab ProgressDeadlineExceeded deb xabar bermoqda. Kubernetes keyin nima qiladi?",
       "options": [
-        {"id": "a", "text": "Avtomatik ravishda oldingi versiyaga qaytaradi"},
-        {"id": "b", "text": "Oldinga siljishni to'xtatadi va sizning aralashuvingizni kutadi"},
-        {"id": "c", "text": "Muvaffaqiyatsiz ReplicaSet'ni o'chirib, boshidan qayta uriladi"},
-        {"id": "d", "text": "Eski ReplicaSet'ni to'liq quvvatga qaytaradi"}
+        {
+          "id": "a",
+          "text": "Avtomatik ravishda oldingi versiyaga qaytaradi"
+        },
+        {
+          "id": "b",
+          "text": "Oldinga siljishni to’xtatadi va sizning aralashuvingizni kutadi"
+        },
+        {
+          "id": "c",
+          "text": "Muvaffaqiyatsiz ReplicaSet’ni o’chirib, boshidan qayta uriladi"
+        },
+        {
+          "id": "d",
+          "text": "Eski ReplicaSet’ni to’liq quvvatga qaytaradi"
+        }
       ],
-      "explanation": "Avtomatik qaytarish yo'q. Bu holat siz yoki CI tizimingiz kubectl rollout undo bajarishi uchun signal. Eski ReplicaSet o'z replikalarini saqlab qoladi - shuning uchun ilova odatda qisman ishlab turadi."
+      "explanation": "Avtomatik qaytarish yo’q. Bu holat siz yoki CI tizimingiz kubectl rollout undo bajarishi uchun signal. Eski ReplicaSet o’z replikalarini saqlab qoladi - shuning uchun ilova odatda qisman ishlab turadi."
     }
   }
 }

@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: ConfigMap’lar",
+  "description": "Konfiguratsiyani konteyner ichiga yetkazish bo’yicha beshta savol.",
+  "questions": {
+    "q1-ways": {
+      "prompt": "ConfigMap’ni konteynerga ochib berishning qaysi usullari to’g’ri? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {"id": "a", "text": "valueFrom.configMapKeyRef orqali alohida muhit o’zgaruvchilari sifatida"},
+        {"id": "b", "text": "envFrom orqali barcha kalitlarni bir yo’la"},
+        {"id": "c", "text": "Volume ichida fayllar sifatida mount qilib"},
+        {"id": "d", "text": "Build paytida konteyner image’iga joylab"}
+      ],
+      "explanation": "Muhit o’zgaruvchilari, envFrom va volume mount. ConfigMap’ning hech bir jihati image’ga tegmaydi."
+    },
+    "q2-update": {
+      "prompt": "Volume sifatida mount qilingan ConfigMap o’zgardi. Ishlayotgan Pod’da nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Pod qayta ishga tushmaguncha hech nima"},
+        {"id": "b", "text": "Mount qilingan fayllar qisqa kechikishdan so’ng yangilanadi"},
+        {"id": "c", "text": "Pod avtomatik ravishda qayta ishga tushiriladi"},
+        {"id": "d", "text": "Mount faqat o’qish uchun bo’lib qoladi"}
+      ],
+      "explanation": "Volume orqali mount qilingan kalitlarni kubelet yangilab turadi. Muhit o’zgaruvchilari esa YO’Q - ular konteynerning butun umri davomida o’zgarmaydi."
+    },
+    "q3-create": {
+      "prompt": "colour kaliti blue qiymatiga teng bo’lgan, app-config nomli ConfigMap yaratadigan buyruqni yozing.",
+      "explanation": "`--from-file` va `--from-env-file` - eslab qolishga arziydigan qolgan ikki shakl."
+    },
+    "q4-missing": {
+      "prompt": "Pod ConfigMap’da mavjud bo’lmagan kalitga murojaat qilyapti va u optional deb belgilanmagan. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Konteyner bo’sh qiymat bilan ishga tushadi"},
+        {"id": "b", "text": "Pod Pending holatida qoladi yoki konteyner ishga tusha olmaydi"},
+        {"id": "c", "text": "ConfigMap avtomatik yaratiladi"},
+        {"id": "d", "text": "Murojaat e’tiborga olinmaydi"}
+      ],
+      "explanation": "Hal qilib bo’lmaydigan majburiy murojaat konteynerning ishga tushishiga to’sqinlik qiladi; hodisalar qaysi kalit yetishmayotganini aytadi."
+    },
+    "q5-immutable": {
+      "prompt": "ConfigMap’ga `immutable: true` qo’yish sizga nima beradi?",
+      "options": [
+        {"id": "a", "text": "Avtomatik versiyalash"},
+        {"id": "b", "text": "Tahrirlardan himoya va watch’lar tufayli API serverga tushadigan yukning kamayishi"},
+        {"id": "c", "text": "Saqlanayotgan holatda shifrlash"},
+        {"id": "d", "text": "Tezroq mount qilish"}
+      ],
+      "explanation": "O’zgarmas ConfigMap’ni tahrirlab bo’lmaydi - uni almashtirasiz - va kubelet uni kuzatishni to’xtatadi, bu esa katta miqyosda sezilarli ahamiyatga ega."
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: imtihonga yozilishdan oldin",
+  "description": "Oxirgi tekshiruvlar bo’yicha beshta savol.",
+  "questions": {
+    "q1-readiness": {
+      "prompt": "Boshqaruv panelingizdagi tayyorgarlik bahosi nima bo’yicha vaznlanadi?",
+      "options": [
+        {"id": "a", "text": "O’qilgan darslar soni bo’yicha"},
+        {"id": "b", "text": "Har bir sohaning imtihondagi haqiqiy ulushi bo’yicha"},
+        {"id": "c", "text": "Sarflangan vaqt bo’yicha"},
+        {"id": "d", "text": "Urinishlar soni bo’yicha"}
+      ],
+      "explanation": "Aynan shuning uchun 30% vaznga ega sohani tugatish ko’rsatkichni 0% vaznlisiga qaraganda ancha ko’proq siljitadi."
+    },
+    "q2-environment": {
+      "prompt": "Imtihon kunidan oldin xonangiz haqida nimani tekshirib qo’yish kerak?",
+      "options": [
+        {"id": "a", "text": "Hech nimani"},
+        {"id": "b", "text": "Toza stol, faqat ruxsat etilgan buyumlar, ishlaydigan veb-kamera va barqaror ulanish - nomzodlar qo’llanmasida aytilganidek"},
+        {"id": "c", "text": "Ikkinchi monitor ulanganini"},
+        {"id": "d", "text": "Qaydlar qo’l ostida turganini"}
+      ],
+      "explanation": "Muhit talablariga javob bermaslik sessiyani tugatadi. Qo’llanma - yagona rasmiy manba va uni bir marta to’liq o’qib chiqishga arziydi."
+    },
+    "q3-id": {
+      "prompt": "Sessiya boshida nima tekshiriladi?",
+      "options": [
+        {"id": "a", "text": "Hech nima"},
+        {"id": "b", "text": "Davlat tomonidan berilgan, fotosuratli shaxsni tasdiqlovchi hujjat"},
+        {"id": "c", "text": "Ish beruvchingizning xati"},
+        {"id": "d", "text": "Oldingi sertifikat"}
+      ],
+      "explanation": "Ism-familiyaning hujjatga mos kelmasligi - tez-tez uchraydigan va butunlay oldini olsa bo’ladigan nosozlik."
+    },
+    "q4-retake": {
+      "prompt": "CKA’ga ro’yxatdan o’tish nimani o’z ichiga oladi?",
+      "options": [
+        {"id": "a", "text": "Faqat bitta urinishni"},
+        {"id": "b", "text": "Bitta urinish va yana bitta bepul qayta topshirishni"},
+        {"id": "c", "text": "Cheksiz urinishlarni"},
+        {"id": "d", "text": "Uchta urinishni"}
+      ],
+      "explanation": "Joriy shartlarni sertifikatsiya sahifasidan tekshiring - u Manbalar bo’limidagi to’rtta rasmiy havoladan biri."
+    },
+    "q5-when": {
+      "prompt": "Qachon haqiqatan ham imtihonga yozilishga tayyor bo’lasiz?",
+      "options": [
+        {"id": "a", "text": "Barcha darslarni o’qib chiqqaningizda"},
+        {"id": "b", "text": "Vaznlangan tayyorgarlik ko’rsatkichi yuqori bo’lib, laboratoriyalarni terminalda tez bajara olganingizda"},
+        {"id": "c", "text": "Bitta sinov imtihonidan keyin"},
+        {"id": "d", "text": "Ketma-ket kunlar seriyasi yetarlicha uzun bo’lganda"}
+      ],
+      "explanation": "O’qish zarur, lekin yetarli emas. Imtihon soat qarshisida nima qila olishingizni o’lchaydi."
+    }
+  }
+}

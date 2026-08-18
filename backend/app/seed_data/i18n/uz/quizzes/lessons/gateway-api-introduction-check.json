@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: Gateway API",
+  "description": "Ingress’ning vorisi bo’yicha beshta savol.",
+  "questions": {
+    "q1-why": {
+      "prompt": "Gateway API qaysi muammoni hal qilishni maqsad qilgan?",
+      "options": [
+        {"id": "a", "text": "Ingress juda sekin"},
+        {"id": "b", "text": "Ingress har bir imkoniyatni annotatsiyalarga tiqadi va operator bilan dasturchi vazifalarini aralashtirib yuboradi"},
+        {"id": "c", "text": "Ingress TLS bilan ishlay olmaydi"},
+        {"id": "d", "text": "Ingress faqat bitta namespace’ni qo’llab-quvvatlaydi"}
+      ],
+      "explanation": "Gateway API bu rollarni vendorga xos annotatsiyalar o’rniga haqiqiy sxemaga ega alohida resurslarga ajratadi."
+    },
+    "q2-resources": {
+      "prompt": "Qaysilari Gateway API resurslari? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {"id": "a", "text": "GatewayClass"},
+        {"id": "b", "text": "Gateway"},
+        {"id": "c", "text": "HTTPRoute"},
+        {"id": "d", "text": "IngressClass"}
+      ],
+      "explanation": "GatewayClass - infratuzilma turi, Gateway - uning nusxasi, HTTPRoute esa marshrutlash qoidalari. IngressClass eski API’ga tegishli."
+    },
+    "q3-roles": {
+      "prompt": "Odatda Gateway kimga tegishli bo’ladi, HTTPRoute esa kimga?",
+      "options": [
+        {"id": "a", "text": "Ikkalasi ham dasturchiga"},
+        {"id": "b", "text": "Gateway klaster operatoriga tegishli; HTTPRoute’lar esa ilova jamoalariga"},
+        {"id": "c", "text": "Ikkalasi ham operatorga"},
+        {"id": "d", "text": "Ikkalasi ham API serverga tegishli"}
+      ],
+      "explanation": "Aynan shu ajratish - butun g’oyaning mag’zi: infratuzilma bir marta sozlanadi, marshrutlarni esa ilovaga egalik qiladigan jamoalar unga ulaydi."
+    },
+    "q4-crd": {
+      "prompt": "Gateway API qanday yetkaziladi?",
+      "options": [
+        {"id": "a", "text": "API server ichiga qurib qo’yilgan"},
+        {"id": "b", "text": "Klasterga o’rnatiladigan CRD’lar ko’rinishida"},
+        {"id": "c", "text": "kubectl plagini sifatida"},
+        {"id": "d", "text": "CNI plaginning bir qismi sifatida"}
+      ],
+      "explanation": "CRD’lar va ularni amalga oshiradigan controller. Hozircha hech nima klasterning o’ziga qurib qo’yilmagan."
+    },
+    "q5-crossnamespace": {
+      "prompt": "Bir namespace’dagi HTTPRoute boshqa namespace’dagi Gateway’ga ulanishiga nima imkon beradi?",
+      "options": [
+        {"id": "a", "text": "Hech nima - bu taqiqlangan"},
+        {"id": "b", "text": "Gateway’dagi allowedRoutes, namespace’lararo backend’lar uchun esa ReferenceGrant"},
+        {"id": "c", "text": "ClusterRole"},
+        {"id": "d", "text": "Umumiy yorliq"}
+      ],
+      "explanation": "Ikkala tomondan ham aniq ruxsat talab qilinishi ataylab shunday qilingan - aynan shu bir jamoa boshqasining hostname’ini o’zlashtirib olishiga yo’l qo’ymaydi."
+    }
+  }
+}

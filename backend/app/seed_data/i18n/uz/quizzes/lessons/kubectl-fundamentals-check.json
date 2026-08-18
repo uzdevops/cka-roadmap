@@ -1,0 +1,80 @@
+{
+  "title": "Tekshiruv: kubectl asoslari",
+  "description": "Fe’llar, chiqish formatlari va vaqt tejaydigan qisqartmalar bo’yicha beshta savol.",
+  "questions": {
+    "q1-all-namespaces": {
+      "prompt": "Barcha namespace’lardagi Pod’larni ro’yxatlaydigan buyruqni yozing.",
+      "explanation": "Fuzzy moslash bilan baholanadi: `-A` va `--all-namespaces` bir xil ball oladi, `po` va `pods` ham."
+    },
+    "q2-describe-vs-get": {
+      "prompt": "`kubectl describe` `kubectl get` bermaydigan nimani beradi?",
+      "explanation": "`describe` obyektni hodisalari va bog’liq obyektlari bilan yig’adi. Xom saqlangan shakl uchun `get -o yaml` kerak.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Obyektni YAML shaklida"
+        },
+        {
+          "id": "b",
+          "text": "Hodisalar va bog’liq holatning o’qishga qulay xulosasi"
+        },
+        {
+          "id": "c",
+          "text": "O’sha turdagi barcha obyektlar ro’yxati"
+        },
+        {
+          "id": "d",
+          "text": "etcd’dagi xom JSON"
+        }
+      ]
+    },
+    "q3-dry-run": {
+      "prompt": "nginx image’idan web nomli Deployment YAML’ini hech narsa yaratmasdan chiqaradigan buyruqni yozing.",
+      "explanation": "Manifestni generatsiya qilib tahrirlash imtihon bosimida YAML’ni yoddan yozishdan ancha tez."
+    },
+    "q4-explain": {
+      "prompt": "Pod’ning restart siyosatini qaysi maydon belgilashini eslay olmayapsiz. Qaysi buyruq terminaldan chiqmasdan aytadi?",
+      "explanation": "`kubectl explain` sxemani maydonma-maydon aylanib chiqadi. Bu imtihonda sizda bor eng tez hujjat.",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl describe pod"
+        },
+        {
+          "id": "b",
+          "text": "kubectl explain pod.spec"
+        },
+        {
+          "id": "c",
+          "text": "kubectl get pod -o wide"
+        },
+        {
+          "id": "d",
+          "text": "kubectl api-resources"
+        }
+      ]
+    },
+    "q5-fast": {
+      "prompt": "Ikki soatlik imtihonda qaysilari haqiqatan vaqt tejaydi? Barcha to’g’rilarini tanlang.",
+      "explanation": "Tugma bosishni kamaytiradigan hamma narsa yordam beradi. YAML’ni yoddan yozish - ishonchli tarzda vaqtingizni yeydigan yagona odat.",
+      "options": [
+        {
+          "id": "a",
+          "text": "k=kubectl kabi alias"
+        },
+        {
+          "id": "b",
+          "text": "Shell avtotoldirishi"
+        },
+        {
+          "id": "c",
+          "text": "Har bir manifestni noldan yozish"
+        },
+        {
+          "id": "d",
+          "text": "Boshlang’ich manifest uchun `--dry-run=client -o yaml`"
+        }
+      ]
+    }
+  }
+}

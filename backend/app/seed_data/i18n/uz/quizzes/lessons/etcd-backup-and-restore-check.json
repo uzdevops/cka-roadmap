@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: etcd zaxirasi va tiklash",
+  "description": "Imtihondagi eng ishonchli topshiriq bo’yicha beshta savol.",
+  "questions": {
+    "q1-snapshot": {
+      "prompt": "/tmp/etcd.db ga snapshot oladigan etcdctl subbuyrug’i va bayrog’ini yozing (sertifikat bayroqlarini tashlab keting).",
+      "explanation": "To’liq shaklda yana --endpoints, --cacert, --cert va --key ham kerak bo’ladi - ularning hammasini /etc/kubernetes/manifests/etcd.yaml dan o’qib olsa bo’ladi."
+    },
+    "q2-api-version": {
+      "prompt": "Snapshot uchun etcdctl qaysi API versiyasidan foydalanishi kerak?",
+      "options": [
+        {"id": "a", "text": "ETCDCTL_API=2"},
+        {"id": "b", "text": "ETCDCTL_API=3"},
+        {"id": "c", "text": "Ikkalasi ham bo’laveradi"},
+        {"id": "d", "text": "U har bir versiyada avtomatik tanlanadi"}
+      ],
+      "explanation": "3-versiya talab qilinadi. Yangi etcdctl uni standart sifatida oladi, lekin uni oshkora ko’rsatish hech narsa turmaydi va imtihondagi butun bir xatolar turkumini yo’q qiladi."
+    },
+    "q3-where-certs": {
+      "prompt": "etcdctl bayroqlari uchun sertifikat yo’llarini qayerdan topasiz?",
+      "options": [
+        {"id": "a", "text": "kubelet konfiguratsiyasida"},
+        {"id": "b", "text": "/etc/kubernetes/manifests/etcd.yaml ichida"},
+        {"id": "c", "text": "Secret ichida"},
+        {"id": "d", "text": "~/.kube/config ichida"}
+      ],
+      "explanation": "Static Pod manifesti serverning o’zi ishlatadigan --cacert, --cert va --key qiymatlarini aynan ro’yxatlab beradi."
+    },
+    "q4-restore": {
+      "prompt": "`etcdctl snapshot restore` bilan yangi data katalogiga tiklagandan keyin nima qilish kerak?",
+      "options": [
+        {"id": "a", "text": "Hech nima - u darhol kuchga kiradi"},
+        {"id": "b", "text": "etcd static Pod’ining data katalogini tiklangan katalogga qaratish va kubelet uni qayta ishga tushirishiga yo’l qo’yish"},
+        {"id": "c", "text": "Yana kubeadm init ishga tushirish"},
+        {"id": "d", "text": "Har bir Pod’ni o’chirish"}
+      ],
+      "explanation": "Restore faqat fayllarni yozadi. etcd o’sha fayllarni ishlatishini esa manifestni tahrirlash ta’minlaydi."
+    },
+    "q5-scope": {
+      "prompt": "etcd snapshot’i nimani o’z ichiga oladi?",
+      "options": [
+        {"id": "a", "text": "Faqat Secret’larni"},
+        {"id": "b", "text": "Butun klaster holatini - har bir obyektni"},
+        {"id": "c", "text": "Faqat control plane manifestlarini"},
+        {"id": "d", "text": "Node fayl tizimlarini"}
+      ],
+      "explanation": "Aynan shuning uchun bu yagona haqiqiy ahamiyatga ega zaxira, va shuning uchun bu fayl klasterning o’zi kabi himoyaga loyiq."
+    }
+  }
+}

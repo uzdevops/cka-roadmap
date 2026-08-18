@@ -1,0 +1,138 @@
+{
+  "title": "8-hafta takrori - masshtablash va sog’liq",
+  "description": "Avtomasshtablash, probe’lar va paketlash bo’yicha oltita savol.",
+  "questions": {
+    "w8-q1": {
+      "prompt": "CPU bo’yicha ishlaydigan HPA <unknown> ko’rsatyapti. Nima yetishmayapti?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PodDisruptionBudget"
+        },
+        {
+          "id": "b",
+          "text": "metrics-server"
+        },
+        {
+          "id": "c",
+          "text": "Service"
+        },
+        {
+          "id": "d",
+          "text": "PriorityClass"
+        }
+      ],
+      "explanation": "HPA aynan metrics-server taqdim etadigan metrics API’dan o’qiydi."
+    },
+    "w8-q2": {
+      "prompt": "HPA’dagi CPU foydalanish darajasi nimaning foizi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Node quvvatining"
+        },
+        {
+          "id": "b",
+          "text": "Pod’ning CPU limitining"
+        },
+        {
+          "id": "c",
+          "text": "Pod’ning CPU request’ining"
+        },
+        {
+          "id": "d",
+          "text": "To’liq bitta yadroning"
+        }
+      ],
+      "explanation": "request bo’lmasa, foizni nimaga nisbatan hisoblash kerakligi ham bo’lmaydi."
+    },
+    "w8-q3": {
+      "prompt": "Muvaffaqiyatsiz tugagan readiness probe nima qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Konteynerni qayta ishga tushiradi"
+        },
+        {
+          "id": "b",
+          "text": "Pod’ni Service endpoint’laridan chiqarib tashlaydi"
+        },
+        {
+          "id": "c",
+          "text": "Pod’ni evict qiladi"
+        },
+        {
+          "id": "d",
+          "text": "Node’ni NotReady deb belgilaydi"
+        }
+      ],
+      "explanation": "Liveness qayta ishga tushiradi; readiness esa trafikni ochib-yopadi."
+    },
+    "w8-q4": {
+      "prompt": "Sekin ishga tushadigan ilovani o’zining liveness probe’idan qaysi probe himoya qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "readinessProbe"
+        },
+        {
+          "id": "b",
+          "text": "startupProbe"
+        },
+        {
+          "id": "c",
+          "text": "execProbe"
+        },
+        {
+          "id": "d",
+          "text": "initProbe"
+        }
+      ],
+      "explanation": "startup probe muvaffaqiyatli o’tmaguncha liveness va readiness ushlab turiladi."
+    },
+    "w8-q5": {
+      "prompt": "Qaysi vosita kubectl ichiga o’rnatib qo’yilgan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Helm"
+        },
+        {
+          "id": "b",
+          "text": "Kustomize"
+        },
+        {
+          "id": "c",
+          "text": "Ikkalasi ham"
+        },
+        {
+          "id": "d",
+          "text": "Hech qaysi"
+        }
+      ],
+      "explanation": "`kubectl apply -k` uchun qo’shimcha binary kerak emas."
+    },
+    "w8-q6": {
+      "prompt": "Helm 3 nima o’rnatganini qayerda qayd etadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hech qayerda"
+        },
+        {
+          "id": "b",
+          "text": "Namespace’dagi har bir release uchun alohida Secret’da"
+        },
+        {
+          "id": "c",
+          "text": "CRD ichida"
+        },
+        {
+          "id": "d",
+          "text": "To’g’ridan-to’g’ri etcd’da"
+        }
+      ],
+      "explanation": "Aynan shu narsa helm rollback’ni mumkin qiladi."
+    }
+  }
+}

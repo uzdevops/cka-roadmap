@@ -1,0 +1,116 @@
+{
+  "title": "Tekshiruv: control plane komponentlari",
+  "description": "API server, etcd, scheduler va controller manager bo’yicha beshta savol.",
+  "questions": {
+    "q1-etcd-quorum": {
+      "prompt": "Nega etcd klasterida a’zolar soni toq bo’lishi kerak?",
+      "explanation": "2 a’zoli klaster 1 a’zolidan qat’iy yomonroq: u bitta ham nosozlikka chidamaydi, buziladigan narsa esa ikkita.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Juft sonlar disk joyini isrof qiladi"
+        },
+        {
+          "id": "b",
+          "text": "Raft (n/2)+1 kvorumni talab qiladi, shuning uchun juft son nosozlikka chidamlilikni oshirmasdan yana bitta a’zo qo’shadi"
+        },
+        {
+          "id": "c",
+          "text": "etcd juft son bilan ishga tushmaydi"
+        },
+        {
+          "id": "d",
+          "text": "Toq sonlar zaxira nusxani tezlashtiradi"
+        }
+      ]
+    },
+    "q2-scheduler-stages": {
+      "prompt": "Scheduler node’ni ikki bosqichda tanlaydi. Ular qaysilar?",
+      "explanation": "Filtrlash (predicates) ishlay olmaydigan node’larni chiqarib tashlaydi; baholash (priorities) qolganlarini tartiblaydi. Eng yuqori ball yutadi va scheduler Binding yozadi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Saralash, so’ng bog’lash"
+        },
+        {
+          "id": "b",
+          "text": "Ishlay olmaydigan node’larni filtrlash, so’ng qolganlarini baholash"
+        },
+        {
+          "id": "c",
+          "text": "Har bir node’ni baholash, so’ng kubelet’dan so’rash"
+        },
+        {
+          "id": "d",
+          "text": "Bo’shatish va rejalashtirish"
+        }
+      ]
+    },
+    "q3-symptom-scheduler": {
+      "prompt": "Yangi Pod’lar abadiy Pending, allaqachon ishlayotganlari esa sog’lom. Qaysi komponent ishlamayapti?",
+      "explanation": "Scheduler yo’q bo’lsa hech narsa node tayinlamaydi, shuning uchun yangi Pod’lar Pending’dan chiqmaydi. Mavjudlarining node’i bor va ularga ta’sir qilmaydi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "etcd"
+        },
+        {
+          "id": "b",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "c",
+          "text": "Scheduler"
+        },
+        {
+          "id": "d",
+          "text": "kubelet"
+        }
+      ]
+    },
+    "q4-symptom-controller": {
+      "prompt": "Deployment’ga tegishli Pod’ni o’chirdingiz va u hech qachon o’rnini almashtirmadi. Qaysi komponent ishlamayapti?",
+      "explanation": "ReplicaSet kontrolleri controller manager ichida yashaydi. Usiz kamomadni hech kim sezmaydi - klaster shunchaki o’zini davolashni to’xtatadi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Controller manager"
+        },
+        {
+          "id": "b",
+          "text": "API server"
+        },
+        {
+          "id": "c",
+          "text": "Scheduler"
+        },
+        {
+          "id": "d",
+          "text": "CoreDNS"
+        }
+      ]
+    },
+    "q5-static-pods": {
+      "prompt": "kubeadm klasterida control plane haqida qaysi fikrlar to’g’ri? Barcha to’g’rilarini tanlang.",
+      "explanation": "Static Pod’larni kubelet to’g’ridan-to’g’ri diskdan ishga tushiradi, scheduler ishtirokisiz - control plane o’zi boshqaradigan agent orqali shunday ko’tariladi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Uning komponentlari static Pod sifatida ishlaydi"
+        },
+        {
+          "id": "b",
+          "text": "Manifestlari /etc/kubernetes/manifests/ da yotadi"
+        },
+        {
+          "id": "c",
+          "text": "Kubelet o’sha katalogni kuzatadi va ularni ishlatib turadi"
+        },
+        {
+          "id": "d",
+          "text": "Scheduler ularni qayerga joylashtirishni hal qiladi"
+        }
+      ]
+    }
+  }
+}

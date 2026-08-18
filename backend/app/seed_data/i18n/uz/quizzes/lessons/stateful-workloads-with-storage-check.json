@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: stateful workload’lar",
+  "description": "Ma’lumotlar bazalari va shunga o’xshash tizimlarni ishlatish bo’yicha beshta savol.",
+  "questions": {
+    "q1-volumeclaimtemplates": {
+      "prompt": "volumeClaimTemplates StatefulSet’ga nima beradi?",
+      "options": [
+        {"id": "a", "text": "Barcha replikalar uchun bitta umumiy PVC"},
+        {"id": "b", "text": "Har bir replika uchun alohida PVC, nomi Pod nomidan kelib chiqadi"},
+        {"id": "c", "text": "Har bir Pod uchun emptyDir"},
+        {"id": "d", "text": "Har bir Pod uchun ConfigMap"}
+      ],
+      "explanation": "data-web-0, data-web-1 va hokazo. Har bir Pod qayta rejalashtirilganda ham o’z volume’ini saqlab qoladi."
+    },
+    "q2-reschedule": {
+      "prompt": "StatefulSet’ning Pod’i o’chirilib, qayta yaratildi. U nimani qaytarib oladi?",
+      "options": [
+        {"id": "a", "text": "Yangi nom va yangi volume"},
+        {"id": "b", "text": "O’sha nomni va o’sha PVC’ni"},
+        {"id": "c", "text": "O’sha nomni, lekin bo’sh xotirani"},
+        {"id": "d", "text": "Tasodifiy tartib raqamini"}
+      ],
+      "explanation": "Barqaror shaxs - bu shartnoma: web-0 yana web-0 bo’lib, data-web-0 ulangan holda qaytadi."
+    },
+    "q3-scaledown": {
+      "prompt": "Siz StatefulSet’ni 3 tadan 1 taga kamaytirdingiz. Qaysi Pod’lar va qanday tartibda o’chadi?",
+      "options": [
+        {"id": "a", "text": "Avval web-0, keyin web-1"},
+        {"id": "b", "text": "Avval web-2, keyin web-1 - teskari tartib raqami bo’yicha"},
+        {"id": "c", "text": "Tasodifiy ikkitasi"},
+        {"id": "d", "text": "Uchalasi ham, keyin bittasi qayta yaratiladi"}
+      ],
+      "explanation": "Kamaytirish teskari tartibda va birma-bir boradi - aynan shu klasterlangan ma’lumotlar bazasiga o’z vazifasidan toza tarzda chiqish imkonini beradi."
+    },
+    "q4-pdb": {
+      "prompt": "Ma’lumotlar bazasi StatefulSet’iga odatda nega PodDisruptionBudget kerak bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Rejalashtirishni tezlashtirish uchun"},
+        {"id": "b", "text": "Node’ni drain qilish kvorumni yo’qotadigan darajada ko’p replikani o’chirib yubora olmasligi uchun"},
+        {"id": "c", "text": "Avtomatik masshtablashni yoqish uchun"},
+        {"id": "d", "text": "Volume’larni shifrlash uchun"}
+      ],
+      "explanation": "`kubectl drain` PDB’ga rioya qiladi; PDB bo’lmasa, u barcha replikalarni bir vaqtning o’zida bemalol evict qilib yuboradi."
+    },
+    "q5-backup": {
+      "prompt": "Stateful ilovalar uchun PVC’ni o’chirish borasidagi amaliy ogohlantirish nimadan iborat?",
+      "options": [
+        {"id": "a", "text": "PVC’lar StatefulSet bilan birga o’chiriladi"},
+        {"id": "b", "text": "Ular u bilan birga O’CHIRILMAYDI, shuning uchun eski ma’lumot qolib ketadi va bilinmasdan qayta ishlatilishi mumkin"},
+        {"id": "c", "text": "PVC’larni o’chirib bo’lmaydi"},
+        {"id": "d", "text": "PVC’ni o’chirish namespace’ni o’chirib yuboradi"}
+      ],
+      "explanation": "StatefulSet’ni o’sha nom bilan qayta yaratsangiz, u eski PVC’larga qaytadan bog’lanadi - ataylab qilsangiz qulay, bilmasdan qilsangiz chalkash."
+    }
+  }
+}

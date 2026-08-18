@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: tarmoq va xotira bo’yicha mustahkamlash",
+  "description": "Butun bosqichni qamrab oladigan beshta savol.",
+  "questions": {
+    "q1-layers": {
+      "prompt": "Tashqaridan kelgan so’rov quyidagilarni qaysi tartibda kesib o’tadi: Ingress, Service, Pod, ingress controller.",
+      "options": [
+        {"id": "a", "text": "Ingress, ingress controller, Service, Pod"},
+        {"id": "b", "text": "ingress controller, Ingress, Pod, Service"},
+        {"id": "c", "text": "Service, Ingress, ingress controller, Pod"},
+        {"id": "d", "text": "Pod, Service, Ingress, ingress controller"}
+      ],
+      "explanation": "Ingress obyekti - bu controller o’qiydigan konfiguratsiya; controller so’rovni Service’ga uzatadi, Service esa Pod’ni tanlaydi."
+    },
+    "q2-which-object": {
+      "prompt": "Sizga HTTP marshrutlashsiz, sof TCP port orqali tashqaridan trafik kerak. Qaysi biri?",
+      "options": [
+        {"id": "a", "text": "Ingress"},
+        {"id": "b", "text": "NodePort yoki LoadBalancer turidagi Service"},
+        {"id": "c", "text": "NetworkPolicy"},
+        {"id": "d", "text": "Headless Service"}
+      ],
+      "explanation": "Ingress HTTP(S) uchun mo’ljallangan. Sof TCP esa Service turiga yoki Gateway API’ning TCPRoute’iga tegishli."
+    },
+    "q3-storage-choice": {
+      "prompt": "Workload’ga boshqa node’ga qayta rejalashtirilgandan keyin ham saqlanib qoladigan xotira kerak. Qaysi biri?",
+      "options": [
+        {"id": "a", "text": "emptyDir"},
+        {"id": "b", "text": "hostPath"},
+        {"id": "c", "text": "Tarmoq yoki bulut volume’i bilan ta’minlangan PVC"},
+        {"id": "d", "text": "configMap"}
+      ],
+      "explanation": "emptyDir Pod bilan birga o’ladi, hostPath esa bitta node’ga bog’langan. Faqat haqiqiy PV workload ortidan ergashadi."
+    },
+    "q4-empty-endpoints": {
+      "prompt": "Service’da endpoint’lar yo’q. Buni nima tushuntirishi mumkin? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {"id": "a", "text": "Hech bir Pod mos keladigan yorliqlarga ega emas"},
+        {"id": "b", "text": "Pod’lar bor, lekin Ready emas"},
+        {"id": "c", "text": "Service’ning targetPort’i konteyner portiga mos kelmayapti"},
+        {"id": "d", "text": "Klasterda standart StorageClass yo’q"}
+      ],
+      "explanation": "Birinchi ikkitasi EndpointSlice’ni bo’sh qoldiradi; uchinchisi esa uni to’ldiradi, lekin trafikni yopiq portga yuboradi. Xotiraning bunga aloqasi yo’q."
+    },
+    "q5-dns-first": {
+      "prompt": "Klaster ichidagi har qanday ulanish muammosida qaysi tekshiruvni erta bajarish kerak?",
+      "options": [
+        {"id": "a", "text": "Node CPU’sini"},
+        {"id": "b", "text": "Nom umuman hal bo’layaptimi-yo’qmi"},
+        {"id": "c", "text": "etcd sog’ligini"},
+        {"id": "d", "text": "Scheduler’ni"}
+      ],
+      "explanation": "Tarmoq nosozligiga o’xshab ko’rinadigan narsalarning yarmi - DNS. Avval nomni hal qiling, keyin ulaning."
+    }
+  }
+}

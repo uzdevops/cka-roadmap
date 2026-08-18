@@ -97,7 +97,7 @@ async def get_lesson(
             best_score is not None and quiz is not None and best_score >= quiz.pass_score
         ),
         quiz_attempts=attempts or 0,
-        references=list(lesson.references or []),
+        references=list(tr(lesson, "references", locale) or []),
     )
 
 

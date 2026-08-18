@@ -1,0 +1,98 @@
+{
+  "title": "Tekshiruv: yorliqlar, selektorlar va annotatsiyalar",
+  "description": "Obyektlar bir-birini qanday topishi haqida beshta savol.",
+  "questions": {
+    "q1-label-vs-annotation": {
+      "prompt": "Yorliq va annotatsiya o’rtasidagi farq nima?",
+      "explanation": "Selektorlar yorliqlarga mos keladi. Annotatsiyalar ixtiyoriy metama’lumotni - build id, vosita sozlamasi, checksum - saqlaydi, ular bo’yicha hech kim so’rov yubormaydi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yorliqlar annotatsiyalardan uzunroq"
+        },
+        {
+          "id": "b",
+          "text": "Yorliqlar obyektlarni tanlash uchun; annotatsiyalar hech narsa tanlamaydigan ma’lumotni tashiydi"
+        },
+        {
+          "id": "c",
+          "text": "Annotatsiyalar faqat scheduler tomonidan ishlatiladi"
+        },
+        {
+          "id": "d",
+          "text": "Farq yo’q"
+        }
+      ]
+    },
+    "q2-selector": {
+      "prompt": "app=web yorlig’iga ega Pod’larni ro’yxatlaydigan buyruqni yozing.",
+      "explanation": "`-l` va `--selector` bir xil bayroq; ikkalasi ham qabul qilinadi."
+    },
+    "q3-service-selector": {
+      "prompt": "Service’da `selector: app=web` bor, lekin trafik hech qayerga bormayapti. Eng ehtimoliy sabab nima?",
+      "explanation": "Service - bu yorliq so’rovi. Agar tayyor Pod mos kelmasa, uning EndpointSlice’i bo’sh va trafikni yuboradigan joy yo’q.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Service’ni qayta ishga tushirish kerak"
+        },
+        {
+          "id": "b",
+          "text": "Ishlayotgan hech bir Pod’da app=web yorlig’i yo’q"
+        },
+        {
+          "id": "c",
+          "text": "Service’lar selektor ishlata olmaydi"
+        },
+        {
+          "id": "d",
+          "text": "Service noto’g’ri bosqichda"
+        }
+      ]
+    },
+    "q4-uses": {
+      "prompt": "Quyidagilardan qaysilari yorliqlar bilan boshqariladi? Barcha to’g’rilarini tanlang.",
+      "explanation": "Yorliqlar - butun tizimning bog’lovchi kaliti. Pod ichidagi konteynerlar tartibi yorliqlarga aloqador emas, buning uchun init konteynerlar bor.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Service trafikni qaysi Pod’larga yuborishi"
+        },
+        {
+          "id": "b",
+          "text": "ReplicaSet qaysi Pod’larga egalik qilishi"
+        },
+        {
+          "id": "c",
+          "text": "nodeSelector orqali Pod qaysi node’ga rejalashtirilishi"
+        },
+        {
+          "id": "d",
+          "text": "Pod ichidagi konteynerlarning ishga tushish tartibi"
+        }
+      ]
+    },
+    "q5-immutable-selector": {
+      "prompt": "Deployment’ning `spec.selector`ini o’zgartirmoqchi bo’ldingiz, API server rad etdi. Nega?",
+      "explanation": "Deployment selektori o’zgarmas: uni o’zgartirish allaqachon egalik qilayotgan ReplicaSet va Pod’larni yetim qoldirardi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selektorlar bir marta belgilangach o’zgarmas"
+        },
+        {
+          "id": "b",
+          "text": "Avval Deployment nolga masshtablanishi kerak"
+        },
+        {
+          "id": "c",
+          "text": "Selektorlarni faqat controller manager o’zgartira oladi"
+        },
+        {
+          "id": "d",
+          "text": "Yorliq juda uzun"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: kubeadm bootstrap",
+  "description": "Klasterni noldan ko’tarish bo’yicha beshta savol.",
+  "questions": {
+    "q1-what-init-does": {
+      "prompt": "`kubeadm init` birinchi node’da nima hosil qiladi?",
+      "options": [
+        {"id": "a", "text": "Faqat ishlayotgan kubelet"},
+        {"id": "b", "text": "Control plane uchun sertifikatlar, kubeconfig’lar va static Pod manifestlari"},
+        {"id": "c", "text": "CNI plagini"},
+        {"id": "d", "text": "Bulutli load balancer"}
+      ],
+      "explanation": "U /etc/kubernetes/pki, kubeconfig’lar va /etc/kubernetes/manifests fayllarini yozadi, so’ng kubelet control plane’ni ishga tushirishini kutadi."
+    },
+    "q2-after-init": {
+      "prompt": "Init’dan keyin node’lar Ready bo’lishi uchun darhol nima qilish kerak?",
+      "options": [
+        {"id": "a", "text": "Qayta yuklash (reboot)"},
+        {"id": "b", "text": "CNI plaginini o’rnatish"},
+        {"id": "c", "text": "StorageClass yaratish"},
+        {"id": "d", "text": "kubeadm upgrade ishga tushirish"}
+      ],
+      "explanation": "Tarmoq plagini o’rnatilmaguncha kubelet NetworkReady=false deb xabar beradi va har bir node NotReady holatida qoladi."
+    },
+    "q3-join-token": {
+      "prompt": "Worker node uchun yangi join buyrug’ini chiqaradigan buyruqni yozing.",
+      "explanation": "Init bergan dastlabki tokenning muddati 24 soatdan keyin tugaydi; bu buyruq uni to’g’ri hash bilan qaytadan hosil qiladi."
+    },
+    "q4-kubeconfig": {
+      "prompt": "kubeadm admin kubeconfig faylini qayerga qo’yadi?",
+      "options": [
+        {"id": "a", "text": "~/.kube/config ga, avtomatik ravishda"},
+        {"id": "b", "text": "/etc/kubernetes/admin.conf ga - uni o’zingiz nusxalaysiz"},
+        {"id": "c", "text": "/var/lib/kubelet/config.yaml"},
+        {"id": "d", "text": "Secret ichiga"}
+      ],
+      "explanation": "Init’ning oxirgi qatorlari uni $HOME/.kube/config ga nusxalash va egaligini to’g’rilashni aytadi."
+    },
+    "q5-podcidr": {
+      "prompt": "Nega `--pod-network-cidr` init paytida muhim?",
+      "options": [
+        {"id": "a", "text": "U Service VIP diapazonini belgilaydi"},
+        {"id": "b", "text": "Ba’zi CNI plaginlari aniq diapazonni kutadi va u ularnikiga mos kelishi shart"},
+        {"id": "c", "text": "U NodePort diapazonini belgilaydi"},
+        {"id": "d", "text": "Bu faqat ko’rinish uchun"}
+      ],
+      "explanation": "Flannel’ning standart qiymati 10.244.0.0/16. Mos kelmasa, Pod’lar hech qayerga marshrutlanmaydigan manzillarni oladi."
+    }
+  }
+}

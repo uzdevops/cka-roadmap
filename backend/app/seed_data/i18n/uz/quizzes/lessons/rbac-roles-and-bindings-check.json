@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: RBAC",
+  "description": "Kim nima qila olishi bo’yicha beshta savol.",
+  "questions": {
+    "q1-role-vs-clusterrole": {
+      "prompt": "Role va ClusterRole o’rtasida qanday farq bor?",
+      "options": [
+        {"id": "a", "text": "Role foydalanuvchilar uchun, ClusterRole esa ServiceAccount’lar uchun"},
+        {"id": "b", "text": "Role namespace doirasida ishlaydi; ClusterRole butun klaster doirasida ishlaydi va namespace’ga tegishli bo’lmagan resurslarni ham qamrab oladi"},
+        {"id": "c", "text": "ClusterRole kamroq huquq beradi"},
+        {"id": "d", "text": "Hech qanday farq yo’q"}
+      ],
+      "explanation": "ClusterRole’ni RoleBinding orqali havola qilib, bitta namespace ichida ham qayta ishlatish mumkin."
+    },
+    "q2-binding": {
+      "prompt": "`dev` namespace’idagi RoleBinding ClusterRole’ga havola qilyapti. Nima beriladi?",
+      "options": [
+        {"id": "a", "text": "Butun klaster bo’ylab huquqlar"},
+        {"id": "b", "text": "O’sha huquqlar, lekin faqat dev ichida"},
+        {"id": "c", "text": "Hech nima - bu yaroqsiz konfiguratsiya"},
+        {"id": "d", "text": "Faqat o’qish huquqi"}
+      ],
+      "explanation": "Bu `view` kabi rolni har bir namespace uchun qaytadan yozmasdan qayta ishlatishning standart usuli."
+    },
+    "q3-additive": {
+      "prompt": "RBAC’da deny qoidalari yo’q. Bundan nima kelib chiqadi?",
+      "options": [
+        {"id": "a", "text": "Oxirgi binding g’olib chiqadi"},
+        {"id": "b", "text": "Huquqlar faqat qo’shiladi - mos keladigan hamma narsaning birlashmasi"},
+        {"id": "c", "text": "Eng tor qoida g’olib chiqadi"},
+        {"id": "d", "text": "Binding’lar tartib bo’yicha baholanadi"}
+      ],
+      "explanation": "Huquqni ayirib bo’lmaydi; buning o’rniga kamroq huquq berasiz."
+    },
+    "q4-can-i": {
+      "prompt": "dev namespace’ida Deployment yarata olasizmi-yo’qmi - shuni tekshiradigan buyruqni yozing.",
+      "explanation": "Xuddi shu savolni boshqa shaxs nomidan berish uchun `--as=system:serviceaccount:dev:build` qo’shing."
+    },
+    "q5-subject": {
+      "prompt": "Binding qanday subject turlariga havola qila oladi?",
+      "options": [
+        {"id": "a", "text": "User, Group va ServiceAccount"},
+        {"id": "b", "text": "Pod va Node"},
+        {"id": "c", "text": "Namespace va Cluster"},
+        {"id": "d", "text": "Faqat ServiceAccount"}
+      ],
+      "explanation": "Foydalanuvchi va guruhlar autentifikatsiya qatlamidan keladi; Kubernetes o’zining foydalanuvchi obyektlarini saqlamaydi."
+    }
+  }
+}

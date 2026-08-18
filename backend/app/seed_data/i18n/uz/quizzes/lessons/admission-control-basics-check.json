@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: admission control",
+  "description": "Saqlashdan oldingi oxirgi darvoza bo’yicha beshta savol.",
+  "questions": {
+    "q1-order": {
+      "prompt": "Admission so’rov quvurining qayerida turadi?",
+      "options": [
+        {"id": "a", "text": "Autentifikatsiyadan oldin"},
+        {"id": "b", "text": "Avtorizatsiyadan keyin, validatsiya va saqlashdan oldin"},
+        {"id": "c", "text": "Obyekt saqlangandan keyin"},
+        {"id": "d", "text": "Scheduler ichida"}
+      ],
+      "explanation": "Autentifikatsiya, avtorizatsiya, admission, validatsiya, saqlash. Admission - obyektni o’zgartirish yoki rad etish uchun oxirgi imkoniyat."
+    },
+    "q2-mutating-first": {
+      "prompt": "Qaysi biri avval ishlaydi: mutating yoki validating webhook’lar?",
+      "options": [
+        {"id": "a", "text": "Validating"},
+        {"id": "b", "text": "Mutating"},
+        {"id": "c", "text": "Ular parallel ishlaydi"},
+        {"id": "d", "text": "Alifbo tartibida"}
+      ],
+      "explanation": "Avval mutating ishlaydi, toki validatsiya yakuniy obyektni ko’rsin - aks holda standart qiymat qo’yuvchi webhook tekshiruvdan biror narsani yashirincha o’tkazib yuborishi mumkin edi."
+    },
+    "q3-failurepolicy": {
+      "prompt": "Webhook’ga ulanib bo’lmayapti va uning failurePolicy qiymati Fail. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "So’rov qabul qilinadi"},
+        {"id": "b", "text": "So’rov rad etiladi"},
+        {"id": "c", "text": "Webhook o’chiriladi"},
+        {"id": "d", "text": "API server qayta ishga tushadi"}
+      ],
+      "explanation": "Bu xavfsiz, lekin webhook’ning o’z Pod’lari ishga tusha olmasa, klasterni butunlay qulflab qo’yishi mumkin. Uni namespaceSelector bilan cheklang."
+    },
+    "q4-builtin": {
+      "prompt": "Qaysi ichki admission plagini kubelet’ning boshqa node’lar obyektlarini o’zgartirishiga yo’l qo’ymaydi?",
+      "options": [
+        {"id": "a", "text": "PodSecurity"},
+        {"id": "b", "text": "NodeRestriction"},
+        {"id": "c", "text": "ResourceQuota"},
+        {"id": "d", "text": "DefaultStorageClass"}
+      ],
+      "explanation": "Aynan NodeRestriction tufayli --authorization-mode=Node,RBAC standart juftlik hisoblanadi."
+    },
+    "q5-podsecurity": {
+      "prompt": "Bugungi kunda Pod Security qanday ta’minlanadi?",
+      "options": [
+        {"id": "a", "text": "PodSecurityPolicy yordamida"},
+        {"id": "b", "text": "Namespace yorliqlari orqali sozlanadigan Pod Security admission kontrolleri yordamida"},
+        {"id": "c", "text": "NetworkPolicy yordamida"},
+        {"id": "d", "text": "Faqat RBAC yordamida"}
+      ],
+      "explanation": "PodSecurityPolicy olib tashlandi. Uning o’rnini pod-security.kubernetes.io/enforce=restricted kabi yorliqlar egalladi."
+    }
+  }
+}

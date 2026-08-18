@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: har qanday miqyosda ishlaydigan metodika",
+  "description": "Alomatdan aybdor komponentga qarab ishlash bo’yicha beshta savol.",
+  "questions": {
+    "q1-first": {
+      "prompt": "Pod trafikka xizmat qilmayapti. Eng ko’p foyda beradigan birinchi buyruq qaysi?",
+      "options": [
+        {"id": "a", "text": "kubectl logs"},
+        {"id": "b", "text": "kubectl describe pod - holat va hodisalarni ko’rish uchun"},
+        {"id": "c", "text": "kubectl delete pod"},
+        {"id": "d", "text": "kubectl top pod"}
+      ],
+      "explanation": "Holat va hodisalar birgalikda Pod umuman rejalashtirilganmi, image tortib olinganmi va probe’lar o’tayaptimi - buni siz loglarga qarashdan oldin aytib beradi."
+    },
+    "q2-pending": {
+      "prompt": "Pending aynan nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Konteyner ishga tushyapti"},
+        {"id": "b", "text": "Pod hali node’ga bog’lanmagan"},
+        {"id": "c", "text": "Image tortib olinmoqda"},
+        {"id": "d", "text": "Probe muvaffaqiyatsiz bo’layapti"}
+      ],
+      "explanation": "Pending - bu rejalashtirish hikoyasi: resurslar, taint’lar, affinity yoki bog’lanmagan PVC. Image tortib olish va volume mount qilish esa ContainerCreating bosqichida sodir bo’ladi."
+    },
+    "q3-split": {
+      "prompt": "Service muammosini eng tez ikkiga bo’lib beradigan tekshiruv qaysi?",
+      "options": [
+        {"id": "a", "text": "kube-proxy’ni qayta ishga tushirish"},
+        {"id": "b", "text": "Service’da tayyor (ready) endpoint’lar bor-yo’qligi"},
+        {"id": "c", "text": "Node CPU’sini tekshirish"},
+        {"id": "d", "text": "Audit logni o’qish"}
+      ],
+      "explanation": "Endpoint’lar bor bo’lsa - tarmoq yo’liga qarang; endpoint’lar yo’q bo’lsa - yorliqlar va readiness’ga qarang."
+    },
+    "q4-layer": {
+      "prompt": "Tashqaridan kelgan trafik ishlamayapti, klaster ichidan esa ishlaydi. Qayerga qaraysiz?",
+      "options": [
+        {"id": "a", "text": "Konteyner image’iga"},
+        {"id": "b", "text": "Ingress yo’liga: kontroller, Ingress qoidalari va tashqi load balancer"},
+        {"id": "c", "text": "etcd’ga"},
+        {"id": "d", "text": "Scheduler’ga"}
+      ],
+      "explanation": "Ichkarida ishlayotgani Pod’lar, Service’lar va DNS sog’lomligini isbotlaydi. Demak nosozlik ularning oldida turgan qatlamda."
+    },
+    "q5-change": {
+      "prompt": "Har qanday to’satdan yuz bergan nosozlikda beriladigan birinchi savol qanday?",
+      "options": [
+        {"id": "a", "text": "U qaysi node’da?"},
+        {"id": "b", "text": "Nima o’zgardi - rollout, konfiguratsiya tahriri yoki yangilanishmi?"},
+        {"id": "c", "text": "Qancha xotira bo’sh?"},
+        {"id": "d", "text": "Klaster HA rejimidami?"}
+      ],
+      "explanation": "Aksariyat incidentlar - yaqinda qilingan o’zgarishning natijasi. `kubectl rollout history` va hodisalar bunga noldan mulohaza yuritishdan ko’ra tezroq javob beradi."
+    }
+  }
+}

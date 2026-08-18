@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: DNS",
+  "description": "Klaster ichida nomlar qanday hal qilinishi bo’yicha beshta savol.",
+  "questions": {
+    "q1-fqdn": {
+      "prompt": "`prod` namespace’idagi `api` Service’ining to’liq DNS nomi (FQDN) qanday?",
+      "options": [
+        {"id": "a", "text": "api.prod.pod.cluster.local"},
+        {"id": "b", "text": "api.prod.svc.cluster.local"},
+        {"id": "c", "text": "prod.api.svc.cluster.local"},
+        {"id": "d", "text": "api.svc.prod.cluster.local"}
+      ],
+      "explanation": "<service>.<namespace>.svc.cluster.local. prod ichidan turib, qidiruv domenlari tufayli faqat `api` ning o’zi ham hal bo’ladi."
+    },
+    "q2-where": {
+      "prompt": "CoreDNS qanday ishlaydi?",
+      "options": [
+        {"id": "a", "text": "Har bir node’da static Pod sifatida"},
+        {"id": "b", "text": "kube-system’da Deployment sifatida, oldida Service turadi"},
+        {"id": "c", "text": "kubelet’ning bir qismi sifatida"},
+        {"id": "d", "text": "systemd birligi sifatida"}
+      ],
+      "explanation": "Ya’ni DNS’ni istalgan boshqa workload kabi tekshirish mumkin - loglar, endpoint’lar, qayta ishga tushishlar."
+    },
+    "q3-debug": {
+      "prompt": "CoreDNS Pod’larini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Amalga oshirilishi CoreDNS bo’lsa ham, yorliq hamon k8s-app=kube-dns bo’lib qolgan."
+    },
+    "q4-resolvconf": {
+      "prompt": "Pod o’zining nameserver’ini qayerdan oladi?",
+      "options": [
+        {"id": "a", "text": "Node’ning /etc/resolv.conf faylidan, aynan nusxalab"},
+        {"id": "b", "text": "kubelet /etc/resolv.conf ni klaster DNS Service’ining IP’siga yo’naltirib yozadi"},
+        {"id": "c", "text": "Muhit o’zgaruvchisidan"},
+        {"id": "d", "text": "CNI plagindan"}
+      ],
+      "explanation": "Buni `dnsPolicy` boshqaradi; standarti - ClusterFirst. DNS noto’g’ri ishlasa, Pod ichiga kirib qarang."
+    },
+    "q5-nxdomain": {
+      "prompt": "Pod ichidan boshqa namespace’dagi Service’ni izlash muvaffaqiyatsiz tugayapti, lekin o’z namespace’idagi qisqa nom ishlayapti. Nega?",
+      "options": [
+        {"id": "a", "text": "CoreDNS ishlamayapti"},
+        {"id": "b", "text": "Qidiruv yo’li faqat Pod’ning o’z namespace’ini qamrab oladi, shuning uchun nomni to’liqroq yozish kerak"},
+        {"id": "c", "text": "NetworkPolicy DNS’ni bloklayapti"},
+        {"id": "d", "text": "Service’da selektor yo’q"}
+      ],
+      "explanation": "Namespace’lar orasida <service>.<namespace> shaklidan foydalaning. Agar CoreDNS ishlamayotgan bo’lganida, umuman hech nima hal bo’lmasdi."
+    }
+  }
+}

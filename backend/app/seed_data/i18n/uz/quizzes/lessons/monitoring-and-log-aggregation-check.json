@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: monitoring va loglar",
+  "description": "Voqea sodir bo’lgandan keyin dalillarni saqlab qolish bo’yicha beshta savol.",
+  "questions": {
+    "q1-why-aggregate": {
+      "prompt": "Nega loglarni node’dan tashqariga yig’ib borish kerak?",
+      "options": [
+        {"id": "a", "text": "kubectl logs sekin ishlaydi"},
+        {"id": "b", "text": "Konteyner loglari Pod bilan birga yo’qoladi va node’da rotatsiya qilinadi"},
+        {"id": "c", "text": "Aks holda loglarni umuman o’qib bo’lmaydi"},
+        {"id": "d", "text": "RBAC talabini bajarish uchun"}
+      ],
+      "explanation": "Tahlil (post-mortem) Pod yo’qolganidan keyin qilinadi. Agar loglar faqat node’da bo’lgan bo’lsa, dalillar ham u bilan birga ketadi."
+    },
+    "q2-node-agent": {
+      "prompt": "Log yig’uvchi agent odatda qanday shaklda ishlaydi?",
+      "options": [
+        {"id": "a", "text": "Deployment sifatida"},
+        {"id": "b", "text": "DaemonSet sifatida - har bir node’da bitta Pod"},
+        {"id": "c", "text": "CronJob sifatida"},
+        {"id": "d", "text": "Har doim har bir Pod ichidagi sidecar sifatida"}
+      ],
+      "explanation": "Har bir node’dagi bitta agent o’sha node’dagi barcha konteynerlarning log fayllarini o’qiydi. Sidecar esa stdout’ga log yozmaydigan ilova uchun zaxira variant."
+    },
+    "q3-metrics-vs-monitoring": {
+      "prompt": "metrics-server va Prometheus - vazifalar qanday taqsimlanadi?",
+      "options": [
+        {"id": "a", "text": "Ular bir-birining o’rnini bosa oladi"},
+        {"id": "b", "text": "metrics-server kubectl top va HPA uchun joriy sarfni beradi; Prometheus esa tarixni saqlaydi va alert yuboradi"},
+        {"id": "c", "text": "Prometheus kubelet o’rnini bosadi"},
+        {"id": "d", "text": "metrics-server tarixni saqlaydi"}
+      ],
+      "explanation": "metrics-server’dan o’tgan haftaning ma’lumotini so’rash - tushunchalarni chalkashtirish: u hech narsani saqlab qolmaydi."
+    },
+    "q4-events-value": {
+      "prompt": "Nega hodisalarni (Events) tashqariga yig’ib borish arziydi?",
+      "options": [
+        {"id": "a", "text": "Ular Pod loglarining yagona manbai"},
+        {"id": "b", "text": "Ular rejalashtirish, image va probe nosozliklarini tushuntiradi, lekin taxminan bir soatdan keyin yo’qoladi"},
+        {"id": "c", "text": "Ular metrikalarni o’z ichiga oladi"},
+        {"id": "d", "text": "Ular audit logning o’rnini bosadi"}
+      ],
+      "explanation": "Bu - biror narsa nega ishga tushmaganini tushuntiruvchi eng foydali yagona yozuv, va u bug’lanib yo’qoladi."
+    },
+    "q5-golden": {
+      "prompt": "Klaster sog’ligini eng tez ko’rsatib beradigan signallar qaysilari?",
+      "options": [
+        {"id": "a", "text": "Node conditions, Pod restart’lari va Pending holatidagi Pod’lar"},
+        {"id": "b", "text": "Image o’lchamlari"},
+        {"id": "c", "text": "namespace’lar soni"},
+        {"id": "d", "text": "etcd disk formati"}
+      ],
+      "explanation": "Ready bo’lmagan node’lar, qayta ishga tushayotgan Pod’lar va Pending’da qotib qolgan Pod’lar - noto’g’ri ketadigan narsalarning ko’pchiligini qamrab oladi."
+    }
+  }
+}

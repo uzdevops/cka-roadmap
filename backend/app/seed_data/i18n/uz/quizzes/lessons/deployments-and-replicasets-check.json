@@ -1,0 +1,80 @@
+{
+  "title": "Tekshiruv: Deployment va ReplicaSet",
+  "description": "Rollout, egalik va orqaga qaytarish bo’yicha beshta savol.",
+  "questions": {
+    "q1-ownership": {
+      "prompt": "Deployment yaratganingizda egalik zanjiri qanday?",
+      "explanation": "Deployment ReplicaSet’larni boshqaradi; har bir ReplicaSet o’z Pod’larini tirik saqlaydi. Rollout - bitta ReplicaSet ko’tarilib, boshqasi pasayishi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deployment -> Pod"
+        },
+        {
+          "id": "b",
+          "text": "Deployment -> ReplicaSet -> Pod"
+        },
+        {
+          "id": "c",
+          "text": "ReplicaSet -> Deployment -> Pod"
+        },
+        {
+          "id": "d",
+          "text": "Deployment -> DaemonSet -> Pod"
+        }
+      ]
+    },
+    "q2-rollout": {
+      "prompt": "Deployment’dagi image’ni o’zgartirdingiz. Deployment kontrolleri nima qiladi?",
+      "explanation": "Pod’lar muhim maydonlarda o’zgarmas, ya’ni yangi shablon yangi ReplicaSet degani. Yangisi ko’tarilgani sayin eskisi pasayadi.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mavjud Pod’larni joyida tahrirlaydi"
+        },
+        {
+          "id": "b",
+          "text": "Yangi ReplicaSet yaratadi va nusxalarni unga ko’chiradi"
+        },
+        {
+          "id": "c",
+          "text": "Har bir Pod’ni o’chirib, keyin qayta yaratadi"
+        },
+        {
+          "id": "d",
+          "text": "Qo’lda masshtablamaguningizcha hech nima"
+        }
+      ]
+    },
+    "q3-rollback": {
+      "prompt": "web nomli Deployment’ning oxirgi rollout’ini bekor qiladigan buyruqni yozing.",
+      "explanation": "Eski ReplicaSet’lar aynan shuning uchun saqlanadi: orqaga qaytarish - oldingisini qayta ko’tarish."
+    },
+    "q4-status": {
+      "prompt": "O’sha rollout jarayonini kuzatadigan buyruqni yozing.",
+      "explanation": "`rollout status` rollout tugagunicha yoki xato bergunicha kutadi, shuning uchun skriptlarda ham qo’l ostida ham foydali."
+    },
+    "q5-observed-generation": {
+      "prompt": "Qaysi status maydoni kontroller sizning oxirgi o’zgarishingizni ko’rgan-ko’rmaganini aytadi?",
+      "explanation": "`observedGeneration` `metadata.generation` dan orqada qolgan bo’lsa, kontroller tahriringizni hali qayta ishlamagan.",
+      "options": [
+        {
+          "id": "a",
+          "text": "readyReplicas"
+        },
+        {
+          "id": "b",
+          "text": "observedGeneration"
+        },
+        {
+          "id": "c",
+          "text": "updatedReplicas"
+        },
+        {
+          "id": "d",
+          "text": "availableReplicas"
+        }
+      ]
+    }
+  }
+}

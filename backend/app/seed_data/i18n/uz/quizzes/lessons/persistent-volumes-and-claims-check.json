@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: PV va PVC",
+  "description": "Doimiy (uzoq yashaydigan) xotira bo’yicha beshta savol.",
+  "questions": {
+    "q1-relationship": {
+      "prompt": "PV bilan PVC o’rtasidagi munosabat qanday?",
+      "options": [
+        {"id": "a", "text": "PVC - bu so’rov; PV esa o’sha so’rovni qondiradigan xotira bo’lagi"},
+        {"id": "b", "text": "PV PVC’dan xotira so’raydi"},
+        {"id": "c", "text": "Ular bir xil obyekt"},
+        {"id": "d", "text": "PVC klaster darajasida, PV esa namespace darajasida"}
+      ],
+      "explanation": "PVC namespace darajasida bo’lib, ilovaga tegishli; PV esa klaster darajasida bo’lib, infratuzilmaga tegishli."
+    },
+    "q2-accessmodes": {
+      "prompt": "ReadWriteOnce nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Uni umuman faqat bitta Pod mount qila oladi"},
+        {"id": "b", "text": "Uni bitta node’dagi Pod’lar o’qish-yozish rejimida mount qila oladi"},
+        {"id": "c", "text": "Uni bir marta o’qish mumkin"},
+        {"id": "d", "text": "Unga faqat control plane yoza oladi"}
+      ],
+      "explanation": "Chegara - node, Pod emas. Haqiqatan ham bitta Pod’ni anglatadigan yangiroq rejim - ReadWriteOncePod."
+    },
+    "q3-reclaim": {
+      "prompt": "`persistentVolumeReclaimPolicy: Delete` bo’lgan PV’ga bog’langan PVC o’chirildi. Nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "PV saqlanib qoladi va Available holatiga o’tadi"},
+        {"id": "b", "text": "PV ham, uning ortidagi haqiqiy xotira ham o’chiriladi"},
+        {"id": "c", "text": "PV Released holatiga o’tadi va ma’lumotni saqlab qoladi"},
+        {"id": "d", "text": "Hech nima"}
+      ],
+      "explanation": "Volume’ni saqlab qoladigan siyosat - Retain: unda PV Released holatiga o’tadi va qayta ishlatishdan oldin qo’lda tozalashni talab qiladi."
+    },
+    "q4-pending": {
+      "prompt": "PVC Pending holatida qolib ketdi. Odatdagi sabablar qanday?",
+      "options": [
+        {"id": "a", "text": "Pod hali ishga tushmagan"},
+        {"id": "b", "text": "Mos keladigan PV yo’q va uni yarata oladigan StorageClass ham yo’q"},
+        {"id": "c", "text": "Namespace mavjud emas"},
+        {"id": "d", "text": "PVC’da yorliqlar yo’q"}
+      ],
+      "explanation": "`kubectl describe pvc` sababni aniq aytib beradi: volume plagin yo’q, hajm yoki access mode mos kelmayapti, yoki ko’rsatilgan StorageClass umuman mavjud emas."
+    },
+    "q5-expand": {
+      "prompt": "Siz PVC so’ragan hajmni oshirdingiz. Bu qachon ishlaydi?",
+      "options": [
+        {"id": "a", "text": "Har doim"},
+        {"id": "b", "text": "Faqat uning StorageClass’ida allowVolumeExpansion: true bo’lsa"},
+        {"id": "c", "text": "Faqat ReadWriteMany volume’lar uchun"},
+        {"id": "d", "text": "Hech qachon - hajm o’zgarmas"}
+      ],
+      "explanation": "Va hatto o’shanda ham faqat kattalashtirish tomonga. Kichraytirish hech qachon qo’llab-quvvatlanmaydi."
+    }
+  }
+}

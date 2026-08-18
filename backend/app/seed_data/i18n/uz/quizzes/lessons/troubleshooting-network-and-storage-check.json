@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: tarmoq va xotira nosozliklari",
+  "description": "Trafik yoki mount qayerda buzilayotganini aniqlash bo’yicha beshta savol.",
+  "questions": {
+    "q1-order": {
+      "prompt": "Service’ga murojaat qilib bo’lmayapti. Eng foydali birinchi tekshiruv qaysi?",
+      "options": [
+        {"id": "a", "text": "kube-proxy’ni qayta ishga tushirish"},
+        {"id": "b", "text": "Service’da tayyor endpoint’lar bor-yo’qligi"},
+        {"id": "c", "text": "Ingress’ning TLS sertifikati"},
+        {"id": "d", "text": "Node yadrosining versiyasi"}
+      ],
+      "explanation": "Endpoint yo’qligi nosozlik tarmoqda emas, selektorda yoki Pod tayyorligida ekanini bildiradi. Bu muammoni darhol ikkiga bo’lib beradi."
+    },
+    "q2-podip-works": {
+      "prompt": "Faqat bitta node’dan trafik Pod IP’ga o’tyapti, lekin Service VIP’ga o’tmayapti. Qaysi komponent aybdor?",
+      "options": [
+        {"id": "a", "text": "CNI plagin"},
+        {"id": "b", "text": "O’sha node’dagi kube-proxy"},
+        {"id": "c", "text": "CoreDNS"},
+        {"id": "d", "text": "API server"}
+      ],
+      "explanation": "Pod IP’ga yetib borish CNI joyida ekanini isbotlaydi. Service VIP’larini esa kube-proxy dasturlaydi va u har bir node’da alohida ishlaydi."
+    },
+    "q3-mount-fail": {
+      "prompt": "Pod volume mount xatosi bilan ContainerCreating holatida qotib qoldi. Xabar qayerda bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Konteyner loglarida"},
+        {"id": "b", "text": "`kubectl describe pod` hodisalarida va o’sha node’dagi kubelet journalida"},
+        {"id": "c", "text": "PVC’ning spec’ida"},
+        {"id": "d", "text": "StorageClass’da"}
+      ],
+      "explanation": "Konteyner loglari hali yo’q - konteyner umuman ishga tushmagan. Mount qilayotgan komponent esa kubelet."
+    },
+    "q4-multiattach": {
+      "prompt": "Pod 'Multi-Attach error for volume' xabari bilan Pending holatida turibdi. Bu nimani anglatadi?",
+      "options": [
+        {"id": "a", "text": "Volume to’lib ketgan"},
+        {"id": "b", "text": "ReadWriteOnce volume hali ham boshqa node’ga ulangan holda turibdi"},
+        {"id": "c", "text": "Ikkita PVC bir xil nomga ega"},
+        {"id": "d", "text": "StorageClass mavjud emas"}
+      ],
+      "explanation": "Odatda boshqa node’dagi eski Pod to’liq tugamagan bo’ladi. RWO - bu har bir node uchun eksklyuziv qulf."
+    },
+    "q5-netshoot": {
+      "prompt": "nicolaka/netshoot image’idan foydalanib, tarmoqni tekshirish uchun vaqtinchalik interaktiv shell Pod’ini ishga tushiradigan buyruqni yozing.",
+      "explanation": "Klaster tarmog’i ichidagi bir martalik Pod - DNS va ulanishni aynan kerakli nuqtadan sinab ko’rishning eng tez usuli."
+    }
+  }
+}

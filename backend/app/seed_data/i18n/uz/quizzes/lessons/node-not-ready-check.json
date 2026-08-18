@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: NotReady node",
+  "description": "Klasterda ishtirok etishni to’xtatgan node’lar bo’yicha beshta savol.",
+  "questions": {
+    "q1-first-command": {
+      "prompt": "Node NotReady holatida. Avval nimani o’qiysiz?",
+      "options": [
+        {"id": "a", "text": "Uning Pod’laridagi kubectl logs chiqishini"},
+        {"id": "b", "text": "kubectl describe node - Conditions blokini"},
+        {"id": "c", "text": "etcd sog’ligini"},
+        {"id": "d", "text": "Service endpoint’larini"}
+      ],
+      "explanation": "Conditions sababni so’z bilan nomlab beradi: MemoryPressure, DiskPressure yoki xabar bilan birga KubeletNotReady."
+    },
+    "q2-networkready": {
+      "prompt": "Conditions 'container runtime network not ready' deb ko’rsatyapti. Nima yetishmayapti?",
+      "options": [
+        {"id": "a", "text": "kube-proxy"},
+        {"id": "b", "text": "CNI plagini"},
+        {"id": "c", "text": "CoreDNS"},
+        {"id": "d", "text": "metrics-server"}
+      ],
+      "explanation": "`kubeadm init` dan keyin tarmoq plagini o’rnatilmaguncha har bir node NotReady bo’lib qolaveradi."
+    },
+    "q3-kubelet-logs": {
+      "prompt": "Node’da kubelet loglarini kuzatib turadigan buyruqni yozing.",
+      "explanation": "kubelet - systemd birligi, Pod emas; shuning uchun uning loglari hech qachon kubectl’da bo’lmaydi."
+    },
+    "q4-eviction": {
+      "prompt": "Node NotReady holatida qolaveryapti. Uning Pod’lariga nima bo’ladi?",
+      "options": [
+        {"id": "a", "text": "Ular darhol o’chiriladi"},
+        {"id": "b", "text": "Eviction timeout o’tgach kontroller ularni o’chirishga belgilaydi va qaytadan rejalashtiradi"},
+        {"id": "c", "text": "Hech qachon hech nima bo’lmaydi"},
+        {"id": "d", "text": "Ular darhol ko’chiriladi"}
+      ],
+      "explanation": "Node kontrolleri kutadi - sukut bo’yicha taxminan besh daqiqa - chunki qisqa tarmoq uzilishi hali node o’ldi degani emas."
+    },
+    "q5-diskpressure": {
+      "prompt": "Node DiskPressure haqida xabar beryapti. kubelet nima qilyapti?",
+      "options": [
+        {"id": "a", "text": "Administrator aralashmaguncha hech nima"},
+        {"id": "b", "text": "Joy bo’shatish uchun image’larni tozalayapti va Pod’larni evict qilyapti"},
+        {"id": "c", "text": "Qayta yuklanyapti"},
+        {"id": "d", "text": "Holat haqida xabar berishdan bosh tortyapti"}
+      ],
+      "explanation": "Bu esa aslida sababchi bo’lmagan Pod’larning evict qilinishi ko’rinishida namoyon bo’ladi. Workload’ni emas, diskni tuzating."
+    }
+  }
+}

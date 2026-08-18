@@ -1,0 +1,50 @@
+{
+  "title": "Tekshiruv: Service’lar",
+  "description": "To’rtta Service turi va ular trafikni qanday yo’naltirishi bo’yicha beshta savol.",
+  "questions": {
+    "q1-clusterip": {
+      "prompt": "ClusterIP turidagi Service sizga nima beradi?",
+      "options": [
+        {"id": "a", "text": "Klaster tashqarisidan murojaat qilinadigan manzil"},
+        {"id": "b", "text": "Faqat klaster ichidan murojaat qilinadigan barqaror virtual IP"},
+        {"id": "c", "text": "IP’siz, faqat DNS nomi"},
+        {"id": "d", "text": "Har bir node’dagi port"}
+      ],
+      "explanation": "ClusterIP - standart tur va asosiy qurilish g’ishti: NodePort ham, LoadBalancer ham uning ustiga quriladi."
+    },
+    "q2-nodeport-range": {
+      "prompt": "NodePort uchun standart diapazon qaysi?",
+      "options": [
+        {"id": "a", "text": "1-1024"},
+        {"id": "b", "text": "8000-9000"},
+        {"id": "c", "text": "30000-32767"},
+        {"id": "d", "text": "Har qanday bo’sh port"}
+      ],
+      "explanation": "API serverdagi --service-node-port-range bilan o’zgartirish mumkin, lekin kutiladigan diapazon - 30000-32767."
+    },
+    "q3-endpoints": {
+      "prompt": "Service Pod’larni tanlaydi, lekin trafikni hech qayerga yubormayapti. Avval nimani tekshirasiz?",
+      "options": [
+        {"id": "a", "text": "Node’ning marshrutlash jadvalini"},
+        {"id": "b", "text": "Uning EndpointSlice’larini - selektorga mos keladigan tayyor (Ready) Pod bormi"},
+        {"id": "c", "text": "Ingress’ni"},
+        {"id": "d", "text": "etcd’ni"}
+      ],
+      "explanation": "`kubectl get endpointslices -l kubernetes.io/service-name=<svc>`. Bo’sh bo’lsa - selektor birorta ham tayyor Pod’ga mos kelmayapti."
+    },
+    "q4-expose": {
+      "prompt": "web nomli Deployment’ni 80-portda ClusterIP turidagi Service sifatida ochadigan buyruqni yozing.",
+      "explanation": "Konteyner boshqa portni tinglayotgan bo’lsa, `--target-port` ni qo’shing."
+    },
+    "q5-headless": {
+      "prompt": "`clusterIP: None` nima hosil qiladi?",
+      "options": [
+        {"id": "a", "text": "Trafikni tashlab yuboradigan Service"},
+        {"id": "b", "text": "Headless Service: VIP’siz, DNS to’g’ridan-to’g’ri Pod IP’larini qaytaradi"},
+        {"id": "c", "text": "Tashqi Service"},
+        {"id": "d", "text": "Yaroqsiz obyekt"}
+      ],
+      "explanation": "StatefulSet’lar har bir Pod’ga o’zining alohida hal qilinadigan nomini aynan headless Service orqali beradi."
+    }
+  }
+}

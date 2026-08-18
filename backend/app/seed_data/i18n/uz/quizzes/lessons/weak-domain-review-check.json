@@ -1,0 +1,56 @@
+{
+  "title": "Tekshiruv: zaif sohalarni takrorlash",
+  "description": "Imtihonning eng og’ir sohalarini qamrab oluvchi beshta savol.",
+  "questions": {
+    "q1-weights": {
+      "prompt": "CKA’da qaysi ikki soha eng katta vaznga ega?",
+      "options": [
+        {"id": "a", "text": "Storage va workload’lar"},
+        {"id": "b", "text": "Nosozliklarni bartaraf etish va klaster arxitekturasi"},
+        {"id": "c", "text": "Tarmoq va storage"},
+        {"id": "d", "text": "Rejalashtirish va Service’lar"}
+      ],
+      "explanation": "Nosozliklarni bartaraf etish 30%, klaster arxitekturasi esa 25% - ikkalasi birgalikda ballarning yarmidan ko’pini tashkil qiladi."
+    },
+    "q2-symptom": {
+      "prompt": "'Yangi Pod’lar Pending holatida qolyapti, mavjudlari esa joyida.' Komponentni ayting.",
+      "options": [
+        {"id": "a", "text": "kubelet"},
+        {"id": "b", "text": "Scheduler"},
+        {"id": "c", "text": "kube-proxy"},
+        {"id": "d", "text": "CoreDNS"}
+      ],
+      "explanation": "Bu bog’lanishni ikki tomonlama mashq qiling - alomatdan komponentga va komponentdan alomatga."
+    },
+    "q3-symptom2": {
+      "prompt": "'Service VIP’lari faqat bitta node’dan ishlamay qoldi.' Komponentni ayting.",
+      "options": [
+        {"id": "a", "text": "O’sha node’dagi kube-proxy"},
+        {"id": "b", "text": "etcd"},
+        {"id": "c", "text": "API server"},
+        {"id": "d", "text": "Scheduler"}
+      ],
+      "explanation": "Bitta node’gagina xos xatti-harakat har bir node’da alohida ishlaydigan komponentga ishora qiladi."
+    },
+    "q4-study": {
+      "prompt": "Tayyorgarlik ko’rsatkichingizni bitta soha pastga tortmoqda. Samarali javob qaysi?",
+      "options": [
+        {"id": "a", "text": "Hamma narsani bir tekisda qaytadan o’qib chiqish"},
+        {"id": "b", "text": "O’sha sohaning laboratoriyalarini mashq qilish va ball siljiguncha uning testlarini qayta topshirish"},
+        {"id": "c", "text": "Baribir imtihonga yozilish"},
+        {"id": "d", "text": "Eng yengil sohaga e’tibor qaratish"}
+      ],
+      "explanation": "Boshqaruv paneli har bir sohani uning imtihondagi haqiqiy ulushi bo’yicha vaznlaydi; eng zaif og’ir soha - bir soatlik mehnat eng ko’p natija keltiradigan joy."
+    },
+    "q5-terminal": {
+      "prompt": "CKA qanday imtihon?",
+      "options": [
+        {"id": "a", "text": "Variantli test"},
+        {"id": "b", "text": "Amaliyotga asoslangan: haqiqiy terminalda haqiqiy topshiriqlar"},
+        {"id": "c", "text": "Og’zaki suhbat"},
+        {"id": "d", "text": "Yozma insho"}
+      ],
+      "explanation": "Aynan shuning uchun buyruq haqida o’qish uni o’z qo’lingiz bilan terib ko’rishning o’rnini hech qachon bosa olmaydi."
+    }
+  }
+}

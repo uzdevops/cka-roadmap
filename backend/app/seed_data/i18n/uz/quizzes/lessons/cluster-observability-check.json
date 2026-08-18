@@ -1,0 +1,44 @@
+{
+  "title": "Tekshiruv: kuzatuvchanlik",
+  "description": "Klaster nima qilayotganini ko’rish bo’yicha beshta savol.",
+  "questions": {
+    "q1-top": {
+      "prompt": "Har bir node bo’yicha CPU va xotira sarfini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Buning uchun metrics-server kerak; usiz buyruq metrikalar mavjud emasligini xabar qiladi."
+    },
+    "q2-metrics-server": {
+      "prompt": "metrics-server nima beradi?",
+      "options": [
+        {"id": "a", "text": "Metrikalarni uzoq muddat saqlashni"},
+        {"id": "b", "text": "`kubectl top` va HPA uchun so’nggi resurs sarfi ma’lumotlarini"},
+        {"id": "c", "text": "Loglarni yig’ishni"},
+        {"id": "d", "text": "Trassirovkani"}
+      ],
+      "explanation": "U ataylab monitoring tizimi qilib yaratilmagan: na tarix, na ogohlantirish bor. Bu vazifani Prometheus bajaradi."
+    },
+    "q3-events": {
+      "prompt": "Event’lar standart holatda qancha vaqt saqlanadi?",
+      "options": [
+        {"id": "a", "text": "Abadiy"},
+        {"id": "b", "text": "Taxminan bir soat"},
+        {"id": "c", "text": "Bir hafta"},
+        {"id": "d", "text": "Pod o’chirilgunicha"}
+      ],
+      "explanation": "Shuning uchun keyinchalik tahlil qilish uchun ularni biror joyga yuborib turish kerak. API serverdagi `--event-ttl` buni o’zgartiradi."
+    },
+    "q4-logs-location": {
+      "prompt": "Konteyner loglari node’da qayerda saqlanadi?",
+      "options": [
+        {"id": "a", "text": "etcd ichida"},
+        {"id": "b", "text": "Node fayl tizimida - ularni konteyner runtime yozadi"},
+        {"id": "c", "text": "API serverning xotirasida"},
+        {"id": "d", "text": "PersistentVolume ichida"}
+      ],
+      "explanation": "`kubectl logs` ularni kubelet orqali o’qiydi. Pod o’chirilsa, ular ham yo’qoladi - loglarni yig’ish shuning uchun kerak."
+    },
+    "q5-previous": {
+      "prompt": "web Pod’idagi app konteynerining oldingi, ishdan chiqqan nusxasining loglarini ko’rsatadigan buyruqni yozing.",
+      "explanation": "CrashLoopBackOff uchun eng foydali yagona bayroq, chunki joriy konteynerda hali loglar bo’lmasligi mumkin."
+    }
+  }
+}

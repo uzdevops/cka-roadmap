@@ -1,0 +1,44 @@
+{
+  "title": "Tekshiruv: 2-sinov imtihoni tahlili",
+  "description": "Dasturning qiyinroq yarmi bo’yicha beshta savol.",
+  "questions": {
+    "q1-etcd": {
+      "prompt": "/tmp/etcd.db faylidan snapshot’ni tiklaydigan etcdctl subbuyrug’ini yozing.",
+      "explanation": "So’ng etcd static Pod’ining ma’lumotlar katalogini yangi joyga qayta yo’naltiring - tiklashning o’zi ishlab turgan hech narsani o’zgartirmaydi."
+    },
+    "q2-rbac": {
+      "prompt": "dev namespace’ida pods ustida get va list huquqini beradigan reader nomli Role yaratadigan buyruqni yozing.",
+      "explanation": "Uni `kubectl create rolebinding` bilan bog’lang - bu imperativ juftlik ikkala YAML’ni qo’lda yozishdan ancha tez."
+    },
+    "q3-upgrade-order": {
+      "prompt": "Klasterni yangilash topshirig’i uchun qaysi tartib to’g’ri?",
+      "options": [
+        {"id": "a", "text": "Drain, kubeadm’ni yangilash, kubelet’ni yangilash, uncordon"},
+        {"id": "b", "text": "kubelet’ni yangilash, drain, kubeadm’ni yangilash, uncordon"},
+        {"id": "c", "text": "Uncordon, drain, yangilash"},
+        {"id": "d", "text": "Hammasini bir vaqtning o’zida yangilash"}
+      ],
+      "explanation": "Avval drain qiling - shunda yangilash o’rtasida hech narsa uzilmaydi; uncordon esa oxirida bajariladi, toki node xizmatga faqat siz xohlagan paytda ataylab qaytsin."
+    },
+    "q4-network-policy": {
+      "prompt": "Topshiriq ma’lumotlar bazasiga faqat app=web yorlig’iga ega Pod’lar kira olishini so’ramoqda. Siyosat nimani o’z ichiga olishi kerak?",
+      "options": [
+        {"id": "a", "text": "Faqat web Pod’laridagi egress qoidasini"},
+        {"id": "b", "text": "Ma’lumotlar bazasi Pod’laridagi app=web ni tanlaydigan ingress qoidasini, bunda podSelector sifatida ma’lumotlar bazasining o’zi turadi"},
+        {"id": "c", "text": "ClusterRole’ni"},
+        {"id": "d", "text": "NodePort’ni"}
+      ],
+      "explanation": "Siyosat himoyalanayotgan Pod’larga biriktiriladi; peer selektori esa ularga kim kira olishini nomma-nom ko’rsatadi."
+    },
+    "q5-time": {
+      "prompt": "Ikkita topshiriq va o’n daqiqa qoldi. Biri 4%, ikkinchisi 12% baholanadi. Nima qilasiz?",
+      "options": [
+        {"id": "a", "text": "4% baholanadiganini, chunki u osonroq"},
+        {"id": "b", "text": "Avval 12% baholanadiganini"},
+        {"id": "c", "text": "Hech qaysisini - oldingi javoblarni qayta ko’rib chiqaman"},
+        {"id": "d", "text": "Vaqtni ikkalasiga teng bo’laman"}
+      ],
+      "explanation": "Oxirida yagona ahamiyatga ega o’lchov - bir daqiqada yig’iladigan ball."
+    }
+  }
+}

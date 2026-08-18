@@ -1,0 +1,120 @@
+{
+  "title": "5-hafta takrori - rollout’lar va kontrollerlar",
+  "description": "Deployment, DaemonSet, StatefulSet va Job bo’yicha oltita savol.",
+  "questions": {
+    "w5-q1": {
+      "prompt": "maxUnavailable: 0 va maxSurge: 1 birgalikda nima beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tezroq rollout"
+        },
+        {
+          "id": "b",
+          "text": "Rollout davomida quvvat yo’qotilmasligini"
+        },
+        {
+          "id": "c",
+          "text": "Recreate strategiyasini"
+        },
+        {
+          "id": "d",
+          "text": "To’xtatib qo’yilgan (paused) rollout"
+        }
+      ],
+      "explanation": "Hech nima olib tashlanishidan oldin qo’shimcha quvvat qo’shiladi."
+    },
+    "w5-q2": {
+      "prompt": "Qaysi kontroller mos keladigan har bir node’ga roppa-rosa bitta Pod joylaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deployment"
+        },
+        {
+          "id": "b",
+          "text": "StatefulSet"
+        },
+        {
+          "id": "c",
+          "text": "DaemonSet"
+        },
+        {
+          "id": "d",
+          "text": "Job"
+        }
+      ],
+      "explanation": "Klasterga yangi node qo’shilganda esa u avtomatik ravishda yana bittasini qo’shadi."
+    },
+    "w5-q3": {
+      "prompt": "StatefulSet Deployment bermaydigan nimani beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rolling update’lar"
+        },
+        {
+          "id": "b",
+          "text": "Barqaror nomlar, barqaror tarmoq identifikatsiyasi va har bir Pod uchun alohida saqlash joyi"
+        },
+        {
+          "id": "c",
+          "text": "Sog’liq tekshiruvlari"
+        },
+        {
+          "id": "d",
+          "text": "Resurs limitlari"
+        }
+      ],
+      "explanation": "web-0 qayta ishga tushganda yana web-0 bo’lib qaytadi va o’z PVC’si bilan keladi."
+    },
+    "w5-q4": {
+      "prompt": "Job Pod’i uchun qaysi restartPolicy to’g’ri?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Always"
+        },
+        {
+          "id": "b",
+          "text": "OnFailure yoki Never"
+        },
+        {
+          "id": "c",
+          "text": "Istalgani"
+        },
+        {
+          "id": "d",
+          "text": "None"
+        }
+      ],
+      "explanation": "Always muvaffaqiyatli tugagan konteynerni ham qaytadan ishga tushirib yuborar edi."
+    },
+    "w5-q5": {
+      "prompt": "CronJob’dagi concurrencyPolicy: Forbid nimani anglatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ishga tushishlar navbatga qo’yiladi"
+        },
+        {
+          "id": "b",
+          "text": "Oldingisi hali ishlab turgan bo’lsa, yangi ishga tushish o’tkazib yuboriladi"
+        },
+        {
+          "id": "c",
+          "text": "Eskisi to’xtatiladi"
+        },
+        {
+          "id": "d",
+          "text": "CronJob to’xtatib qo’yiladi"
+        }
+      ],
+      "explanation": "Replace esa buning o’rniga eskisini to’xtatadi."
+    },
+    "w5-q6": {
+      "prompt": "api Deployment’ining rollout’i tugashini kuzatib turadigan buyruqni yozing.",
+      "explanation": "U rollout tugagunicha yoki muvaffaqiyatsiz bo’lgunicha kutib turadi."
+    }
+  }
+}
