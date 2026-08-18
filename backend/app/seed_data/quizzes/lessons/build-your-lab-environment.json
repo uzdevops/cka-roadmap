@@ -1,0 +1,139 @@
+{
+  "slug": "build-your-lab-environment-check",
+  "lesson_slug": "build-your-lab-environment",
+  "phase_slug": "foundations",
+  "week_number": 2,
+  "title": "Check: your practice cluster",
+  "description": "Five questions on kind, minikube and the habits the exam rewards.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-kind-vs-minikube",
+      "type": "single_choice",
+      "prompt": "What does kind use to run cluster nodes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A virtual machine per node"
+        },
+        {
+          "id": "b",
+          "text": "Docker containers as nodes"
+        },
+        {
+          "id": "c",
+          "text": "systemd units on the host"
+        },
+        {
+          "id": "d",
+          "text": "A remote cloud instance"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "kind is 'Kubernetes IN Docker': each node is a container, which makes multi-node clusters cheap to create and throw away.",
+      "points": 1
+    },
+    {
+      "key": "q2-loadbalancer-pending",
+      "type": "single_choice",
+      "prompt": "On a local cluster a `type: LoadBalancer` Service keeps `<pending>` as its external IP. Why?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Service is misconfigured"
+        },
+        {
+          "id": "b",
+          "text": "There is no cloud controller to provision a load balancer"
+        },
+        {
+          "id": "c",
+          "text": "kube-proxy is not running"
+        },
+        {
+          "id": "d",
+          "text": "The cluster has run out of node ports"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "That is correct behaviour, not a bug. Locally you reach the Service with NodePort, `kubectl port-forward` or `minikube tunnel`.",
+      "points": 1
+    },
+    {
+      "key": "q3-context",
+      "type": "fill_command",
+      "prompt": "Write the command that shows which cluster your kubectl is pointing at right now.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl config current-context"
+      ],
+      "explanation": "Getting this wrong on the exam means doing correct work in the wrong cluster. Check it before you start.",
+      "points": 2
+    },
+    {
+      "key": "q4-time",
+      "type": "single_choice",
+      "prompt": "The lesson stresses one habit because the exam is only two hours long. Which?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Memorising every YAML field"
+        },
+        {
+          "id": "b",
+          "text": "Setting up aliases and autocompletion in the first minute"
+        },
+        {
+          "id": "c",
+          "text": "Rebuilding the cluster between questions"
+        },
+        {
+          "id": "d",
+          "text": "Reading the whole documentation first"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "Two hours is not much. The setup that saves keystrokes pays for itself many times over, and the same habits belong in your practice cluster.",
+      "points": 1
+    },
+    {
+      "key": "q5-practice",
+      "type": "multi_select",
+      "prompt": "Which are good reasons to run a local cluster while studying? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "You can break things on purpose and diagnose them"
+        },
+        {
+          "id": "b",
+          "text": "It is the only way to read the documentation"
+        },
+        {
+          "id": "c",
+          "text": "You can practise the commands until they are muscle memory"
+        },
+        {
+          "id": "d",
+          "text": "You can throw the cluster away and start clean"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "c",
+        "d"
+      ],
+      "explanation": "The exam is a terminal. Reading about a command is not the same as having typed it a hundred times.",
+      "points": 2
+    }
+  ]
+}

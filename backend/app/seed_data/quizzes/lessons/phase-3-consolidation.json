@@ -1,0 +1,160 @@
+{
+  "slug": "phase-3-consolidation-check",
+  "lesson_slug": "phase-3-consolidation",
+  "phase_slug": "networking-storage",
+  "week_number": 12,
+  "title": "Check: networking and storage consolidation",
+  "description": "Five questions spanning the whole phase.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-layers",
+      "type": "single_choice",
+      "prompt": "Put these in the order a request traverses them from outside: Ingress, Service, Pod, ingress controller.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ingress, ingress controller, Service, Pod"
+        },
+        {
+          "id": "b",
+          "text": "ingress controller, Ingress, Pod, Service"
+        },
+        {
+          "id": "c",
+          "text": "Service, Ingress, ingress controller, Pod"
+        },
+        {
+          "id": "d",
+          "text": "Pod, Service, Ingress, ingress controller"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "The Ingress object is configuration read by the controller; the controller forwards to the Service, which selects the Pod.",
+      "points": 1
+    },
+    {
+      "key": "q2-which-object",
+      "type": "single_choice",
+      "prompt": "You need traffic from outside on a raw TCP port, with no HTTP routing. Which?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ingress"
+        },
+        {
+          "id": "b",
+          "text": "A Service of type NodePort or LoadBalancer"
+        },
+        {
+          "id": "c",
+          "text": "A NetworkPolicy"
+        },
+        {
+          "id": "d",
+          "text": "A headless Service"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Ingress is HTTP(S)-oriented. Raw TCP belongs to a Service type, or to the Gateway API's TCPRoute.",
+      "points": 1
+    },
+    {
+      "key": "q3-storage-choice",
+      "type": "single_choice",
+      "prompt": "A workload needs storage that survives rescheduling to another node. Which?",
+      "options": [
+        {
+          "id": "a",
+          "text": "emptyDir"
+        },
+        {
+          "id": "b",
+          "text": "hostPath"
+        },
+        {
+          "id": "c",
+          "text": "A PVC backed by a networked or cloud volume"
+        },
+        {
+          "id": "d",
+          "text": "configMap"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "emptyDir dies with the Pod and hostPath is tied to one node. Only a real PV follows the workload.",
+      "points": 1
+    },
+    {
+      "key": "q4-empty-endpoints",
+      "type": "multi_select",
+      "prompt": "A Service has no endpoints. Which could explain it? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "No Pod carries the matching labels"
+        },
+        {
+          "id": "b",
+          "text": "The Pods exist but are not Ready"
+        },
+        {
+          "id": "c",
+          "text": "The Service's targetPort does not match the container port"
+        },
+        {
+          "id": "d",
+          "text": "The cluster has no default StorageClass"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "The first two empty the EndpointSlice; the third fills it but sends traffic to a closed port. Storage is unrelated.",
+      "points": 2
+    },
+    {
+      "key": "q5-dns-first",
+      "type": "single_choice",
+      "prompt": "Any connectivity problem inside the cluster deserves which check early?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Node CPU"
+        },
+        {
+          "id": "b",
+          "text": "Whether the name resolves at all"
+        },
+        {
+          "id": "c",
+          "text": "etcd health"
+        },
+        {
+          "id": "d",
+          "text": "The scheduler"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Half of what looks like a network fault is DNS. Resolve first, then connect.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "slug": "deployment-strategies-and-rollbacks-check",
+  "lesson_slug": "deployment-strategies-and-rollbacks",
+  "phase_slug": "workloads-scheduling",
+  "week_number": 5,
+  "title": "Check: rollouts and rollbacks",
+  "description": "Five questions on rolling updates, surge and rollback.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-default-strategy",
+      "type": "single_choice",
+      "prompt": "Which update strategy does a Deployment use by default?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recreate"
+        },
+        {
+          "id": "b",
+          "text": "RollingUpdate"
+        },
+        {
+          "id": "c",
+          "text": "OnDelete"
+        },
+        {
+          "id": "d",
+          "text": "Blue/green"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "RollingUpdate replaces Pods gradually so the app stays available. Recreate deletes them all first and is only right when two versions must never run at once.",
+      "points": 1
+    },
+    {
+      "key": "q2-surge-unavailable",
+      "type": "single_choice",
+      "prompt": "`maxSurge: 1` and `maxUnavailable: 0` on a 3-replica Deployment means what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "At most 2 Pods run during the rollout"
+        },
+        {
+          "id": "b",
+          "text": "Up to 4 Pods may run, and 3 stay available throughout"
+        },
+        {
+          "id": "c",
+          "text": "One Pod is deleted before any is created"
+        },
+        {
+          "id": "d",
+          "text": "The rollout is paused after one Pod"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "maxSurge adds capacity above the desired count; maxUnavailable 0 means none of the existing three may go away before a replacement is ready.",
+      "points": 1
+    },
+    {
+      "key": "q3-undo",
+      "type": "fill_command",
+      "prompt": "Write the command that rolls a Deployment named api back to its previous revision.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl rollout undo deployment/api",
+        "kubectl rollout undo deployment api",
+        "kubectl rollout undo deploy/api",
+        "kubectl rollout undo deploy api"
+      ],
+      "explanation": "Old ReplicaSets are kept precisely so a rollback is just a scale-up of the previous one.",
+      "points": 2
+    },
+    {
+      "key": "q4-history",
+      "type": "fill_command",
+      "prompt": "Write the command that lists the revision history of that Deployment.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl rollout history deployment/api",
+        "kubectl rollout history deployment api",
+        "kubectl rollout history deploy/api",
+        "kubectl rollout history deploy api"
+      ],
+      "explanation": "`revisionHistoryLimit` controls how many old ReplicaSets are retained and therefore how far back you can roll.",
+      "points": 2
+    },
+    {
+      "key": "q5-stuck",
+      "type": "single_choice",
+      "prompt": "A rollout is stuck and `kubectl rollout status` never returns. Where do you look first?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Deployment's YAML"
+        },
+        {
+          "id": "b",
+          "text": "`kubectl describe pod` on a new Pod, for the events"
+        },
+        {
+          "id": "c",
+          "text": "The kubelet logs"
+        },
+        {
+          "id": "d",
+          "text": "etcd"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A stuck rollout almost always means the new Pods will not become ready - image pull failure, failing probe or unschedulable. The events say which.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "slug": "week-20-review",
+  "phase_slug": "mock-exams",
+  "week_number": 20,
+  "title": "Week 20 review - final check",
+  "description": "Six questions before you book.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 20,
+  "questions": [
+    {
+      "key": "w20-q1",
+      "type": "single_choice",
+      "prompt": "Which two domains carry the most weight?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Storage and workloads"
+        },
+        {
+          "id": "b",
+          "text": "Troubleshooting and cluster architecture"
+        },
+        {
+          "id": "c",
+          "text": "Networking and scheduling"
+        },
+        {
+          "id": "d",
+          "text": "Services and storage"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "30% and 25% - more than half the marks.",
+      "points": 1
+    },
+    {
+      "key": "w20-q2",
+      "type": "fill_command",
+      "prompt": "Write the command that generates YAML for a Deployment without creating it.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl create deployment web --image=nginx --dry-run=client -o yaml",
+        "kubectl create deploy web --image=nginx --dry-run=client -o yaml"
+      ],
+      "explanation": "Generate, edit, apply.",
+      "points": 2
+    },
+    {
+      "key": "w20-q3",
+      "type": "single_choice",
+      "prompt": "'Service VIPs fail from one node only.' Name the component.",
+      "options": [
+        {
+          "id": "a",
+          "text": "kube-proxy on that node"
+        },
+        {
+          "id": "b",
+          "text": "etcd"
+        },
+        {
+          "id": "c",
+          "text": "The scheduler"
+        },
+        {
+          "id": "d",
+          "text": "CoreDNS"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Practise symptom-to-component in both directions.",
+      "points": 1
+    },
+    {
+      "key": "w20-q4",
+      "type": "fill_command",
+      "prompt": "Write the command that force-deletes a stuck Pod named web.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl delete pod web --force --grace-period=0"
+      ],
+      "explanation": "Use knowingly - it skips graceful shutdown.",
+      "points": 2
+    },
+    {
+      "key": "w20-q5",
+      "type": "single_choice",
+      "prompt": "What does the readiness estimate weight by?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lessons read"
+        },
+        {
+          "id": "b",
+          "text": "Each domain's real share of the exam"
+        },
+        {
+          "id": "c",
+          "text": "Time spent"
+        },
+        {
+          "id": "d",
+          "text": "Streak length"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is why the weakest heavy domain is where an hour buys most.",
+      "points": 1
+    },
+    {
+      "key": "w20-q6",
+      "type": "single_choice",
+      "prompt": "When are you ready to book?",
+      "options": [
+        {
+          "id": "a",
+          "text": "After reading everything"
+        },
+        {
+          "id": "b",
+          "text": "When readiness is high and you can finish labs at speed in a terminal"
+        },
+        {
+          "id": "c",
+          "text": "After one mock"
+        },
+        {
+          "id": "d",
+          "text": "When the streak is long"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The exam measures what you can do under a clock.",
+      "points": 1
+    }
+  ]
+}

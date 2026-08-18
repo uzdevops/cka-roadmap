@@ -1,0 +1,614 @@
+{
+  "what-is-kubernetes": [
+    {
+      "title": "What is Kubernetes?",
+      "url": "https://kubernetes.io/docs/concepts/overview/"
+    },
+    {
+      "title": "Objects in Kubernetes",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/"
+    }
+  ],
+  "kubernetes-architecture-overview": [
+    {
+      "title": "Cluster architecture",
+      "url": "https://kubernetes.io/docs/concepts/architecture/"
+    },
+    {
+      "title": "Nodes",
+      "url": "https://kubernetes.io/docs/concepts/architecture/nodes/"
+    }
+  ],
+  "control-plane-components": [
+    {
+      "title": "Control plane components",
+      "url": "https://kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "title": "kube-apiserver reference",
+      "url": "https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/"
+    },
+    {
+      "title": "Operating etcd clusters",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/"
+    }
+  ],
+  "build-your-lab-environment": [
+    {
+      "title": "Install tools",
+      "url": "https://kubernetes.io/docs/tasks/tools/"
+    },
+    {
+      "title": "kind quick start",
+      "url": "https://kind.sigs.k8s.io/docs/user/quick-start/"
+    },
+    {
+      "title": "minikube start",
+      "url": "https://minikube.sigs.k8s.io/docs/start/"
+    }
+  ],
+  "kubectl-fundamentals": [
+    {
+      "title": "kubectl overview",
+      "url": "https://kubernetes.io/docs/reference/kubectl/"
+    },
+    {
+      "title": "kubectl cheat sheet",
+      "url": "https://kubernetes.io/docs/reference/kubectl/quick-reference/"
+    },
+    {
+      "title": "kubectl command reference",
+      "url": "https://kubernetes.io/docs/reference/kubectl/generated/kubectl/"
+    }
+  ],
+  "kubernetes-api-objects-and-yaml": [
+    {
+      "title": "Kubernetes object management",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/"
+    },
+    {
+      "title": "API overview",
+      "url": "https://kubernetes.io/docs/reference/using-api/"
+    },
+    {
+      "title": "kubectl explain",
+      "url": "https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain/"
+    }
+  ],
+  "pods-deep-dive": [
+    {
+      "title": "Pods",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/"
+    },
+    {
+      "title": "Pod lifecycle",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"
+    },
+    {
+      "title": "Init containers",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+    }
+  ],
+  "labels-selectors-annotations": [
+    {
+      "title": "Labels and selectors",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+    },
+    {
+      "title": "Annotations",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/"
+    }
+  ],
+  "deployments-and-replicasets": [
+    {
+      "title": "Deployments",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "title": "ReplicaSet",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+    }
+  ],
+  "namespaces-and-context": [
+    {
+      "title": "Namespaces",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+    },
+    {
+      "title": "Resource quotas",
+      "url": "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+    },
+    {
+      "title": "Configure access to multiple clusters",
+      "url": "https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/"
+    }
+  ],
+  "deployment-strategies-and-rollbacks": [
+    {
+      "title": "Deployment strategies",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy"
+    },
+    {
+      "title": "Rolling back a Deployment",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment"
+    }
+  ],
+  "daemonsets-and-statefulsets": [
+    {
+      "title": "DaemonSet",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/"
+    },
+    {
+      "title": "StatefulSets",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    }
+  ],
+  "jobs-and-cronjobs": [
+    {
+      "title": "Jobs",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+    },
+    {
+      "title": "CronJob",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+    }
+  ],
+  "configmaps-in-practice": [
+    {
+      "title": "ConfigMaps",
+      "url": "https://kubernetes.io/docs/concepts/configuration/configmap/"
+    },
+    {
+      "title": "Configure a Pod to use a ConfigMap",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/"
+    }
+  ],
+  "secrets-and-encryption": [
+    {
+      "title": "Secrets",
+      "url": "https://kubernetes.io/docs/concepts/configuration/secret/"
+    },
+    {
+      "title": "Encrypting confidential data at rest",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/"
+    }
+  ],
+  "resource-requests-and-limits": [
+    {
+      "title": "Resource management for Pods and containers",
+      "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    },
+    {
+      "title": "Pod Quality of Service classes",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/"
+    },
+    {
+      "title": "Limit Ranges",
+      "url": "https://kubernetes.io/docs/concepts/policy/limit-range/"
+    }
+  ],
+  "node-selectors-and-affinity": [
+    {
+      "title": "Assigning Pods to Nodes",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+    },
+    {
+      "title": "Affinity and anti-affinity",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity"
+    }
+  ],
+  "taints-and-tolerations": [
+    {
+      "title": "Taints and tolerations",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+    }
+  ],
+  "topology-spread-and-priority": [
+    {
+      "title": "Pod topology spread constraints",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/"
+    },
+    {
+      "title": "Pod priority and preemption",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/"
+    }
+  ],
+  "horizontal-pod-autoscaling": [
+    {
+      "title": "Horizontal Pod Autoscaling",
+      "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"
+    },
+    {
+      "title": "HorizontalPodAutoscaler walkthrough",
+      "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/"
+    }
+  ],
+  "probes-and-self-healing": [
+    {
+      "title": "Configure liveness, readiness and startup probes",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+    },
+    {
+      "title": "Pod lifecycle: container probes",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes"
+    }
+  ],
+  "helm-and-kustomize-basics": [
+    {
+      "title": "Declarative management with Kustomize",
+      "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+    },
+    {
+      "title": "Helm documentation",
+      "url": "https://helm.sh/docs/"
+    }
+  ],
+  "kubernetes-network-model": [
+    {
+      "title": "Cluster networking",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/networking/"
+    },
+    {
+      "title": "Network plugins",
+      "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/"
+    }
+  ],
+  "services-clusterip-nodeport-loadbalancer": [
+    {
+      "title": "Service",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "title": "Publishing Services (ServiceTypes)",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types"
+    }
+  ],
+  "coredns-and-service-discovery": [
+    {
+      "title": "DNS for Services and Pods",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"
+    },
+    {
+      "title": "Debugging DNS resolution",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/"
+    }
+  ],
+  "ingress-controllers-and-rules": [
+    {
+      "title": "Ingress",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/ingress/"
+    },
+    {
+      "title": "Ingress controllers",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/"
+    }
+  ],
+  "gateway-api-introduction": [
+    {
+      "title": "Gateway API",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/gateway/"
+    },
+    {
+      "title": "Gateway API documentation",
+      "url": "https://gateway-api.sigs.k8s.io/"
+    }
+  ],
+  "network-policies": [
+    {
+      "title": "Network Policies",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+    },
+    {
+      "title": "Declare Network Policy",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/"
+    }
+  ],
+  "volumes-and-volume-types": [
+    {
+      "title": "Volumes",
+      "url": "https://kubernetes.io/docs/concepts/storage/volumes/"
+    },
+    {
+      "title": "Ephemeral volumes",
+      "url": "https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/"
+    }
+  ],
+  "persistent-volumes-and-claims": [
+    {
+      "title": "Persistent Volumes",
+      "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+    },
+    {
+      "title": "Configure a Pod to use a volume for storage",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/"
+    }
+  ],
+  "storage-classes-and-dynamic-provisioning": [
+    {
+      "title": "Storage Classes",
+      "url": "https://kubernetes.io/docs/concepts/storage/storage-classes/"
+    },
+    {
+      "title": "Dynamic volume provisioning",
+      "url": "https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/"
+    }
+  ],
+  "stateful-workloads-with-storage": [
+    {
+      "title": "StatefulSet basics",
+      "url": "https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/"
+    },
+    {
+      "title": "StatefulSets",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    }
+  ],
+  "troubleshooting-network-and-storage": [
+    {
+      "title": "Debug Services",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/"
+    },
+    {
+      "title": "Troubleshooting clusters",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/"
+    }
+  ],
+  "phase-3-consolidation": [
+    {
+      "title": "Services and networking",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/"
+    },
+    {
+      "title": "Storage",
+      "url": "https://kubernetes.io/docs/concepts/storage/"
+    }
+  ],
+  "kubeadm-cluster-bootstrap": [
+    {
+      "title": "Creating a cluster with kubeadm",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/"
+    },
+    {
+      "title": "Installing kubeadm",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/"
+    }
+  ],
+  "cluster-upgrades": [
+    {
+      "title": "Upgrading kubeadm clusters",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/"
+    },
+    {
+      "title": "Version skew policy",
+      "url": "https://kubernetes.io/releases/version-skew-policy/"
+    }
+  ],
+  "highly-available-control-planes": [
+    {
+      "title": "High availability topology options",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/"
+    },
+    {
+      "title": "Creating highly available clusters with kubeadm",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/"
+    }
+  ],
+  "etcd-backup-and-restore": [
+    {
+      "title": "Operating etcd clusters for Kubernetes",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/"
+    },
+    {
+      "title": "Backing up an etcd cluster",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster"
+    }
+  ],
+  "certificates-and-kubeconfig": [
+    {
+      "title": "PKI certificates and requirements",
+      "url": "https://kubernetes.io/docs/setup/best-practices/certificates/"
+    },
+    {
+      "title": "Certificate management with kubeadm",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/"
+    },
+    {
+      "title": "Organizing cluster access using kubeconfig",
+      "url": "https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/"
+    }
+  ],
+  "static-pods-and-manifests": [
+    {
+      "title": "Static Pods",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/"
+    }
+  ],
+  "rbac-roles-and-bindings": [
+    {
+      "title": "Using RBAC authorization",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+    },
+    {
+      "title": "Authorization overview",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/authorization/"
+    }
+  ],
+  "service-accounts-and-tokens": [
+    {
+      "title": "Service accounts",
+      "url": "https://kubernetes.io/docs/concepts/security/service-accounts/"
+    },
+    {
+      "title": "Configure Service Accounts for Pods",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/"
+    }
+  ],
+  "admission-control-basics": [
+    {
+      "title": "Admission controllers reference",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/"
+    },
+    {
+      "title": "Dynamic admission control",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/"
+    }
+  ],
+  "node-maintenance-cordon-drain": [
+    {
+      "title": "Safely drain a node",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/"
+    },
+    {
+      "title": "Disruptions",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+    }
+  ],
+  "crds-and-operators": [
+    {
+      "title": "Custom resources",
+      "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/"
+    },
+    {
+      "title": "Operator pattern",
+      "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/operator/"
+    }
+  ],
+  "cluster-observability": [
+    {
+      "title": "Metrics for Kubernetes system components",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/system-metrics/"
+    },
+    {
+      "title": "Logging architecture",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+    }
+  ],
+  "troubleshooting-methodology": [
+    {
+      "title": "Troubleshooting",
+      "url": "https://kubernetes.io/docs/tasks/debug/"
+    },
+    {
+      "title": "Debug running Pods",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/"
+    }
+  ],
+  "debugging-pods-and-containers": [
+    {
+      "title": "Debug Pods",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/"
+    },
+    {
+      "title": "Get a shell to a running container",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/get-shell-running-container/"
+    },
+    {
+      "title": "Ephemeral debug containers",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container"
+    }
+  ],
+  "control-plane-failures": [
+    {
+      "title": "Troubleshooting clusters",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/"
+    },
+    {
+      "title": "kubeadm troubleshooting",
+      "url": "https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/"
+    }
+  ],
+  "node-not-ready": [
+    {
+      "title": "Node status and conditions",
+      "url": "https://kubernetes.io/docs/concepts/architecture/nodes/#node-status"
+    },
+    {
+      "title": "Troubleshooting clusters",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/"
+    }
+  ],
+  "network-troubleshooting": [
+    {
+      "title": "Debug Services",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/"
+    },
+    {
+      "title": "Debugging DNS resolution",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/"
+    }
+  ],
+  "monitoring-and-log-aggregation": [
+    {
+      "title": "Logging architecture",
+      "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+    },
+    {
+      "title": "Tools for monitoring resources",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/"
+    }
+  ],
+  "exam-day-logistics": [
+    {
+      "title": "CKA certification",
+      "url": "https://www.cncf.io/certification/cka/"
+    },
+    {
+      "title": "Candidate handbook",
+      "url": "https://www.cncf.io/certification/candidate-handbook"
+    },
+    {
+      "title": "Important exam tips",
+      "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD"
+    }
+  ],
+  "mock-exam-one": [
+    {
+      "title": "Exam curriculum",
+      "url": "https://github.com/cncf/curriculum"
+    },
+    {
+      "title": "kubectl cheat sheet",
+      "url": "https://kubernetes.io/docs/reference/kubectl/quick-reference/"
+    }
+  ],
+  "mock-exam-two": [
+    {
+      "title": "Exam curriculum",
+      "url": "https://github.com/cncf/curriculum"
+    },
+    {
+      "title": "Tasks",
+      "url": "https://kubernetes.io/docs/tasks/"
+    }
+  ],
+  "speed-drills-and-imperative-commands": [
+    {
+      "title": "kubectl quick reference",
+      "url": "https://kubernetes.io/docs/reference/kubectl/quick-reference/"
+    },
+    {
+      "title": "Managing objects with imperative commands",
+      "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/"
+    }
+  ],
+  "weak-domain-review": [
+    {
+      "title": "Exam curriculum",
+      "url": "https://github.com/cncf/curriculum"
+    },
+    {
+      "title": "Kubernetes concepts",
+      "url": "https://kubernetes.io/docs/concepts/"
+    }
+  ],
+  "final-checklist": [
+    {
+      "title": "Candidate handbook",
+      "url": "https://www.cncf.io/certification/candidate-handbook"
+    },
+    {
+      "title": "Important exam tips",
+      "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "slug": "network-policies-check",
+  "lesson_slug": "network-policies",
+  "phase_slug": "networking-storage",
+  "week_number": 10,
+  "title": "Check: NetworkPolicy",
+  "description": "Five questions on restricting Pod traffic.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-default",
+      "type": "single_choice",
+      "prompt": "With no NetworkPolicy in a namespace, what traffic is allowed?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "All of it - Pods are non-isolated by default"
+        },
+        {
+          "id": "c",
+          "text": "Only same-namespace traffic"
+        },
+        {
+          "id": "d",
+          "text": "Only ingress"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Kubernetes is allow-all until a policy selects a Pod. From that moment the Pod is isolated for the directions the policy names.",
+      "points": 1
+    },
+    {
+      "key": "q2-deny-all",
+      "type": "single_choice",
+      "prompt": "Which policy denies all ingress to every Pod in a namespace?",
+      "options": [
+        {
+          "id": "a",
+          "text": "An empty podSelector with policyTypes: [Ingress] and no ingress rules"
+        },
+        {
+          "id": "b",
+          "text": "A policy with ingress: [] and no podSelector field at all"
+        },
+        {
+          "id": "c",
+          "text": "Deleting the CNI plugin"
+        },
+        {
+          "id": "d",
+          "text": "Setting a namespace label"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "`podSelector: {}` selects every Pod; listing Ingress in policyTypes with no rules permits nothing.",
+      "points": 1
+    },
+    {
+      "key": "q3-additive",
+      "type": "single_choice",
+      "prompt": "Two policies select the same Pod, one allowing port 80 and one allowing port 443. What is permitted?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only 80"
+        },
+        {
+          "id": "b",
+          "text": "Only 443"
+        },
+        {
+          "id": "c",
+          "text": "Both, because policies are additive"
+        },
+        {
+          "id": "d",
+          "text": "Neither"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "There is no deny rule and no ordering. The union of every matching policy is what is allowed.",
+      "points": 1
+    },
+    {
+      "key": "q4-enforcement",
+      "type": "single_choice",
+      "prompt": "What actually enforces a NetworkPolicy?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The API server"
+        },
+        {
+          "id": "b",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "c",
+          "text": "The CNI plugin"
+        },
+        {
+          "id": "d",
+          "text": "The kubelet"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "A cluster whose CNI plugin does not implement NetworkPolicy will accept the object and enforce nothing - a dangerous silent no-op.",
+      "points": 1
+    },
+    {
+      "key": "q5-dns",
+      "type": "single_choice",
+      "prompt": "You apply a default-deny egress policy and applications break immediately. What did you forget?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To allow egress to CoreDNS on port 53"
+        },
+        {
+          "id": "b",
+          "text": "To restart the Pods"
+        },
+        {
+          "id": "c",
+          "text": "To label the namespace"
+        },
+        {
+          "id": "d",
+          "text": "To open the NodePort range"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Name resolution is egress traffic too. Denying it breaks everything before a single connection is attempted.",
+      "points": 1
+    }
+  ]
+}

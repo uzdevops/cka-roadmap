@@ -1,0 +1,127 @@
+{
+  "slug": "mock-exam-one-check",
+  "lesson_slug": "mock-exam-one",
+  "phase_slug": "mock-exams",
+  "week_number": 19,
+  "title": "Check: mock exam 1 review",
+  "description": "Five questions on the tasks this simulation drills.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-create-pod",
+      "type": "fill_command",
+      "prompt": "Write the fastest command that creates a Pod named nginx from image nginx.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl run nginx --image=nginx"
+      ],
+      "explanation": "`kubectl run` makes Pods; `kubectl create deployment` makes Deployments. Knowing which is which saves a correction.",
+      "points": 2
+    },
+    {
+      "key": "q2-scale",
+      "type": "fill_command",
+      "prompt": "Write the command that scales Deployment web to 5 replicas.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl scale deployment web --replicas=5",
+        "kubectl scale deploy web --replicas=5",
+        "kubectl scale --replicas=5 deployment/web",
+        "kubectl scale --replicas=5 deploy/web"
+      ],
+      "explanation": "Imperative scaling is far faster than editing YAML under time pressure.",
+      "points": 2
+    },
+    {
+      "key": "q3-output-file",
+      "type": "single_choice",
+      "prompt": "A task says to save output to a file. What is the risk?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "Writing to the wrong path or node scores zero even though the command was right"
+        },
+        {
+          "id": "c",
+          "text": "Files cannot be created"
+        },
+        {
+          "id": "d",
+          "text": "The file is deleted at the end"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Read the path literally and check with `cat` afterwards. Graders look exactly where they said.",
+      "points": 1
+    },
+    {
+      "key": "q4-verify",
+      "type": "single_choice",
+      "prompt": "After completing a task, what should you always do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Move on immediately"
+        },
+        {
+          "id": "b",
+          "text": "Verify with a get or describe that the cluster is in the asked-for state"
+        },
+        {
+          "id": "c",
+          "text": "Delete the object and redo it"
+        },
+        {
+          "id": "d",
+          "text": "Restart the kubelet"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A typo you never look at costs the whole task. Verification takes seconds.",
+      "points": 1
+    },
+    {
+      "key": "q5-imperative",
+      "type": "single_choice",
+      "prompt": "Why prefer imperative commands with --dry-run=client -o yaml?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They are the only supported way"
+        },
+        {
+          "id": "b",
+          "text": "They produce a correct skeleton fast, which you then edit"
+        },
+        {
+          "id": "c",
+          "text": "They avoid RBAC"
+        },
+        {
+          "id": "d",
+          "text": "They skip admission control"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "You get valid YAML without remembering field names, then change the two lines that matter.",
+      "points": 1
+    }
+  ]
+}

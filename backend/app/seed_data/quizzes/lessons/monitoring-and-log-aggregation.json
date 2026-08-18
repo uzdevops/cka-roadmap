@@ -1,0 +1,158 @@
+{
+  "slug": "monitoring-and-log-aggregation-check",
+  "lesson_slug": "monitoring-and-log-aggregation",
+  "phase_slug": "troubleshooting",
+  "week_number": 18,
+  "title": "Check: monitoring and logs",
+  "description": "Five questions on keeping evidence after the fact.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-why-aggregate",
+      "type": "single_choice",
+      "prompt": "Why aggregate logs off the node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl logs is slow"
+        },
+        {
+          "id": "b",
+          "text": "Container logs disappear with the Pod, and rotate on the node"
+        },
+        {
+          "id": "c",
+          "text": "Logs cannot be read otherwise"
+        },
+        {
+          "id": "d",
+          "text": "To satisfy RBAC"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Post-mortems happen after the Pod is gone. If the logs were only on the node, the evidence went with it.",
+      "points": 1
+    },
+    {
+      "key": "q2-node-agent",
+      "type": "single_choice",
+      "prompt": "What shape does a log shipper usually take?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Deployment"
+        },
+        {
+          "id": "b",
+          "text": "A DaemonSet, one Pod per node"
+        },
+        {
+          "id": "c",
+          "text": "A CronJob"
+        },
+        {
+          "id": "d",
+          "text": "A sidecar in every Pod, always"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "One agent per node reads every container's log files. A sidecar is the fallback for an app that will not log to stdout.",
+      "points": 1
+    },
+    {
+      "key": "q3-metrics-vs-monitoring",
+      "type": "single_choice",
+      "prompt": "metrics-server versus Prometheus - what is the split?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They are interchangeable"
+        },
+        {
+          "id": "b",
+          "text": "metrics-server serves current usage for kubectl top and the HPA; Prometheus stores history and alerts"
+        },
+        {
+          "id": "c",
+          "text": "Prometheus replaces the kubelet"
+        },
+        {
+          "id": "d",
+          "text": "metrics-server stores history"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Asking metrics-server for last week's data is a category error - it keeps nothing.",
+      "points": 1
+    },
+    {
+      "key": "q4-events-value",
+      "type": "single_choice",
+      "prompt": "Why are Events worth shipping?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They are the only source of Pod logs"
+        },
+        {
+          "id": "b",
+          "text": "They explain scheduling, image and probe failures, and expire after about an hour"
+        },
+        {
+          "id": "c",
+          "text": "They contain metrics"
+        },
+        {
+          "id": "d",
+          "text": "They replace the audit log"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The single most useful record of why something did not start - and it evaporates.",
+      "points": 1
+    },
+    {
+      "key": "q5-golden",
+      "type": "single_choice",
+      "prompt": "Which signals give the quickest read on cluster health?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Node conditions, Pod restarts and pending Pods"
+        },
+        {
+          "id": "b",
+          "text": "Image sizes"
+        },
+        {
+          "id": "c",
+          "text": "The number of namespaces"
+        },
+        {
+          "id": "d",
+          "text": "etcd disk format"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Nodes not Ready, Pods restarting and Pods stuck Pending cover most of what goes wrong.",
+      "points": 1
+    }
+  ]
+}

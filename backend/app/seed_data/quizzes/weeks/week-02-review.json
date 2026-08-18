@@ -1,0 +1,154 @@
+{
+  "slug": "week-02-review",
+  "phase_slug": "foundations",
+  "week_number": 2,
+  "title": "Week 2 review - lab and kubectl",
+  "description": "Six questions across your practice cluster, kubectl and the object model.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 2,
+  "questions": [
+    {
+      "key": "w2-q1",
+      "type": "fill_command",
+      "prompt": "Write the command that shows which cluster kubectl is currently pointing at.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl config current-context"
+      ],
+      "explanation": "Wrong context means correct work in the wrong cluster.",
+      "points": 2
+    },
+    {
+      "key": "w2-q2",
+      "type": "fill_command",
+      "prompt": "Write the command that generates a Pod manifest for nginx without creating it.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl run nginx --image=nginx --dry-run=client -o yaml"
+      ],
+      "explanation": "Generate, edit, apply - the fastest safe loop under time pressure.",
+      "points": 2
+    },
+    {
+      "key": "w2-q3",
+      "type": "single_choice",
+      "prompt": "Which command explains a field you cannot remember?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl describe"
+        },
+        {
+          "id": "b",
+          "text": "kubectl explain"
+        },
+        {
+          "id": "c",
+          "text": "kubectl get -o yaml"
+        },
+        {
+          "id": "d",
+          "text": "kubectl api-versions"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`kubectl explain pod.spec.containers` walks the schema without leaving the terminal.",
+      "points": 1
+    },
+    {
+      "key": "w2-q4",
+      "type": "multi_select",
+      "prompt": "Which fields appear on essentially every object? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "apiVersion"
+        },
+        {
+          "id": "b",
+          "text": "kind"
+        },
+        {
+          "id": "c",
+          "text": "metadata"
+        },
+        {
+          "id": "d",
+          "text": "replicas"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "replicas belongs to particular specs, not to every object.",
+      "points": 2
+    },
+    {
+      "key": "w2-q5",
+      "type": "single_choice",
+      "prompt": "`spec` versus `status` - who writes which?",
+      "options": [
+        {
+          "id": "a",
+          "text": "You write both"
+        },
+        {
+          "id": "b",
+          "text": "You write spec; controllers write status"
+        },
+        {
+          "id": "c",
+          "text": "Controllers write both"
+        },
+        {
+          "id": "d",
+          "text": "The kubelet writes spec"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "That division is the reconciliation loop in one sentence.",
+      "points": 1
+    },
+    {
+      "key": "w2-q6",
+      "type": "single_choice",
+      "prompt": "Why does a local `type: LoadBalancer` Service sit at <pending>?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kube-proxy is down"
+        },
+        {
+          "id": "b",
+          "text": "There is no cloud controller to provision one"
+        },
+        {
+          "id": "c",
+          "text": "The Service has no selector"
+        },
+        {
+          "id": "d",
+          "text": "The port is taken"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Correct behaviour on kind or minikube; use NodePort or port-forward.",
+      "points": 1
+    }
+  ]
+}

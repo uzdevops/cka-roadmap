@@ -1,0 +1,143 @@
+{
+  "slug": "storage-classes-and-dynamic-provisioning-check",
+  "lesson_slug": "storage-classes-and-dynamic-provisioning",
+  "phase_slug": "networking-storage",
+  "week_number": 11,
+  "title": "Check: StorageClasses",
+  "description": "Five questions on provisioning volumes on demand.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-purpose",
+      "type": "single_choice",
+      "prompt": "What does a StorageClass do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Stores data itself"
+        },
+        {
+          "id": "b",
+          "text": "Describes a kind of storage and the provisioner that creates it on demand"
+        },
+        {
+          "id": "c",
+          "text": "Limits how much storage a namespace may use"
+        },
+        {
+          "id": "d",
+          "text": "Encrypts volumes"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It removes the need for an administrator to pre-create PVs: the PVC names a class and one appears.",
+      "points": 1
+    },
+    {
+      "key": "q2-default",
+      "type": "single_choice",
+      "prompt": "A PVC omits storageClassName entirely. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It fails immediately"
+        },
+        {
+          "id": "b",
+          "text": "The cluster's default StorageClass is used, if one is marked as such"
+        },
+        {
+          "id": "c",
+          "text": "It binds to any free PV"
+        },
+        {
+          "id": "d",
+          "text": "It uses hostPath"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The annotation is storageclass.kubernetes.io/is-default-class. With no default and no match, the PVC sits Pending.",
+      "points": 1
+    },
+    {
+      "key": "q3-empty-string",
+      "type": "single_choice",
+      "prompt": "What does `storageClassName: \"\"` mean?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Use the default class"
+        },
+        {
+          "id": "b",
+          "text": "Disable dynamic provisioning and bind only to a matching pre-created PV"
+        },
+        {
+          "id": "c",
+          "text": "Any class will do"
+        },
+        {
+          "id": "d",
+          "text": "It is invalid"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "An explicit empty string is how you opt out of the default - not the same as leaving the field out.",
+      "points": 1
+    },
+    {
+      "key": "q4-binding-mode",
+      "type": "single_choice",
+      "prompt": "What does `volumeBindingMode: WaitForFirstConsumer` change?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The PVC binds immediately"
+        },
+        {
+          "id": "b",
+          "text": "Binding waits until a Pod using the PVC is scheduled"
+        },
+        {
+          "id": "c",
+          "text": "It disables expansion"
+        },
+        {
+          "id": "d",
+          "text": "It makes the volume read-only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is what keeps a zonal volume from being created in a zone where the Pod cannot run.",
+      "points": 1
+    },
+    {
+      "key": "q5-list",
+      "type": "fill_command",
+      "prompt": "Write the command that lists the StorageClasses in the cluster.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl get storageclass",
+        "kubectl get sc",
+        "kubectl get storageclasses"
+      ],
+      "explanation": "The default one is marked '(default)' in the NAME column.",
+      "points": 2
+    }
+  ]
+}

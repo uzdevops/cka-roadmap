@@ -1,0 +1,186 @@
+{
+  "slug": "week-11-review",
+  "phase_slug": "networking-storage",
+  "week_number": 11,
+  "title": "Week 11 review - storage",
+  "description": "Six questions on volumes, claims and classes.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 11,
+  "questions": [
+    {
+      "key": "w11-q1",
+      "type": "single_choice",
+      "prompt": "How long does an emptyDir last?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Forever"
+        },
+        {
+          "id": "b",
+          "text": "As long as the Pod lives on that node"
+        },
+        {
+          "id": "c",
+          "text": "As long as the container"
+        },
+        {
+          "id": "d",
+          "text": "Until reboot"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It survives container restarts, not Pod deletion.",
+      "points": 1
+    },
+    {
+      "key": "w11-q2",
+      "type": "single_choice",
+      "prompt": "ReadWriteOnce means what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One Pod, ever"
+        },
+        {
+          "id": "b",
+          "text": "Read-write by Pods on a single node"
+        },
+        {
+          "id": "c",
+          "text": "Read once"
+        },
+        {
+          "id": "d",
+          "text": "Write once"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "ReadWriteOncePod is the stricter, newer mode.",
+      "points": 1
+    },
+    {
+      "key": "w11-q3",
+      "type": "single_choice",
+      "prompt": "A PVC with reclaimPolicy Delete is deleted. What happens to the storage?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Kept"
+        },
+        {
+          "id": "b",
+          "text": "Deleted with it"
+        },
+        {
+          "id": "c",
+          "text": "Becomes Released"
+        },
+        {
+          "id": "d",
+          "text": "Becomes read-only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Retain is the policy that preserves it for manual handling.",
+      "points": 1
+    },
+    {
+      "key": "w11-q4",
+      "type": "single_choice",
+      "prompt": "storageClassName: \"\" means what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Use the default class"
+        },
+        {
+          "id": "b",
+          "text": "No dynamic provisioning; bind only to a matching existing PV"
+        },
+        {
+          "id": "c",
+          "text": "Any class"
+        },
+        {
+          "id": "d",
+          "text": "Invalid"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Different from omitting the field, which uses the default class.",
+      "points": 1
+    },
+    {
+      "key": "w11-q5",
+      "type": "single_choice",
+      "prompt": "volumeBindingMode: WaitForFirstConsumer does what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Binds immediately"
+        },
+        {
+          "id": "b",
+          "text": "Delays binding until a Pod is scheduled"
+        },
+        {
+          "id": "c",
+          "text": "Disables expansion"
+        },
+        {
+          "id": "d",
+          "text": "Forces ReadWriteMany"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which keeps a zonal volume from being created where the Pod cannot run.",
+      "points": 1
+    },
+    {
+      "key": "w11-q6",
+      "type": "single_choice",
+      "prompt": "A PVC stays Pending. Most likely?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Pod has not started"
+        },
+        {
+          "id": "b",
+          "text": "No matching PV and no class that can provision one"
+        },
+        {
+          "id": "c",
+          "text": "Missing labels"
+        },
+        {
+          "id": "d",
+          "text": "The namespace is full"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`kubectl describe pvc` names the reason.",
+      "points": 1
+    }
+  ]
+}

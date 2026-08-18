@@ -1,0 +1,158 @@
+{
+  "slug": "admission-control-basics-check",
+  "lesson_slug": "admission-control-basics",
+  "phase_slug": "cluster-architecture",
+  "week_number": 15,
+  "title": "Check: admission control",
+  "description": "Five questions on the last gate before persistence.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-order",
+      "type": "single_choice",
+      "prompt": "Where does admission sit in the request pipeline?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Before authentication"
+        },
+        {
+          "id": "b",
+          "text": "After authorisation, before validation and persistence"
+        },
+        {
+          "id": "c",
+          "text": "After the object is stored"
+        },
+        {
+          "id": "d",
+          "text": "In the scheduler"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Authenticate, authorise, admit, validate, persist. Admission is the last chance to change or refuse an object.",
+      "points": 1
+    },
+    {
+      "key": "q2-mutating-first",
+      "type": "single_choice",
+      "prompt": "Which runs first, mutating or validating webhooks?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Validating"
+        },
+        {
+          "id": "b",
+          "text": "Mutating"
+        },
+        {
+          "id": "c",
+          "text": "They run in parallel"
+        },
+        {
+          "id": "d",
+          "text": "Alphabetically"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Mutating first so that validation sees the final object - otherwise a defaulting webhook could smuggle something past a check.",
+      "points": 1
+    },
+    {
+      "key": "q3-failurepolicy",
+      "type": "single_choice",
+      "prompt": "A webhook is unreachable and its failurePolicy is Fail. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The request is admitted"
+        },
+        {
+          "id": "b",
+          "text": "The request is rejected"
+        },
+        {
+          "id": "c",
+          "text": "The webhook is deleted"
+        },
+        {
+          "id": "d",
+          "text": "The API server restarts"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is safe but can wedge a cluster if the webhook's own Pods cannot start. Scope it with namespaceSelector.",
+      "points": 1
+    },
+    {
+      "key": "q4-builtin",
+      "type": "single_choice",
+      "prompt": "Which built-in admission plugin stops a kubelet from modifying other nodes' objects?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PodSecurity"
+        },
+        {
+          "id": "b",
+          "text": "NodeRestriction"
+        },
+        {
+          "id": "c",
+          "text": "ResourceQuota"
+        },
+        {
+          "id": "d",
+          "text": "DefaultStorageClass"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "NodeRestriction is why --authorization-mode=Node,RBAC is the standard pairing.",
+      "points": 1
+    },
+    {
+      "key": "q5-podsecurity",
+      "type": "single_choice",
+      "prompt": "How is Pod Security enforced today?",
+      "options": [
+        {
+          "id": "a",
+          "text": "With PodSecurityPolicy"
+        },
+        {
+          "id": "b",
+          "text": "With the Pod Security admission controller, configured by namespace labels"
+        },
+        {
+          "id": "c",
+          "text": "With a NetworkPolicy"
+        },
+        {
+          "id": "d",
+          "text": "With RBAC alone"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "PodSecurityPolicy was removed. Labels like pod-security.kubernetes.io/enforce=restricted are the replacement.",
+      "points": 1
+    }
+  ]
+}

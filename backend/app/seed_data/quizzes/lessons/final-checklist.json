@@ -1,0 +1,158 @@
+{
+  "slug": "final-checklist-check",
+  "lesson_slug": "final-checklist",
+  "phase_slug": "mock-exams",
+  "week_number": 20,
+  "title": "Check: before you book",
+  "description": "Five questions on the last checks.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-readiness",
+      "type": "single_choice",
+      "prompt": "What does the readiness estimate on your dashboard weight by?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lessons read"
+        },
+        {
+          "id": "b",
+          "text": "Each domain's real share of the exam"
+        },
+        {
+          "id": "c",
+          "text": "Time spent"
+        },
+        {
+          "id": "d",
+          "text": "Number of attempts"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is why finishing a 30%-weighted domain moves it far more than a 0%-weighted one.",
+      "points": 1
+    },
+    {
+      "key": "q2-environment",
+      "type": "single_choice",
+      "prompt": "What should you verify about your room before exam day?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "A clear desk, permitted items only, working webcam and a stable connection - per the candidate handbook"
+        },
+        {
+          "id": "c",
+          "text": "That a second monitor is connected"
+        },
+        {
+          "id": "d",
+          "text": "That notes are within reach"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Environment failures end sessions. The handbook is the authority, and it is worth reading in full once.",
+      "points": 1
+    },
+    {
+      "key": "q3-id",
+      "type": "single_choice",
+      "prompt": "What is checked at the start of the session?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "Government-issued photo identification"
+        },
+        {
+          "id": "c",
+          "text": "Your employer's letter"
+        },
+        {
+          "id": "d",
+          "text": "A previous certificate"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Name mismatches are a common and entirely avoidable failure.",
+      "points": 1
+    },
+    {
+      "key": "q4-retake",
+      "type": "single_choice",
+      "prompt": "What does a CKA registration include?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One attempt only"
+        },
+        {
+          "id": "b",
+          "text": "An attempt plus one free retake"
+        },
+        {
+          "id": "c",
+          "text": "Unlimited attempts"
+        },
+        {
+          "id": "d",
+          "text": "Three attempts"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Check the certification page for current terms - it is one of the four official links in the References section.",
+      "points": 1
+    },
+    {
+      "key": "q5-when",
+      "type": "single_choice",
+      "prompt": "When are you actually ready to book?",
+      "options": [
+        {
+          "id": "a",
+          "text": "When you have read every lesson"
+        },
+        {
+          "id": "b",
+          "text": "When the weighted readiness is high and you can finish labs at speed, in a terminal"
+        },
+        {
+          "id": "c",
+          "text": "After one mock exam"
+        },
+        {
+          "id": "d",
+          "text": "When the streak is long enough"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Reading is necessary and not sufficient. The exam measures what you can do under a clock.",
+      "points": 1
+    }
+  ]
+}

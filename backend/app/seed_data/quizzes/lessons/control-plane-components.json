@@ -1,0 +1,155 @@
+{
+  "slug": "control-plane-components-check",
+  "lesson_slug": "control-plane-components",
+  "phase_slug": "foundations",
+  "week_number": 1,
+  "title": "Check: control plane components",
+  "description": "Five questions on the API server, etcd, the scheduler and the controller manager.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-etcd-quorum",
+      "type": "single_choice",
+      "prompt": "Why should an etcd cluster have an odd number of members?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Even numbers waste disk space"
+        },
+        {
+          "id": "b",
+          "text": "Raft needs a quorum of (n/2)+1, so an even count adds a member without adding fault tolerance"
+        },
+        {
+          "id": "c",
+          "text": "etcd refuses to start with an even number"
+        },
+        {
+          "id": "d",
+          "text": "Odd numbers make backups faster"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "A 2-member cluster is strictly worse than a 1-member one: it tolerates zero failures and has two things that can break.",
+      "points": 1
+    },
+    {
+      "key": "q2-scheduler-stages",
+      "type": "single_choice",
+      "prompt": "The scheduler picks a node in two stages. What are they?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sorting then binding"
+        },
+        {
+          "id": "b",
+          "text": "Filtering out nodes that cannot work, then scoring the survivors"
+        },
+        {
+          "id": "c",
+          "text": "Scoring every node, then asking the kubelet"
+        },
+        {
+          "id": "d",
+          "text": "Draining then scheduling"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "Filtering (predicates) eliminates nodes that cannot work; scoring (priorities) ranks what is left. The highest score wins and the scheduler writes a Binding.",
+      "points": 1
+    },
+    {
+      "key": "q3-symptom-scheduler",
+      "type": "single_choice",
+      "prompt": "New Pods stay Pending forever, but everything already running is healthy. Which component is down?",
+      "options": [
+        {
+          "id": "a",
+          "text": "etcd"
+        },
+        {
+          "id": "b",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "c",
+          "text": "The scheduler"
+        },
+        {
+          "id": "d",
+          "text": "The kubelet"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "explanation": "No scheduler means nothing assigns a node, so new Pods never leave Pending. Existing Pods already have a node and are unaffected.",
+      "points": 1
+    },
+    {
+      "key": "q4-symptom-controller",
+      "type": "single_choice",
+      "prompt": "You delete a Pod belonging to a Deployment and it is never replaced. Which component is down?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The controller manager"
+        },
+        {
+          "id": "b",
+          "text": "The API server"
+        },
+        {
+          "id": "c",
+          "text": "The scheduler"
+        },
+        {
+          "id": "d",
+          "text": "CoreDNS"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "explanation": "The ReplicaSet controller lives in the controller manager. Without it nothing notices the gap - the cluster simply stops healing itself.",
+      "points": 1
+    },
+    {
+      "key": "q5-static-pods",
+      "type": "multi_select",
+      "prompt": "On a kubeadm cluster, which statements about the control plane are true? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Its components run as static Pods"
+        },
+        {
+          "id": "b",
+          "text": "Their manifests live in /etc/kubernetes/manifests/"
+        },
+        {
+          "id": "c",
+          "text": "The kubelet watches that directory and keeps them running"
+        },
+        {
+          "id": "d",
+          "text": "The scheduler decides where to place them"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Static Pods are run straight from disk by the kubelet, with no scheduler involved - which is how the control plane bootstraps the very agent it manages.",
+      "points": 2
+    }
+  ]
+}

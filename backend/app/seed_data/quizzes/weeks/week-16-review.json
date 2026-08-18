@@ -1,0 +1,154 @@
+{
+  "slug": "week-16-review",
+  "phase_slug": "cluster-architecture",
+  "week_number": 16,
+  "title": "Week 16 review - operations",
+  "description": "Six questions on maintenance, extensions and visibility.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 16,
+  "questions": [
+    {
+      "key": "w16-q1",
+      "type": "fill_command",
+      "prompt": "Write the command that drains worker-3 including emptyDir Pods.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl drain worker-3 --ignore-daemonsets --delete-emptydir-data",
+        "kubectl drain worker-3 --delete-emptydir-data --ignore-daemonsets"
+      ],
+      "explanation": "Without the flag, drain refuses rather than discarding data.",
+      "points": 2
+    },
+    {
+      "key": "w16-q2",
+      "type": "single_choice",
+      "prompt": "Drain hangs, evicting nothing. Usual cause?",
+      "options": [
+        {
+          "id": "a",
+          "text": "API server down"
+        },
+        {
+          "id": "b",
+          "text": "A PodDisruptionBudget is blocking further evictions"
+        },
+        {
+          "id": "c",
+          "text": "Already cordoned"
+        },
+        {
+          "id": "d",
+          "text": "No labels"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "That is the PDB doing its job.",
+      "points": 1
+    },
+    {
+      "key": "w16-q3",
+      "type": "single_choice",
+      "prompt": "What is an operator?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A person"
+        },
+        {
+          "id": "b",
+          "text": "A controller reconciling a custom resource"
+        },
+        {
+          "id": "c",
+          "text": "A kubectl plugin"
+        },
+        {
+          "id": "d",
+          "text": "A Service type"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "CRD plus controller, following the same reconciliation loop.",
+      "points": 1
+    },
+    {
+      "key": "w16-q4",
+      "type": "single_choice",
+      "prompt": "A CRD alone gives you what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A working controller"
+        },
+        {
+          "id": "b",
+          "text": "A new API type that is stored and served, with nothing acting on it"
+        },
+        {
+          "id": "c",
+          "text": "An admission webhook"
+        },
+        {
+          "id": "d",
+          "text": "A namespace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Without a controller the objects just sit there.",
+      "points": 1
+    },
+    {
+      "key": "w16-q5",
+      "type": "fill_command",
+      "prompt": "Write the command showing per-node CPU and memory usage.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl top nodes",
+        "kubectl top node"
+      ],
+      "explanation": "Requires metrics-server.",
+      "points": 2
+    },
+    {
+      "key": "w16-q6",
+      "type": "single_choice",
+      "prompt": "How long do Events last by default?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Forever"
+        },
+        {
+          "id": "b",
+          "text": "About an hour"
+        },
+        {
+          "id": "c",
+          "text": "A week"
+        },
+        {
+          "id": "d",
+          "text": "Until Pod deletion"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is why they are worth shipping somewhere.",
+      "points": 1
+    }
+  ]
+}

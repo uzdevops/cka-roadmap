@@ -1,0 +1,127 @@
+{
+  "slug": "deployments-and-replicasets-check",
+  "lesson_slug": "deployments-and-replicasets",
+  "phase_slug": "foundations",
+  "week_number": 4,
+  "title": "Check: Deployments and ReplicaSets",
+  "description": "Five questions on rollouts, ownership and rollbacks.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-ownership",
+      "type": "single_choice",
+      "prompt": "What is the ownership chain when you create a Deployment?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deployment -> Pod"
+        },
+        {
+          "id": "b",
+          "text": "Deployment -> ReplicaSet -> Pod"
+        },
+        {
+          "id": "c",
+          "text": "ReplicaSet -> Deployment -> Pod"
+        },
+        {
+          "id": "d",
+          "text": "Deployment -> DaemonSet -> Pod"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "The Deployment manages ReplicaSets; each ReplicaSet keeps its own Pods alive. A rollout is one ReplicaSet scaling up while another scales down.",
+      "points": 1
+    },
+    {
+      "key": "q2-rollout",
+      "type": "single_choice",
+      "prompt": "You change the image in a Deployment. What does the Deployment controller do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Edits the existing Pods in place"
+        },
+        {
+          "id": "b",
+          "text": "Creates a new ReplicaSet and shifts replicas to it"
+        },
+        {
+          "id": "c",
+          "text": "Deletes every Pod, then recreates them"
+        },
+        {
+          "id": "d",
+          "text": "Nothing until you scale it manually"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "Pods are immutable in the fields that matter, so a new template means a new ReplicaSet. The old one scales down as the new one scales up.",
+      "points": 1
+    },
+    {
+      "key": "q3-rollback",
+      "type": "fill_command",
+      "prompt": "Write the command that undoes the last rollout of a Deployment named web.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl rollout undo deployment/web",
+        "kubectl rollout undo deployment web",
+        "kubectl rollout undo deploy/web",
+        "kubectl rollout undo deploy web"
+      ],
+      "explanation": "Old ReplicaSets are kept precisely so a rollback is a scale-up of the previous one.",
+      "points": 2
+    },
+    {
+      "key": "q4-status",
+      "type": "fill_command",
+      "prompt": "Write the command that watches the progress of that rollout.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl rollout status deployment/web",
+        "kubectl rollout status deployment web",
+        "kubectl rollout status deploy/web",
+        "kubectl rollout status deploy web"
+      ],
+      "explanation": "`rollout status` blocks until the rollout finishes or fails, which makes it useful in scripts as well as by hand.",
+      "points": 2
+    },
+    {
+      "key": "q5-observed-generation",
+      "type": "single_choice",
+      "prompt": "Which status field tells you whether the controller has seen your latest change?",
+      "options": [
+        {
+          "id": "a",
+          "text": "readyReplicas"
+        },
+        {
+          "id": "b",
+          "text": "observedGeneration"
+        },
+        {
+          "id": "c",
+          "text": "updatedReplicas"
+        },
+        {
+          "id": "d",
+          "text": "availableReplicas"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "`observedGeneration` lagging behind `metadata.generation` means the controller has not processed your edit yet.",
+      "points": 1
+    }
+  ]
+}

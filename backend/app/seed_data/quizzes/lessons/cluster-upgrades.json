@@ -1,0 +1,142 @@
+{
+  "slug": "cluster-upgrades-check",
+  "lesson_slug": "cluster-upgrades",
+  "phase_slug": "cluster-architecture",
+  "week_number": 13,
+  "title": "Check: upgrades",
+  "description": "Five questions on moving a cluster to a new version.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-order",
+      "type": "single_choice",
+      "prompt": "What is the correct order when upgrading a cluster?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Workers first, then the control plane"
+        },
+        {
+          "id": "b",
+          "text": "Control plane first, then workers one at a time"
+        },
+        {
+          "id": "c",
+          "text": "Everything at once"
+        },
+        {
+          "id": "d",
+          "text": "etcd last"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The control plane may run ahead of the kubelets, never behind. Upgrade it first, then drain and upgrade each worker.",
+      "points": 1
+    },
+    {
+      "key": "q2-skew",
+      "type": "single_choice",
+      "prompt": "How far may a kubelet lag behind the API server?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No versions - they must match"
+        },
+        {
+          "id": "b",
+          "text": "Up to three minor versions"
+        },
+        {
+          "id": "c",
+          "text": "One minor version"
+        },
+        {
+          "id": "d",
+          "text": "Any distance"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Modern policy allows kubelets up to three minor versions older than the API server, but never newer.",
+      "points": 1
+    },
+    {
+      "key": "q3-skip",
+      "type": "single_choice",
+      "prompt": "Can you upgrade from 1.30 straight to 1.32 with kubeadm?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yes, kubeadm handles any jump"
+        },
+        {
+          "id": "b",
+          "text": "No - upgrade one minor version at a time, 1.30 to 1.31 to 1.32"
+        },
+        {
+          "id": "c",
+          "text": "Only with --force"
+        },
+        {
+          "id": "d",
+          "text": "Only for the control plane"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "kubeadm refuses the jump. Minor versions must be walked one at a time.",
+      "points": 1
+    },
+    {
+      "key": "q4-drain",
+      "type": "fill_command",
+      "prompt": "Write the command that safely drains node worker-1 before upgrading its kubelet.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl drain worker-1 --ignore-daemonsets",
+        "kubectl drain worker-1 --ignore-daemonsets --delete-emptydir-data"
+      ],
+      "explanation": "--ignore-daemonsets is needed because DaemonSet Pods are deliberately not evictable.",
+      "points": 2
+    },
+    {
+      "key": "q5-plan",
+      "type": "single_choice",
+      "prompt": "Which command shows the upgrade paths available from the current version?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubeadm upgrade apply"
+        },
+        {
+          "id": "b",
+          "text": "kubeadm upgrade plan"
+        },
+        {
+          "id": "c",
+          "text": "kubectl version"
+        },
+        {
+          "id": "d",
+          "text": "kubeadm config view"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`plan` reports the versions you can move to and what it will change; `apply` performs it.",
+      "points": 1
+    }
+  ]
+}

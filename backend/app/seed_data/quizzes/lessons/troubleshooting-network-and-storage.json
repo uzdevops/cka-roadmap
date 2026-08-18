@@ -1,0 +1,143 @@
+{
+  "slug": "troubleshooting-network-and-storage-check",
+  "lesson_slug": "troubleshooting-network-and-storage",
+  "phase_slug": "networking-storage",
+  "week_number": 12,
+  "title": "Check: network and storage faults",
+  "description": "Five questions on isolating where traffic or a mount is going wrong.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-order",
+      "type": "single_choice",
+      "prompt": "A Service is unreachable. What is the most useful first check?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Restart kube-proxy"
+        },
+        {
+          "id": "b",
+          "text": "Whether the Service has ready endpoints"
+        },
+        {
+          "id": "c",
+          "text": "The Ingress TLS certificate"
+        },
+        {
+          "id": "d",
+          "text": "The node's kernel version"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "No endpoints means the fault is the selector or Pod readiness, not the network. It splits the problem in half immediately.",
+      "points": 1
+    },
+    {
+      "key": "q2-podip-works",
+      "type": "single_choice",
+      "prompt": "Traffic works to the Pod IP but not to the Service VIP, from one node only. Which component?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The CNI plugin"
+        },
+        {
+          "id": "b",
+          "text": "kube-proxy on that node"
+        },
+        {
+          "id": "c",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "d",
+          "text": "The API server"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pod IP reachability proves the CNI is fine. Service VIPs are kube-proxy's programming, and it is per node.",
+      "points": 1
+    },
+    {
+      "key": "q3-mount-fail",
+      "type": "single_choice",
+      "prompt": "A Pod is stuck in ContainerCreating with a volume mount error. Where is the message?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The container logs"
+        },
+        {
+          "id": "b",
+          "text": "`kubectl describe pod` events, and the kubelet journal on that node"
+        },
+        {
+          "id": "c",
+          "text": "The PVC's spec"
+        },
+        {
+          "id": "d",
+          "text": "The StorageClass"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "There are no container logs yet - the container never started. The kubelet is the component doing the mounting.",
+      "points": 1
+    },
+    {
+      "key": "q4-multiattach",
+      "type": "single_choice",
+      "prompt": "A Pod is Pending with 'Multi-Attach error for volume'. What does that mean?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The volume is full"
+        },
+        {
+          "id": "b",
+          "text": "A ReadWriteOnce volume is still attached to another node"
+        },
+        {
+          "id": "c",
+          "text": "Two PVCs share a name"
+        },
+        {
+          "id": "d",
+          "text": "The StorageClass is missing"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Usually an old Pod on a different node has not fully terminated. RWO is a per-node exclusive lock.",
+      "points": 1
+    },
+    {
+      "key": "q5-netshoot",
+      "type": "fill_command",
+      "prompt": "Write a command that starts a temporary interactive shell Pod for network debugging using image nicolaka/netshoot.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl run tmp --rm -it --image=nicolaka/netshoot -- sh",
+        "kubectl run tmp --rm -it --image=nicolaka/netshoot --restart=Never -- sh",
+        "kubectl run netshoot --rm -it --image=nicolaka/netshoot -- sh"
+      ],
+      "explanation": "A throwaway Pod inside the cluster network is the fastest way to test DNS and connectivity from where it matters.",
+      "points": 2
+    }
+  ]
+}

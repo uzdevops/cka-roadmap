@@ -1,0 +1,170 @@
+{
+  "slug": "week-13-review",
+  "phase_slug": "cluster-architecture",
+  "week_number": 13,
+  "title": "Week 13 review - building a cluster",
+  "description": "Six questions on kubeadm, upgrades and HA.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 13,
+  "questions": [
+    {
+      "key": "w13-q1",
+      "type": "single_choice",
+      "prompt": "What must follow kubeadm init before nodes go Ready?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A reboot"
+        },
+        {
+          "id": "b",
+          "text": "Installing a CNI plugin"
+        },
+        {
+          "id": "c",
+          "text": "A StorageClass"
+        },
+        {
+          "id": "d",
+          "text": "An Ingress controller"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Until then the kubelet reports NetworkReady=false.",
+      "points": 1
+    },
+    {
+      "key": "w13-q2",
+      "type": "fill_command",
+      "prompt": "Write the command that prints a fresh worker join command.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubeadm token create --print-join-command",
+        "sudo kubeadm token create --print-join-command"
+      ],
+      "explanation": "The init token expires after 24 hours.",
+      "points": 2
+    },
+    {
+      "key": "w13-q3",
+      "type": "single_choice",
+      "prompt": "Correct upgrade order?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Workers, then control plane"
+        },
+        {
+          "id": "b",
+          "text": "Control plane, then workers one at a time"
+        },
+        {
+          "id": "c",
+          "text": "All at once"
+        },
+        {
+          "id": "d",
+          "text": "etcd last"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Kubelets may lag the API server, never lead it.",
+      "points": 1
+    },
+    {
+      "key": "w13-q4",
+      "type": "single_choice",
+      "prompt": "Can kubeadm jump 1.30 to 1.32 directly?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yes"
+        },
+        {
+          "id": "b",
+          "text": "No - one minor version at a time"
+        },
+        {
+          "id": "c",
+          "text": "With --force"
+        },
+        {
+          "id": "d",
+          "text": "Only the control plane"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "1.30 to 1.31 to 1.32.",
+      "points": 1
+    },
+    {
+      "key": "w13-q5",
+      "type": "single_choice",
+      "prompt": "How many control plane nodes should an HA cluster have?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Two"
+        },
+        {
+          "id": "b",
+          "text": "An odd number, usually three"
+        },
+        {
+          "id": "c",
+          "text": "Any"
+        },
+        {
+          "id": "d",
+          "text": "Four"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "etcd's Raft quorum drives the answer.",
+      "points": 1
+    },
+    {
+      "key": "w13-q6",
+      "type": "single_choice",
+      "prompt": "A three-node control plane loses two nodes. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "No etcd quorum, so no API writes; running Pods continue"
+        },
+        {
+          "id": "c",
+          "text": "Workers stop"
+        },
+        {
+          "id": "d",
+          "text": "Only the scheduler stops"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The data plane does not depend on the control plane.",
+      "points": 1
+    }
+  ]
+}

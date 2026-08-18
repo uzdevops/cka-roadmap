@@ -1,0 +1,170 @@
+{
+  "slug": "week-19-review",
+  "phase_slug": "mock-exams",
+  "week_number": 19,
+  "title": "Week 19 review - exam simulation",
+  "description": "Six questions on working under the clock.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 19,
+  "questions": [
+    {
+      "key": "w19-q1",
+      "type": "single_choice",
+      "prompt": "How long is the CKA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One hour"
+        },
+        {
+          "id": "b",
+          "text": "Two hours"
+        },
+        {
+          "id": "c",
+          "text": "Three hours"
+        },
+        {
+          "id": "d",
+          "text": "Four hours"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Older material still says three.",
+      "points": 1
+    },
+    {
+      "key": "w19-q2",
+      "type": "single_choice",
+      "prompt": "What is the first thing to do on every task?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read the docs"
+        },
+        {
+          "id": "b",
+          "text": "Switch to the context the task names"
+        },
+        {
+          "id": "c",
+          "text": "Check the version"
+        },
+        {
+          "id": "d",
+          "text": "Create a namespace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Correct work in the wrong cluster scores nothing.",
+      "points": 1
+    },
+    {
+      "key": "w19-q3",
+      "type": "fill_command",
+      "prompt": "Write the fastest command that creates a Deployment web from image nginx.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl create deployment web --image=nginx",
+        "kubectl create deploy web --image=nginx"
+      ],
+      "explanation": "kubectl run creates a Pod; create deployment creates a Deployment.",
+      "points": 2
+    },
+    {
+      "key": "w19-q4",
+      "type": "single_choice",
+      "prompt": "You are stuck on a 12% task with 10 minutes and an untouched 4% task left. What now?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Finish the 12% one"
+        },
+        {
+          "id": "b",
+          "text": "Bank the 4%, return if time allows"
+        },
+        {
+          "id": "c",
+          "text": "Neither"
+        },
+        {
+          "id": "d",
+          "text": "Split evenly"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Marks per minute is the only thing that matters at the end.",
+      "points": 1
+    },
+    {
+      "key": "w19-q5",
+      "type": "single_choice",
+      "prompt": "What should you do after finishing each task?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Move straight on"
+        },
+        {
+          "id": "b",
+          "text": "Verify the resulting state with get or describe"
+        },
+        {
+          "id": "c",
+          "text": "Delete and redo"
+        },
+        {
+          "id": "d",
+          "text": "Restart the kubelet"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A typo you never look at costs the whole task.",
+      "points": 1
+    },
+    {
+      "key": "w19-q6",
+      "type": "single_choice",
+      "prompt": "Which documentation is permitted?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "The official Kubernetes docs in one extra tab"
+        },
+        {
+          "id": "c",
+          "text": "Anything"
+        },
+        {
+          "id": "d",
+          "text": "Your own notes"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Practise navigating them quickly.",
+      "points": 1
+    }
+  ]
+}

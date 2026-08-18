@@ -1,0 +1,93 @@
+{
+  "slug": "speed-drills-and-imperative-commands-check",
+  "lesson_slug": "speed-drills-and-imperative-commands",
+  "phase_slug": "mock-exams",
+  "week_number": 20,
+  "title": "Check: speed drills",
+  "description": "Five questions on the commands worth having in your fingers.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-deploy-dry",
+      "type": "fill_command",
+      "prompt": "Write the command that generates a Deployment manifest for web with image nginx, without creating it.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl create deployment web --image=nginx --dry-run=client -o yaml",
+        "kubectl create deploy web --image=nginx --dry-run=client -o yaml"
+      ],
+      "explanation": "Redirect it to a file, edit two fields, apply. Far faster than typing YAML from scratch.",
+      "points": 2
+    },
+    {
+      "key": "q2-expose",
+      "type": "fill_command",
+      "prompt": "Write the command that exposes Deployment web on port 80 as a NodePort Service.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl expose deployment web --port=80 --type=NodePort",
+        "kubectl expose deploy web --port=80 --type=NodePort"
+      ],
+      "explanation": "Add --target-port when the container listens elsewhere.",
+      "points": 2
+    },
+    {
+      "key": "q3-set-image",
+      "type": "fill_command",
+      "prompt": "Write the command that updates Deployment web's container nginx to image nginx:1.27.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl set image deployment/web nginx=nginx:1.27",
+        "kubectl set image deploy/web nginx=nginx:1.27"
+      ],
+      "explanation": "`kubectl set` also handles resources, env and serviceaccount - all faster than editing.",
+      "points": 2
+    },
+    {
+      "key": "q4-ns-default",
+      "type": "fill_command",
+      "prompt": "Write the command that makes namespace dev the default for the current context.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl config set-context --current --namespace=dev"
+      ],
+      "explanation": "One of the highest-value habits in a timed exam: it removes -n from every later command.",
+      "points": 2
+    },
+    {
+      "key": "q5-force-delete",
+      "type": "single_choice",
+      "prompt": "A Pod is stuck Terminating and the task needs it gone now. What is the command shape?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl delete pod web"
+        },
+        {
+          "id": "b",
+          "text": "kubectl delete pod web --force --grace-period=0"
+        },
+        {
+          "id": "c",
+          "text": "kubectl drain"
+        },
+        {
+          "id": "d",
+          "text": "kubectl replace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Use it knowingly: force-deleting skips graceful shutdown, which for a StatefulSet member can mean data loss.",
+      "points": 1
+    }
+  ]
+}

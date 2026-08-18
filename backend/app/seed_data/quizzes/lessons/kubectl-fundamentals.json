@@ -1,0 +1,127 @@
+{
+  "slug": "kubectl-fundamentals-check",
+  "lesson_slug": "kubectl-fundamentals",
+  "phase_slug": "foundations",
+  "week_number": 2,
+  "title": "Check: kubectl fundamentals",
+  "description": "Five questions on the verbs, output formats and the shortcuts that save time.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-all-namespaces",
+      "type": "fill_command",
+      "prompt": "Write the command that lists Pods in every namespace.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl get pods --all-namespaces",
+        "kubectl get po -A",
+        "kubectl get pods -A",
+        "kubectl get po --all-namespaces"
+      ],
+      "explanation": "Graded with fuzzy matching: `-A` and `--all-namespaces` score the same, as do `po` and `pods`.",
+      "points": 2
+    },
+    {
+      "key": "q2-describe-vs-get",
+      "type": "single_choice",
+      "prompt": "What does `kubectl describe` give you that `kubectl get` does not?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The object in YAML form"
+        },
+        {
+          "id": "b",
+          "text": "Events and a human-readable summary of related state"
+        },
+        {
+          "id": "c",
+          "text": "A list of every object of that type"
+        },
+        {
+          "id": "d",
+          "text": "The raw JSON from etcd"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "`describe` assembles the object plus its events and related objects. For the raw stored form you want `get -o yaml`.",
+      "points": 1
+    },
+    {
+      "key": "q3-dry-run",
+      "type": "fill_command",
+      "prompt": "Write the command that prints the YAML for a Deployment named web using image nginx, without creating anything.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl create deployment web --image=nginx --dry-run=client -o yaml",
+        "kubectl create deploy web --image=nginx --dry-run=client -o yaml"
+      ],
+      "explanation": "Generating a manifest and editing it is far faster under exam pressure than writing YAML from memory.",
+      "points": 2
+    },
+    {
+      "key": "q4-explain",
+      "type": "single_choice",
+      "prompt": "You cannot remember which field sets a Pod's restart policy. Which command tells you without leaving the terminal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl describe pod"
+        },
+        {
+          "id": "b",
+          "text": "kubectl explain pod.spec"
+        },
+        {
+          "id": "c",
+          "text": "kubectl get pod -o wide"
+        },
+        {
+          "id": "d",
+          "text": "kubectl api-resources"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "`kubectl explain` walks the schema field by field. It is the fastest documentation you have during the exam.",
+      "points": 1
+    },
+    {
+      "key": "q5-fast",
+      "type": "multi_select",
+      "prompt": "Which of these actually save time in a two-hour exam? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "An alias such as k=kubectl"
+        },
+        {
+          "id": "b",
+          "text": "Shell autocompletion"
+        },
+        {
+          "id": "c",
+          "text": "Writing every manifest from scratch"
+        },
+        {
+          "id": "d",
+          "text": "`--dry-run=client -o yaml` to generate a starting manifest"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "Everything that removes keystrokes helps. Writing YAML from memory is the one habit that reliably costs you time.",
+      "points": 2
+    }
+  ]
+}

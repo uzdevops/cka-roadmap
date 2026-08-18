@@ -1,0 +1,186 @@
+{
+  "slug": "week-08-review",
+  "phase_slug": "workloads-scheduling",
+  "week_number": 8,
+  "title": "Week 8 review - scaling and health",
+  "description": "Six questions on autoscaling, probes and packaging.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 8,
+  "questions": [
+    {
+      "key": "w8-q1",
+      "type": "single_choice",
+      "prompt": "An HPA on CPU shows <unknown>. What is missing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A PodDisruptionBudget"
+        },
+        {
+          "id": "b",
+          "text": "metrics-server"
+        },
+        {
+          "id": "c",
+          "text": "A Service"
+        },
+        {
+          "id": "d",
+          "text": "A PriorityClass"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The HPA reads the metrics API that metrics-server serves.",
+      "points": 1
+    },
+    {
+      "key": "w8-q2",
+      "type": "single_choice",
+      "prompt": "HPA CPU utilisation is a percentage of what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The node's capacity"
+        },
+        {
+          "id": "b",
+          "text": "The Pod's CPU limit"
+        },
+        {
+          "id": "c",
+          "text": "The Pod's CPU request"
+        },
+        {
+          "id": "d",
+          "text": "A full core"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "Without a request there is nothing to compute a percentage against.",
+      "points": 1
+    },
+    {
+      "key": "w8-q3",
+      "type": "single_choice",
+      "prompt": "A failing readiness probe does what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Restarts the container"
+        },
+        {
+          "id": "b",
+          "text": "Removes the Pod from Service endpoints"
+        },
+        {
+          "id": "c",
+          "text": "Evicts the Pod"
+        },
+        {
+          "id": "d",
+          "text": "Marks the node NotReady"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Liveness restarts; readiness gates traffic.",
+      "points": 1
+    },
+    {
+      "key": "w8-q4",
+      "type": "single_choice",
+      "prompt": "Which probe protects a slow-starting app from its own liveness probe?",
+      "options": [
+        {
+          "id": "a",
+          "text": "readinessProbe"
+        },
+        {
+          "id": "b",
+          "text": "startupProbe"
+        },
+        {
+          "id": "c",
+          "text": "execProbe"
+        },
+        {
+          "id": "d",
+          "text": "initProbe"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Liveness and readiness are held off until the startup probe succeeds.",
+      "points": 1
+    },
+    {
+      "key": "w8-q5",
+      "type": "single_choice",
+      "prompt": "Which tool is built into kubectl?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Helm"
+        },
+        {
+          "id": "b",
+          "text": "Kustomize"
+        },
+        {
+          "id": "c",
+          "text": "Both"
+        },
+        {
+          "id": "d",
+          "text": "Neither"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`kubectl apply -k` needs no extra binary.",
+      "points": 1
+    },
+    {
+      "key": "w8-q6",
+      "type": "single_choice",
+      "prompt": "Where does Helm 3 record what it installed?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nowhere"
+        },
+        {
+          "id": "b",
+          "text": "In a Secret per release in the namespace"
+        },
+        {
+          "id": "c",
+          "text": "In a CRD"
+        },
+        {
+          "id": "d",
+          "text": "In etcd directly"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is what makes helm rollback possible.",
+      "points": 1
+    }
+  ]
+}

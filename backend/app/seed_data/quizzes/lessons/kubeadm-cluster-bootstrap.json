@@ -1,0 +1,142 @@
+{
+  "slug": "kubeadm-cluster-bootstrap-check",
+  "lesson_slug": "kubeadm-cluster-bootstrap",
+  "phase_slug": "cluster-architecture",
+  "week_number": 13,
+  "title": "Check: kubeadm bootstrap",
+  "description": "Five questions on standing a cluster up.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-what-init-does",
+      "type": "single_choice",
+      "prompt": "What does `kubeadm init` produce on the first node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A running kubelet only"
+        },
+        {
+          "id": "b",
+          "text": "Certificates, kubeconfigs and static Pod manifests for the control plane"
+        },
+        {
+          "id": "c",
+          "text": "A CNI plugin"
+        },
+        {
+          "id": "d",
+          "text": "A cloud load balancer"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It writes /etc/kubernetes/pki, the kubeconfigs and /etc/kubernetes/manifests, then waits for the kubelet to start the control plane.",
+      "points": 1
+    },
+    {
+      "key": "q2-after-init",
+      "type": "single_choice",
+      "prompt": "What must you do immediately after init before nodes go Ready?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reboot"
+        },
+        {
+          "id": "b",
+          "text": "Install a CNI plugin"
+        },
+        {
+          "id": "c",
+          "text": "Create a StorageClass"
+        },
+        {
+          "id": "d",
+          "text": "Run kubeadm upgrade"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Until a network plugin is installed the kubelet reports NetworkReady=false and every node stays NotReady.",
+      "points": 1
+    },
+    {
+      "key": "q3-join-token",
+      "type": "fill_command",
+      "prompt": "Write the command that prints a fresh join command for a worker node.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubeadm token create --print-join-command",
+        "sudo kubeadm token create --print-join-command"
+      ],
+      "explanation": "The original token from init expires after 24 hours; this regenerates it with the right hash.",
+      "points": 2
+    },
+    {
+      "key": "q4-kubeconfig",
+      "type": "single_choice",
+      "prompt": "Where does kubeadm put the admin kubeconfig?",
+      "options": [
+        {
+          "id": "a",
+          "text": "~/.kube/config, automatically"
+        },
+        {
+          "id": "b",
+          "text": "/etc/kubernetes/admin.conf, which you copy yourself"
+        },
+        {
+          "id": "c",
+          "text": "/var/lib/kubelet/config.yaml"
+        },
+        {
+          "id": "d",
+          "text": "In a Secret"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The final lines of init tell you to copy it to $HOME/.kube/config and fix its ownership.",
+      "points": 1
+    },
+    {
+      "key": "q5-podcidr",
+      "type": "single_choice",
+      "prompt": "Why does `--pod-network-cidr` matter at init time?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It sets the Service VIP range"
+        },
+        {
+          "id": "b",
+          "text": "Some CNI plugins expect a specific range, and it must match theirs"
+        },
+        {
+          "id": "c",
+          "text": "It sets the NodePort range"
+        },
+        {
+          "id": "d",
+          "text": "It is only cosmetic"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Flannel's default is 10.244.0.0/16. A mismatch gives Pods addresses nothing routes.",
+      "points": 1
+    }
+  ]
+}

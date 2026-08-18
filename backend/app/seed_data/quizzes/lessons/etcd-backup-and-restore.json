@@ -1,0 +1,142 @@
+{
+  "slug": "etcd-backup-and-restore-check",
+  "lesson_slug": "etcd-backup-and-restore",
+  "phase_slug": "cluster-architecture",
+  "week_number": 14,
+  "title": "Check: etcd backup and restore",
+  "description": "Five questions on the exam's most reliable task.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-snapshot",
+      "type": "fill_command",
+      "prompt": "Write the etcdctl subcommand and flag that takes a snapshot to /tmp/etcd.db (omit the cert flags).",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "etcdctl snapshot save /tmp/etcd.db",
+        "ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd.db"
+      ],
+      "explanation": "The full form also needs --endpoints, --cacert, --cert and --key, all readable from /etc/kubernetes/manifests/etcd.yaml.",
+      "points": 2
+    },
+    {
+      "key": "q2-api-version",
+      "type": "single_choice",
+      "prompt": "Which API version must etcdctl use for snapshots?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ETCDCTL_API=2"
+        },
+        {
+          "id": "b",
+          "text": "ETCDCTL_API=3"
+        },
+        {
+          "id": "c",
+          "text": "Either"
+        },
+        {
+          "id": "d",
+          "text": "It is chosen automatically in every version"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Version 3 is required. Recent etcdctl defaults to it, but setting it explicitly costs nothing and removes a whole class of exam failure.",
+      "points": 1
+    },
+    {
+      "key": "q3-where-certs",
+      "type": "single_choice",
+      "prompt": "Where do you find the certificate paths for the etcdctl flags?",
+      "options": [
+        {
+          "id": "a",
+          "text": "In the kubelet config"
+        },
+        {
+          "id": "b",
+          "text": "In /etc/kubernetes/manifests/etcd.yaml"
+        },
+        {
+          "id": "c",
+          "text": "In a Secret"
+        },
+        {
+          "id": "d",
+          "text": "In ~/.kube/config"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The static Pod manifest lists exactly the --cacert, --cert and --key the server itself uses.",
+      "points": 1
+    },
+    {
+      "key": "q4-restore",
+      "type": "single_choice",
+      "prompt": "After `etcdctl snapshot restore` into a new data directory, what must you do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing - it takes effect immediately"
+        },
+        {
+          "id": "b",
+          "text": "Point the etcd static Pod's data directory at the restored one and let the kubelet restart it"
+        },
+        {
+          "id": "c",
+          "text": "Run kubeadm init again"
+        },
+        {
+          "id": "d",
+          "text": "Delete every Pod"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Restore only writes files. Editing the manifest is what makes etcd use them.",
+      "points": 1
+    },
+    {
+      "key": "q5-scope",
+      "type": "single_choice",
+      "prompt": "What does an etcd snapshot contain?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only Secrets"
+        },
+        {
+          "id": "b",
+          "text": "The entire cluster state - every object"
+        },
+        {
+          "id": "c",
+          "text": "Just the control plane manifests"
+        },
+        {
+          "id": "d",
+          "text": "Node filesystems"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Which is why it is the one backup that matters, and why the file deserves the same protection as the cluster.",
+      "points": 1
+    }
+  ]
+}

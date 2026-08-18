@@ -1,0 +1,142 @@
+{
+  "slug": "node-maintenance-cordon-drain-check",
+  "lesson_slug": "node-maintenance-cordon-drain",
+  "phase_slug": "cluster-architecture",
+  "week_number": 16,
+  "title": "Check: node maintenance",
+  "description": "Five questions on taking a node out of service safely.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-cordon",
+      "type": "single_choice",
+      "prompt": "What does `kubectl cordon` do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Evicts every Pod"
+        },
+        {
+          "id": "b",
+          "text": "Marks the node unschedulable, leaving running Pods alone"
+        },
+        {
+          "id": "c",
+          "text": "Reboots the node"
+        },
+        {
+          "id": "d",
+          "text": "Deletes the node"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Cordon is the 'no new work' switch. Drain is what actually moves the existing Pods.",
+      "points": 1
+    },
+    {
+      "key": "q2-drain",
+      "type": "fill_command",
+      "prompt": "Write the command that drains node worker-3, including Pods using emptyDir.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl drain worker-3 --ignore-daemonsets --delete-emptydir-data",
+        "kubectl drain worker-3 --delete-emptydir-data --ignore-daemonsets"
+      ],
+      "explanation": "Without --delete-emptydir-data, drain refuses rather than silently discarding data.",
+      "points": 2
+    },
+    {
+      "key": "q3-daemonsets",
+      "type": "single_choice",
+      "prompt": "Why does drain need --ignore-daemonsets?",
+      "options": [
+        {
+          "id": "a",
+          "text": "DaemonSet Pods are always failing"
+        },
+        {
+          "id": "b",
+          "text": "They would be recreated on the same node immediately, so drain refuses unless told to skip them"
+        },
+        {
+          "id": "c",
+          "text": "They have no owner"
+        },
+        {
+          "id": "d",
+          "text": "They cannot be deleted"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A DaemonSet Pod belongs to that node by definition; evicting it is meaningless.",
+      "points": 1
+    },
+    {
+      "key": "q4-pdb",
+      "type": "single_choice",
+      "prompt": "Drain hangs, evicting nothing. What is the usual cause?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The API server is down"
+        },
+        {
+          "id": "b",
+          "text": "A PodDisruptionBudget will not allow another eviction"
+        },
+        {
+          "id": "c",
+          "text": "The node is already cordoned"
+        },
+        {
+          "id": "d",
+          "text": "The Pods have no labels"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "That is a PDB doing its job. Check whether enough replicas exist elsewhere before you force it.",
+      "points": 1
+    },
+    {
+      "key": "q5-after",
+      "type": "single_choice",
+      "prompt": "After maintenance, what returns the node to service?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl drain --undo"
+        },
+        {
+          "id": "b",
+          "text": "kubectl uncordon"
+        },
+        {
+          "id": "c",
+          "text": "Restarting the kubelet"
+        },
+        {
+          "id": "d",
+          "text": "kubectl taint --remove"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Uncordon clears the unschedulable flag; the scheduler starts placing work there again.",
+      "points": 1
+    }
+  ]
+}

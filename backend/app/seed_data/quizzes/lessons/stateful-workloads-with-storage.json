@@ -1,0 +1,158 @@
+{
+  "slug": "stateful-workloads-with-storage-check",
+  "lesson_slug": "stateful-workloads-with-storage",
+  "phase_slug": "networking-storage",
+  "week_number": 12,
+  "title": "Check: stateful workloads",
+  "description": "Five questions on running databases and friends.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-volumeclaimtemplates",
+      "type": "single_choice",
+      "prompt": "What does volumeClaimTemplates give a StatefulSet?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One shared PVC for all replicas"
+        },
+        {
+          "id": "b",
+          "text": "A separate PVC per replica, named after the Pod"
+        },
+        {
+          "id": "c",
+          "text": "An emptyDir per Pod"
+        },
+        {
+          "id": "d",
+          "text": "A ConfigMap per Pod"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "data-web-0, data-web-1 and so on. Each Pod keeps its own volume across rescheduling.",
+      "points": 1
+    },
+    {
+      "key": "q2-reschedule",
+      "type": "single_choice",
+      "prompt": "A StatefulSet Pod is deleted and recreated. What does it get back?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A new name and a new volume"
+        },
+        {
+          "id": "b",
+          "text": "The same name and the same PVC"
+        },
+        {
+          "id": "c",
+          "text": "The same name but empty storage"
+        },
+        {
+          "id": "d",
+          "text": "A random ordinal"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Stable identity is the contract: web-0 comes back as web-0 with data-web-0 attached.",
+      "points": 1
+    },
+    {
+      "key": "q3-scaledown",
+      "type": "single_choice",
+      "prompt": "You scale a StatefulSet from 3 to 1. Which Pods go, and in what order?",
+      "options": [
+        {
+          "id": "a",
+          "text": "web-0 then web-1"
+        },
+        {
+          "id": "b",
+          "text": "web-2 then web-1, in reverse ordinal order"
+        },
+        {
+          "id": "c",
+          "text": "Two at random"
+        },
+        {
+          "id": "d",
+          "text": "All three, then one is recreated"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Scale-down is reverse-ordered and one at a time, which is what lets a clustered database step down cleanly.",
+      "points": 1
+    },
+    {
+      "key": "q4-pdb",
+      "type": "single_choice",
+      "prompt": "Why does a database StatefulSet usually want a PodDisruptionBudget?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To speed up scheduling"
+        },
+        {
+          "id": "b",
+          "text": "So a node drain cannot take down enough replicas to lose quorum"
+        },
+        {
+          "id": "c",
+          "text": "To enable autoscaling"
+        },
+        {
+          "id": "d",
+          "text": "To encrypt the volumes"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`kubectl drain` respects a PDB; without one it will happily evict every replica at once.",
+      "points": 1
+    },
+    {
+      "key": "q5-backup",
+      "type": "single_choice",
+      "prompt": "What is the practical warning about PVC deletion for stateful apps?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PVCs are deleted with the StatefulSet"
+        },
+        {
+          "id": "b",
+          "text": "They are NOT deleted with it, so old data lingers and can be silently reused"
+        },
+        {
+          "id": "c",
+          "text": "PVCs cannot be deleted"
+        },
+        {
+          "id": "d",
+          "text": "Deleting a PVC deletes the namespace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Recreating a StatefulSet with the same name re-binds the old PVCs - convenient when you meant it, confusing when you did not.",
+      "points": 1
+    }
+  ]
+}
