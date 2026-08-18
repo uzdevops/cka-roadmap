@@ -28,10 +28,22 @@
       "mark": "K8",
       "accent": "sky",
       "references": [
-        { "title": "CKA certification page", "url": "https://www.cncf.io/certification/cka/" },
-        { "title": "Exam curriculum (topics)", "url": "https://github.com/cncf/curriculum" },
-        { "title": "Candidate handbook", "url": "https://www.cncf.io/certification/candidate-handbook" },
-        { "title": "Exam tips", "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD" }
+        {
+          "title": "CKA certification page",
+          "url": "https://www.cncf.io/certification/cka/"
+        },
+        {
+          "title": "Exam curriculum (topics)",
+          "url": "https://github.com/cncf/curriculum"
+        },
+        {
+          "title": "Candidate handbook",
+          "url": "https://www.cncf.io/certification/candidate-handbook"
+        },
+        {
+          "title": "Exam tips",
+          "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD"
+        }
       ]
     },
     {
@@ -48,8 +60,14 @@
       "mark": "KS",
       "accent": "violet",
       "references": [
-        { "title": "CKS certification page", "url": "https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/" },
-        { "title": "Exam curriculum (topics)", "url": "https://github.com/cncf/curriculum" }
+        {
+          "title": "CKS certification page",
+          "url": "https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/"
+        },
+        {
+          "title": "Exam curriculum (topics)",
+          "url": "https://github.com/cncf/curriculum"
+        }
       ]
     },
     {
@@ -66,8 +84,14 @@
       "mark": "LF",
       "accent": "amber",
       "references": [
-        { "title": "LFCS certification page", "url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/" },
-        { "title": "Important instructions: LFCS", "url": "https://docs.linuxfoundation.org/tc-docs/certification/instructions-lfcs-and-lfce" }
+        {
+          "title": "LFCS certification page",
+          "url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/"
+        },
+        {
+          "title": "Important instructions: LFCS",
+          "url": "https://docs.linuxfoundation.org/tc-docs/certification/instructions-lfcs-and-lfce"
+        }
       ]
     },
     {
@@ -84,27 +108,83 @@
       "mark": "AW",
       "accent": "amber",
       "references": [
-        { "title": "Solutions Architect - Associate", "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/" },
-        { "title": "Exam guide (SAA-C03)", "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/solutions-architect-associate-03.html" },
-        { "title": "All AWS exam guides", "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/aws-certification-exam-guides.html" }
+        {
+          "title": "Solutions Architect - Associate",
+          "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
+        },
+        {
+          "title": "Exam guide (SAA-C03)",
+          "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/solutions-architect-associate-03.html"
+        },
+        {
+          "title": "All AWS exam guides",
+          "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/aws-certification-exam-guides.html"
+        }
       ]
     },
     {
-      "slug": "comptia",
-      "title": "CompTIA",
-      "short_title": "CompTIA",
-      "summary": "Placeholder track - CompTIA is a family of exams (A+, Network+, Security+, Linux+, Cloud+). Rename this to the one you are sitting.",
+      "slug": "comptia-a-plus",
+      "title": "CompTIA A+",
+      "short_title": "A+",
+      "summary": "Hardware, operating systems, networking basics and troubleshooting - the entry point into IT support.",
       "provider": "CompTIA",
       "is_topic": false,
       "is_certificate": true,
-      "exam_code": null,
-      "exam_minutes": null,
-      "order_index": 4,
-      "mark": "CT",
+      "exam_code": "220-1201 / 220-1202",
+      "exam_minutes": 90,
+      "mark": "A+",
       "accent": "rose",
       "references": [
-        { "title": "CompTIA certifications", "url": "https://www.comptia.org/certifications" }
-      ]
+        {
+          "title": "CompTIA A+ certification",
+          "url": "https://www.comptia.org/certifications/a"
+        }
+      ],
+      "order_index": 4
+    },
+    {
+      "slug": "comptia-linux-plus",
+      "title": "CompTIA Linux+",
+      "short_title": "Linux+",
+      "summary": "Linux administration from the command line up: users, permissions, storage, services, scripting and security.",
+      "provider": "CompTIA",
+      "is_topic": false,
+      "is_certificate": true,
+      "exam_code": "XK0-005",
+      "exam_minutes": 90,
+      "mark": "L+",
+      "accent": "amber",
+      "references": [
+        {
+          "title": "CompTIA Linux+ certification",
+          "url": "https://www.comptia.org/certifications/linux"
+        }
+      ],
+      "order_index": 5
+    },
+    {
+      "slug": "comptia-cysa-pentest",
+      "title": "CompTIA CySA+ / PenTest+",
+      "short_title": "CySA+ / PenTest+",
+      "summary": "The two defensive-and-offensive security certifications studied together: threat detection and response, and penetration testing.",
+      "provider": "CompTIA",
+      "is_topic": false,
+      "is_certificate": true,
+      "exam_code": "CS0-003 / PT0-003",
+      "exam_minutes": 165,
+      "mark": "CY",
+      "accent": "violet",
+      "references": [
+        {
+          "title": "CompTIA CySA+ certification",
+          "url": "https://www.comptia.org/certifications/cybersecurity-analyst"
+        },
+        {
+          "title": "CompTIA PenTest+ certification",
+          "url": "https://www.comptia.org/certifications/pentest"
+        }
+      ],
+      "order_index": 6
     },
     {
       "slug": "docker",
@@ -116,13 +196,22 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 5,
+      "order_index": 7,
       "mark": "DK",
       "accent": "sky",
       "references": [
-        { "title": "Docker documentation", "url": "https://docs.docker.com/" },
-        { "title": "Dockerfile reference", "url": "https://docs.docker.com/reference/dockerfile/" },
-        { "title": "Compose specification", "url": "https://docs.docker.com/reference/compose-file/" }
+        {
+          "title": "Docker documentation",
+          "url": "https://docs.docker.com/"
+        },
+        {
+          "title": "Dockerfile reference",
+          "url": "https://docs.docker.com/reference/dockerfile/"
+        },
+        {
+          "title": "Compose specification",
+          "url": "https://docs.docker.com/reference/compose-file/"
+        }
       ]
     },
     {
@@ -135,12 +224,18 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 6,
+      "order_index": 8,
       "mark": "PY",
       "accent": "emerald",
       "references": [
-        { "title": "Python documentation", "url": "https://docs.python.org/3/" },
-        { "title": "Standard library", "url": "https://docs.python.org/3/library/" }
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/"
+        },
+        {
+          "title": "Standard library",
+          "url": "https://docs.python.org/3/library/"
+        }
       ]
     },
     {
@@ -153,12 +248,18 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 7,
+      "order_index": 9,
       "mark": "AN",
       "accent": "rose",
       "references": [
-        { "title": "Ansible documentation", "url": "https://docs.ansible.com/ansible/latest/" },
-        { "title": "Playbook guide", "url": "https://docs.ansible.com/ansible/latest/playbook_guide/index.html" }
+        {
+          "title": "Ansible documentation",
+          "url": "https://docs.ansible.com/ansible/latest/"
+        },
+        {
+          "title": "Playbook guide",
+          "url": "https://docs.ansible.com/ansible/latest/playbook_guide/index.html"
+        }
       ]
     },
     {
@@ -171,13 +272,22 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 8,
+      "order_index": 10,
       "mark": "CI",
       "accent": "violet",
       "references": [
-        { "title": "GitHub Actions documentation", "url": "https://docs.github.com/actions" },
-        { "title": "Argo CD documentation", "url": "https://argo-cd.readthedocs.io/en/stable/" },
-        { "title": "OpenGitOps principles", "url": "https://opengitops.dev/" }
+        {
+          "title": "GitHub Actions documentation",
+          "url": "https://docs.github.com/actions"
+        },
+        {
+          "title": "Argo CD documentation",
+          "url": "https://argo-cd.readthedocs.io/en/stable/"
+        },
+        {
+          "title": "OpenGitOps principles",
+          "url": "https://opengitops.dev/"
+        }
       ]
     },
     {
@@ -190,12 +300,18 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 9,
+      "order_index": 11,
       "mark": "HM",
       "accent": "sky",
       "references": [
-        { "title": "Helm documentation", "url": "https://helm.sh/docs/" },
-        { "title": "Chart template guide", "url": "https://helm.sh/docs/chart_template_guide/" }
+        {
+          "title": "Helm documentation",
+          "url": "https://helm.sh/docs/"
+        },
+        {
+          "title": "Chart template guide",
+          "url": "https://helm.sh/docs/chart_template_guide/"
+        }
       ]
     },
     {
@@ -208,13 +324,22 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 10,
+      "order_index": 12,
       "mark": "MN",
       "accent": "emerald",
       "references": [
-        { "title": "Prometheus documentation", "url": "https://prometheus.io/docs/" },
-        { "title": "Grafana documentation", "url": "https://grafana.com/docs/grafana/latest/" },
-        { "title": "OpenTelemetry documentation", "url": "https://opentelemetry.io/docs/" }
+        {
+          "title": "Prometheus documentation",
+          "url": "https://prometheus.io/docs/"
+        },
+        {
+          "title": "Grafana documentation",
+          "url": "https://grafana.com/docs/grafana/latest/"
+        },
+        {
+          "title": "OpenTelemetry documentation",
+          "url": "https://opentelemetry.io/docs/"
+        }
       ]
     },
     {
@@ -227,13 +352,22 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 11,
+      "order_index": 13,
       "mark": "DB",
       "accent": "amber",
       "references": [
-        { "title": "PostgreSQL documentation", "url": "https://www.postgresql.org/docs/current/" },
-        { "title": "MySQL reference manual", "url": "https://dev.mysql.com/doc/refman/8.4/en/" },
-        { "title": "Redis documentation", "url": "https://redis.io/docs/latest/" }
+        {
+          "title": "PostgreSQL documentation",
+          "url": "https://www.postgresql.org/docs/current/"
+        },
+        {
+          "title": "MySQL reference manual",
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/"
+        },
+        {
+          "title": "Redis documentation",
+          "url": "https://redis.io/docs/latest/"
+        }
       ]
     },
     {
@@ -246,12 +380,18 @@
       "is_certificate": false,
       "exam_code": null,
       "exam_minutes": null,
-      "order_index": 12,
+      "order_index": 14,
       "mark": "TF",
       "accent": "violet",
       "references": [
-        { "title": "Terraform documentation", "url": "https://developer.hashicorp.com/terraform/docs" },
-        { "title": "Language reference", "url": "https://developer.hashicorp.com/terraform/language" }
+        {
+          "title": "Terraform documentation",
+          "url": "https://developer.hashicorp.com/terraform/docs"
+        },
+        {
+          "title": "Language reference",
+          "url": "https://developer.hashicorp.com/terraform/language"
+        }
       ]
     }
   ]

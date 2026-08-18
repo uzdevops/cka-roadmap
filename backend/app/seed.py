@@ -146,6 +146,15 @@ async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
             session.add(track)
             await session.flush()
             counter.create("tracks")
+        elif track.order_index != data.get("order_index", 0):
+            # The one field that is kept in sync on an existing row. It encodes a
+            # RELATIVE ordering, so applying it only to new tracks leaves two
+            # rows sharing an index and the list order goes undefined - which is
+            # exactly what happened when CompTIA was split into three.
+            # Revisit when the admin panel can reorder tracks: this would undo
+            # that.
+            track.order_index = data.get("order_index", 0)
+            counter.update("track order")
 
         if track.slug == DEFAULT_TRACK_SLUG:
             default = track
