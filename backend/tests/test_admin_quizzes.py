@@ -16,18 +16,21 @@ from httpx import AsyncClient
 
 from app.config import settings
 from app.models import Lesson, Phase, Question, Quiz, Week
+from tests.conftest import ensure_track
 
 API = settings.api_v1_prefix
 
 
 async def _seed(session) -> dict[str, str]:
     """One of each kind of quiz: a lesson gate, a published standalone, a draft."""
-    phase = Phase(slug="p1", title="Phase 1", description="", order_index=0,
-                  exam_weight=10, week_start=1, week_end=1)
+    track = await ensure_track(session)
+    phase = Phase(track_id=track.id, slug="p1", title="Phase 1", description="",
+                  order_index=0, exam_weight=10, week_start=1, week_end=1)
     session.add(phase)
     await session.flush()
 
-    week = Week(phase_id=phase.id, number=1, title="Week 1", description="", order_index=0)
+    week = Week(track_id=track.id, phase_id=phase.id, number=1, title="Week 1",
+                description="", order_index=0)
     session.add(week)
     await session.flush()
 

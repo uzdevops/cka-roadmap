@@ -1,0 +1,258 @@
+{
+  "_comment": [
+    "Every programme of study on the platform. A track can be a topic, a",
+    "certificate, or both - LFCS, CKA and AWS are all three of those cases at",
+    "once, which is why is_topic and is_certificate are separate flags rather",
+    "than one type field.",
+    "",
+    "Only `cka` carries content today; the rest are created empty so they can be",
+    "filled in from the admin panel. An empty track is safe: the collisions this",
+    "schema guards against (a repeated phase slug, a repeated week number) can",
+    "only happen once a track has phases and weeks.",
+    "",
+    "exam_minutes and exam_code are null on a topic-only track - there is no",
+    "exam, and the UI must not render an exam panel for one."
+  ],
+  "tracks": [
+    {
+      "slug": "cka",
+      "title": "Certified Kubernetes Administrator",
+      "short_title": "CKA",
+      "summary": "Cluster architecture, workloads, networking, storage, security and troubleshooting - the twenty-week path to the exam.",
+      "provider": "CNCF / Linux Foundation",
+      "is_topic": true,
+      "is_certificate": true,
+      "exam_code": null,
+      "exam_minutes": 120,
+      "order_index": 0,
+      "mark": "K8",
+      "accent": "sky",
+      "references": [
+        { "title": "CKA certification page", "url": "https://www.cncf.io/certification/cka/" },
+        { "title": "Exam curriculum (topics)", "url": "https://github.com/cncf/curriculum" },
+        { "title": "Candidate handbook", "url": "https://www.cncf.io/certification/candidate-handbook" },
+        { "title": "Exam tips", "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD" }
+      ]
+    },
+    {
+      "slug": "cks",
+      "title": "Certified Kubernetes Security Specialist",
+      "short_title": "CKS",
+      "summary": "Hardening a cluster you already know how to run. Requires an active CKA before you may sit it.",
+      "provider": "CNCF / Linux Foundation",
+      "is_topic": false,
+      "is_certificate": true,
+      "exam_code": null,
+      "exam_minutes": 120,
+      "order_index": 1,
+      "mark": "KS",
+      "accent": "violet",
+      "references": [
+        { "title": "CKS certification page", "url": "https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/" },
+        { "title": "Exam curriculum (topics)", "url": "https://github.com/cncf/curriculum" }
+      ]
+    },
+    {
+      "slug": "lfcs",
+      "title": "Linux Foundation Certified System Administrator",
+      "short_title": "LFCS",
+      "summary": "The Linux underneath everything else: users and permissions, storage, networking, services and recovery.",
+      "provider": "Linux Foundation",
+      "is_topic": true,
+      "is_certificate": true,
+      "exam_code": null,
+      "exam_minutes": 120,
+      "order_index": 2,
+      "mark": "LF",
+      "accent": "amber",
+      "references": [
+        { "title": "LFCS certification page", "url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/" },
+        { "title": "Important instructions: LFCS", "url": "https://docs.linuxfoundation.org/tc-docs/certification/instructions-lfcs-and-lfce" }
+      ]
+    },
+    {
+      "slug": "aws",
+      "title": "Amazon Web Services",
+      "short_title": "AWS",
+      "summary": "Core AWS services and architecture, and the path to the Solutions Architect - Associate exam.",
+      "provider": "Amazon Web Services",
+      "is_topic": true,
+      "is_certificate": true,
+      "exam_code": "SAA-C03",
+      "exam_minutes": 130,
+      "order_index": 3,
+      "mark": "AW",
+      "accent": "amber",
+      "references": [
+        { "title": "Solutions Architect - Associate", "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/" },
+        { "title": "Exam guide (SAA-C03)", "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/solutions-architect-associate-03.html" },
+        { "title": "All AWS exam guides", "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/aws-certification-exam-guides.html" }
+      ]
+    },
+    {
+      "slug": "comptia",
+      "title": "CompTIA",
+      "short_title": "CompTIA",
+      "summary": "Placeholder track - CompTIA is a family of exams (A+, Network+, Security+, Linux+, Cloud+). Rename this to the one you are sitting.",
+      "provider": "CompTIA",
+      "is_topic": false,
+      "is_certificate": true,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 4,
+      "mark": "CT",
+      "accent": "rose",
+      "references": [
+        { "title": "CompTIA certifications", "url": "https://www.comptia.org/certifications" }
+      ]
+    },
+    {
+      "slug": "docker",
+      "title": "Docker and containers",
+      "short_title": "Docker",
+      "summary": "Images, layers, the build cache, registries, networking and volumes - the layer everything else here sits on.",
+      "provider": "Docker Inc.",
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 5,
+      "mark": "DK",
+      "accent": "sky",
+      "references": [
+        { "title": "Docker documentation", "url": "https://docs.docker.com/" },
+        { "title": "Dockerfile reference", "url": "https://docs.docker.com/reference/dockerfile/" },
+        { "title": "Compose specification", "url": "https://docs.docker.com/reference/compose-file/" }
+      ]
+    },
+    {
+      "slug": "python",
+      "title": "Python for operations",
+      "short_title": "Python",
+      "summary": "The language most automation ends up written in: scripting, packaging, testing, and talking to APIs.",
+      "provider": null,
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 6,
+      "mark": "PY",
+      "accent": "emerald",
+      "references": [
+        { "title": "Python documentation", "url": "https://docs.python.org/3/" },
+        { "title": "Standard library", "url": "https://docs.python.org/3/library/" }
+      ]
+    },
+    {
+      "slug": "ansible",
+      "title": "Ansible",
+      "short_title": "Ansible",
+      "summary": "Inventories, playbooks, roles and idempotence - configuration management without an agent.",
+      "provider": "Red Hat",
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 7,
+      "mark": "AN",
+      "accent": "rose",
+      "references": [
+        { "title": "Ansible documentation", "url": "https://docs.ansible.com/ansible/latest/" },
+        { "title": "Playbook guide", "url": "https://docs.ansible.com/ansible/latest/playbook_guide/index.html" }
+      ]
+    },
+    {
+      "slug": "cicd",
+      "title": "CI/CD and GitOps",
+      "short_title": "CI/CD",
+      "summary": "Pipelines, artefacts and environments, and Git as the source of truth for cluster state with Argo CD and Flux.",
+      "provider": null,
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 8,
+      "mark": "CI",
+      "accent": "violet",
+      "references": [
+        { "title": "GitHub Actions documentation", "url": "https://docs.github.com/actions" },
+        { "title": "Argo CD documentation", "url": "https://argo-cd.readthedocs.io/en/stable/" },
+        { "title": "OpenGitOps principles", "url": "https://opengitops.dev/" }
+      ]
+    },
+    {
+      "slug": "helm",
+      "title": "Helm",
+      "short_title": "Helm",
+      "summary": "Charts, templates and values, releases and rollbacks, dependencies - and where Helm stops being the right tool.",
+      "provider": "CNCF",
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 9,
+      "mark": "HM",
+      "accent": "sky",
+      "references": [
+        { "title": "Helm documentation", "url": "https://helm.sh/docs/" },
+        { "title": "Chart template guide", "url": "https://helm.sh/docs/chart_template_guide/" }
+      ]
+    },
+    {
+      "slug": "monitoring",
+      "title": "Monitoring and observability",
+      "short_title": "Monitoring",
+      "summary": "Metrics, logs and traces: Prometheus, Grafana and alerting rules - what to measure before an incident, not during one.",
+      "provider": "CNCF",
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 10,
+      "mark": "MN",
+      "accent": "emerald",
+      "references": [
+        { "title": "Prometheus documentation", "url": "https://prometheus.io/docs/" },
+        { "title": "Grafana documentation", "url": "https://grafana.com/docs/grafana/latest/" },
+        { "title": "OpenTelemetry documentation", "url": "https://opentelemetry.io/docs/" }
+      ]
+    },
+    {
+      "slug": "dbms",
+      "title": "Databases and data stores",
+      "short_title": "DBMS",
+      "summary": "Modelling, indexes and query plans, transactions, backup and restore, replication - and running a database inside Kubernetes.",
+      "provider": null,
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 11,
+      "mark": "DB",
+      "accent": "amber",
+      "references": [
+        { "title": "PostgreSQL documentation", "url": "https://www.postgresql.org/docs/current/" },
+        { "title": "MySQL reference manual", "url": "https://dev.mysql.com/doc/refman/8.4/en/" },
+        { "title": "Redis documentation", "url": "https://redis.io/docs/latest/" }
+      ]
+    },
+    {
+      "slug": "terraform",
+      "title": "Terraform",
+      "short_title": "Terraform",
+      "summary": "Declarative infrastructure: providers, state, modules, plan and apply, and what to do when state and reality disagree.",
+      "provider": "HashiCorp",
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 12,
+      "mark": "TF",
+      "accent": "violet",
+      "references": [
+        { "title": "Terraform documentation", "url": "https://developer.hashicorp.com/terraform/docs" },
+        { "title": "Language reference", "url": "https://developer.hashicorp.com/terraform/language" }
+      ]
+    }
+  ]
+}

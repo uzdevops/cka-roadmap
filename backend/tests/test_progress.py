@@ -10,7 +10,7 @@ from app.config import settings
 from app.models import Lesson, Phase, Week
 from app.schemas.progress import PhaseProgress
 from app.services.progress_service import compute_readiness, compute_streaks
-from tests.conftest import auth_header, login
+from tests.conftest import auth_header, ensure_track, login
 
 API = settings.api_v1_prefix
 
@@ -137,14 +137,17 @@ def test_readiness_blends_lessons_and_quizzes() -> None:
 
 
 async def _seed_lessons(session) -> None:
+    track = await ensure_track(session)
     phase = Phase(
+        track_id=track.id,
         slug="p1", title="Phase 1", description="", order_index=1,
         exam_weight=0, week_start=1, week_end=1,
     )
     session.add(phase)
     await session.flush()
 
-    week = Week(phase_id=phase.id, number=1, title="Week 1", order_index=1)
+    week = Week(track_id=track.id, phase_id=phase.id, number=1, title="Week 1",
+                order_index=1)
     session.add(week)
     await session.flush()
 

@@ -12,7 +12,7 @@ from app.services.quiz_service import (
     grade_question,
     normalize_command,
 )
-from tests.conftest import auth_header, login
+from tests.conftest import auth_header, ensure_track, login
 
 API = settings.api_v1_prefix
 
@@ -91,14 +91,17 @@ def test_grade_fill_command_uses_fuzzy_match() -> None:
 async def _build_quiz(session) -> tuple[Quiz, list[int]]:
     """Returns the quiz plus its question ids in order (the relationship is
     not loaded eagerly, and lazy loading is unavailable on an async session)."""
+    track = await ensure_track(session)
     phase = Phase(
+        track_id=track.id,
         slug="test-phase", title="Test Phase", description="", order_index=1,
         exam_weight=20, week_start=1, week_end=1,
     )
     session.add(phase)
     await session.flush()
 
-    week = Week(phase_id=phase.id, number=1, title="Week 1", order_index=1)
+    week = Week(track_id=track.id, phase_id=phase.id, number=1, title="Week 1",
+                order_index=1)
     session.add(week)
     await session.flush()
 

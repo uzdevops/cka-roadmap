@@ -27,12 +27,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.db import SessionLocal
 from app.i18n import SUPPORTED_LOCALES, DEFAULT_LOCALE
-from app.models import Lab, Lesson, Phase, Question, Quiz, User, UserRole, Week
+from app.models import Lab, Lesson, Phase, Question, Quiz, Track, User, UserRole, Week
 from app.security import hash_password
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s seed: %(message)s")
 log = logging.getLogger("seed")
 
+
+# The track that owns every phase, week and lesson seeded from these files.
+# Other tracks are created empty until their own content exists.
+DEFAULT_TRACK_SLUG = "cka"
 
 DATA_DIR = Path(__file__).parent / "seed_data"
 LESSON_DIR = DATA_DIR / "lessons"
@@ -107,16 +111,70 @@ def _placeholder_content(title: str, summary: str, phase_title: str) -> str:
 # --- Phases / weeks / lessons -------------------------------------------
 
 
-async def seed_structure(session: AsyncSession, counter: Counter) -> None:
+async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
+    """Creates every programme of study and returns the one that owns the
+    existing content.
+
+    Only `cka` has phases today. The rest are created empty on purpose: an empty
+    track cannot collide with another one, because the two things this schema
+    keeps unique per track - a phase slug and a week number - do not exist yet.
+    """
+    payload = json.loads((DATA_DIR / "tracks.json").read_text(encoding="utf-8"))
+
+    default: Track | None = None
+    for data in payload["tracks"]:
+        track = (
+            await session.execute(select(Track).where(Track.slug == data["slug"]))
+        ).scalar_one_or_none()
+
+        if track is None:
+            track = Track(
+                slug=data["slug"],
+                title=data["title"],
+                short_title=data.get("short_title", ""),
+                summary=data.get("summary", ""),
+                provider=data.get("provider"),
+                is_topic=data.get("is_topic", False),
+                is_certificate=data.get("is_certificate", False),
+                exam_code=data.get("exam_code"),
+                exam_minutes=data.get("exam_minutes"),
+                order_index=data.get("order_index", 0),
+                mark=data.get("mark", ""),
+                accent=data.get("accent", "sky"),
+                references=data.get("references", []),
+            )
+            session.add(track)
+            await session.flush()
+            counter.create("tracks")
+
+        if track.slug == DEFAULT_TRACK_SLUG:
+            default = track
+
+    if default is None:
+        raise RuntimeError(
+            f"tracks.json must define the {DEFAULT_TRACK_SLUG!r} track - it owns "
+            "all existing phases, weeks and lessons."
+        )
+    return default
+
+
+async def seed_structure(
+    session: AsyncSession, counter: Counter, track: Track
+) -> None:
     payload = json.loads((DATA_DIR / "phases.json").read_text(encoding="utf-8"))
 
     for phase_data in payload["phases"]:
         phase = (
-            await session.execute(select(Phase).where(Phase.slug == phase_data["slug"]))
+            await session.execute(
+                select(Phase).where(
+                    Phase.track_id == track.id, Phase.slug == phase_data["slug"]
+                )
+            )
         ).scalar_one_or_none()
 
         if phase is None:
             phase = Phase(
+                track_id=track.id,
                 slug=phase_data["slug"],
                 title=phase_data["title"],
                 description=phase_data["description"],
@@ -134,12 +192,16 @@ async def seed_structure(session: AsyncSession, counter: Counter) -> None:
         for week_index, week_data in enumerate(phase_data["weeks"], start=1):
             week = (
                 await session.execute(
-                    select(Week).where(Week.number == week_data["number"])
+                    select(Week).where(
+                        Week.track_id == track.id,
+                        Week.number == week_data["number"],
+                    )
                 )
             ).scalar_one_or_none()
 
             if week is None:
                 week = Week(
+                    track_id=track.id,
                     phase_id=phase.id,
                     number=week_data["number"],
                     title=week_data["title"],
@@ -216,12 +278,18 @@ async def _seed_lesson(
 # --- Quizzes -------------------------------------------------------------
 
 
-async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
+async def seed_quizzes(
+    session: AsyncSession, counter: Counter, track: Track
+) -> None:
     for path in sorted(QUIZ_DIR.rglob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
 
         phase = (
-            await session.execute(select(Phase).where(Phase.slug == data["phase_slug"]))
+            await session.execute(
+                select(Phase).where(
+                    Phase.track_id == track.id, Phase.slug == data["phase_slug"]
+                )
+            )
         ).scalar_one_or_none()
         if phase is None:
             log.warning("skipping quiz %s - phase %s missing", data["slug"], data["phase_slug"])
@@ -249,7 +317,10 @@ async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
         if data.get("week_number"):
             week = (
                 await session.execute(
-                    select(Week).where(Week.number == data["week_number"])
+                    select(Week).where(
+                        Week.track_id == track.id,
+                        Week.number == data["week_number"],
+                    )
                 )
             ).scalar_one_or_none()
             week_id = week.id if week else None
@@ -311,7 +382,9 @@ async def seed_quizzes(session: AsyncSession, counter: Counter) -> None:
 # --- Labs ----------------------------------------------------------------
 
 
-async def seed_labs(session: AsyncSession, counter: Counter) -> None:
+async def seed_labs(
+    session: AsyncSession, counter: Counter, track: Track
+) -> None:
     for path in sorted(LAB_DIR.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
 
@@ -322,7 +395,11 @@ async def seed_labs(session: AsyncSession, counter: Counter) -> None:
             continue
 
         phase = (
-            await session.execute(select(Phase).where(Phase.slug == data["phase_slug"]))
+            await session.execute(
+                select(Phase).where(
+                    Phase.track_id == track.id, Phase.slug == data["phase_slug"]
+                )
+            )
         ).scalar_one_or_none()
         if phase is None:
             log.warning("skipping lab %s - phase %s missing", data["slug"], data["phase_slug"])
@@ -332,7 +409,10 @@ async def seed_labs(session: AsyncSession, counter: Counter) -> None:
         if data.get("week_number"):
             week = (
                 await session.execute(
-                    select(Week).where(Week.number == data["week_number"])
+                    select(Week).where(
+                        Week.track_id == track.id,
+                        Week.number == data["week_number"],
+                    )
                 )
             ).scalar_one_or_none()
             week_id = week.id if week else None
@@ -378,20 +458,22 @@ def _fill(current: dict, locale: str, values: dict) -> tuple[dict, bool]:
     return merged, changed
 
 
-async def seed_translations(session: AsyncSession, counter: Counter) -> None:
+async def seed_translations(
+    session: AsyncSession, counter: Counter, track: Track
+) -> None:
     for locale in SUPPORTED_LOCALES:
         if locale == DEFAULT_LOCALE:
             continue  # English is the base row itself
         root = I18N_DIR / locale
         if not root.is_dir():
             continue
-        await _seed_structure_translations(session, counter, locale, root)
+        await _seed_structure_translations(session, counter, locale, root, track)
         await _seed_quiz_translations(session, counter, locale, root)
         await _seed_lab_translations(session, counter, locale, root)
 
 
 async def _seed_structure_translations(
-    session: AsyncSession, counter: Counter, locale: str, root: Path
+    session: AsyncSession, counter: Counter, locale: str, root: Path, track: Track
 ) -> None:
     structure_file = root / "structure.json"
     if not structure_file.is_file():
@@ -400,7 +482,9 @@ async def _seed_structure_translations(
 
     for slug, values in (data.get("phases") or {}).items():
         phase = (
-            await session.execute(select(Phase).where(Phase.slug == slug))
+            await session.execute(
+                select(Phase).where(Phase.track_id == track.id, Phase.slug == slug)
+            )
         ).scalar_one_or_none()
         if phase is None:
             continue
@@ -410,7 +494,11 @@ async def _seed_structure_translations(
 
     for number, values in (data.get("weeks") or {}).items():
         week = (
-            await session.execute(select(Week).where(Week.number == int(number)))
+            await session.execute(
+                select(Week).where(
+                    Week.track_id == track.id, Week.number == int(number)
+                )
+            )
         ).scalar_one_or_none()
         if week is None:
             continue
@@ -590,16 +678,19 @@ async def seed_users(session: AsyncSession, counter: Counter) -> None:
 async def run_seed() -> None:
     counter = Counter()
     async with SessionLocal() as session:
-        await seed_structure(session, counter)
+        track = await seed_tracks(session, counter)
         await session.commit()
 
-        await seed_quizzes(session, counter)
+        await seed_structure(session, counter, track)
         await session.commit()
 
-        await seed_labs(session, counter)
+        await seed_quizzes(session, counter, track)
         await session.commit()
 
-        await seed_translations(session, counter)
+        await seed_labs(session, counter, track)
+        await session.commit()
+
+        await seed_translations(session, counter, track)
         await session.commit()
 
         await seed_users(session, counter)

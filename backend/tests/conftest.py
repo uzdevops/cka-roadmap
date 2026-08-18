@@ -15,7 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from app.config import settings
 from app.db import get_session
 from app.main import app
-from app.models import Base, User, UserRole
+from app.models import Base, Track, User, UserRole
 from app.rate_limit import limiter
 from app.security import hash_password
 
@@ -47,6 +47,24 @@ async def _ensure_test_database() -> None:
                 await conn.execute(text(f'CREATE DATABASE "{TEST_DB_NAME}"'))
     finally:
         await engine.dispose()
+
+
+async def ensure_track(session: AsyncSession, slug: str = "t1") -> Track:
+    """Content hangs off a track, so every test that builds phases needs one.
+
+    Phase slugs and week numbers are unique per track rather than globally, so
+    tests that want two isolated roadmaps ask for two different slugs.
+    """
+    from sqlalchemy import select
+
+    track = (
+        await session.execute(select(Track).where(Track.slug == slug))
+    ).scalar_one_or_none()
+    if track is None:
+        track = Track(slug=slug, title=f"Track {slug}", is_topic=True)
+        session.add(track)
+        await session.flush()
+    return track
 
 
 @pytest_asyncio.fixture
