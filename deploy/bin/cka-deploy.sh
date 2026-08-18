@@ -12,7 +12,11 @@ set -euo pipefail
 
 REPO="${CKA_REPO:-/opt/projects/cka-roadmap}"
 CONTAINERS="cka-db cka-backend cka-frontend"
-HEALTH_TIMEOUT=300
+# A schema migration plus a full re-seed can take minutes; 300s was tuned for
+# a code-only deploy and would declare failure part-way through one.
+HEALTH_TIMEOUT=900
+BACKUP_DIR="${CKA_BACKUP_DIR:-/var/backups/cka-prep}"
+BACKUP_KEEP=10
 
 # The revision that was last built and brought up healthy. Compared against
 # HEAD rather than against the remote, because a `git pull` run by hand moves
@@ -34,6 +38,38 @@ check_clean() {
     log "them, or discard them with 'git checkout -- <file>', then retry."
     printf '%s\n' "$dirty"
     return 1
+}
+
+# Dumps the database before anything is rebuilt. This is the only rollback that
+# works: `git checkout <old> && docker compose up -d --build` restores the code,
+# but a migration that already ran stays run.
+backup_db() {
+    if ! docker ps --format '{{.Names}}' | grep -qx cka-db; then
+        log "WARNING: cka-db is not running - skipping backup"
+        return 0
+    fi
+    # Read the real credentials rather than assuming the defaults - the whole
+    # point of the dump is that it restores.
+    local user db
+    user=$(sed -n 's/^POSTGRES_USER=//p' "$REPO/.env" 2>/dev/null | tail -1)
+    db=$(sed -n 's/^POSTGRES_DB=//p' "$REPO/.env" 2>/dev/null | tail -1)
+    user="${user:-${POSTGRES_USER:-cka}}"
+    db="${db:-${POSTGRES_DB:-cka_prep}}"
+
+    install -d "$BACKUP_DIR"
+    local out="$BACKUP_DIR/${db}-$(date +%F-%H%M%S).sql.gz"
+    log "backing up the database to $out"
+    if docker exec -i cka-db pg_dump -U "$user" "$db" | gzip > "$out"; then
+        log "backup complete ($(du -h "$out" | cut -f1))"
+    else
+        rm -f "$out"
+        log "ERROR: backup failed - refusing to deploy over an unbacked-up database"
+        return 1
+    fi
+    # Keep the last N, oldest first.
+    ls -1t "$BACKUP_DIR"/"$db"-*.sql.gz 2>/dev/null | tail -n "+$((BACKUP_KEEP + 1))" \
+        | xargs -r rm -f
+    return 0
 }
 
 wait_healthy() {
@@ -103,6 +139,8 @@ main() {
     # No early exit when they already match: a rebuild with nothing to do costs
     # seconds against the layer cache, and running this by hand should always
     # mean "make what is running match what is checked out".
+
+    backup_db
 
     # --build because NEXT_PUBLIC_* values are compiled into the client bundle;
     # restarting a stale image would serve the old ones.

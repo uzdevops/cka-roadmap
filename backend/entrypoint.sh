@@ -1,9 +1,15 @@
 #!/bin/sh
 # Container entrypoint: wait for the database, migrate, seed, then serve.
 #
-# Passing a command overrides the server start, so that
-#   docker compose run --rm backend pytest
-# still gets a migrated database to work against.
+# Migrations and seeding run ONLY when this container is starting the server.
+# Passing a command (docker compose run --rm backend pytest) skips both, because
+# that command carries the production .env: an operator "just checking the tests
+# pass" on the deploy host would otherwise perform the migration and a full seed
+# against the live database before pytest even started. The test suite does not
+# need them - tests build their own schema in a separate <db>_test database.
+#
+# Override deliberately if you do want them for a one-off command:
+#   docker compose run --rm -e RUN_MIGRATIONS=true backend alembic upgrade head
 set -e
 
 DB_HOST="${POSTGRES_HOST:-db}"
@@ -36,9 +42,24 @@ done
 log "database is accepting connections (${elapsed}s)"
 
 # --- 2. Migrations ------------------------------------------------------
+# An override command means someone is running a one-off (pytest, a shell, a
+# psql poke) with this container's environment - which on the deploy host is
+# the production .env. Neither step runs then, whatever the compose file sets:
+# docker-compose.yml passes SEED_ON_START=true unconditionally, so "unset means
+# skip" would never fire. FORCE_LIFECYCLE is the deliberate way back in.
+if [ "$#" -gt 0 ] && [ "${FORCE_LIFECYCLE:-false}" != "true" ]; then
+    RUN_MIGRATIONS=false
+    SEED_ON_START=false
+    log "override command given - skipping migrations and seed"
+    log "  (run with -e FORCE_LIFECYCLE=true if you really want them)"
+else
+    RUN_MIGRATIONS="${RUN_MIGRATIONS:-true}"
+    SEED_ON_START="${SEED_ON_START:-true}"
+fi
+
 # On Kubernetes these two steps run once in a Job and every app Pod sets
 # RUN_MIGRATIONS=false, so replicas never race on the same DDL.
-if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
+if [ "$RUN_MIGRATIONS" = "true" ]; then
     log "running alembic upgrade head"
     alembic upgrade head
 else
@@ -46,7 +67,7 @@ else
 fi
 
 # --- 3. Seed (idempotent) -----------------------------------------------
-if [ "${SEED_ON_START:-true}" = "true" ]; then
+if [ "$SEED_ON_START" = "true" ]; then
     log "running idempotent seed"
     python -m app.seed
 else

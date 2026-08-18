@@ -83,7 +83,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
-      start_period: 30s
+      # uvicorn does not bind until migrations and the seed have finished, so
+      # this has to cover the slowest of those, not just process start.
+      start_period: 120s
 
   frontend:
     build:
