@@ -167,9 +167,14 @@ class AdminUserRead(BaseModel):
 
     id: int
     email: str
+    username: str | None = None
     full_name: str | None
     role: str
     is_active: bool
+    # The two checkboxes, and the name their combination is shown under.
+    access_topics: bool = True
+    access_certificates: bool = True
+    role_label: str = ""
     created_at: datetime
     last_active: date | None = None
 
@@ -184,16 +189,24 @@ class AdminUserRead(BaseModel):
 
 class AdminUserCreate(BaseModel):
     email: EmailStr
+    username: str | None = Field(default=None, min_length=1, max_length=64)
     password: str = Field(min_length=8, max_length=128)
     full_name: str | None = Field(default=None, max_length=255)
     role: Literal["student", "admin"] = "student"
+    # Independent grants rather than one role name, because the content
+    # categories overlap. Both default on, which is "Full Student".
+    access_topics: bool = True
+    access_certificates: bool = True
 
 
 class AdminUserUpdate(BaseModel):
     """Every field optional: this is a PATCH, and an omitted key means 'leave it'."""
 
     full_name: str | None = Field(default=None, max_length=255)
+    username: str | None = Field(default=None, min_length=1, max_length=64)
     role: Literal["student", "admin"] | None = None
     is_active: bool | None = None
+    access_topics: bool | None = None
+    access_certificates: bool | None = None
     # Registration is closed, so resetting a forgotten password is an admin job.
     password: str | None = Field(default=None, min_length=8, max_length=128)

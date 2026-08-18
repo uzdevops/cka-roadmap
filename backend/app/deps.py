@@ -7,7 +7,7 @@ from typing import Annotated
 import jwt
 from fastapi import Depends, Header, HTTPException, Query, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import select
+from sqlalchemy import false as sa_false, or_, select, true as sa_true
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_session
@@ -88,6 +88,25 @@ async def get_locale(
 Locale = Annotated[str, Depends(get_locale)]
 
 
+def _visible_to(user: User):
+    """SQL half of `User.may_see_track` - kept next to it so the two cannot drift.
+
+    An admin has no restriction; a student sees a track when either of its
+    categories is granted, which is what makes a dual-nature track like CKA
+    visible to both kinds of student.
+    """
+    if user.role == UserRole.ADMIN.value:
+        return sa_true()
+    clauses = []
+    if user.access_topics:
+        clauses.append(Track.is_topic.is_(True))
+    if user.access_certificates:
+        clauses.append(Track.is_certificate.is_(True))
+    if not clauses:
+        return sa_false()
+    return or_(*clauses)
+
+
 async def get_track(
     session: SessionDep,
     user: CurrentUser,
@@ -116,12 +135,21 @@ async def get_track(
         ).scalar_one_or_none()
         if found is None or not found.is_published:
             raise HTTPException(status_code=404, detail=f"Unknown track: {track}")
+        if not user.may_see_track(
+            is_topic=found.is_topic, is_certificate=found.is_certificate
+        ):
+            # 403, not 404: the track exists and the answer does not depend on
+            # anything secret, so pretending otherwise only confuses the user.
+            raise HTTPException(
+                status_code=403,
+                detail=f"Your account does not have access to {found.slug}",
+            )
         return found
 
     default = (
         await session.execute(
             select(Track)
-            .where(Track.is_published.is_(True))
+            .where(Track.is_published.is_(True), _visible_to(user))
             .order_by(Track.order_index, Track.id)
             .limit(1)
         )

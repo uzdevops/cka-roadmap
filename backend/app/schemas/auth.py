@@ -49,6 +49,11 @@ class UserRead(BaseModel):
     full_name: str | None = None
     role: str
     is_active: bool
+    # The two grants, plus the name the UI shows for their combination. The
+    # label is derived on the model, never stored.
+    access_topics: bool = True
+    access_certificates: bool = True
+    role_label: str = ""
     target_exam_date: date | None = None
     daily_study_minutes: int
     avatar_url: str | None = None

@@ -336,6 +336,36 @@ async def structure(session: SessionDep, admin: AdminUser) -> list[dict]:
 # existence. Every route here inherits the router's require_admin dependency.
 
 
+def _admin_user_read(
+    user: User, total_lessons: int, stats: dict | None = None
+) -> AdminUserRead:
+    """The single place an AdminUserRead is built."""
+    s = stats or {}
+    done = s.get("completed_lessons", 0)
+    return AdminUserRead(
+        id=user.id,
+        email=user.email,
+        username=user.username,
+        full_name=user.full_name,
+        role=user.role,
+        is_active=user.is_active,
+        access_topics=user.access_topics,
+        access_certificates=user.access_certificates,
+        role_label=user.role_label,
+        created_at=user.created_at,
+        last_active=s.get("last_active"),
+        completed_lessons=done,
+        total_lessons=total_lessons,
+        progress_percent=(
+            round((done / total_lessons) * 100, 1) if total_lessons else 0.0
+        ),
+        quiz_attempts=s.get("quiz_attempts", 0),
+        quiz_average=s.get("quiz_average"),
+        completed_labs=s.get("completed_labs", 0),
+        current_streak=s.get("current_streak", 0),
+    )
+
+
 async def _user_stats(session: SessionDep) -> dict[int, dict[str, Any]]:
     """Progress numbers for every user, as grouped aggregates.
 
@@ -415,26 +445,7 @@ async def list_users(session: SessionDep) -> list[AdminUserRead]:
     for user in users:
         s = stats[user.id]
         done = s["completed_lessons"]
-        out.append(
-            AdminUserRead(
-                id=user.id,
-                email=user.email,
-                full_name=user.full_name,
-                role=user.role,
-                is_active=user.is_active,
-                created_at=user.created_at,
-                last_active=s["last_active"],
-                completed_lessons=done,
-                total_lessons=total_lessons,
-                progress_percent=(
-                    round((done / total_lessons) * 100, 1) if total_lessons else 0.0
-                ),
-                quiz_attempts=s["quiz_attempts"],
-                quiz_average=s["quiz_average"],
-                completed_labs=s["completed_labs"],
-                current_streak=s["current_streak"],
-            )
-        )
+        out.append(_admin_user_read(user, total_lessons, s))
     return out
 
 
@@ -450,23 +461,18 @@ async def create_user(payload: AdminUserCreate, session: SessionDep) -> AdminUse
     user = await user_repo.create(
         session,
         email=payload.email,
+        username=payload.username,
         hashed_password=hash_password(payload.password),
         full_name=payload.full_name,
         role=payload.role,
     )
+    user.access_topics = payload.access_topics
+    user.access_certificates = payload.access_certificates
     await session.commit()
     await session.refresh(user)
 
     total_lessons = (await session.execute(select(func.count(Lesson.id)))).scalar_one()
-    return AdminUserRead(
-        id=user.id,
-        email=user.email,
-        full_name=user.full_name,
-        role=user.role,
-        is_active=user.is_active,
-        created_at=user.created_at,
-        total_lessons=total_lessons,
-    )
+    return _admin_user_read(user, total_lessons)
 
 
 @router.patch("/users/{user_id}", response_model=AdminUserRead)
@@ -501,6 +507,12 @@ async def update_user(
         user.role = payload.role
     if payload.is_active is not None:
         user.is_active = payload.is_active
+    if payload.username is not None:
+        user.username = payload.username.strip().lower()
+    if payload.access_topics is not None:
+        user.access_topics = payload.access_topics
+    if payload.access_certificates is not None:
+        user.access_certificates = payload.access_certificates
     if payload.password is not None:
         user.hashed_password = hash_password(payload.password)
 
@@ -508,25 +520,8 @@ async def update_user(
     await session.refresh(user)
 
     stats = await _user_stats(session)
-    s = stats[user.id]
     total_lessons = (await session.execute(select(func.count(Lesson.id)))).scalar_one()
-    done = s["completed_lessons"]
-    return AdminUserRead(
-        id=user.id,
-        email=user.email,
-        full_name=user.full_name,
-        role=user.role,
-        is_active=user.is_active,
-        created_at=user.created_at,
-        last_active=s["last_active"],
-        completed_lessons=done,
-        total_lessons=total_lessons,
-        progress_percent=round((done / total_lessons) * 100, 1) if total_lessons else 0.0,
-        quiz_attempts=s["quiz_attempts"],
-        quiz_average=s["quiz_average"],
-        completed_labs=s["completed_labs"],
-        current_streak=s["current_streak"],
-    )
+    return _admin_user_read(user, total_lessons, stats.get(user.id))
 
 
 async def _guard_last_admin(session: SessionDep, user_id: int) -> None:

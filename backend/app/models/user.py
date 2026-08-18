@@ -40,6 +40,15 @@ class User(Base, TimestampMixin):
     )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
+    # Two independent grants, because the content categories overlap: a track can
+    # be a topic, a certificate, or both. The product's four role names are
+    # derived from this pair (see `role_label`), never stored - otherwise
+    # "Full Student" becomes a third value to keep consistent everywhere.
+    access_topics: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    access_certificates: Mapped[bool] = mapped_column(
+        Boolean, default=True, nullable=False
+    )
+
     # Profile / study plan
     target_exam_date: Mapped[date | None] = mapped_column(Date, nullable=True)
     daily_study_minutes: Mapped[int] = mapped_column(Integer, default=60, nullable=False)
@@ -50,6 +59,34 @@ class User(Base, TimestampMixin):
         String(255), nullable=True, index=True
     )
     avatar_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
+
+    @property
+    def is_admin(self) -> bool:
+        return self.role == UserRole.ADMIN.value
+
+    @property
+    def role_label(self) -> str:
+        """What the UI calls this combination of grants."""
+        if self.is_admin:
+            return "Administrator"
+        if self.access_topics and self.access_certificates:
+            return "Full Student"
+        if self.access_certificates:
+            return "Certificate Student"
+        if self.access_topics:
+            return "DevOps Student"
+        return "No access"
+
+    def may_see_track(self, *, is_topic: bool, is_certificate: bool) -> bool:
+        """An admin sees everything; a student sees a track if EITHER of its
+        categories is granted - which is what lets a dual-nature track like CKA
+        show up for both kinds of student."""
+        if self.is_admin:
+            return True
+        return bool(
+            (is_topic and self.access_topics)
+            or (is_certificate and self.access_certificates)
+        )
 
     lesson_progress: Mapped[list["LessonProgress"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"

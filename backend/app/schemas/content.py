@@ -58,6 +58,30 @@ class WeekRead(BaseModel):
     total_lessons: int = 0
 
 
+class TrackRead(BaseModel):
+    """One programme of study.
+
+    `is_topic` and `is_certificate` are both sent because a track can be both,
+    and the UI groups by them: exam chrome (pass marks, a countdown, a candidate
+    handbook) only makes sense when `is_certificate` is true.
+    """
+
+    model_config = ConfigDict(from_attributes=True)
+
+    slug: str
+    title: str
+    short_title: str
+    summary: str = ""
+    provider: str | None = None
+    is_topic: bool
+    is_certificate: bool
+    exam_code: str | None = None
+    exam_minutes: int | None = None
+    mark: str = ""
+    accent: str = "sky"
+    references: list[dict] = []
+
+
 class PhaseSummary(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
