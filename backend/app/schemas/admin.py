@@ -147,6 +147,48 @@ class AdminLabRead(BaseModel):
     translations: dict[str, Any] = Field(default_factory=dict)
 
 
+class AdminUserTrackProgress(BaseModel):
+    """Where one user stands in one track.
+
+    The admin list shows a single overall figure; this is the breakdown behind
+    it, which is the only meaningful view once a person studies more than one
+    programme at a time.
+    """
+
+    track_slug: str
+    track_title: str
+    is_topic: bool
+    is_certificate: bool
+
+    total_lessons: int = 0
+    completed_lessons: int = 0
+    progress_percent: float = 0.0
+
+    total_quizzes: int = 0
+    attempted_quizzes: int = 0
+    quiz_average: float | None = None
+
+    total_labs: int = 0
+    completed_labs: int = 0
+
+
+class AdminQuizScore(BaseModel):
+    """A user's best score on one quiz, so the admin can see where they struggle."""
+
+    track_slug: str
+    quiz_slug: str
+    quiz_title: str
+    best_score: float
+    attempts: int
+    passed: bool
+
+
+class AdminUserDetail(BaseModel):
+    user: AdminUserRead
+    tracks: list[AdminUserTrackProgress] = Field(default_factory=list)
+    quiz_scores: list[AdminQuizScore] = Field(default_factory=list)
+
+
 class AdminStats(BaseModel):
     users: int
     students: int

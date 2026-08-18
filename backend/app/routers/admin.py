@@ -20,12 +20,16 @@ from app.models import (
     Quiz,
     QuizAttempt,
     StudyActivity,
+    Track,
     User,
     UserRole,
     Week,
 )
 from app.repositories import progress_repo, user_repo
 from app.schemas.admin import (
+    AdminQuizScore,
+    AdminUserDetail,
+    AdminUserTrackProgress,
     AdminLabRead,
     AdminUserCreate,
     AdminUserRead,
@@ -522,6 +526,163 @@ async def update_user(
     stats = await _user_stats(session)
     total_lessons = (await session.execute(select(func.count(Lesson.id)))).scalar_one()
     return _admin_user_read(user, total_lessons, stats.get(user.id))
+
+
+@router.get("/users/{user_id}/progress", response_model=AdminUserDetail)
+async def user_progress(user_id: int, session: SessionDep) -> AdminUserDetail:
+    """One user's standing, broken down per track.
+
+    The list view shows a single overall percentage; that figure stops meaning
+    much once somebody studies two programmes at once, so this is the breakdown
+    behind it. Computed with grouped aggregates rather than a query per track -
+    there are fifteen tracks and this is an admin screen, not a hot path.
+    """
+    user = await session.get(User, user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    tracks = (
+        await session.execute(select(Track).order_by(Track.order_index, Track.id))
+    ).scalars().all()
+
+    # totals per track
+    lesson_totals = dict(
+        (
+            await session.execute(
+                select(Week.track_id, func.count(Lesson.id))
+                .select_from(Lesson)
+                .join(Week, Lesson.week_id == Week.id)
+                .where(Lesson.is_published.is_(True))
+                .group_by(Week.track_id)
+            )
+        ).all()
+    )
+    lab_totals = dict(
+        (
+            await session.execute(
+                select(Phase.track_id, func.count(Lab.id))
+                .select_from(Lab)
+                .join(Phase, Lab.phase_id == Phase.id)
+                .where(Lab.is_published.is_(True))
+                .group_by(Phase.track_id)
+            )
+        ).all()
+    )
+    quiz_totals = dict(
+        (
+            await session.execute(
+                select(Phase.track_id, func.count(Quiz.id))
+                .select_from(Quiz)
+                .join(Phase, Quiz.phase_id == Phase.id)
+                .where(Quiz.is_published.is_(True))
+                .group_by(Phase.track_id)
+            )
+        ).all()
+    )
+
+    # this user's completions per track
+    lessons_done = dict(
+        (
+            await session.execute(
+                select(Week.track_id, func.count(LessonProgress.id))
+                .select_from(LessonProgress)
+                .join(Lesson, LessonProgress.lesson_id == Lesson.id)
+                .join(Week, Lesson.week_id == Week.id)
+                .where(
+                    LessonProgress.user_id == user_id,
+                    LessonProgress.completed.is_(True),
+                )
+                .group_by(Week.track_id)
+            )
+        ).all()
+    )
+    labs_done = dict(
+        (
+            await session.execute(
+                select(Phase.track_id, func.count(LabProgress.id))
+                .select_from(LabProgress)
+                .join(Lab, LabProgress.lab_id == Lab.id)
+                .join(Phase, Lab.phase_id == Phase.id)
+                .where(LabProgress.user_id == user_id, LabProgress.status == "completed")
+                .group_by(Phase.track_id)
+            )
+        ).all()
+    )
+
+    # Best score per quiz, then averaged per track. Averaging the attempts
+    # directly would punish somebody for retaking a quiz, which is the opposite
+    # of what the platform asks people to do.
+    best_per_quiz = (
+        select(
+            Phase.track_id.label("track_id"),
+            Quiz.id.label("quiz_id"),
+            Quiz.slug.label("quiz_slug"),
+            Quiz.title.label("quiz_title"),
+            Quiz.pass_score.label("pass_score"),
+            func.max(QuizAttempt.score).label("best"),
+            func.count(QuizAttempt.id).label("attempts"),
+        )
+        .select_from(QuizAttempt)
+        .join(Quiz, QuizAttempt.quiz_id == Quiz.id)
+        .join(Phase, Quiz.phase_id == Phase.id)
+        .where(QuizAttempt.user_id == user_id)
+        .group_by(Phase.track_id, Quiz.id, Quiz.slug, Quiz.title, Quiz.pass_score)
+        .subquery()
+    )
+    rows = (await session.execute(select(best_per_quiz))).all()
+
+    by_track: dict[int, list[Any]] = defaultdict(list)
+    for row in rows:
+        by_track[row.track_id].append(row)
+
+    slug_by_id = {t.id: t.slug for t in tracks}
+    quiz_scores = [
+        AdminQuizScore(
+            track_slug=slug_by_id.get(row.track_id, ""),
+            quiz_slug=row.quiz_slug,
+            quiz_title=row.quiz_title,
+            best_score=round(float(row.best), 1),
+            attempts=int(row.attempts),
+            passed=float(row.best) >= float(row.pass_score),
+        )
+        for row in rows
+    ]
+    quiz_scores.sort(key=lambda q: (q.track_slug, q.quiz_slug))
+
+    per_track: list[AdminUserTrackProgress] = []
+    for track in tracks:
+        total = lesson_totals.get(track.id, 0)
+        done = lessons_done.get(track.id, 0)
+        attempted = by_track.get(track.id, [])
+        avg = (
+            round(sum(float(r.best) for r in attempted) / len(attempted), 1)
+            if attempted
+            else None
+        )
+        per_track.append(
+            AdminUserTrackProgress(
+                track_slug=track.slug,
+                track_title=track.title,
+                is_topic=track.is_topic,
+                is_certificate=track.is_certificate,
+                total_lessons=total,
+                completed_lessons=done,
+                progress_percent=round((done / total) * 100, 1) if total else 0.0,
+                total_quizzes=quiz_totals.get(track.id, 0),
+                attempted_quizzes=len(attempted),
+                quiz_average=avg,
+                total_labs=lab_totals.get(track.id, 0),
+                completed_labs=labs_done.get(track.id, 0),
+            )
+        )
+
+    stats = await _user_stats(session)
+    total_lessons = (await session.execute(select(func.count(Lesson.id)))).scalar_one()
+    return AdminUserDetail(
+        user=_admin_user_read(user, total_lessons, stats.get(user.id)),
+        tracks=per_track,
+        quiz_scores=quiz_scores,
+    )
 
 
 async def _guard_last_admin(session: SessionDep, user_id: int) -> None:
