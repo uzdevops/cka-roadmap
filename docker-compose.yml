@@ -92,6 +92,7 @@ services:
       # hardcoded routing list against seed_data/tracks.json. Two named files
       # rather than the repo root, so nothing else leaks into the container.
       - ./frontend/src/tracks/config.ts:/repo/frontend/src/tracks/config.ts:ro
+      - ./docker-stack.yml:/repo/docker-stack.yml:ro
 
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]

@@ -1,0 +1,195 @@
+# Docker Swarm deployment. The compose path is untouched and still the way to
+# run this locally:
+#
+#     docker compose up          # local, zero config
+#     ./install.sh               # single-node Swarm
+#
+# Deployed with:
+#
+#     set -a; . ./.env; set +a
+#     docker stack deploy -c docker-stack.yml --resolve-image never cka
+#
+# `docker stack deploy` does not read .env itself - hence `set -a`. And
+# `--resolve-image never` is not optional here: there is no registry, the tags
+# exist only on this node, and without it Docker tries to pull them and fails.
+#
+# Images are NOT built from this file. `docker stack deploy` cannot build, so
+# `make build` (or install.sh) builds them first.
+#
+# Every environment default below MUST match docker-compose.yml and
+# backend/app/config.py. A value set here wins over the Python default, so a
+# mismatch silently ignores it - the same trap that has caught SEED_ON_START and
+# DEMO_ADMIN_PASSWORD before. tests/test_config_defaults.py compares all three.
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cka}
+      # Swarm secret, with the plain variable as a fallback so a .env-only
+      # deployment still works. Postgres reads *_FILE natively.
+      POSTGRES_PASSWORD_FILE: /run/secrets/cka_postgres_password
+      POSTGRES_DB: ${POSTGRES_DB:-cka_prep}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [k8s]
+    secrets:
+      - cka_postgres_password
+    # Deliberately NOT published. Nothing outside the overlay network needs the
+    # database; `make psql` goes in through `docker exec`.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cka} -d ${POSTGRES_DB:-cka_prep}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    deploy:
+      # Exactly one. A second replica would be a second process writing the same
+      # volume, which Postgres does not survive.
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+      update_config:
+        order: stop-first
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 256m
+
+  backend:
+    image: ${BACKEND_IMAGE:-cka-prep-backend:latest}
+    environment:
+      # --- database ---
+      POSTGRES_USER: ${POSTGRES_USER:-cka}
+      POSTGRES_PASSWORD_FILE: /run/secrets/cka_postgres_password
+      POSTGRES_DB: ${POSTGRES_DB:-cka_prep}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      # --- app ---
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DEBUG: ${DEBUG:-false}
+      SECRET_KEY_FILE: /run/secrets/cka_secret_key
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-30}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3000}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      # --- optional Google OAuth: leave empty to hide the button ---
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      OAUTH_REDIRECT_URL: ${OAUTH_REDIRECT_URL:-http://localhost:8000/api/v1/auth/google/callback}
+      OAUTH_SUCCESS_REDIRECT: ${OAUTH_SUCCESS_REDIRECT:-http://localhost:3000/auth/callback}
+      # --- features ---
+      ENFORCE_PHASE_UNLOCK: ${ENFORCE_PHASE_UNLOCK:-false}
+      SEED_ON_START: ${SEED_ON_START:-true}
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
+      # --- demo accounts ---
+      DEMO_STUDENT_EMAIL: ${DEMO_STUDENT_EMAIL:-student@demo.local}
+      DEMO_STUDENT_USERNAME: ${DEMO_STUDENT_USERNAME:-student}
+      DEMO_STUDENT_PASSWORD: ${DEMO_STUDENT_PASSWORD:-DemoPass123!}
+      DEMO_ADMIN_EMAIL: ${DEMO_ADMIN_EMAIL:-admin@demo.local}
+      DEMO_ADMIN_USERNAME: ${DEMO_ADMIN_USERNAME:-admin}
+      DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:-123}
+    networks: [k8s]
+    secrets:
+      - cka_secret_key
+      - cka_postgres_password
+    ports:
+      # mode: host, not the default ingress routing mesh. Two reasons:
+      #   1. nginx runs on the host and reaches this over the loopback
+      #      interface. Through the routing mesh the port is served by Swarm's
+      #      ingress network, and a loopback connection does not reach it.
+      #   2. The mesh adds a NAT hop for traffic that never leaves the node.
+      #
+      # Swarm does not support host_ip in this form, so `127.0.0.1:8000:8000`
+      # is not expressible - the port lands on 0.0.0.0 and the FIREWALL is what
+      # closes it. See install.sh --with-firewall and deploy/README.md.
+      - target: 8000
+        published: ${BACKEND_PORT:-8000}
+        protocol: tcp
+        mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      # uvicorn does not bind until migrations and the seed have finished.
+      start_period: 120s
+    deploy:
+      # Exactly one, and this one matters: entrypoint.sh runs
+      # `alembic upgrade head` on start. Two replicas starting together would
+      # race on the same DDL, and Alembic has no lock to arbitrate that. Scale
+      # this out only by moving migrations into a separate one-shot task and
+      # setting RUN_MIGRATIONS=false here.
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 10s
+      update_config:
+        # start-first would mean two backends alive at once - see above.
+        order: stop-first
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 256m
+
+  frontend:
+    image: ${FRONTEND_IMAGE:-cka-prep-frontend:latest}
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL-http://localhost:8000}
+      INTERNAL_API_URL: ${INTERNAL_API_URL:-http://backend:8000}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_DEFAULT_LOCALE: ${NEXT_PUBLIC_DEFAULT_LOCALE:-en}
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    networks: [k8s]
+    ports:
+      - target: 3000
+        published: ${FRONTEND_PORT:-3000}
+        protocol: tcp
+        mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    deploy:
+      # There is no depends_on in Swarm and none is needed: the frontend simply
+      # restarts until the backend answers.
+      replicas: ${FRONTEND_REPLICAS:-1}
+      restart_policy:
+        condition: any
+        delay: 5s
+      update_config:
+        # Stateless, so a new task can come up before the old one goes away.
+        order: start-first
+      resources:
+        limits:
+          memory: 512m
+        reservations:
+          memory: 128m
+
+networks:
+  k8s:
+    # overlay, not bridge: a bridge network is per-node and Swarm services
+    # cannot attach to one. `attachable` lets `docker run` join it for debugging.
+    driver: overlay
+    attachable: true
+
+volumes:
+  pgdata:
+
+secrets:
+  # Created by install.sh from .env. `external: true` because a secret is
+  # immutable in Swarm - changing one means creating a new name and updating the
+  # service, which is a deliberate operation rather than something a redeploy
+  # should do silently.
+  cka_secret_key:
+    external: true
+  cka_postgres_password:
+    external: true

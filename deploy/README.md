@@ -184,6 +184,83 @@ sudo ufw allow 'Nginx Full'
 sudo ufw enable
 ```
 
+## Swarm instead of Compose
+
+`docker compose up` is one way to run this on a server. The other is a
+single-node Docker Swarm, which adds restart policies, rolling updates and
+resource limits without introducing an orchestrator:
+
+```bash
+./install.sh                  # from the repository root
+```
+
+nginx does **not** change. It still runs on the host, still terminates TLS, and
+still proxies to `127.0.0.1:8000` and `127.0.0.1:3000` - every config in this
+directory works unmodified.
+
+### The port difference, and why the firewall is not optional
+
+Compose can bind a published port to one interface (`BACKEND_BIND=127.0.0.1`).
+**Swarm cannot** - the long port syntax has no `host_ip` field, so a published
+port lands on `0.0.0.0`. The stack file therefore uses:
+
+```yaml
+ports:
+  - target: 8000
+    published: 8000
+    protocol: tcp
+    mode: host
+```
+
+`mode: host` rather than the default ingress routing mesh, for two reasons:
+nginx connects over the loopback interface and a mesh-published port is served
+by Swarm's ingress network, which a loopback connection does not reach; and the
+mesh adds a NAT hop for traffic that never leaves the node.
+
+The consequence is that on a Swarm host, ports 8000 and 3000 are reachable from
+the network. That means the raw API and the un-proxied frontend, bypassing nginx
+and TLS. Close them:
+
+```bash
+# nftables
+sudo nft add rule inet filter input iif != "lo" tcp dport 8000 drop
+sudo nft add rule inet filter input iif != "lo" tcp dport 3000 drop
+
+# or ufw
+sudo ufw deny 8000/tcp
+sudo ufw deny 3000/tcp
+```
+
+Verify from **another machine** - a check run on the host itself goes over
+loopback and will always succeed:
+
+```bash
+nc -zv <host> 8000    # must be refused or time out
+```
+
+`install.sh` prints these commands and warns when the ports are open. It applies
+them only with `--with-firewall`: changing a server's firewall without being
+asked is a good way to lose the SSH session you are holding.
+
+### Secrets
+
+`SECRET_KEY` and `POSTGRES_PASSWORD` are Docker secrets under Swarm, mounted at
+`/run/secrets/` rather than passed as environment variables - so they stay out
+of `docker inspect` and out of every child process's environment. The backend
+reads `SECRET_KEY_FILE` / `POSTGRES_PASSWORD_FILE` and falls back to the plain
+variable, so the compose path is unaffected.
+
+A Swarm secret is immutable. Rotating one means creating a new name and updating
+the service; `install.sh` only ever creates a missing secret, and never replaces
+a live one underneath a running stack.
+
+### Single node
+
+There is no registry, so images exist only on the machine that built them -
+hence `--resolve-image never` on the deploy. A second node would need a registry
+(or `docker save`/`docker load` onto each node) and the tags in
+`docker-stack.yml` pointed at it.
+
 ## Automatic deploys
 
 Two units in [systemd/](systemd/), driving two scripts in [bin/](bin/). The

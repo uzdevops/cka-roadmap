@@ -5,10 +5,42 @@ Every value has a working default so the stack boots with zero .env files.
 
 from __future__ import annotations
 
+import os
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+# Secrets that may arrive as a file path instead of a value. Docker Swarm mounts
+# secrets at /run/secrets/<name> rather than putting them in the environment,
+# which keeps them out of `docker inspect` and out of the process environment of
+# every child process.
+_FILE_BACKED = ("SECRET_KEY", "POSTGRES_PASSWORD", "TELEGRAM_BOT_TOKEN")
+
+
+def _load_file_backed_secrets() -> None:
+    """Turns `FOO_FILE=/run/secrets/x` into `FOO=<contents of x>`.
+
+    Runs before Settings is constructed. An explicit FOO in the environment wins,
+    so a compose run with a plain .env is unaffected; this only fills a gap.
+    A missing or unreadable file is left alone rather than raising - the field's
+    own default or validation then reports the problem in terms the operator
+    recognises, instead of a traceback out of the config module.
+    """
+    for name in _FILE_BACKED:
+        if os.environ.get(name):
+            continue
+        path = os.environ.get(f"{name}_FILE")
+        if not path:
+            continue
+        try:
+            value = Path(path).read_text(encoding="utf-8").strip()
+        except OSError:
+            continue
+        if value:
+            os.environ[name] = value
 
 
 # The password a fresh checkout starts with. Referenced by the guard below.
@@ -135,6 +167,7 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    _load_file_backed_secrets()
     return Settings()
 
 

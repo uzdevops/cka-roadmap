@@ -39,6 +39,20 @@ def _find_compose() -> Path | None:
 
 COMPOSE = _find_compose()
 
+
+def _find_stack() -> Path | None:
+    candidates = [
+        Path(__file__).resolve().parents[2] / "docker-stack.yml",
+        Path("/repo/docker-stack.yml"),
+        Path.cwd() / "docker-stack.yml",
+    ]
+    if env := os.environ.get("STACK_FILE_PATH"):
+        candidates.insert(0, Path(env))
+    return next((c for c in candidates if c.is_file()), None)
+
+
+STACK = _find_stack()
+
 # Values compose computes for the container rather than mirroring from Settings:
 # service hostnames, ports inside the network, and bind addresses.
 NOT_MIRRORED = {
@@ -145,3 +159,123 @@ def test_development_keeps_the_convenient_default(
     settings = Settings()
     assert settings.demo_admin_username == "admin"
     assert settings.demo_admin_password == "123"
+
+
+# --- the Swarm file has to agree with the compose file ----------------------
+
+
+def _stack_defaults() -> dict[str, str]:
+    """Same `VAR: ${VAR:-default}` shape, one indent level deeper."""
+    if STACK is None:
+        return {}
+    pattern = re.compile(r"^\s{6}([A-Z0-9_]+):\s*\$\{\1:-(.*)\}\s*$", re.M)
+    return {
+        name: default
+        for name, default in pattern.findall(STACK.read_text(encoding="utf-8"))
+        if name not in NOT_MIRRORED
+    }
+
+
+def test_stack_file_is_readable() -> None:
+    if STACK is None:
+        pytest.skip(
+            "docker-stack.yml not reachable from here. Run with -v $PWD:/repo or "
+            "set STACK_FILE_PATH."
+        )
+    assert _stack_defaults(), "no `VAR: ${VAR:-default}` lines found - regex stale?"
+
+
+def test_the_swarm_file_defaults_match_the_compose_file() -> None:
+    """Two deployment paths, one set of defaults.
+
+    Whichever file a deployment uses wins over `Settings`, so a value that
+    differs between them means the same command produces two different
+    applications depending on how it was started - and nothing reports it.
+    """
+    if STACK is None or COMPOSE is None:
+        pytest.skip("both deployment files are needed for this comparison")
+
+    compose = _compose_defaults()
+    stack = _stack_defaults()
+
+    disagreements = {
+        name: (compose[name], stack[name])
+        for name in compose.keys() & stack.keys()
+        if compose[name] != stack[name]
+    }
+    assert not disagreements, (
+        "docker-compose.yml and docker-stack.yml disagree: "
+        + ", ".join(
+            f"{n}: compose={c!r} stack={s!r}" for n, (c, s) in sorted(disagreements.items())
+        )
+    )
+
+
+def test_the_swarm_file_covers_the_same_variables() -> None:
+    """A variable the Swarm path forgets falls back to a different default.
+
+    Two are expected to be missing: SECRET_KEY and POSTGRES_PASSWORD arrive as
+    Docker secrets there (`*_FILE`), which is the point of the Swarm path.
+    """
+    if STACK is None or COMPOSE is None:
+        pytest.skip("both deployment files are needed for this comparison")
+
+    via_secret = {"SECRET_KEY", "POSTGRES_PASSWORD"}
+    missing = set(_compose_defaults()) - set(_stack_defaults()) - via_secret
+    assert not missing, (
+        f"docker-stack.yml does not set {sorted(missing)}. Those services would "
+        f"fall back to the image default instead of the deployment's."
+    )
+
+
+# --- Docker secrets ---------------------------------------------------------
+
+
+def test_a_secret_can_arrive_as_a_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Swarm mounts secrets at /run/secrets/<name>, not into the environment.
+
+    Keeping them out of the environment is the point: an environment variable
+    is visible in `docker inspect` and inherited by every child process.
+    """
+    from app.config import _load_file_backed_secrets
+
+    secret = tmp_path / "cka_secret_key"
+    secret.write_text("value-from-the-file\n", encoding="utf-8")
+
+    monkeypatch.delenv("SECRET_KEY", raising=False)
+    monkeypatch.setenv("SECRET_KEY_FILE", str(secret))
+    _load_file_backed_secrets()
+
+    assert Settings().secret_key == "value-from-the-file", "trailing newline not stripped?"
+
+
+def test_an_explicit_value_beats_the_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """So a compose run with a plain .env is never overridden by a stale mount."""
+    from app.config import _load_file_backed_secrets
+
+    secret = tmp_path / "cka_secret_key"
+    secret.write_text("from-the-file", encoding="utf-8")
+
+    monkeypatch.setenv("SECRET_KEY", "from-the-environment")
+    monkeypatch.setenv("SECRET_KEY_FILE", str(secret))
+    _load_file_backed_secrets()
+
+    assert Settings().secret_key == "from-the-environment"
+
+
+def test_a_missing_secret_file_does_not_raise(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The field's own default or validation should report the problem, in terms
+    an operator recognises - not a traceback out of the config module."""
+    from app.config import _load_file_backed_secrets
+
+    monkeypatch.delenv("SECRET_KEY", raising=False)
+    monkeypatch.setenv("SECRET_KEY_FILE", str(tmp_path / "does-not-exist"))
+
+    _load_file_backed_secrets()  # must not raise
+    assert Settings().secret_key

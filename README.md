@@ -1,9 +1,13 @@
-# CKA Prep
+# DevOps Platform
 
-A learning platform for the **Certified Kubernetes Administrator** exam: a
-20-week roadmap, written lessons, server-graded quizzes, hands-on labs and a
-progress dashboard whose readiness estimate is weighted by the real exam
-domains.
+A learning platform for the DevOps toolchain, organised into **tracks**. A track
+is either a certification (CKA, CKS, LFCS, AWS, CompTIA), a topic (Docker,
+Python, Ansible, CI/CD, Helm, Monitoring, databases, Terraform), or both -
+several subjects are genuinely a thing you study *and* an exam you sit.
+
+Each track carries a roadmap of phases and weeks, written lessons, server-graded
+quizzes, hands-on labs, and a progress dashboard whose readiness estimate is
+weighted by the real exam domains.
 
 ## Quickstart
 
@@ -23,10 +27,15 @@ nothing installed on the host but Docker.
 
 Sign in immediately with either demo account:
 
-| Role | Email | Password |
+| Role | Sign in as | Password |
 | --- | --- | --- |
-| Student | `student@demo.local` | `DemoPass123!` |
-| Admin | `admin@demo.local` | `AdminPass123!` |
+| Student | `student` | `DemoPass123!` |
+| Admin | `admin` | `123` |
+
+The sign-in field takes a username or an email, so `admin@demo.local` works too.
+The trivial admin password is deliberate on a laptop - the backend **refuses to
+start** with it when `ENVIRONMENT=production`, so it cannot reach a public
+server by accident.
 
 **Host requirements:** Docker and Docker Compose v2. No Python, Node.js or
 PostgreSQL. Cold start after the images are built is about 25 seconds.
@@ -107,7 +116,7 @@ docker compose up --build         # rebuild after changing source
 docker compose down               # stop, keep the database
 docker compose down -v            # stop and wipe the database (clean re-seed)
 docker compose logs -f backend    # follow the API logs
-docker compose run --rm backend pytest   # 73 backend tests
+docker compose run --rm backend pytest   # the backend test suite
 docker compose exec db psql -U cka -d cka_prep   # a psql shell
 ```
 
@@ -210,6 +219,38 @@ progress logic (streak arithmetic across gaps, readiness weighting, lesson
 completion idempotence) and localisation (locale negotiation, per-field English
 fallback, and that translating a quiz never changes which answers are correct). They run against a dedicated `cka_prep_test` database
 on the same server, so your development data is never touched.
+
+## Installing on a server (Docker Swarm)
+
+`docker compose up` stays the way to run this locally. For a server there is a
+second path that adds restart policies, rolling updates and resource limits
+without introducing an orchestrator:
+
+```bash
+./install.sh                  # deploy, and print the firewall commands
+./install.sh --with-firewall  # deploy, and apply them
+```
+
+The script checks Docker, initialises a single-node Swarm if one is not already
+running, creates `.env` from the production template with generated secrets,
+registers them as Docker secrets, builds the images, deploys `docker-stack.yml`,
+and waits for both health endpoints. Running it twice is safe: Swarm is not
+re-initialised and existing secrets are left alone.
+
+**Single node only, as written.** There is no registry, so the images exist only
+on the machine that built them - which is why the deploy passes
+`--resolve-image never`. A multi-node cluster needs a registry (or `docker save`
+/ `docker load` onto every node) and the tags in `docker-stack.yml` changed to
+point at it.
+
+**nginx stays on the host** and proxies to the published container ports. Swarm
+cannot bind a published port to a single interface, so those ports land on
+`0.0.0.0` and a firewall is what closes them - `install.sh` prints the exact
+nftables and ufw commands, and applies them only with `--with-firewall`, because
+changing a server's firewall without being asked is a good way to lock yourself
+out of it. See `deploy/README.md`.
+
+`make help` lists both paths.
 
 ## Deploying behind nginx
 
