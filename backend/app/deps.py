@@ -10,6 +10,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import false as sa_false, or_, select, true as sa_true
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.config import settings
 from app.db import get_session
 from app.i18n import normalize_locale, pick_locale
 from app.models import Track, User, UserRole
@@ -107,6 +108,31 @@ def _visible_to(user: User):
     return or_(*clauses)
 
 
+async def resolve_track(session: AsyncSession, user: User, slug: str) -> Track:
+    """Look a track up by slug and check this account may open it.
+
+    Shared by the `?track=` dependency and by routes that carry the slug in
+    their path - `/tracks/{slug}/...`. Those used to lean on the query-parameter
+    dependency, which ignored the path entirely and answered about whichever
+    track happened to sort first.
+    """
+    found = (
+        await session.execute(select(Track).where(Track.slug == slug.strip().lower()))
+    ).scalar_one_or_none()
+    if found is None or not found.is_published:
+        raise HTTPException(status_code=404, detail=f"Unknown track: {slug}")
+    if not user.may_see_track(
+        is_topic=found.is_topic, is_certificate=found.is_certificate
+    ):
+        # 403, not 404: the track exists and nothing about it is secret, so
+        # pretending otherwise only confuses the user.
+        raise HTTPException(
+            status_code=403,
+            detail=f"Your account does not have access to {found.slug}",
+        )
+    return found
+
+
 async def get_track(
     session: SessionDep,
     user: CurrentUser,
@@ -128,23 +154,7 @@ async def get_track(
     dependency before the auth check ran, turning a 401 into something else.
     """
     if track:
-        found = (
-            await session.execute(
-                select(Track).where(Track.slug == track.strip().lower())
-            )
-        ).scalar_one_or_none()
-        if found is None or not found.is_published:
-            raise HTTPException(status_code=404, detail=f"Unknown track: {track}")
-        if not user.may_see_track(
-            is_topic=found.is_topic, is_certificate=found.is_certificate
-        ):
-            # 403, not 404: the track exists and the answer does not depend on
-            # anything secret, so pretending otherwise only confuses the user.
-            raise HTTPException(
-                status_code=403,
-                detail=f"Your account does not have access to {found.slug}",
-            )
-        return found
+        return await resolve_track(session, user, track)
 
     default = (
         await session.execute(
@@ -164,6 +174,43 @@ async def get_track(
 
 
 CurrentTrack = Annotated[Track, Depends(get_track)]
+
+
+async def get_started_track(
+    session: SessionDep, user: CurrentUser, track: CurrentTrack
+) -> Track:
+    """A track the user has actually pressed Start on.
+
+    Separate from `get_track` on purpose: the Start screen, the track list and
+    `GET /tracks/{slug}/enrollment` all have to work BEFORE there is an
+    enrollment, and they use `CurrentTrack`. Only the content routes use this.
+
+    The 403 carries a machine-readable `code` because the frontend has to tell
+    "you have not started this" apart from "you may not see this at all" - one
+    shows a Start button, the other an error.
+    """
+    from app.repositories import enrollment_repo
+
+    if not settings.enforce_track_start:
+        return track
+    # An admin is inspecting content, not studying it.
+    if user.role == UserRole.ADMIN.value:
+        return track
+
+    enrollment = await enrollment_repo.get(session, user.id, track.id)
+    if enrollment is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "code": "track_not_started",
+                "track": track.slug,
+                "message": f"Press Start on {track.slug} before opening its content.",
+            },
+        )
+    return track
+
+
+StartedTrack = Annotated[Track, Depends(get_started_track)]
 
 
 def client_ip(request: Request) -> str:

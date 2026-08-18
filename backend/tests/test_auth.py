@@ -78,14 +78,40 @@ async def test_profile_update_persists(client: AsyncClient, student_user) -> Non
     resp = await client.patch(
         f"{API}/auth/me",
         headers=auth_header(token),
-        json={"full_name": "Renamed", "target_exam_date": "2026-06-01",
-              "daily_study_minutes": 120},
+        json={"full_name": "Renamed", "daily_study_minutes": 120},
     )
     assert resp.status_code == 200
     body = resp.json()
     assert body["full_name"] == "Renamed"
-    assert body["target_exam_date"] == "2026-06-01"
     assert body["daily_study_minutes"] == 120
+
+
+async def test_the_profile_no_longer_carries_an_exam_date(
+    client: AsyncClient, student_user
+) -> None:
+    """It moved to the enrollment.
+
+    One column on the account could only ever describe one exam; somebody
+    studying CKA and LFCS at the same time needs a date for each. It is set
+    through PATCH /tracks/{slug}/enrollment now, and the daily study budget
+    stays on the account because that is about the person, not the track.
+    """
+    token = await login(client, "student@test.local", "StudentPass123!")
+
+    resp = await client.get(f"{API}/auth/me", headers=auth_header(token))
+    assert resp.status_code == 200
+    assert "target_exam_date" not in resp.json()
+    assert "daily_study_minutes" in resp.json()
+
+    # Sending it is silently ignored rather than accepted and dropped, because
+    # the field is not on the update schema at all.
+    patched = await client.patch(
+        f"{API}/auth/me",
+        headers=auth_header(token),
+        json={"target_exam_date": "2026-06-01"},
+    )
+    assert patched.status_code == 200
+    assert "target_exam_date" not in patched.json()
 
 
 async def test_admin_endpoints_reject_students(client: AsyncClient, student_user) -> None:

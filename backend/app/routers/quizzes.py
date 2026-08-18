@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import CurrentTrack, CurrentUser, Locale, SessionDep
+from app.deps import CurrentUser, Locale, SessionDep, StartedTrack
 from app.i18n import tr
 from app.repositories import quiz_repo
 from app.schemas.quiz import (
@@ -40,7 +40,7 @@ def _summary(quiz, best, counts, locked_ids, locale: str) -> QuizSummary:
 
 @router.get("", response_model=list[QuizSummary])
 async def list_quizzes(
-    session: SessionDep, track: CurrentTrack, user: CurrentUser, locale: Locale,
+    session: SessionDep, track: StartedTrack, user: CurrentUser, locale: Locale,
     phase: str | None = None,
 ) -> list[QuizSummary]:
     quizzes = await quiz_repo.list_quizzes(
@@ -75,7 +75,7 @@ async def my_attempts(
 
 @router.get("/{slug}", response_model=QuizDetail)
 async def get_quiz(
-    slug: str, session: SessionDep, track: CurrentTrack, user: CurrentUser,
+    slug: str, session: SessionDep, track: StartedTrack, user: CurrentUser,
     locale: Locale,
 ) -> QuizDetail:
     quiz = await quiz_repo.get_quiz_by_slug(session, slug)
@@ -112,7 +112,7 @@ async def get_quiz(
 
 @router.post("/{slug}/submit", response_model=QuizResult)
 async def submit_quiz(
-    slug: str, payload: QuizSubmission, session: SessionDep, track: CurrentTrack,
+    slug: str, payload: QuizSubmission, session: SessionDep, track: StartedTrack,
     user: CurrentUser, locale: Locale,
 ) -> QuizResult:
     quiz = await quiz_repo.get_quiz_by_slug(session, slug)

@@ -54,7 +54,8 @@ class UserRead(BaseModel):
     access_topics: bool = True
     access_certificates: bool = True
     role_label: str = ""
-    target_exam_date: date | None = None
+    # The exam date moved to TrackEnrollment - one column could only ever
+    # describe one exam, and a person studying two tracks needs two dates.
     daily_study_minutes: int
     avatar_url: str | None = None
     created_at: datetime
@@ -62,7 +63,7 @@ class UserRead(BaseModel):
 
 class UserUpdate(BaseModel):
     full_name: str | None = Field(default=None, max_length=255)
-    target_exam_date: date | None = None
+    # A target date is set through PATCH /tracks/{slug}/enrollment.
     daily_study_minutes: int | None = Field(default=None, ge=5, le=1440)
 
 

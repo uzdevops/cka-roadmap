@@ -6,6 +6,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.schemas.enrollment import TrackSummaryStatus
+
 
 class LessonSummary(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -82,6 +84,9 @@ class TrackRead(BaseModel):
     mark: str = ""
     accent: str = "sky"
     references: list[dict] = []
+    # Where this account stands in the track. Attached here so the switcher and
+    # the "My tracks" cards need one request rather than one per track.
+    enrollment: TrackSummaryStatus | None = None
 
 
 class PhaseSummary(BaseModel):

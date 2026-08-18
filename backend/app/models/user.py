@@ -3,15 +3,15 @@
 from __future__ import annotations
 
 import enum
-from datetime import date
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Date, Integer, String
+from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base, TimestampMixin
 
 if TYPE_CHECKING:
+    from app.models.enrollment import TrackEnrollment
     from app.models.progress import LabProgress, LessonProgress, StudyActivity
     from app.models.quiz import QuizAttempt
 
@@ -49,8 +49,10 @@ class User(Base, TimestampMixin):
         Boolean, default=True, nullable=False
     )
 
-    # Profile / study plan
-    target_exam_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    # Profile / study plan. The exam date used to live here as a single column,
+    # which could only ever describe one exam - it is per track now, on
+    # TrackEnrollment. The daily budget stays: it is about the person, not the
+    # track, and somebody studying two tracks still has one evening.
     daily_study_minutes: Mapped[int] = mapped_column(Integer, default=60, nullable=False)
 
     # OAuth linkage (nullable: password accounts never populate these)
@@ -88,6 +90,9 @@ class User(Base, TimestampMixin):
             or (is_certificate and self.access_certificates)
         )
 
+    enrollments: Mapped[list["TrackEnrollment"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan"
+    )
     lesson_progress: Mapped[list["LessonProgress"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )

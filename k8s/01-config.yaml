@@ -19,6 +19,8 @@ data:
   # Must match the Ingress host below.
   FRONTEND_ORIGIN: "https://cka.example.com"
   ENFORCE_PHASE_UNLOCK: "false"
+  ENFORCE_TRACK_START: "true"
+  TRACK_DEFAULT_WEEKS: "20"
   RATE_LIMIT_ENABLED: "true"
   OAUTH_REDIRECT_URL: "https://cka.example.com/api/v1/auth/google/callback"
   OAUTH_SUCCESS_REDIRECT: "https://cka.example.com/auth/callback"

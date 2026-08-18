@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.i18n import DEFAULT_LOCALE, tr, verdict as verdict_for
 from app.models import Track, User
-from app.repositories import content_repo, progress_repo, quiz_repo
+from app.repositories import content_repo, enrollment_repo, progress_repo, quiz_repo
 from app.schemas.progress import (
     DashboardResponse,
     ExamReadiness,
@@ -175,9 +175,13 @@ async def build_dashboard(
     streak = compute_streaks(await progress_repo.activity_days(session, user.id))
     readiness = compute_readiness(phase_progress, locale)
 
-    days_until = None
-    if user.target_exam_date:
-        days_until = (user.target_exam_date - datetime_today()).days
+    # The exam date belongs to the enrollment for THIS track, not to the
+    # account - somebody studying two tracks has two of them.
+    enrollment = await enrollment_repo.get(session, user.id, track.id)
+    target_exam_date = enrollment.target_date if enrollment else None
+    days_until = (
+        (target_exam_date - datetime_today()).days if target_exam_date else None
+    )
 
     return DashboardResponse(
         total_lessons=total_lessons,
@@ -194,7 +198,7 @@ async def build_dashboard(
         phases=phase_progress,
         recent_scores=recent,
         readiness=readiness,
-        target_exam_date=user.target_exam_date,
+        target_exam_date=target_exam_date,
         days_until_exam=days_until,
         daily_study_minutes=user.daily_study_minutes,
     )

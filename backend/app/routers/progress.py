@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from app.deps import CurrentTrack, CurrentUser, Locale, SessionDep
+from app.deps import CurrentUser, Locale, SessionDep, StartedTrack
 from app.repositories import content_repo, progress_repo
 from app.schemas.progress import DashboardResponse, StreakInfo
 from app.services import progress_service
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/progress", tags=["progress"])
 
 @router.get("/dashboard", response_model=DashboardResponse)
 async def dashboard(
-    session: SessionDep, track: CurrentTrack, user: CurrentUser, locale: Locale
+    session: SessionDep, track: StartedTrack, user: CurrentUser, locale: Locale
 ) -> DashboardResponse:
     return await progress_service.build_dashboard(session, track, user, locale)
 
@@ -27,7 +27,7 @@ async def streak(session: SessionDep, user: CurrentUser) -> StreakInfo:
 
 @router.get("/overview")
 async def overview(
-    session: SessionDep, track: CurrentTrack, user: CurrentUser
+    session: SessionDep, track: StartedTrack, user: CurrentUser
 ) -> dict:
     """Compact counters for the navbar / header widgets."""
     total = await content_repo.count_lessons(session, track.id)

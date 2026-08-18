@@ -66,6 +66,8 @@ services:
       OAUTH_SUCCESS_REDIRECT: ${OAUTH_SUCCESS_REDIRECT:-http://localhost:3000/auth/callback}
       # --- features ---
       ENFORCE_PHASE_UNLOCK: ${ENFORCE_PHASE_UNLOCK:-false}
+      ENFORCE_TRACK_START: ${ENFORCE_TRACK_START:-true}
+      TRACK_DEFAULT_WEEKS: ${TRACK_DEFAULT_WEEKS:-20}
       SEED_ON_START: ${SEED_ON_START:-true}
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
       # --- demo accounts ---

@@ -87,6 +87,12 @@ class Settings(BaseSettings):
 
     # --- Feature flags ---------------------------------------------------
     enforce_phase_unlock: bool = False
+    # A track is opened by pressing Start, which is what gives the countdown a
+    # day one. Off, every track behaves as it did before enrollments existed.
+    enforce_track_start: bool = True
+    # Fallback length for a track whose phases declare no week range and which
+    # has no weeks yet - an empty track still needs a target date to show.
+    track_default_weeks: int = 20
     phase_unlock_min_score: float = 70.0
 
     # --- Rate limiting ---------------------------------------------------

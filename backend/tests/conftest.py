@@ -10,6 +10,7 @@ from collections.abc import AsyncGenerator
 
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
+from sqlalchemy.pool import NullPool
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.config import settings
@@ -21,6 +22,14 @@ from app.security import hash_password
 
 # Throttling would otherwise reject the repeated logins these tests perform.
 limiter.enabled = False
+
+# The track-start gate is a feature flag, and almost every test here predates it
+# and is about something else. It is switched off by default and switched ON
+# explicitly in tests/test_track_start.py, which is the same arrangement
+# ENFORCE_PHASE_UNLOCK has - see tests/test_phase_unlock.py. The point of the
+# dedicated file is that a flag nothing exercises is a flag that breaks silently
+# the day it is turned on.
+settings.enforce_track_start = False
 
 TEST_DB_NAME = f"{settings.postgres_db}_test"
 
@@ -70,7 +79,14 @@ async def ensure_track(session: AsyncSession, slug: str = "t1") -> Track:
 @pytest_asyncio.fixture
 async def session() -> AsyncGenerator[AsyncSession, None]:
     await _ensure_test_database()
-    engine = create_async_engine(_test_url(), poolclass=None)
+    # NullPool: every connection is closed the moment it is released, so no
+    # connection outlives the test that opened it. With a pooled engine a
+    # connection from the previous test could still be holding a row lock while
+    # this test's `drop_all` asks for an AccessExclusiveLock on the same table -
+    # Postgres reports that as a deadlock, and it surfaces as a fixture error in
+    # an unrelated test. It only started happening once track_enrollments made
+    # the schema wide enough to widen that window.
+    engine = create_async_engine(_test_url(), poolclass=NullPool)
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
