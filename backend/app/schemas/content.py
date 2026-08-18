@@ -23,6 +23,8 @@ class LessonSummary(BaseModel):
 
 class LessonDetail(LessonSummary):
     content: str
+    # Optional YouTube link, rendered as a player above the prose.
+    video_url: str | None = None
     week_id: int
     week_number: int | None = None
     week_title: str | None = None

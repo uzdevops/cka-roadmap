@@ -16,6 +16,8 @@ class LessonCreate(BaseModel):
     title: str = Field(min_length=1, max_length=255)
     summary: str = ""
     content: str = ""
+    # A YouTube link, shown as a player above the lesson.
+    video_url: str | None = Field(default=None, max_length=512)
     order_index: int = 0
     estimated_minutes: int = 30
     day_of_week: int | None = Field(default=None, ge=1, le=7)
@@ -29,6 +31,7 @@ class LessonUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=255)
     summary: str | None = None
     content: str | None = None
+    video_url: str | None = Field(default=None, max_length=512)
     order_index: int | None = None
     estimated_minutes: int | None = None
     day_of_week: int | None = Field(default=None, ge=1, le=7)
@@ -98,6 +101,7 @@ class AdminLessonRead(BaseModel):
     title: str
     summary: str
     content: str
+    video_url: str | None = None
     order_index: int
     estimated_minutes: int
     day_of_week: int | None

@@ -101,6 +101,7 @@ async def get_lesson(
         ),
         quiz_attempts=attempts or 0,
         references=list(tr(lesson, "references", locale) or []),
+        video_url=lesson.video_url,
     )
 
 

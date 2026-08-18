@@ -175,6 +175,11 @@ class Lesson(Base, TimestampMixin):
     references: Mapped[list[dict[str, Any]]] = mapped_column(
         JSONB, default=list, nullable=False
     )
+    # An optional YouTube link, shown as a player above the prose. A column
+    # rather than markdown: the seeder rewrites a placeholder lesson's body, so
+    # anything embedded there would not survive a redeploy.
+    video_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
+
     # Per-locale overrides; English lives in the columns above.
     translations: Mapped[dict[str, Any]] = mapped_column(
         JSONB, default=dict, nullable=False
