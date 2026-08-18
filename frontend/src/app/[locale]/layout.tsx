@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { SiteFooter } from '@/components/site-footer';
-import { SiteHeader } from '@/components/site-header';
+import { AppShell } from '@/components/app-shell';
 import { ThemeScript } from '@/components/theme-toggle';
 import { getDictionary } from '@/i18n';
 import { isLocale, LOCALES, type Locale } from '@/i18n/config';
@@ -70,11 +69,7 @@ export default function LocaleLayout({
       <body className="min-h-screen antialiased">
         <I18nProvider locale={locale}>
           <AuthProvider>
-            <SiteHeader />
-            <main className="mx-auto min-h-[calc(100vh-8.5rem)] max-w-6xl px-4 py-8">
-              {children}
-            </main>
-            <SiteFooter />
+            <AppShell>{children}</AppShell>
           </AuthProvider>
         </I18nProvider>
       </body>

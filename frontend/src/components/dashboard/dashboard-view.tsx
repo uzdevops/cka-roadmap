@@ -82,11 +82,13 @@ export function DashboardView() {
         <p className="mt-2 text-ink-secondary">{t.dashboard.intro}</p>
       </header>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-3">
-        <div className="flex flex-col gap-6 lg:col-span-2">
+      {/* Three bands rather than two columns: the twenty week cards want the
+          full width far more than the stat tiles want their own column. */}
+      <div className="mt-6 flex flex-col gap-5">
+        <div className="grid gap-5 xl:grid-cols-3">
           {/* Hero: one ring, one twenty-segment bar. */}
-          <Card className="dash-hero">
-            <CardContent className="pt-6">
+          <Card className="dash-hero xl:col-span-2">
+            <CardContent className="flex h-full flex-col justify-between gap-8 pt-6">
               <div className="flex flex-wrap items-center gap-x-8 gap-y-6">
                 <ProgressRing
                   value={data.overall_percent}
@@ -129,34 +131,9 @@ export function DashboardView() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>{t.dashboard.weeksHeading}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <WeekGrid weeks={weeks} />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <ReadinessPanel readiness={data.readiness} />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>{t.dashboard.nextHeading}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <NextSteps data={data} />
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Rail: the small analytical panels. */}
-        <div className="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
-          <StatTile
+          {/* Stat tiles, beside the hero rather than under it. */}
+          <div className="grid gap-4 sm:grid-cols-2 xl:gap-4">
+            <StatTile
             label={t.dashboard.statLessons}
             value={`${data.completed_lessons} / ${data.total_lessons}`}
             hint={fill(t.dashboard.statLessonsHint, { percent: data.overall_percent })}
@@ -205,6 +182,25 @@ export function DashboardView() {
               }
             />
           )}
+          </div>
+        </div>
+
+        {/* Twenty cards want the whole width: five across beats three. */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.dashboard.weeksHeading}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <WeekGrid weeks={weeks} />
+          </CardContent>
+        </Card>
+
+        <div className="grid gap-5 xl:grid-cols-3">
+          <Card className="xl:col-span-2">
+            <CardContent className="pt-6">
+              <ReadinessPanel readiness={data.readiness} />
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>
@@ -214,13 +210,24 @@ export function DashboardView() {
               <ScoreTrendChart points={data.recent_scores} />
             </CardContent>
           </Card>
+        </div>
 
-          <Card>
+        <div className="grid gap-5 xl:grid-cols-3">
+          <Card className="xl:col-span-2">
             <CardHeader>
               <CardTitle>{t.dashboard.phaseChartTitle}</CardTitle>
             </CardHeader>
             <CardContent>
               <PhaseProgressChart phases={data.phases} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.dashboard.nextHeading}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <NextSteps data={data} />
             </CardContent>
           </Card>
         </div>

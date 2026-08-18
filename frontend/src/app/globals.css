@@ -134,6 +134,172 @@
   }
 }
 
+/* --- Application shell -----------------------------------------------------
+   A fixed navigation rail plus a slim top bar. The rail is what buys the extra
+   horizontal space: a top nav would spend a whole band of the screen on six
+   links that are visible here permanently and cost nothing.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --rail-width: 15rem;
+  /* Wide enough for dense panels, short enough that a line of lesson prose
+     never runs past a comfortable measure on a 2500px monitor. */
+  --content-max: 1700px;
+}
+
+.app-rail {
+  width: var(--rail-width);
+  flex-shrink: 0;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: var(--surface-1);
+}
+
+@media (min-width: 1024px) {
+  .app-rail {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+}
+
+.rail-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 1.25rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.rail-mark {
+  display: flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rail-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border-radius: 9px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.rail-link:hover {
+  background: var(--surface-2);
+  color: var(--text-primary);
+}
+
+/* The current section. The left marker carries the state as well as the tint,
+   so it survives a colour-blind reading and a low-contrast screen. */
+.rail-link-active {
+  position: relative;
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-weight: 550;
+}
+
+.rail-link-active::before {
+  content: '';
+  position: absolute;
+  left: -0.7rem;
+  top: 50%;
+  height: 1.15rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+  transform: translateY(-50%);
+  box-shadow: var(--dash-seg-glow);
+}
+
+.rail-link-active svg {
+  color: var(--accent);
+}
+
+.rail-divider {
+  margin: 0.6rem 0.7rem;
+  height: 1px;
+  background: var(--border);
+}
+
+.rail-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 9px;
+  padding: 0.45rem 0.6rem;
+}
+
+.rail-user:hover {
+  background: var(--surface-2);
+}
+
+.rail-avatar {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: 620;
+  color: var(--text-secondary);
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 3.25rem;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--plane) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.app-topbar-menu {
+  display: flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.app-main {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 1.75rem 1.25rem 4rem;
+}
+
+@media (min-width: 1280px) {
+  .app-main {
+    padding-inline: 2rem;
+  }
+}
+
 /* --- Lesson prose ---------------------------------------------------------- */
 
 .prose-lesson {
@@ -466,7 +632,9 @@
 
 @media (min-width: 1180px) {
   .prose-lesson .arch-figure {
-    width: 840px;
+    /* Wider than the prose measure, still inside the centred reading column. */
+    width: min(840px, 100%);
+    margin-inline: auto;
   }
 }
 

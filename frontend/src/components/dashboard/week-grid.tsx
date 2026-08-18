@@ -118,7 +118,7 @@ function WeekCard({ week }: { week: WeekRow }) {
 
 export function WeekGrid({ weeks }: { weeks: WeekRow[] }) {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {weeks.map((week) => (
         <WeekCard key={week.number} week={week} />
       ))}

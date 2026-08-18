@@ -70,7 +70,7 @@ export default async function LessonPage({
   };
 
   return (
-    <article className="py-4">
+    <article className="mx-auto max-w-4xl py-4">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
