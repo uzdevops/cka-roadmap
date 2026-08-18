@@ -13,6 +13,7 @@ async def list_quizzes(
     session: AsyncSession,
     phase_slug: str | None = None,
     *,
+    track_id: int | None = None,
     published_only: bool = True,
     standalone_only: bool = True,
 ) -> list[Quiz]:
@@ -37,6 +38,8 @@ async def list_quizzes(
         .options(selectinload(Quiz.questions), selectinload(Quiz.phase))
         .order_by(Phase.order_index, Quiz.order_index, Quiz.id)
     )
+    if track_id is not None:
+        stmt = stmt.where(Phase.track_id == track_id)
     if published_only:
         stmt = stmt.where(Quiz.is_published.is_(True))
     if standalone_only:
@@ -101,8 +104,10 @@ async def attempt_counts(session: AsyncSession, user_id: int) -> dict[int, int]:
     return {qid: int(count) for qid, count in (await session.execute(stmt)).all()}
 
 
-async def best_score_per_phase(session: AsyncSession, user_id: int) -> dict[int, float]:
-    """Average of the best score per quiz, grouped by phase."""
+async def best_score_per_phase(
+    session: AsyncSession, user_id: int, track_id: int
+) -> dict[int, float]:
+    """Average of the best score per quiz, grouped by phase, within one track."""
     best = (
         select(
             Quiz.phase_id.label("phase_id"),
@@ -111,7 +116,8 @@ async def best_score_per_phase(session: AsyncSession, user_id: int) -> dict[int,
         )
         .select_from(QuizAttempt)
         .join(Quiz, QuizAttempt.quiz_id == Quiz.id)
-        .where(QuizAttempt.user_id == user_id)
+        .join(Phase, Quiz.phase_id == Phase.id)
+        .where(QuizAttempt.user_id == user_id, Phase.track_id == track_id)
         .group_by(Quiz.phase_id, QuizAttempt.quiz_id)
         .subquery()
     )
@@ -119,8 +125,14 @@ async def best_score_per_phase(session: AsyncSession, user_id: int) -> dict[int,
     return {pid: float(avg) for pid, avg in (await session.execute(stmt)).all()}
 
 
-async def count_quizzes(session: AsyncSession) -> int:
-    stmt = select(func.count(Quiz.id)).where(Quiz.is_published.is_(True))
+async def count_quizzes(session: AsyncSession, track_id: int) -> int:
+    """Reaches its track through the phase - `quizzes` has no track of its own."""
+    stmt = (
+        select(func.count(Quiz.id))
+        .select_from(Quiz)
+        .join(Phase, Quiz.phase_id == Phase.id)
+        .where(Quiz.is_published.is_(True), Phase.track_id == track_id)
+    )
     return int((await session.execute(stmt)).scalar_one())
 
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import CurrentUser, Locale, SessionDep
+from app.deps import CurrentTrack, CurrentUser, Locale, SessionDep
 from app.i18n import tr
 from app.repositories import quiz_repo
 from app.schemas.quiz import (
@@ -40,12 +40,15 @@ def _summary(quiz, best, counts, locked_ids, locale: str) -> QuizSummary:
 
 @router.get("", response_model=list[QuizSummary])
 async def list_quizzes(
-    session: SessionDep, user: CurrentUser, locale: Locale, phase: str | None = None
+    session: SessionDep, track: CurrentTrack, user: CurrentUser, locale: Locale,
+    phase: str | None = None,
 ) -> list[QuizSummary]:
-    quizzes = await quiz_repo.list_quizzes(session, phase_slug=phase)
+    quizzes = await quiz_repo.list_quizzes(
+        session, phase_slug=phase, track_id=track.id
+    )
     best = await quiz_repo.best_scores(session, user.id) if user else {}
     counts = await quiz_repo.attempt_counts(session, user.id) if user else {}
-    locked = await quiz_service.locked_phase_ids(session, user)
+    locked = await quiz_service.locked_phase_ids(session, user, track.id)
     return [_summary(q, best, counts, locked, locale) for q in quizzes]
 
 
@@ -72,7 +75,8 @@ async def my_attempts(
 
 @router.get("/{slug}", response_model=QuizDetail)
 async def get_quiz(
-    slug: str, session: SessionDep, user: CurrentUser, locale: Locale
+    slug: str, session: SessionDep, track: CurrentTrack, user: CurrentUser,
+    locale: Locale,
 ) -> QuizDetail:
     quiz = await quiz_repo.get_quiz_by_slug(session, slug)
     if quiz is None or not quiz.is_published:
@@ -80,7 +84,7 @@ async def get_quiz(
             status_code=status.HTTP_404_NOT_FOUND, detail="Quiz not found"
         )
 
-    locked = await quiz_service.locked_phase_ids(session, user)
+    locked = await quiz_service.locked_phase_ids(session, user, track.id)
     if quiz.phase_id in locked:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -108,15 +112,15 @@ async def get_quiz(
 
 @router.post("/{slug}/submit", response_model=QuizResult)
 async def submit_quiz(
-    slug: str, payload: QuizSubmission, session: SessionDep, user: CurrentUser,
-    locale: Locale,
+    slug: str, payload: QuizSubmission, session: SessionDep, track: CurrentTrack,
+    user: CurrentUser, locale: Locale,
 ) -> QuizResult:
     quiz = await quiz_repo.get_quiz_by_slug(session, slug)
     if quiz is None or not quiz.is_published:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Quiz not found"
         )
-    locked = await quiz_service.locked_phase_ids(session, user)
+    locked = await quiz_service.locked_phase_ids(session, user, track.id)
     if quiz.phase_id in locked:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

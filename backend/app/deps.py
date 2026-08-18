@@ -7,11 +7,12 @@ from typing import Annotated
 import jwt
 from fastapi import Depends, Header, HTTPException, Query, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_session
 from app.i18n import normalize_locale, pick_locale
-from app.models import User, UserRole
+from app.models import Track, User, UserRole
 from app.repositories import user_repo
 from app.security import decode_token
 
@@ -85,6 +86,56 @@ async def get_locale(
 
 
 Locale = Annotated[str, Depends(get_locale)]
+
+
+async def get_track(
+    session: SessionDep,
+    user: CurrentUser,
+    track: Annotated[
+        str | None, Query(description="Track slug, e.g. cka | docker | lfcs")
+    ] = None,
+) -> Track:
+    """Which programme of study this request is about.
+
+    Optional and defaulted on purpose. Making it required would break every
+    route and every existing client in one commit, on a site that redeploys on
+    every push; defaulted, the backend can ship scoped while the deployed
+    frontend still calls the old URLs and keeps working.
+
+    Explicit `?track=` wins, otherwise the lowest-ordered published track.
+
+    It depends on `CurrentUser` so that authentication resolves first: without
+    that, an anonymous request to a content route could be answered by this
+    dependency before the auth check ran, turning a 401 into something else.
+    """
+    if track:
+        found = (
+            await session.execute(
+                select(Track).where(Track.slug == track.strip().lower())
+            )
+        ).scalar_one_or_none()
+        if found is None or not found.is_published:
+            raise HTTPException(status_code=404, detail=f"Unknown track: {track}")
+        return found
+
+    default = (
+        await session.execute(
+            select(Track)
+            .where(Track.is_published.is_(True))
+            .order_by(Track.order_index, Track.id)
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    if default is None:
+        # A database with no tracks at all is a fresh install, not an error.
+        # This sentinel matches no phase, week or lesson, so every scoped query
+        # returns nothing and the endpoints answer with empty lists rather than
+        # failing. It is never persisted.
+        return Track(id=-1, slug="", title="", is_topic=False, is_certificate=False)
+    return default
+
+
+CurrentTrack = Annotated[Track, Depends(get_track)]
 
 
 def client_ip(request: Request) -> str:

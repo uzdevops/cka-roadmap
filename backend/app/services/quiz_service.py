@@ -206,22 +206,31 @@ async def score_submission(
     )
 
 
-async def locked_phase_ids(session: AsyncSession, user: User | None) -> set[int]:
+async def locked_phase_ids(
+    session: AsyncSession, user: User | None, track_id: int
+) -> set[int]:
     """Phase-unlock gate, active only when ENFORCE_PHASE_UNLOCK is on.
 
     A phase is locked until the previous phase's quiz average clears the
     configured minimum score.
+
+    The walk below runs within ONE track. It used to run over every phase in the
+    database through a single counter, and because each track numbers its phases
+    from 1, they interleaved when sorted: passing CKA phase 1 could unlock LFCS
+    phase 2, while a track that sorted later stayed locked forever. Nothing
+    raised - the flag defaults to off, so it would have shipped silently and
+    broken on the day it was turned on.
     """
     from app.repositories import content_repo
 
     if not settings.enforce_phase_unlock:
         return set()
 
-    phases = await content_repo.list_phases(session)
+    phases = await content_repo.list_phases(session, track_id)
     if user is None:
         return {p.id for p in phases if p.order_index > 1}
 
-    averages = await quiz_repo.best_score_per_phase(session, user.id)
+    averages = await quiz_repo.best_score_per_phase(session, user.id, track_id)
     locked: set[int] = set()
     unlocked_through = 1
     for phase in sorted(phases, key=lambda p: p.order_index):

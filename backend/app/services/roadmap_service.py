@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Lesson, Phase, User, Week
+from app.models import Lesson, Phase, Track, User, Week
 from app.i18n import DEFAULT_LOCALE, SUNDAY_REVIEW, tr, weekday
 from app.repositories import content_repo
 from app.schemas.content import (
@@ -74,14 +74,17 @@ def _phase_summary(
 
 
 async def list_phases(
-    session: AsyncSession, user: User | None, locale: str = DEFAULT_LOCALE
+    session: AsyncSession, track: Track, user: User | None,
+    locale: str = DEFAULT_LOCALE,
 ) -> list[PhaseSummary]:
-    phases = await content_repo.list_phases(session)
-    totals = await content_repo.total_lessons_per_phase(session)
+    phases = await content_repo.list_phases(session, track.id)
+    totals = await content_repo.total_lessons_per_phase(session, track.id)
     completed = (
-        await content_repo.completed_lessons_per_phase(session, user.id) if user else {}
+        await content_repo.completed_lessons_per_phase(session, user.id, track.id)
+        if user
+        else {}
     )
-    locked = await quiz_service.locked_phase_ids(session, user)
+    locked = await quiz_service.locked_phase_ids(session, user, track.id)
     return [
         _phase_summary(
             p, totals.get(p.id, 0), completed.get(p.id, 0), p.id in locked, locale
@@ -91,9 +94,10 @@ async def list_phases(
 
 
 async def get_phase(
-    session: AsyncSession, slug: str, user: User | None, locale: str = DEFAULT_LOCALE
+    session: AsyncSession, track: Track, slug: str, user: User | None,
+    locale: str = DEFAULT_LOCALE,
 ) -> PhaseDetail | None:
-    phase = await content_repo.get_phase_by_slug(session, slug)
+    phase = await content_repo.get_phase_by_slug(session, track.id, slug)
     if phase is None:
         return None
 
@@ -104,18 +108,19 @@ async def get_phase(
     ]
     total = sum(w.total_lessons for w in weeks)
     completed = sum(w.completed_lessons for w in weeks)
-    locked = await quiz_service.locked_phase_ids(session, user)
+    locked = await quiz_service.locked_phase_ids(session, user, track.id)
 
     base = _phase_summary(phase, total, completed, phase.id in locked, locale)
     return PhaseDetail(**base.model_dump(), weeks=weeks, quizzes=[], labs=[])
 
 
 async def get_roadmap(
-    session: AsyncSession, user: User | None, locale: str = DEFAULT_LOCALE
+    session: AsyncSession, track: Track, user: User | None,
+    locale: str = DEFAULT_LOCALE,
 ) -> list[PhaseDetail]:
-    phases = await content_repo.get_roadmap(session)
+    phases = await content_repo.get_roadmap(session, track.id)
     done = await content_repo.completed_lesson_ids(session, user.id) if user else set()
-    locked = await quiz_service.locked_phase_ids(session, user)
+    locked = await quiz_service.locked_phase_ids(session, user, track.id)
 
     out: list[PhaseDetail] = []
     for phase in phases:
@@ -131,16 +136,16 @@ async def get_roadmap(
 
 
 async def weekly_schedule(
-    session: AsyncSession, week_number: int, user: User | None,
+    session: AsyncSession, track: Track, week_number: int, user: User | None,
     locale: str = DEFAULT_LOCALE,
 ) -> WeeklySchedule | None:
     """Mon-Fri lessons, Saturday lab day, Sunday review."""
-    week = await content_repo.get_week_by_number(session, week_number)
+    week = await content_repo.get_week_by_number(session, track.id, week_number)
     if week is None:
         return None
 
     done = await content_repo.completed_lesson_ids(session, user.id) if user else set()
-    labs = await content_repo.list_labs(session)
+    labs = await content_repo.list_labs(session, track.id)
     week_labs = [lab for lab in labs if lab.week_id == week.id]
 
     days: list[WeeklyScheduleDay] = []

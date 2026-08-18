@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import CurrentUser, Locale, SessionDep
+from app.deps import CurrentTrack, CurrentUser, Locale, SessionDep
 from app.schemas.content import (
     LabSummary,
     PhaseDetail,
@@ -21,30 +21,31 @@ router = APIRouter(prefix="/roadmap", tags=["roadmap"])
 
 @router.get("/phases", response_model=list[PhaseSummary])
 async def list_phases(
-    session: SessionDep, user: CurrentUser, locale: Locale
+    session: SessionDep, track: CurrentTrack, user: CurrentUser, locale: Locale
 ) -> list[PhaseSummary]:
-    return await roadmap_service.list_phases(session, user, locale)
+    return await roadmap_service.list_phases(session, track, user, locale)
 
 
 @router.get("", response_model=list[PhaseDetail])
 async def full_roadmap(
-    session: SessionDep, user: CurrentUser, locale: Locale
+    session: SessionDep, track: CurrentTrack, user: CurrentUser, locale: Locale
 ) -> list[PhaseDetail]:
     """The whole phase -> week -> lesson tree, with progress when signed in."""
-    return await roadmap_service.get_roadmap(session, user, locale)
+    return await roadmap_service.get_roadmap(session, track, user, locale)
 
 
 @router.get("/phases/{slug}", response_model=PhaseDetail)
 async def get_phase(
-    slug: str, session: SessionDep, user: CurrentUser, locale: Locale
+    slug: str, session: SessionDep, track: CurrentTrack, user: CurrentUser,
+    locale: Locale,
 ) -> PhaseDetail:
-    phase = await roadmap_service.get_phase(session, slug, user, locale)
+    phase = await roadmap_service.get_phase(session, track, slug, user, locale)
     if phase is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Phase not found"
         )
 
-    quizzes = await quiz_repo.list_quizzes(session, phase_slug=slug)
+    quizzes = await quiz_repo.list_quizzes(session, phase_slug=slug, track_id=track.id)
     best = await quiz_repo.best_scores(session, user.id) if user else {}
     counts = await quiz_repo.attempt_counts(session, user.id) if user else {}
     phase.quizzes = [
@@ -65,7 +66,7 @@ async def get_phase(
         for q in quizzes
     ]
 
-    labs = await content_repo.list_labs(session, phase_slug=slug)
+    labs = await content_repo.list_labs(session, track.id, phase_slug=slug)
     lab_status = await content_repo.lab_progress_map(session, user.id) if user else {}
     phase.labs = [
         LabSummary(
@@ -86,9 +87,12 @@ async def get_phase(
 
 @router.get("/weeks/{number}/schedule", response_model=WeeklySchedule)
 async def week_schedule(
-    number: int, session: SessionDep, user: CurrentUser, locale: Locale
+    number: int, session: SessionDep, track: CurrentTrack, user: CurrentUser,
+    locale: Locale,
 ) -> WeeklySchedule:
-    schedule = await roadmap_service.weekly_schedule(session, number, user, locale)
+    schedule = await roadmap_service.weekly_schedule(
+        session, track, number, user, locale
+    )
     if schedule is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Week not found"

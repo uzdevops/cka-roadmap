@@ -8,7 +8,15 @@ from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import LabProgress, LessonProgress, StudyActivity
+from app.models import (
+    Lab,
+    LabProgress,
+    Lesson,
+    LessonProgress,
+    Phase,
+    StudyActivity,
+    Week,
+)
 
 
 async def set_lesson_completed(
@@ -79,16 +87,38 @@ async def activity_days(session: AsyncSession, user_id: int) -> list[date]:
     return list((await session.execute(stmt)).scalars().all())
 
 
-async def count_completed_lessons(session: AsyncSession, user_id: int) -> int:
-    stmt = select(func.count(LessonProgress.id)).where(
-        LessonProgress.user_id == user_id, LessonProgress.completed.is_(True)
+async def count_completed_lessons(
+    session: AsyncSession, user_id: int, track_id: int
+) -> int:
+    """Joined through week, so a lesson finished in another track is not counted
+    against this track's total - which would push completion over 100%."""
+    stmt = (
+        select(func.count(LessonProgress.id))
+        .select_from(LessonProgress)
+        .join(Lesson, LessonProgress.lesson_id == Lesson.id)
+        .join(Week, Lesson.week_id == Week.id)
+        .where(
+            LessonProgress.user_id == user_id,
+            LessonProgress.completed.is_(True),
+            Week.track_id == track_id,
+        )
     )
     return int((await session.execute(stmt)).scalar_one())
 
 
-async def count_completed_labs(session: AsyncSession, user_id: int) -> int:
-    stmt = select(func.count(LabProgress.id)).where(
-        LabProgress.user_id == user_id, LabProgress.status == "completed"
+async def count_completed_labs(
+    session: AsyncSession, user_id: int, track_id: int
+) -> int:
+    stmt = (
+        select(func.count(LabProgress.id))
+        .select_from(LabProgress)
+        .join(Lab, LabProgress.lab_id == Lab.id)
+        .join(Phase, Lab.phase_id == Phase.id)
+        .where(
+            LabProgress.user_id == user_id,
+            LabProgress.status == "completed",
+            Phase.track_id == track_id,
+        )
     )
     return int((await session.execute(stmt)).scalar_one())
 

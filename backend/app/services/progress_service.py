@@ -7,7 +7,7 @@ from datetime import UTC, date, timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.i18n import DEFAULT_LOCALE, tr, verdict as verdict_for
-from app.models import User
+from app.models import Track, User
 from app.repositories import content_repo, progress_repo, quiz_repo
 from app.schemas.progress import (
     DashboardResponse,
@@ -59,7 +59,10 @@ def compute_streaks(days: list[date], today: date | None = None) -> StreakInfo:
 def compute_readiness(
     phases: list[PhaseProgress], locale: str = DEFAULT_LOCALE
 ) -> ExamReadiness:
-    """Quiz averages weighted by the CKA domain percentages.
+    """Quiz averages weighted by the exam domain percentages of ONE track.
+
+    The scoping lives in the caller: this weights whatever phase list it is
+    given, so it is only correct while that list belongs to a single track.
 
     Phases with no exam weight (Foundations, Mock Exams) are excluded from the
     weighting; a domain with no attempt yet contributes 0 but still counts
@@ -111,12 +114,19 @@ def compute_readiness(
 
 
 async def build_dashboard(
-    session: AsyncSession, user: User, locale: str = DEFAULT_LOCALE
+    session: AsyncSession, track: Track, user: User, locale: str = DEFAULT_LOCALE
 ) -> DashboardResponse:
-    phases = await content_repo.list_phases(session)
-    totals = await content_repo.total_lessons_per_phase(session)
-    completed = await content_repo.completed_lessons_per_phase(session, user.id)
-    phase_quiz_avg = await quiz_repo.best_score_per_phase(session, user.id)
+    # Every count below is per track. Unscoped, `compute_readiness` divides one
+    # track's earned weight by every track's total weight, and somebody who has
+    # finished the CKA reads about 17% ready - with no error anywhere.
+    phases = await content_repo.list_phases(session, track.id)
+    totals = await content_repo.total_lessons_per_phase(session, track.id)
+    completed = await content_repo.completed_lessons_per_phase(
+        session, user.id, track.id
+    )
+    phase_quiz_avg = await quiz_repo.best_score_per_phase(
+        session, user.id, track.id
+    )
 
     phase_progress: list[PhaseProgress] = []
     for phase in phases:
@@ -137,11 +147,15 @@ async def build_dashboard(
             )
         )
 
-    total_lessons = await content_repo.count_lessons(session)
-    completed_lessons = await progress_repo.count_completed_lessons(session, user.id)
-    total_labs = await content_repo.count_labs(session)
-    completed_labs = await progress_repo.count_completed_labs(session, user.id)
-    total_quizzes = await quiz_repo.count_quizzes(session)
+    total_lessons = await content_repo.count_lessons(session, track.id)
+    completed_lessons = await progress_repo.count_completed_lessons(
+        session, user.id, track.id
+    )
+    total_labs = await content_repo.count_labs(session, track.id)
+    completed_labs = await progress_repo.count_completed_labs(
+        session, user.id, track.id
+    )
+    total_quizzes = await quiz_repo.count_quizzes(session, track.id)
 
     attempts = await quiz_repo.list_attempts(session, user.id, limit=30)
     best = await quiz_repo.best_scores(session, user.id)
