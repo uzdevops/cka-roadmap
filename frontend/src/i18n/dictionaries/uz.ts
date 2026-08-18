@@ -334,6 +334,8 @@ export const uz: Dictionary = {
     completing: 'Kirish yakunlanmoqda…',
     adminOnly: 'Faqat administratorlar uchun',
     adminOnlyBody: 'Bu bo’lim admin hisobini talab qiladi. Siz {email} sifatida kirgansiz.',
+    identifier: 'Foydalanuvchi nomi yoki email',
+    identifierPlaceholder: 'admin',
   },
 
   profile: {

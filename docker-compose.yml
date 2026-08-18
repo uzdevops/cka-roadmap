@@ -69,15 +69,26 @@ services:
       SEED_ON_START: ${SEED_ON_START:-true}
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
       # --- demo accounts ---
+      # These defaults MUST match backend/app/config.py - a value set here wins
+      # over the one in Settings, so a mismatch silently ignores the Python
+      # default. tests/test_config_defaults.py fails if they drift.
       DEMO_STUDENT_EMAIL: ${DEMO_STUDENT_EMAIL:-student@demo.local}
+      DEMO_STUDENT_USERNAME: ${DEMO_STUDENT_USERNAME:-student}
       DEMO_STUDENT_PASSWORD: ${DEMO_STUDENT_PASSWORD:-DemoPass123!}
       DEMO_ADMIN_EMAIL: ${DEMO_ADMIN_EMAIL:-admin@demo.local}
-      DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:-AdminPass123!}
+      DEMO_ADMIN_USERNAME: ${DEMO_ADMIN_USERNAME:-admin}
+      DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:-123}
     networks: [k8s]
     ports:
       # Behind a reverse proxy, set BACKEND_BIND=127.0.0.1 so only nginx on the
       # same host can reach it.
       - "${BACKEND_BIND:-0.0.0.0}:${BACKEND_PORT:-8000}:8000"
+    volumes:
+      # Read-only, and only so tests/test_config_defaults.py can compare the
+      # env defaults here against the ones in config.py. Without it that test
+      # skips silently inside the container, which is where tests are run.
+      - ./docker-compose.yml:/repo/docker-compose.yml:ro
+
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
       interval: 10s

@@ -68,7 +68,7 @@ async def login(
     payload: UserLogin,
     session: SessionDep,
 ) -> TokenPair:
-    user = await auth_service.authenticate(session, payload.email, payload.password)
+    user = await auth_service.authenticate(session, payload.identifier, payload.password)
     return auth_service.issue_tokens(user)
 
 

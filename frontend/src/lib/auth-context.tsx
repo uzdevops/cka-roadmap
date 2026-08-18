@@ -78,11 +78,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const login = useCallback(
-    async (email: string, password: string) => {
+    async (identifier: string, password: string) => {
+      // Username or email - the API accepts either under this key.
       const tokens = await apiFetch<TokenPair>('/auth/login', {
         method: 'POST',
         auth: false,
-        body: { email, password },
+        body: { identifier, password },
       });
       await applyTokens(tokens);
     },

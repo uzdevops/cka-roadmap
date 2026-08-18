@@ -28,6 +28,11 @@ class User(Base, TimestampMixin):
     email: Mapped[str] = mapped_column(
         String(320), unique=True, index=True, nullable=False
     )
+    # A second way to sign in. Unique but nullable: an OAuth account has no
+    # username until someone gives it one, and NULLs do not collide.
+    username: Mapped[str | None] = mapped_column(
+        String(64), unique=True, index=True, nullable=True
+    )
     hashed_password: Mapped[str | None] = mapped_column(String(255), nullable=True)
     full_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     role: Mapped[str] = mapped_column(

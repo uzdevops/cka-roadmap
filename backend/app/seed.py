@@ -21,7 +21,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
@@ -539,27 +539,41 @@ async def seed_users(session: AsyncSession, counter: Counter) -> None:
     demo_users = [
         (
             settings.demo_student_email,
+            settings.demo_student_username,
             settings.demo_student_password,
             "Demo Student",
             UserRole.STUDENT.value,
         ),
         (
             settings.demo_admin_email,
+            settings.demo_admin_username,
             settings.demo_admin_password,
             "Demo Admin",
             UserRole.ADMIN.value,
         ),
     ]
 
-    for email, password, name, role in demo_users:
+    for email, username, password, name, role in demo_users:
         existing = (
-            await session.execute(select(User).where(User.email == email))
+            await session.execute(
+                select(User).where(
+                    or_(User.email == email, User.username == username)
+                )
+            )
         ).scalar_one_or_none()
         if existing is not None:
+            # Backfill the username onto an account seeded before usernames
+            # existed, so `admin` starts working without a wipe. The password is
+            # never touched - resetting it on every container start would undo
+            # any change the owner made from the profile page.
+            if existing.username is None:
+                existing.username = username
+                counter.update("user usernames")
             continue
         session.add(
             User(
                 email=email,
+                username=username,
                 hashed_password=hash_password(password),
                 full_name=name,
                 role=role,

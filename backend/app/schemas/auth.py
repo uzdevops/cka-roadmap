@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import AliasChoices, BaseModel, ConfigDict, EmailStr, Field
 
 
 class UserRegister(BaseModel):
@@ -14,7 +14,19 @@ class UserRegister(BaseModel):
 
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    """Sign-in payload.
+
+    The field is an identifier, not an email: `admin` is a valid value. It is
+    still accepted under the key "email" so existing clients keep working - this
+    used to be an EmailStr, which rejected a bare username with a 422 before the
+    request ever reached the lookup.
+    """
+
+    identifier: str = Field(
+        min_length=1,
+        max_length=320,
+        validation_alias=AliasChoices("identifier", "username", "email"),
+    )
     password: str
 
 
@@ -33,6 +45,7 @@ class UserRead(BaseModel):
 
     id: int
     email: EmailStr
+    username: str | None = None
     full_name: str | None = None
     role: str
     is_active: bool

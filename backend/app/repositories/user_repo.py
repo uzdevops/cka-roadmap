@@ -17,6 +17,22 @@ async def get_by_email(session: AsyncSession, email: str) -> User | None:
     return (await session.execute(stmt)).scalar_one_or_none()
 
 
+async def get_by_username(session: AsyncSession, username: str) -> User | None:
+    stmt = select(User).where(func.lower(User.username) == username.strip().lower())
+    return (await session.execute(stmt)).scalar_one_or_none()
+
+
+async def get_by_identifier(session: AsyncSession, identifier: str) -> User | None:
+    """Whatever the sign-in form was given: a username or an email.
+
+    An "@" is not a reliable test - a username column could hold one - so both
+    lookups are tried, username first because that is the shorter namespace.
+    """
+    return await get_by_username(session, identifier) or await get_by_email(
+        session, identifier
+    )
+
+
 async def get_by_oauth(
     session: AsyncSession, provider: str, subject: str
 ) -> User | None:
@@ -30,6 +46,7 @@ async def create(
     session: AsyncSession,
     *,
     email: str,
+    username: str | None = None,
     hashed_password: str | None = None,
     full_name: str | None = None,
     role: str = UserRole.STUDENT.value,
@@ -39,6 +56,7 @@ async def create(
 ) -> User:
     user = User(
         email=email.strip().lower(),
+        username=username.strip().lower() if username else None,
         hashed_password=hashed_password,
         full_name=full_name,
         role=role,

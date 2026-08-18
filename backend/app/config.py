@@ -7,8 +7,12 @@ from __future__ import annotations
 
 from functools import lru_cache
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+# The password a fresh checkout starts with. Referenced by the guard below.
+_DEV_ADMIN_PASSWORD = "123"
 
 
 class Settings(BaseSettings):
@@ -60,9 +64,35 @@ class Settings(BaseSettings):
     # --- Seed ------------------------------------------------------------
     seed_on_start: bool = True
     demo_student_email: str = "student@demo.local"
+    demo_student_username: str = "student"
     demo_student_password: str = "DemoPass123!"
     demo_admin_email: str = "admin@demo.local"
-    demo_admin_password: str = "AdminPass123!"
+    demo_admin_username: str = "admin"
+    # Deliberately trivial so a fresh checkout is usable immediately: sign in as
+    # admin / 123 and change it from the profile page. `_reject_default_admin_password`
+    # below refuses to boot with this value in production.
+    demo_admin_password: str = _DEV_ADMIN_PASSWORD
+
+    @model_validator(mode="after")
+    def _reject_default_admin_password(self) -> "Settings":
+        """A trivial admin password is for a laptop, not for the internet.
+
+        The default exists so a fresh checkout is usable straight away. Shipping
+        it to a public deployment would leave an admin account open to anyone
+        who read this file, so production has to set its own - unless it does
+        not seed the demo accounts at all, in which case the value is unused.
+        """
+        if (
+            self.environment.strip().lower() == "production"
+            and self.seed_on_start
+            and self.demo_admin_password == _DEV_ADMIN_PASSWORD
+        ):
+            raise ValueError(
+                "DEMO_ADMIN_PASSWORD is still the development default "
+                f"({_DEV_ADMIN_PASSWORD!r}). Set a real one in .env, or set "
+                "SEED_ON_START=false if this deployment does not want demo accounts."
+            )
+        return self
 
     @field_validator("database_url", mode="before")
     @classmethod

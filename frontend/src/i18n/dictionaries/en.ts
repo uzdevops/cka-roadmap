@@ -331,6 +331,8 @@ export const en = {
     completing: 'Completing sign in…',
     adminOnly: 'Administrators only',
     adminOnlyBody: 'This area needs an admin account. Signed in as {email}.',
+    identifier: 'Username or email',
+    identifierPlaceholder: 'admin',
   },
 
   profile: {

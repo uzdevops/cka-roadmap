@@ -27,7 +27,7 @@ function LoginForm() {
   const { login, config } = useAuth();
   const { t, href } = useI18n();
 
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -39,7 +39,7 @@ function LoginForm() {
     setBusy(true);
     setError(null);
     try {
-      await login(email, password);
+      await login(identifier, password);
       router.push(next);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.auth.signInFailed);
@@ -70,16 +70,18 @@ function LoginForm() {
 
         <form className="mt-5" onSubmit={submit} noValidate>
           <div className="mb-4">
-            <Label htmlFor="email">{t.auth.email}</Label>
+            <Label htmlFor="identifier">{t.auth.identifier}</Label>
+            {/* Not type="email": the admin signs in as `admin`, and the browser
+                would refuse to submit that against an email input. */}
             <Input
-              id="email"
-              type="email"
-              autoComplete="email"
+              id="identifier"
+              type="text"
+              autoComplete="username"
               required
               className="font-mono"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              placeholder={t.auth.identifierPlaceholder}
             />
           </div>
 

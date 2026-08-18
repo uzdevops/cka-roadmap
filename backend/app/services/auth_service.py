@@ -50,8 +50,9 @@ async def register(session: AsyncSession, payload: UserRegister) -> User:
     return user
 
 
-async def authenticate(session: AsyncSession, email: str, password: str) -> User:
-    user = await user_repo.get_by_email(session, email)
+async def authenticate(session: AsyncSession, identifier: str, password: str) -> User:
+    """`identifier` is whatever was typed into the sign-in form - username or email."""
+    user = await user_repo.get_by_identifier(session, identifier)
     if user is None or not verify_password(password, user.hashed_password):
         raise INVALID_CREDENTIALS
     if not user.is_active:
