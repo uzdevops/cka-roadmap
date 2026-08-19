@@ -144,6 +144,11 @@ services:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       ENVIRONMENT: ${ENVIRONMENT:-development}
+      # Not mirrored from .env on purpose: the DEMO_* seed variables are not
+      # passed to this container, so with seeding nominally on, a production
+      # Settings() sees the dev-default admin password and refuses to start.
+      # The backend owns the seed; this process must say it wants no part of it.
+      SEED_ON_START: "false"
       SECRET_KEY: ${SECRET_KEY:-dev-secret-change-me-in-production-0123456789abcdef}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME:-}
