@@ -6,6 +6,7 @@ import { Suspense, useState } from 'react';
 import { BrandMark } from '@/components/brand-mark';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { FieldError, Input, Label } from '@/components/ui/field';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useI18n } from '@/i18n/provider';
 import { BROWSER_API_URL } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
@@ -92,9 +93,8 @@ function LoginForm() {
             <Label htmlFor="password">{t.auth.password}</Label>
             {/* "new-password" rather than "off": the one value password
                 managers actually honour as "do not offer saved logins here". */}
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               autoComplete="new-password"
               required
               className="font-mono"

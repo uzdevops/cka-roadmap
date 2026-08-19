@@ -8,6 +8,7 @@ import { BrandMark } from '@/components/brand-mark';
 import { NavIcon } from '@/components/nav-icons';
 import { Button } from '@/components/ui/button';
 import { FieldError, Input, Label } from '@/components/ui/field';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useI18n } from '@/i18n/provider';
 import { useAuth } from '@/lib/auth-context';
 
@@ -99,9 +100,8 @@ function AdminLoginForm() {
             <Label htmlFor="password">{t.auth.password}</Label>
             {/* "new-password" rather than "off": the one value password
                 managers actually honour as "do not offer saved logins here". */}
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               autoComplete="new-password"
               required
               className="font-mono"

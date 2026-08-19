@@ -409,6 +409,8 @@ export const uz: Dictionary = {
     adminSignInSubtitle:
       'Boshqaruv uchun kirish. Talaba hisoblari talabalar saytidan kiradi.',
     studentSignIn: 'Talabalar uchun kirish',
+    showPassword: 'Parolni ko’rsatish',
+    hidePassword: 'Parolni yashirish',
   },
 
   profile: {

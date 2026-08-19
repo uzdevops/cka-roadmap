@@ -405,6 +405,8 @@ export const en = {
     identifier: 'Username',
     adminSignInSubtitle: 'Management sign-in. Student accounts belong on the student site.',
     studentSignIn: 'Student sign-in',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
   },
 
   profile: {
