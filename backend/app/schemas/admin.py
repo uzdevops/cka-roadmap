@@ -217,9 +217,11 @@ class AdminUserRead(BaseModel):
     full_name: str | None
     role: str
     is_active: bool
-    # The two checkboxes, and the name their combination is shown under.
+    # The two checkboxes, the optional per-track allowlist, and the name the
+    # combination is shown under.
     access_topics: bool = True
     access_certificates: bool = True
+    access_tracks: list[str] | None = None
     role_label: str = ""
     created_at: datetime
     last_active: date | None = None
@@ -245,6 +247,9 @@ class AdminUserCreate(BaseModel):
     # categories overlap. Both default on, which is "Full Student".
     access_topics: bool = True
     access_certificates: bool = True
+    # The finer grain: exactly these tracks and nothing else. None (the
+    # default) leaves the categories in charge.
+    access_tracks: list[str] | None = None
 
 
 class AdminUserUpdate(BaseModel):
@@ -256,5 +261,9 @@ class AdminUserUpdate(BaseModel):
     is_active: bool | None = None
     access_topics: bool | None = None
     access_certificates: bool | None = None
+    # None is a real value here - "clear the allowlist, let the categories
+    # decide" - so the router tells it apart from an omitted key with
+    # model_fields_set rather than by comparing against the default.
+    access_tracks: list[str] | None = None
     # Registration is closed, so resetting a forgotten password is an admin job.
     password: str | None = Field(default=None, min_length=8, max_length=128)

@@ -435,6 +435,10 @@ export interface AdminUser {
   full_name: string | null;
   role: Role;
   is_active: boolean;
+  /** Explicit allowlist of track slugs; null means the category grants decide. */
+  access_tracks: string[] | null;
+  /** What the grant combination is called - "Full Student", "Custom Access", ... */
+  role_label: string;
   created_at: string;
   last_active: string | null;
   completed_lessons: number;
@@ -452,4 +456,8 @@ export interface AdminUserCreate {
   password: string;
   full_name?: string | null;
   role?: Role;
+  access_topics?: boolean;
+  access_certificates?: boolean;
+  /** Exactly these tracks; null/omitted leaves the categories in charge. */
+  access_tracks?: string[] | null;
 }

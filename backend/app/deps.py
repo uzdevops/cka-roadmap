@@ -92,12 +92,17 @@ Locale = Annotated[str, Depends(get_locale)]
 def _visible_to(user: User):
     """SQL half of `User.may_see_track` - kept next to it so the two cannot drift.
 
-    An admin has no restriction; a student sees a track when either of its
-    categories is granted, which is what makes a dual-nature track like CKA
-    visible to both kinds of student.
+    An admin has no restriction. An explicit allowlist names exactly what it
+    names. Otherwise a student sees a track when either of its categories is
+    granted, which is what makes a dual-nature track like CKA visible to both
+    kinds of student.
     """
     if user.role == UserRole.ADMIN.value:
         return sa_true()
+    if user.access_tracks is not None:
+        if not user.access_tracks:
+            return sa_false()
+        return Track.slug.in_(user.access_tracks)
     clauses = []
     if user.access_topics:
         clauses.append(Track.is_topic.is_(True))
@@ -122,7 +127,7 @@ async def resolve_track(session: AsyncSession, user: User, slug: str) -> Track:
     if found is None or not found.is_published:
         raise HTTPException(status_code=404, detail=f"Unknown track: {slug}")
     if not user.may_see_track(
-        is_topic=found.is_topic, is_certificate=found.is_certificate
+        slug=found.slug, is_topic=found.is_topic, is_certificate=found.is_certificate
     ):
         # 403, not 404: the track exists and nothing about it is secret, so
         # pretending otherwise only confuses the user.

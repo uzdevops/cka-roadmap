@@ -52,6 +52,7 @@ class UserRead(BaseModel):
     # label is derived on the model, never stored.
     access_topics: bool = True
     access_certificates: bool = True
+    access_tracks: list[str] | None = None
     role_label: str = ""
     # The exam date moved to TrackEnrollment - one column could only ever
     # describe one exam, and a person studying two tracks needs two dates.

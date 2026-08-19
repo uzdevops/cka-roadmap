@@ -355,6 +355,7 @@ def _admin_user_read(
         is_active=user.is_active,
         access_topics=user.access_topics,
         access_certificates=user.access_certificates,
+        access_tracks=user.access_tracks,
         role_label=user.role_label,
         created_at=user.created_at,
         last_active=s.get("last_active"),
@@ -453,6 +454,28 @@ async def list_users(session: SessionDep) -> list[AdminUserRead]:
     return out
 
 
+async def _checked_track_access(
+    session: SessionDep, tracks: list[str] | None
+) -> list[str] | None:
+    """Normalise an allowlist and refuse slugs that name no track.
+
+    Silently storing an unknown slug would grant nothing while looking like it
+    granted something - the admin finds out when the student calls. An empty
+    list is legal: "no tracks" is a decision, not a mistake.
+    """
+    if tracks is None:
+        return None
+    slugs = list(dict.fromkeys(s.strip().lower() for s in tracks if s.strip()))
+    known = set((await session.execute(select(Track.slug))).scalars())
+    unknown = sorted(set(slugs) - known)
+    if unknown:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unknown tracks: {', '.join(unknown)}",
+        )
+    return slugs
+
+
 @router.post("/users", response_model=AdminUserRead, status_code=status.HTTP_201_CREATED)
 async def create_user(payload: AdminUserCreate, session: SessionDep) -> AdminUserRead:
     existing = await user_repo.get_by_email(session, payload.email)
@@ -469,6 +492,7 @@ async def create_user(payload: AdminUserCreate, session: SessionDep) -> AdminUse
             status_code=status.HTTP_409_CONFLICT,
             detail="A user with that username already exists",
         )
+    access_tracks = await _checked_track_access(session, payload.access_tracks)
 
     user = await user_repo.create(
         session,
@@ -480,6 +504,7 @@ async def create_user(payload: AdminUserCreate, session: SessionDep) -> AdminUse
     )
     user.access_topics = payload.access_topics
     user.access_certificates = payload.access_certificates
+    user.access_tracks = access_tracks
     await session.commit()
     await session.refresh(user)
 
@@ -532,6 +557,10 @@ async def update_user(
         user.access_topics = payload.access_topics
     if payload.access_certificates is not None:
         user.access_certificates = payload.access_certificates
+    # None is a real value ("clear the allowlist"), so presence of the key is
+    # what distinguishes it from "leave it alone".
+    if "access_tracks" in payload.model_fields_set:
+        user.access_tracks = await _checked_track_access(session, payload.access_tracks)
     if payload.password is not None:
         user.hashed_password = hash_password(payload.password)
 

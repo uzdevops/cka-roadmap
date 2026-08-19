@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING
 
 from sqlalchemy import BigInteger, Boolean, DateTime, Integer, String
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base, TimestampMixin
@@ -50,6 +51,13 @@ class User(Base, TimestampMixin):
         Boolean, default=True, nullable=False
     )
 
+    # The finer grain: an explicit allowlist of track slugs, or NULL. NULL means
+    # the two category grants above decide, exactly as before this column
+    # existed; a list means THOSE tracks and nothing else, categories ignored.
+    # JSONB rather than an association table because the list is tiny, is read
+    # on every content request, and is never queried from the track side.
+    access_tracks: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
+
     # Profile / study plan. The exam date used to live here as a single column,
     # which could only ever describe one exam - it is per track now, on
     # TrackEnrollment. The daily budget stays: it is about the person, not the
@@ -87,6 +95,8 @@ class User(Base, TimestampMixin):
         """What the UI calls this combination of grants."""
         if self.is_admin:
             return "Administrator"
+        if self.access_tracks is not None:
+            return "Custom Access" if self.access_tracks else "No access"
         if self.access_topics and self.access_certificates:
             return "Full Student"
         if self.access_certificates:
@@ -95,12 +105,15 @@ class User(Base, TimestampMixin):
             return "DevOps Student"
         return "No access"
 
-    def may_see_track(self, *, is_topic: bool, is_certificate: bool) -> bool:
-        """An admin sees everything; a student sees a track if EITHER of its
-        categories is granted - which is what lets a dual-nature track like CKA
-        show up for both kinds of student."""
+    def may_see_track(self, *, slug: str, is_topic: bool, is_certificate: bool) -> bool:
+        """An admin sees everything. A student with an explicit allowlist sees
+        exactly what it names. Otherwise the categories decide: a track is
+        visible if EITHER of its categories is granted, which is what lets a
+        dual-nature track like CKA show up for both kinds of student."""
         if self.is_admin:
             return True
+        if self.access_tracks is not None:
+            return slug in self.access_tracks
         return bool(
             (is_topic and self.access_topics)
             or (is_certificate and self.access_certificates)
