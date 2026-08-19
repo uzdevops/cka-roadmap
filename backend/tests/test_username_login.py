@@ -1,9 +1,10 @@
-"""Signing in with `admin`, not only with `admin@somewhere`.
+"""Signing in with `admin` - and only with `admin`.
 
-The sign-in field used to be an `EmailStr`, so a bare username was rejected with
-a 422 before the request ever reached the password check. It now takes either,
-under any of three keys, so older clients that post `{"email": ...}` keep
-working.
+The sign-in field used to be an `EmailStr`, then took either a username or an
+email. Email sign-in was removed on purpose: the username is the login name,
+the address is contact information. The legacy keys are still accepted so an
+old client posting `{"email": ...}` gets an honest 401 for the value rather
+than a 422 for the key.
 """
 
 from __future__ import annotations
@@ -49,21 +50,23 @@ async def test_username_is_accepted_under_every_key(
     assert response.json()["access_token"]
 
 
-async def test_email_still_works(client: AsyncClient, person: User) -> None:
+async def test_email_is_no_longer_a_login_name(
+    client: AsyncClient, person: User
+) -> None:
+    """The address on the account must not open it - only the username does."""
     response = await client.post(
         f"{API}/auth/login",
         json={"identifier": "someone@example.com", "password": PASSWORD},
     )
+    assert response.status_code == 401, response.text
+
+
+async def test_username_is_case_insensitive(client: AsyncClient, person: User) -> None:
+    """Typing it in caps must still match."""
+    response = await client.post(
+        f"{API}/auth/login", json={"identifier": "SOMEONE", "password": PASSWORD}
+    )
     assert response.status_code == 200, response.text
-
-
-async def test_identifier_is_case_insensitive(client: AsyncClient, person: User) -> None:
-    """The row was stored with mixed case; typing it in caps must still match."""
-    for value in ("SOMEONE", "Someone@Example.com"):
-        response = await client.post(
-            f"{API}/auth/login", json={"identifier": value, "password": PASSWORD}
-        )
-        assert response.status_code == 200, f"{value}: {response.text}"
 
 
 async def test_a_username_that_does_not_exist_is_401_not_422(

@@ -166,7 +166,7 @@ async def test_perfect_submission_scores_100(
     client: AsyncClient, session, student_user
 ) -> None:
     _, ids = await _build_quiz(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     resp = await client.post(
         f"{API}/quizzes/scoring-quiz/submit",
@@ -193,7 +193,7 @@ async def test_partial_submission_is_weighted_by_points(
     client: AsyncClient, session, student_user
 ) -> None:
     _, ids = await _build_quiz(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     resp = await client.post(
         f"{API}/quizzes/scoring-quiz/submit",
@@ -218,7 +218,7 @@ async def test_unanswered_questions_count_as_wrong(
     client: AsyncClient, session, student_user
 ) -> None:
     _, ids = await _build_quiz(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     resp = await client.post(
         f"{API}/quizzes/scoring-quiz/submit",
@@ -245,7 +245,7 @@ async def test_attempt_is_recorded_and_listed(
     client: AsyncClient, session, student_user
 ) -> None:
     _, ids = await _build_quiz(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     await client.post(
         f"{API}/quizzes/scoring-quiz/submit",

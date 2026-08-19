@@ -2,7 +2,8 @@
 
 Self-registration is closed, so these endpoints are the only way an account is
 created - which also makes them the only place the "do not lock yourself out"
-rules can live.
+rules can live. Sign-in is by username, so creation demands one: an account
+without a username would be an account nobody can sign in to.
 """
 
 from __future__ import annotations
@@ -47,12 +48,14 @@ async def test_create_list_and_delete_a_user(
 
     created = await admin_client.post(
         f"{API}/admin/users",
-        json={"email": "New@Example.com", "password": "LearnerPass1!",
-              "full_name": "New Learner", "role": "student"},
+        json={"email": "New@Example.com", "username": "NewLearner",
+              "password": "LearnerPass1!", "full_name": "New Learner",
+              "role": "student"},
     )
     assert created.status_code == 201, created.text
     body = created.json()
     assert body["email"] == "new@example.com"  # normalised
+    assert body["username"] == "newlearner"  # normalised
     assert body["role"] == "student"
     assert body["total_lessons"] == 1
     user_id = body["id"]
@@ -73,14 +76,35 @@ async def test_create_list_and_delete_a_user(
 
 
 async def test_duplicate_email_is_rejected(admin_client: AsyncClient) -> None:
-    payload = {"email": "dupe@example.com", "password": "LearnerPass1!"}
+    payload = {"email": "dupe@example.com", "username": "dupe1",
+               "password": "LearnerPass1!"}
     assert (await admin_client.post(f"{API}/admin/users", json=payload)).status_code == 201
+    payload["username"] = "dupe2"
     assert (await admin_client.post(f"{API}/admin/users", json=payload)).status_code == 409
+
+
+async def test_duplicate_username_is_rejected(admin_client: AsyncClient) -> None:
+    """Case included: `Dupe` and `dupe` would collide at sign-in."""
+    payload = {"email": "one@example.com", "username": "dupe",
+               "password": "LearnerPass1!"}
+    assert (await admin_client.post(f"{API}/admin/users", json=payload)).status_code == 201
+    payload = {"email": "two@example.com", "username": "Dupe",
+               "password": "LearnerPass1!"}
+    assert (await admin_client.post(f"{API}/admin/users", json=payload)).status_code == 409
+
+
+async def test_username_is_required(admin_client: AsyncClient) -> None:
+    resp = await admin_client.post(
+        f"{API}/admin/users",
+        json={"email": "nameless@example.com", "password": "LearnerPass1!"},
+    )
+    assert resp.status_code == 422
 
 
 async def test_short_password_is_rejected(admin_client: AsyncClient) -> None:
     resp = await admin_client.post(
-        f"{API}/admin/users", json={"email": "short@example.com", "password": "abc"}
+        f"{API}/admin/users",
+        json={"email": "short@example.com", "username": "short", "password": "abc"},
     )
     assert resp.status_code == 422
 
@@ -90,11 +114,12 @@ async def test_created_user_can_sign_in(
 ) -> None:
     await admin_client.post(
         f"{API}/admin/users",
-        json={"email": "signin@example.com", "password": "LearnerPass1!"},
+        json={"email": "signin@example.com", "username": "signin",
+              "password": "LearnerPass1!"},
     )
     resp = await client.post(
         f"{API}/auth/login",
-        json={"email": "signin@example.com", "password": "LearnerPass1!"},
+        json={"identifier": "signin", "password": "LearnerPass1!"},
     )
     assert resp.status_code == 200
     assert resp.json()["access_token"]
@@ -123,7 +148,8 @@ async def test_password_reset_takes_effect(
 ) -> None:
     created = await admin_client.post(
         f"{API}/admin/users",
-        json={"email": "reset@example.com", "password": "OldPassword1!"},
+        json={"email": "reset@example.com", "username": "reset",
+              "password": "OldPassword1!"},
     )
     user_id = created.json()["id"]
 
@@ -135,12 +161,12 @@ async def test_password_reset_takes_effect(
 
     old = await client.post(
         f"{API}/auth/login",
-        json={"email": "reset@example.com", "password": "OldPassword1!"},
+        json={"identifier": "reset", "password": "OldPassword1!"},
     )
     assert old.status_code == 401
     new = await client.post(
         f"{API}/auth/login",
-        json={"email": "reset@example.com", "password": "BrandNewPass1!"},
+        json={"identifier": "reset", "password": "BrandNewPass1!"},
     )
     assert new.status_code == 200
 
@@ -150,14 +176,15 @@ async def test_deactivated_user_cannot_sign_in(
 ) -> None:
     created = await admin_client.post(
         f"{API}/admin/users",
-        json={"email": "off@example.com", "password": "LearnerPass1!"},
+        json={"email": "off@example.com", "username": "off",
+              "password": "LearnerPass1!"},
     )
     user_id = created.json()["id"]
     await admin_client.patch(f"{API}/admin/users/{user_id}", json={"is_active": False})
 
     resp = await client.post(
         f"{API}/auth/login",
-        json={"email": "off@example.com", "password": "LearnerPass1!"},
+        json={"identifier": "off", "password": "LearnerPass1!"},
     )
     # 403, not 401: the credentials were correct, the account is switched off.
     assert resp.status_code == 403

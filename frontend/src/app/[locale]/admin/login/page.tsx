@@ -78,34 +78,35 @@ function AdminLoginForm() {
           <span aria-hidden className="auth-rule" />
         </div>
 
-        <form className="mt-5" onSubmit={submit} noValidate>
+        {/* autoComplete off, and no placeholder: the field suggests nothing.
+            The browser's stored-credential dropdown and its autofill tint were
+            being read as the site hinting at an account name. */}
+        <form className="mt-5" onSubmit={submit} noValidate autoComplete="off">
           <div className="mb-4">
             <Label htmlFor="identifier">{t.auth.identifier}</Label>
-            {/* Not type="email": the admin signs in as `admin`, and the browser
-                would refuse to submit that against an email input. */}
             <Input
               id="identifier"
               type="text"
-              autoComplete="username"
+              autoComplete="off"
               required
               className="font-mono"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder={t.auth.identifierPlaceholder}
             />
           </div>
 
           <div className="mb-2">
             <Label htmlFor="password">{t.auth.password}</Label>
+            {/* "new-password" rather than "off": the one value password
+                managers actually honour as "do not offer saved logins here". */}
             <Input
               id="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               required
               className="font-mono"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
             />
           </div>
 

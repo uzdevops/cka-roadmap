@@ -166,7 +166,7 @@ async def test_marking_a_lesson_complete_updates_progress(
     client: AsyncClient, session, student_user
 ) -> None:
     await _seed_lessons(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     resp = await client.post(
         f"{API}/lessons/lesson-one/complete", headers=auth_header(token)
@@ -186,7 +186,7 @@ async def test_completion_is_idempotent(
     client: AsyncClient, session, student_user
 ) -> None:
     await _seed_lessons(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     for _ in range(3):
         await client.post(f"{API}/lessons/lesson-one/complete", headers=auth_header(token))
@@ -199,7 +199,7 @@ async def test_completion_can_be_undone(
     client: AsyncClient, session, student_user
 ) -> None:
     await _seed_lessons(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     await client.post(f"{API}/lessons/lesson-one/complete", headers=auth_header(token))
     resp = await client.delete(
@@ -238,7 +238,7 @@ async def test_dashboard_reports_totals(
     client: AsyncClient, session, student_user
 ) -> None:
     await _seed_lessons(session)
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
     await client.post(f"{API}/lessons/lesson-one/complete", headers=auth_header(token))
 
     resp = await client.get(f"{API}/progress/dashboard", headers=auth_header(token))

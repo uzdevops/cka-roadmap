@@ -115,6 +115,7 @@ async def client(session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
 async def admin_user(session: AsyncSession) -> User:
     user = User(
         email="admin@test.local",
+        username="admin",
         hashed_password=hash_password("AdminPass123!"),
         full_name="Test Admin",
         role=UserRole.ADMIN.value,
@@ -129,6 +130,7 @@ async def admin_user(session: AsyncSession) -> User:
 async def student_user(session: AsyncSession) -> User:
     user = User(
         email="student@test.local",
+        username="student",
         hashed_password=hash_password("StudentPass123!"),
         full_name="Test Student",
         role=UserRole.STUDENT.value,
@@ -149,7 +151,7 @@ async def student_client(
     tests that only care about *what* an endpoint returns use this and leave the
     bare `client` to the tests that are specifically about being anonymous.
     """
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
     transport = ASGITransport(app=app)
     async with AsyncClient(
         transport=transport, base_url="http://test", headers=auth_header(token)
@@ -161,7 +163,7 @@ async def student_client(
 async def admin_client(
     client: AsyncClient, admin_user: User
 ) -> AsyncGenerator[AsyncClient, None]:
-    token = await login(client, "admin@test.local", "AdminPass123!")
+    token = await login(client, "admin", "AdminPass123!")
     transport = ASGITransport(app=app)
     async with AsyncClient(
         transport=transport, base_url="http://test", headers=auth_header(token)
@@ -173,10 +175,10 @@ def auth_header(token: str) -> dict[str, str]:
     return {"Authorization": f"Bearer {token}"}
 
 
-async def login(client: AsyncClient, email: str, password: str) -> str:
+async def login(client: AsyncClient, username: str, password: str) -> str:
     resp = await client.post(
         f"{settings.api_v1_prefix}/auth/login",
-        json={"email": email, "password": password},
+        json={"identifier": username, "password": password},
     )
     assert resp.status_code == 200, resp.text
     return resp.json()["access_token"]

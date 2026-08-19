@@ -19,7 +19,7 @@ from app.security import (
 
 INVALID_CREDENTIALS = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
-    detail="Incorrect email or password",
+    detail="Incorrect username or password",
     headers={"WWW-Authenticate": "Bearer"},
 )
 
@@ -51,8 +51,9 @@ async def register(session: AsyncSession, payload: UserRegister) -> User:
 
 
 async def authenticate(session: AsyncSession, identifier: str, password: str) -> User:
-    """`identifier` is whatever was typed into the sign-in form - username or email."""
-    user = await user_repo.get_by_identifier(session, identifier)
+    """`identifier` is a username. Email sign-in was removed on purpose: one
+    account, one login name, and the email stays what it is - an address."""
+    user = await user_repo.get_by_username(session, identifier)
     if user is None or not verify_password(password, user.hashed_password):
         raise INVALID_CREDENTIALS
     if not user.is_active:

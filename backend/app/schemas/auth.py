@@ -16,10 +16,9 @@ class UserRegister(BaseModel):
 class UserLogin(BaseModel):
     """Sign-in payload.
 
-    The field is an identifier, not an email: `admin` is a valid value. It is
-    still accepted under the key "email" so existing clients keep working - this
-    used to be an EmailStr, which rejected a bare username with a 422 before the
-    request ever reached the lookup.
+    The value is a username - email sign-in was removed, the address is contact
+    information rather than a login name. The legacy keys are still accepted so
+    an old client gets a 401 for a wrong value instead of a 422 for the key.
     """
 
     identifier: str = Field(

@@ -405,8 +405,7 @@ export const uz: Dictionary = {
     completing: 'Kirish yakunlanmoqda…',
     adminOnly: 'Faqat administratorlar uchun',
     adminOnlyBody: 'Bu bo’lim admin hisobini talab qiladi. Siz {email} sifatida kirgansiz.',
-    identifier: 'Foydalanuvchi nomi yoki email',
-    identifierPlaceholder: 'admin',
+    identifier: 'Foydalanuvchi nomi',
     adminSignInSubtitle:
       'Boshqaruv uchun kirish. Talaba hisoblari talabalar saytidan kiradi.',
     studentSignIn: 'Talabalar uchun kirish',

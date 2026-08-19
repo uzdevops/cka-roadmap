@@ -31,7 +31,7 @@ async def test_auth_config_advertises_that_registration_is_off(
 
 
 async def test_login_and_fetch_profile(client: AsyncClient, student_user) -> None:
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     resp = await client.get(f"{API}/auth/me", headers=auth_header(token))
     assert resp.status_code == 200
@@ -43,7 +43,7 @@ async def test_login_and_fetch_profile(client: AsyncClient, student_user) -> Non
 async def test_login_with_wrong_password_is_401(client: AsyncClient, student_user) -> None:
     resp = await client.post(
         f"{API}/auth/login",
-        json={"email": "student@test.local", "password": "definitely-wrong"},
+        json={"identifier": "student", "password": "definitely-wrong"},
     )
     assert resp.status_code == 401
 
@@ -57,7 +57,7 @@ async def test_me_requires_authentication(client: AsyncClient) -> None:
 async def test_refresh_issues_new_access_token(client: AsyncClient, student_user) -> None:
     login_resp = await client.post(
         f"{API}/auth/login",
-        json={"email": "student@test.local", "password": "StudentPass123!"},
+        json={"identifier": "student", "password": "StudentPass123!"},
     )
     refresh_token = login_resp.json()["refresh_token"]
 
@@ -68,13 +68,13 @@ async def test_refresh_issues_new_access_token(client: AsyncClient, student_user
 
 async def test_access_token_is_rejected_by_refresh(client: AsyncClient, student_user) -> None:
     """A refresh endpoint that accepts access tokens defeats the split."""
-    access = await login(client, "student@test.local", "StudentPass123!")
+    access = await login(client, "student", "StudentPass123!")
     resp = await client.post(f"{API}/auth/refresh", json={"refresh_token": access})
     assert resp.status_code == 401
 
 
 async def test_profile_update_persists(client: AsyncClient, student_user) -> None:
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
     resp = await client.patch(
         f"{API}/auth/me",
         headers=auth_header(token),
@@ -96,7 +96,7 @@ async def test_the_profile_no_longer_carries_an_exam_date(
     through PATCH /tracks/{slug}/enrollment now, and the daily study budget
     stays on the account because that is about the person, not the track.
     """
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
 
     resp = await client.get(f"{API}/auth/me", headers=auth_header(token))
     assert resp.status_code == 200
@@ -115,13 +115,13 @@ async def test_the_profile_no_longer_carries_an_exam_date(
 
 
 async def test_admin_endpoints_reject_students(client: AsyncClient, student_user) -> None:
-    token = await login(client, "student@test.local", "StudentPass123!")
+    token = await login(client, "student", "StudentPass123!")
     resp = await client.get(f"{API}/admin/stats", headers=auth_header(token))
     assert resp.status_code == 403
 
 
 async def test_admin_endpoints_accept_admins(client: AsyncClient, admin_user) -> None:
-    token = await login(client, "admin@test.local", "AdminPass123!")
+    token = await login(client, "admin", "AdminPass123!")
     resp = await client.get(f"{API}/admin/stats", headers=auth_header(token))
     assert resp.status_code == 200
     assert resp.json()["admins"] >= 1

@@ -461,11 +461,19 @@ async def create_user(payload: AdminUserCreate, session: SessionDep) -> AdminUse
             status_code=status.HTTP_409_CONFLICT,
             detail="A user with that email already exists",
         )
+    # Stored lowercased (as update_user does), so the unique index cannot be
+    # sidestepped by case and the case-insensitive sign-in lookup stays 1:1.
+    username = payload.username.strip().lower()
+    if await user_repo.get_by_username(session, username) is not None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A user with that username already exists",
+        )
 
     user = await user_repo.create(
         session,
         email=payload.email,
-        username=payload.username,
+        username=username,
         hashed_password=hash_password(payload.password),
         full_name=payload.full_name,
         role=payload.role,
@@ -512,7 +520,14 @@ async def update_user(
     if payload.is_active is not None:
         user.is_active = payload.is_active
     if payload.username is not None:
-        user.username = payload.username.strip().lower()
+        username = payload.username.strip().lower()
+        other = await user_repo.get_by_username(session, username)
+        if other is not None and other.id != user.id:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="A user with that username already exists",
+            )
+        user.username = username
     if payload.access_topics is not None:
         user.access_topics = payload.access_topics
     if payload.access_certificates is not None:

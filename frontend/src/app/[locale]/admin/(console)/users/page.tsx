@@ -26,6 +26,7 @@ export default function AdminUsersPage() {
   const [busy, setBusy] = useState(false);
 
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [role, setRole] = useState<Role>('student');
@@ -58,10 +59,11 @@ export default function AdminUsersPage() {
     try {
       await apiFetch<AdminUser>('/admin/users', {
         method: 'POST',
-        body: { email, password, full_name: fullName || null, role },
+        body: { email, username, password, full_name: fullName || null, role },
       });
-      setCreated(email);
+      setCreated(username);
       setEmail('');
+      setUsername('');
       setPassword('');
       setFullName('');
       setRole('student');
@@ -159,6 +161,20 @@ export default function AdminUsersPage() {
         <CardContent>
           <form onSubmit={create} className="grid gap-4 sm:grid-cols-2">
             <div>
+              {/* First, because it is the login name - the email is contact
+                  information and cannot be signed in with. */}
+              <Label htmlFor="new-username">{t.auth.identifier}</Label>
+              <Input
+                id="new-username"
+                required
+                maxLength={64}
+                className="font-mono"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div>
               <Label htmlFor="new-email">{t.auth.email}</Label>
               <Input
                 id="new-email"
@@ -247,10 +263,14 @@ export default function AdminUsersPage() {
                   return (
                     <tr key={u.id} className="border-b border-line">
                       <td className="py-2 pr-3">
-                        <span className="text-ink">{u.full_name || u.email}</span>
-                        {u.full_name && (
-                          <span className="block text-xs text-ink-muted">{u.email}</span>
-                        )}
+                        <span className="text-ink">{u.full_name || u.username || u.email}</span>
+                        {/* The login name and the address, both: the first is
+                            what they sign in with, the second is who they are. */}
+                        <span className="block text-xs text-ink-muted">
+                          {u.username && <code className="font-mono">{u.username}</code>}
+                          {u.username && ' · '}
+                          {u.email}
+                        </span>
                       </td>
                       <td className="py-2 pr-3">
                         <Badge variant={u.role === 'admin' ? 'accent' : 'neutral'}>

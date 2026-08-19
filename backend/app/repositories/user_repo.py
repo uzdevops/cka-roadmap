@@ -22,17 +22,6 @@ async def get_by_username(session: AsyncSession, username: str) -> User | None:
     return (await session.execute(stmt)).scalar_one_or_none()
 
 
-async def get_by_identifier(session: AsyncSession, identifier: str) -> User | None:
-    """Whatever the sign-in form was given: a username or an email.
-
-    An "@" is not a reliable test - a username column could hold one - so both
-    lookups are tried, username first because that is the shorter namespace.
-    """
-    return await get_by_username(session, identifier) or await get_by_email(
-        session, identifier
-    )
-
-
 async def get_by_oauth(
     session: AsyncSession, provider: str, subject: str
 ) -> User | None:

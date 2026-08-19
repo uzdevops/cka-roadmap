@@ -431,6 +431,7 @@ export interface StructurePhase {
 export interface AdminUser {
   id: number;
   email: string;
+  username: string | null;
   full_name: string | null;
   role: Role;
   is_active: boolean;
@@ -447,6 +448,7 @@ export interface AdminUser {
 
 export interface AdminUserCreate {
   email: string;
+  username: string;
   password: string;
   full_name?: string | null;
   role?: Role;

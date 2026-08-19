@@ -235,7 +235,9 @@ class AdminUserRead(BaseModel):
 
 class AdminUserCreate(BaseModel):
     email: EmailStr
-    username: str | None = Field(default=None, min_length=1, max_length=64)
+    # Required: the username is the login name now, so an account created
+    # without one would be an account nobody can sign in to.
+    username: str = Field(min_length=1, max_length=64)
     password: str = Field(min_length=8, max_length=128)
     full_name: str | None = Field(default=None, max_length=255)
     role: Literal["student", "admin"] = "student"
