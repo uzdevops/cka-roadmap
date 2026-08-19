@@ -17,7 +17,7 @@ import {
 } from '@/tracks/config';
 
 /** Reachable without an account. Everything else needs one. */
-const PUBLIC_PATHS = ['/login', '/auth/callback'];
+const PUBLIC_PATHS = ['/login', '/admin/login', '/auth/callback'];
 
 function stripLocalePrefix(pathname: string): string {
   for (const locale of LOCALES) {
@@ -83,7 +83,10 @@ export function middleware(request: NextRequest) {
 
   if (!signedIn && !isPublic) {
     const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/login`;
+    // Each surface has its own door: a signed-out visit to the console is
+    // sent to the console's sign-in, not the student one.
+    const door = bare === '/admin' || bare.startsWith('/admin/') ? '/admin/login' : '/login';
+    url.pathname = `/${locale}${door}`;
     // So the login page can bounce them back where they were headed. The
     // locale-stripped path - which still carries the track, so they return to
     // the right one.
@@ -91,10 +94,18 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Signed in and standing on the login page: nothing to do there.
+  // Signed in and standing on a login page: nothing to do there. Each door
+  // forwards to its own surface; whether the account may actually enter the
+  // console is the guard's question, which owns the refusal screen.
   if (signedIn && withoutTrack === '/login') {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}/${track}/dashboard`;
+    url.search = '';
+    return NextResponse.redirect(url);
+  }
+  if (signedIn && withoutTrack === '/admin/login') {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}/admin`;
     url.search = '';
     return NextResponse.redirect(url);
   }
