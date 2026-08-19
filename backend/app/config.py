@@ -89,7 +89,11 @@ class Settings(BaseSettings):
     enforce_phase_unlock: bool = False
     # A track is opened by pressing Start, which is what gives the countdown a
     # day one. Off, every track behaves as it did before enrollments existed.
-    enforce_track_start: bool = True
+    # Off until the frontend has a Start screen. The 0009 backfill gives an
+    # enrolment to anyone with progress, but a newly created account has
+    # none, and with the gate on it could reach no content and have no way
+    # to fix that. Turn it on once there is a button to press.
+    enforce_track_start: bool = False
     # Fallback length for a track whose phases declare no week range and which
     # has no weeks yet - an empty track still needs a target date to show.
     track_default_weeks: int = 20
