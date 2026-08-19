@@ -107,6 +107,13 @@ export function trackPath(path: string, locale: string, track: TrackSlug): strin
   if (isTracklessPath(clean)) {
     return clean === '/' ? `/${locale}` : `/${locale}${clean}`;
   }
+  // A path that already names its track only needs the locale. The login
+  // page's `next` is exactly such a path - the middleware keeps the track in
+  // it so a sign-in returns to the right programme - and prepending the ACTIVE
+  // track on top of it is how /uz/cka/cka/dashboard happened.
+  if (isTrack(clean.split('/')[1])) {
+    return `/${locale}${clean}`;
+  }
   return clean === '/' ? `/${locale}/${track}` : `/${locale}/${track}${clean}`;
 }
 
