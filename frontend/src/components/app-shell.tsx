@@ -81,7 +81,9 @@ function Rail({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="flex h-full flex-col">
-      <Link href={href('/')} onClick={onNavigate} className="rail-brand">
+      {/* The lockup goes home - and home is the dashboard, not the track root,
+          so the click lands on a page rather than on a redirect. */}
+      <Link href={href('/dashboard')} onClick={onNavigate} className="rail-brand">
         {/* The tile keeps its gradient and its `--accent-ink` colour; the mark
             inside it is drawn in currentColor, so both themes are already
             handled by the tokens .rail-mark sets. */}
