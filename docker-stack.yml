@@ -155,6 +155,10 @@ services:
     # than a capacity choice.
     image: ${BACKEND_IMAGE:-cka-prep-backend:latest}
     command: ["python", "-m", "app.bot"]
+    # The backend image ships a /healthz HEALTHCHECK, but this process serves
+    # no HTTP - inheriting it reports a perfectly working bot as unhealthy.
+    healthcheck:
+      disable: true
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-cka}
       POSTGRES_PASSWORD_FILE: /run/secrets/cka_postgres_password

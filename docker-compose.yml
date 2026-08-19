@@ -137,6 +137,10 @@ services:
     # we want: the backend owns those, and two processes racing on them is the
     # failure this avoids.
     command: ["python", "-m", "app.bot"]
+    # The backend image ships a /healthz HEALTHCHECK, but this process serves
+    # no HTTP - inheriting it reports a perfectly working bot as unhealthy.
+    healthcheck:
+      disable: true
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-cka}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cka_password}
