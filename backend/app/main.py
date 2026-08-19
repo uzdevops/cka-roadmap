@@ -14,7 +14,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from app.config import settings
 from app.db import engine
 from app.rate_limit import limiter
-from app.routers import admin, auth, health, labs, lessons, progress, quizzes, roadmap, tracks
+from app.routers import admin, auth, health, labs, lessons, progress, quizzes, roadmap, telegram, tracks
 
 logging.basicConfig(
     level=logging.DEBUG if settings.debug else logging.INFO,
@@ -85,6 +85,7 @@ app.add_middleware(
 app.include_router(health.router)
 
 app.include_router(tracks.router, prefix=settings.api_v1_prefix)
+app.include_router(telegram.router, prefix=settings.api_v1_prefix)
 
 api = settings.api_v1_prefix
 app.include_router(auth.router, prefix=api)

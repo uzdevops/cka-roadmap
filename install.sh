@@ -25,6 +25,7 @@ ENV_TEMPLATE=".env.production.example"
 
 SECRET_KEY_NAME="cka_secret_key"
 POSTGRES_PASSWORD_NAME="cka_postgres_password"
+TELEGRAM_TOKEN_NAME="cka_telegram_token"
 
 WAIT_SECONDS="${WAIT_SECONDS:-300}"
 APPLY_FIREWALL=false
@@ -156,12 +157,22 @@ ensure_secret() {
         info "${name} exists - left as is."
         return 0
     fi
+    # printf, not echo: a value must not gain a trailing newline it did not
+    # have, and echo's handling of backslashes is shell-dependent.
     printf '%s' "$value" | docker secret create "$name" - >/dev/null
     info "${name} created."
 }
 
 ensure_secret "$SECRET_KEY_NAME" "$SECRET_KEY"
 ensure_secret "$POSTGRES_PASSWORD_NAME" "$POSTGRES_PASSWORD"
+
+# Always created, even when empty. docker-stack.yml declares it `external`, so a
+# missing secret fails the whole deploy - and the bot is meant to be optional.
+# An empty value is read as "no bot": the service says so and exits 0.
+ensure_secret "$TELEGRAM_TOKEN_NAME" "${TELEGRAM_BOT_TOKEN:-}"
+if [ -z "${TELEGRAM_BOT_TOKEN:-}" ]; then
+    info "No TELEGRAM_BOT_TOKEN in ${ENV_FILE} - the bot will stay disabled."
+fi
 
 # --- 5. Images ---------------------------------------------------------------
 

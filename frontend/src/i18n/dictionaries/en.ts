@@ -60,6 +60,25 @@ export const en = {
     restart: 'Restart from today',
   },
 
+  telegram: {
+    label: 'Telegram reminder',
+    optional: 'optional',
+    offer: 'Connect the bot and it will nudge you at the end of the day if the lessons you planned are still unfinished. Everything on the site works the same without it.',
+    offerShort: 'Get a nudge at 20:30 if the day\u2019s lessons are still open. Optional.',
+    connect: 'Connect Telegram',
+    openTelegram: 'Open Telegram',
+    scan: 'or scan on your phone',
+    expiresIn: 'This link works for another {time}',
+    expired: 'This link has expired.',
+    newLink: 'New link',
+    connected: 'Connected',
+    connectedAs: 'Connected as @{username}',
+    connectedNoName: 'Connected to a Telegram chat.',
+    disconnect: 'Disconnect',
+    later: 'Later',
+    failed: 'Something went wrong. Try again.',
+  },
+
   common: {
     loading: 'Loading…',
     saving: 'Saving…',
@@ -388,7 +407,7 @@ export const en = {
 
   profile: {
     heading: 'Profile',
-    intro: 'Your target exam date drives the countdown on the dashboard.',
+    intro: 'Your account, your language, and how you want to be reminded. Target dates belong to each track and are set from its dashboard.',
     account: 'Account',
     email: 'Email',
     role: 'Role',

@@ -62,6 +62,25 @@ export const uz: Dictionary = {
     restart: 'Bugundan qayta boshlash',
   },
 
+  telegram: {
+    label: 'Telegram eslatmasi',
+    optional: 'ixtiyoriy',
+    offer: 'Botni ulasangiz, kun oxirida rejalashtirilgan darslar bajarilmagan bo\u2019lsa eslatib turadi. Usiz ham saytdagi hamma narsa avvalgidek ishlaydi.',
+    offerShort: 'Kun darslari ochiq qolsa, 20:30 da eslatma keladi. Ixtiyoriy.',
+    connect: 'Telegram\u2019ni ulash',
+    openTelegram: 'Telegram\u2019ni ochish',
+    scan: 'yoki telefoningizda skanerlang',
+    expiresIn: 'Bu havola yana {time} ishlaydi',
+    expired: 'Havola muddati tugadi.',
+    newLink: 'Yangi havola',
+    connected: 'Ulangan',
+    connectedAs: '@{username} sifatida ulangan',
+    connectedNoName: 'Telegram chatiga ulangan.',
+    disconnect: 'Uzish',
+    later: 'Keyinroq',
+    failed: 'Xatolik yuz berdi. Qayta urinib ko\u2019ring.',
+  },
+
   common: {
     loading: 'Yuklanmoqda…',
     saving: 'Saqlanmoqda…',
@@ -391,7 +410,7 @@ export const uz: Dictionary = {
 
   profile: {
     heading: 'Profil',
-    intro: 'Maqsadli imtihon sanasi paneldagi hisoblagichni boshqaradi.',
+    intro: 'Hisobingiz, tilingiz va eslatmalarni qanday olishingiz. Maqsad sanalari har bir yo\u2019nalishga tegishli va o\u2019sha yo\u2019nalish panelidan belgilanadi.',
     account: 'Hisob',
     email: 'Email',
     role: 'Rol',

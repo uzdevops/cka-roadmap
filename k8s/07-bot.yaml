@@ -1,0 +1,65 @@
+# The Telegram bot.
+#
+# Same image as the backend - it is the same codebase, run with a different
+# command, so the models and settings cannot drift apart.
+#
+# replicas: 1 is a CORRECTNESS constraint, not a capacity one. The bot uses long
+# polling, and two pollers sharing one token fight over every update until
+# Telegram rejects one of them. `Recreate` for the same reason: a rolling update
+# would briefly run two.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cka-bot
+  namespace: cka-prep
+  labels:
+    app.kubernetes.io/name: cka-prep
+    app.kubernetes.io/component: bot
+spec:
+  # Zero by default, because a Deployment has no "do not restart" option: with
+  # no token the process exits 0 and kubelet restarts it until it is declared
+  # CrashLoopBackOff. Set the token in the Secret, then:
+  #
+  #     kubectl -n cka-prep scale deployment/cka-bot --replicas=1
+  #
+  # One replica, never more - see the note above about long polling.
+  replicas: 0
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: bot
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cka-prep
+        app.kubernetes.io/component: bot
+    spec:
+      containers:
+        - name: bot
+          image: cka-prep-backend:latest
+          imagePullPolicy: IfNotPresent
+          # A command means entrypoint.sh skips migrations and the seed. The
+          # migration Job owns those; a second process running them is the race
+          # this avoids.
+          command: ["python", "-m", "app.bot"]
+          envFrom:
+            - configMapRef:
+                name: cka-config
+            - secretRef:
+                name: cka-secrets
+          env:
+            # Belt and braces: the entrypoint already skips both when handed a
+            # command, and saying so here means a reader does not have to know
+            # that to be sure.
+            - name: RUN_MIGRATIONS
+              value: "false"
+            - name: SEED_ON_START
+              value: "false"
+          resources:
+            requests:
+              memory: 96Mi
+              cpu: 25m
+            limits:
+              memory: 384Mi
+              cpu: 250m

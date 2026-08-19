@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import enum
+from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Integer, String
+from sqlalchemy import BigInteger, Boolean, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base, TimestampMixin
@@ -54,6 +55,21 @@ class User(Base, TimestampMixin):
     # TrackEnrollment. The daily budget stays: it is about the person, not the
     # track, and somebody studying two tracks still has one evening.
     daily_study_minutes: Mapped[int] = mapped_column(Integer, default=60, nullable=False)
+
+    # Telegram linkage. `telegram_chat_id` is UNIQUE: one Telegram account
+    # belongs to one web account, or a reminder about somebody else's progress
+    # could be delivered to the wrong person.
+    telegram_chat_id: Mapped[int | None] = mapped_column(
+        BigInteger, unique=True, index=True, nullable=True
+    )
+    telegram_username: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    telegram_linked_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
+    @property
+    def telegram_linked(self) -> bool:
+        return self.telegram_chat_id is not None
 
     # OAuth linkage (nullable: password accounts never populate these)
     oauth_provider: Mapped[str | None] = mapped_column(String(32), nullable=True)

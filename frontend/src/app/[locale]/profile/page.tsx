@@ -5,6 +5,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { AuthGuard } from '@/components/auth-guard';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { Badge } from '@/components/ui/badge';
+import { ConnectPanel } from '@/components/telegram/connect-panel';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { FieldError, Input, Label } from '@/components/ui/field';
@@ -131,6 +132,10 @@ function ProfileView() {
         <h1 className="text-[28px] font-bold tracking-[-0.02em] text-ink">{t.profile.heading}</h1>
         <p className="mt-2 max-w-xl text-ink-secondary">{t.profile.intro}</p>
       </header>
+
+      <section className="mt-8">
+        <ConnectPanel />
+      </section>
 
       <section className="mt-8">
         <h2 className="tech-label">{t.profile.account}</h2>

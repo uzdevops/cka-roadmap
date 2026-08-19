@@ -73,6 +73,10 @@ services:
       # ENFORCE_PHASE_UNLOCK above.
       ENFORCE_TRACK_START: ${ENFORCE_TRACK_START:-true}
       TRACK_DEFAULT_WEEKS: ${TRACK_DEFAULT_WEEKS:-20}
+      # --- Telegram (optional; empty token disables the bot) ---
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME:-}
+      LINK_TOKEN_TTL_MINUTES: ${LINK_TOKEN_TTL_MINUTES:-15}
       SEED_ON_START: ${SEED_ON_START:-true}
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
       # --- demo accounts ---
@@ -110,6 +114,39 @@ services:
       # uvicorn does not bind until migrations and the seed have finished, so
       # this has to cover the slowest of those, not just process start.
       start_period: 120s
+
+  bot:
+    # The SAME image as the backend - see backend/app/bot/__init__.py. A second
+    # Dockerfile would mean two definitions of the models and settings.
+    image: ${BACKEND_IMAGE:-cka-prep-backend:latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cka-bot
+    # on-failure, NOT unless-stopped: with no token configured the bot logs why
+    # and exits 0, and `unless-stopped` restarts a container whatever its exit
+    # code - which turns "the bot is switched off" into a restart loop.
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+    # A command means entrypoint.sh skips migrations and the seed, which is what
+    # we want: the backend owns those, and two processes racing on them is the
+    # failure this avoids.
+    command: ["python", "-m", "app.bot"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cka}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cka_password}
+      POSTGRES_DB: ${POSTGRES_DB:-cka_prep}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-change-me-in-production-0123456789abcdef}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME:-}
+      LINK_TOKEN_TTL_MINUTES: ${LINK_TOKEN_TTL_MINUTES:-15}
+      TRACK_DEFAULT_WEEKS: ${TRACK_DEFAULT_WEEKS:-20}
+    networks: [k8s]
 
   frontend:
     build:

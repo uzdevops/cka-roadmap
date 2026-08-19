@@ -220,6 +220,33 @@ completion idempotence) and localisation (locale negotiation, per-field English
 fallback, and that translating a quiz never changes which answers are correct). They run against a dedicated `cka_prep_test` database
 on the same server, so your development data is never touched.
 
+## Telegram reminders (optional)
+
+A bot can nudge you at the end of the day when the lessons you planned are still
+unfinished. It is entirely optional: leave `TELEGRAM_BOT_TOKEN` empty and the
+service logs why, exits cleanly, and the site hides every mention of it.
+
+```bash
+# 1. Talk to @BotFather on Telegram: /newbot
+# 2. Put both values in .env - the username WITHOUT the leading @
+TELEGRAM_BOT_TOKEN=123456:AA...
+TELEGRAM_BOT_USERNAME=your_bot
+# 3. docker compose up -d
+```
+
+Linking is done by deep link rather than by copying a code: your profile page
+hands out a one-time button (and a QR for a second device) that opens Telegram
+with `/start <token>` already typed. The token lasts fifteen minutes and works
+once.
+
+The bot runs from the **backend image** with a different command, so the models,
+settings and database session are the ones the API already uses. It uses long
+polling, which means **exactly one instance** may run - two pollers sharing a
+token fight over every update. That is why every deployment file pins it to one
+replica.
+
+Commands: `/today`, `/status`, `/help`, `/stop`.
+
 ## Installing on a server (Docker Swarm)
 
 `docker compose up` stays the way to run this locally. For a server there is a

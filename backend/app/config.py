@@ -103,6 +103,18 @@ class Settings(BaseSettings):
     auth_rate_limit: str = "20/minute"
     rate_limit_enabled: bool = True
 
+    # --- Telegram (entirely optional) ------------------------------------
+    #
+    # Empty token means no bot: the service exits cleanly instead of
+    # crash-looping, /auth/config reports it as disabled, and the UI hides
+    # everything about it. Nothing else in the platform depends on it.
+    telegram_bot_token: str = ""
+    # The @name, without the @ - only used to build the t.me deep link.
+    telegram_bot_username: str = ""
+    # A link token is single-use and short-lived; fifteen minutes is long enough
+    # to switch to a phone and short enough that a forwarded link is dead.
+    link_token_ttl_minutes: int = 15
+
     # --- Seed ------------------------------------------------------------
     seed_on_start: bool = True
     demo_student_email: str = "student@demo.local"
@@ -163,6 +175,11 @@ class Settings(BaseSettings):
         if url.startswith("postgresql://"):
             url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
         return url
+
+    @property
+    def telegram_enabled(self) -> bool:
+        """Both halves are needed: a token to talk, a username to be found."""
+        return bool(self.telegram_bot_token and self.telegram_bot_username)
 
     @property
     def google_oauth_enabled(self) -> bool:

@@ -15,7 +15,27 @@ migration Job, probes, an HPA, a PDB, an Ingress and a NetworkPolicy.
 | `04-backend.yaml` | Deployment, ClusterIP Service, PodDisruptionBudget, HPA |
 | `05-frontend.yaml` | Deployment, ClusterIP Service, PodDisruptionBudget |
 | `06-ingress.yaml` | Ingress (path split) + NetworkPolicy for the database |
+| `07-bot.yaml` | Telegram bot Deployment - **`replicas: 0` by default**, see below |
 | `kustomization.yaml` | Applies everything in order and pins image tags |
+
+### The bot ships switched off
+
+`07-bot.yaml` starts at zero replicas on purpose. The bot is optional: with
+no `TELEGRAM_BOT_TOKEN` it logs why and exits 0, and a Deployment has no
+"do not restart" option - kubelet would restart it until it landed in
+CrashLoopBackOff. Put the token in the Secret, then:
+
+```bash
+kubectl -n cka-prep scale deployment/cka-bot --replicas=1
+```
+
+**One replica, never more.** It uses long polling, and two processes sharing
+one token compete for every update until Telegram rejects one of them. That
+is also why its strategy is `Recreate` rather than a rolling update.
+
+It runs the backend image with a different command, so it needs no build of
+its own - and `RUN_MIGRATIONS=false` / `SEED_ON_START=false` keep it out of
+the migration Job's way.
 
 ## Deploying to a local cluster
 

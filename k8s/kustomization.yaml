@@ -11,6 +11,7 @@ resources:
   - 04-backend.yaml
   - 05-frontend.yaml
   - 06-ingress.yaml
+  - 07-bot.yaml
 
 # `labels` rather than the deprecated `commonLabels`: these land on metadata
 # only, never on spec.selector, which is immutable once a Deployment exists.

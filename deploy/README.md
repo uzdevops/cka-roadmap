@@ -261,6 +261,34 @@ hence `--resolve-image never` on the deploy. A second node would need a registry
 (or `docker save`/`docker load` onto each node) and the tags in
 `docker-stack.yml` pointed at it.
 
+## The Telegram bot
+
+Optional. Without `TELEGRAM_BOT_TOKEN` the service logs why it is disabled and
+exits 0 - which is why its restart policy is `on-failure` and not `any`: a
+policy that restarts on ANY exit turns "switched off" into a restart loop.
+
+Under Swarm the token is a Docker secret (`cka_telegram_token`), created by
+install.sh from `.env`. A Swarm secret is immutable, so adding a token later is
+a rotation rather than an edit:
+
+```bash
+docker service rm cka_bot                 # frees the secret
+docker secret rm cka_telegram_token
+# put TELEGRAM_BOT_TOKEN in .env, then
+./install.sh
+```
+
+On Kubernetes the Deployment ships with `replicas: 0` for the same reason - a
+Deployment has no "do not restart" option, so a bot with no token would sit in
+CrashLoopBackOff. Put the token in the Secret, then scale it up:
+
+```bash
+kubectl -n cka-prep scale deployment/cka-bot --replicas=1
+```
+
+**Never more than one replica.** Long polling means two processes on one token
+compete for every update and Telegram rejects one of them.
+
 ## Automatic deploys
 
 Two units in [systemd/](systemd/), driving two scripts in [bin/](bin/). The

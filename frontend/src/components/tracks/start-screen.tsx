@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { ConnectPanel } from '@/components/telegram/connect-panel';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/provider';
 import { startTrack } from '@/lib/tracks-api';
@@ -96,6 +97,14 @@ export function StartScreen({
         )}
 
         <p className="start-note">{t.start.note}</p>
+
+        {/* Offered at the moment somebody commits to a schedule, which is when
+            a daily nudge is worth having. Renders nothing when no bot is
+            configured, and skipping it costs nothing - the panel is on the
+            profile page permanently. */}
+        <div className="start-telegram">
+          <ConnectPanel compact />
+        </div>
       </section>
     </div>
   );

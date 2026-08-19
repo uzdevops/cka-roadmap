@@ -41,6 +41,7 @@ async def auth_config() -> AuthConfig:
         google_oauth_enabled=settings.google_oauth_enabled,
         registration_enabled=False,
         phase_unlock_enforced=settings.enforce_phase_unlock,
+        telegram_enabled=settings.telegram_enabled,
         locales=list(SUPPORTED_LOCALES),
         default_locale=DEFAULT_LOCALE,
     )

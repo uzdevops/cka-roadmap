@@ -88,6 +88,10 @@ services:
       # who already had progress, so nobody is locked out by turning this on.
       ENFORCE_TRACK_START: ${ENFORCE_TRACK_START:-true}
       TRACK_DEFAULT_WEEKS: ${TRACK_DEFAULT_WEEKS:-20}
+      # --- Telegram (optional; empty token disables the bot) ---
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME:-}
+      LINK_TOKEN_TTL_MINUTES: ${LINK_TOKEN_TTL_MINUTES:-15}
       SEED_ON_START: ${SEED_ON_START:-true}
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
       # --- demo accounts ---
@@ -140,6 +144,47 @@ services:
           memory: 1g
         reservations:
           memory: 256m
+
+  bot:
+    # Same image as the backend, one replica. Long polling means exactly one
+    # process may hold the token: two pollers fight over every update and
+    # Telegram rejects one of them, so this is a correctness constraint rather
+    # than a capacity choice.
+    image: ${BACKEND_IMAGE:-cka-prep-backend:latest}
+    command: ["python", "-m", "app.bot"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cka}
+      POSTGRES_PASSWORD_FILE: /run/secrets/cka_postgres_password
+      POSTGRES_DB: ${POSTGRES_DB:-cka_prep}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      SECRET_KEY_FILE: /run/secrets/cka_secret_key
+      # Optional: without the secret the process logs why and exits 0.
+      TELEGRAM_BOT_TOKEN_FILE: /run/secrets/cka_telegram_token
+      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME:-}
+      LINK_TOKEN_TTL_MINUTES: ${LINK_TOKEN_TTL_MINUTES:-15}
+      TRACK_DEFAULT_WEEKS: ${TRACK_DEFAULT_WEEKS:-20}
+    networks: [k8s]
+    secrets:
+      - cka_secret_key
+      - cka_postgres_password
+      - cka_telegram_token
+    deploy:
+      replicas: 1
+      restart_policy:
+        # on-failure, not any: a bot with no token exits 0 on purpose, and
+        # `any` would restart it forever.
+        condition: on-failure
+        delay: 15s
+      update_config:
+        # Never two pollers at once, not even for a second during an update.
+        order: stop-first
+      resources:
+        limits:
+          memory: 384m
+        reservations:
+          memory: 96m
 
   frontend:
     image: ${FRONTEND_IMAGE:-cka-prep-frontend:latest}
@@ -197,4 +242,8 @@ secrets:
   cka_secret_key:
     external: true
   cka_postgres_password:
+    external: true
+  # Optional. install.sh creates it only when TELEGRAM_BOT_TOKEN is set in .env;
+  # without it the bot service starts, reports that it is disabled and exits 0.
+  cka_telegram_token:
     external: true

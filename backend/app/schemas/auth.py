@@ -78,5 +78,7 @@ class AuthConfig(BaseModel):
     google_oauth_enabled: bool
     registration_enabled: bool = True
     phase_unlock_enforced: bool = False
+    # Lets the UI hide every mention of the bot when none is configured.
+    telegram_enabled: bool = False
     locales: list[str] = Field(default_factory=list)
     default_locale: str = "en"
