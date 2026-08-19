@@ -404,6 +404,8 @@ export const en = {
     adminOnlyBody: 'This area needs an admin account. Signed in as {email}.',
     identifier: 'Username or email',
     identifierPlaceholder: 'admin',
+    adminSignInSubtitle: 'Management sign-in. Student accounts belong on the student site.',
+    studentSignIn: 'Student sign-in',
   },
 
   profile: {

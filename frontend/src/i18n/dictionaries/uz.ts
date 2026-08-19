@@ -407,6 +407,9 @@ export const uz: Dictionary = {
     adminOnlyBody: 'Bu bo’lim admin hisobini talab qiladi. Siz {email} sifatida kirgansiz.',
     identifier: 'Foydalanuvchi nomi yoki email',
     identifierPlaceholder: 'admin',
+    adminSignInSubtitle:
+      'Boshqaruv uchun kirish. Talaba hisoblari talabalar saytidan kiradi.',
+    studentSignIn: 'Talabalar uchun kirish',
   },
 
   profile: {

@@ -142,7 +142,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
 
   const bare = stripLocale(pathname);
-  const bareLayout = bare === '/login' || bare.startsWith('/auth/');
+  const bareLayout = bare === '/login' || bare === '/admin/login' || bare.startsWith('/auth/');
 
   useEffect(() => setOpen(false), [pathname]);
 

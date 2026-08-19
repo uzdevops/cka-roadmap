@@ -2611,6 +2611,43 @@ body:has(.adm-console) .app-main {
   color: var(--accent);
 }
 
+/* --- Console door (adm-auth) -------------------------------------------------
+   /admin/login. Which room you are entering should be answered before a word
+   is read, so the door stands on the console's own ground: the dot grid and
+   the aurora stop here exactly as they stop at the console. Scoped by :has()
+   on the page's marker class like the console frame is; a browser without
+   :has() degrades to the student backdrop behind the same card. */
+
+body:has(.adm-auth) {
+  background: var(--surface-2);
+}
+
+body:has(.adm-auth)::before,
+body:has(.adm-auth)::after {
+  content: none;
+}
+
+/* Opaque where the student card is glass, and edged with the structural axis
+   line rather than the hairline - the console's own materials. The welded
+   gradient hairline on the top edge is the one piece of the student surface's
+   warmth this door keeps, as the console header does. */
+.adm-auth-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-1);
+  border: 1px solid var(--axis);
+}
+
+.adm-auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+}
+
 
 /* ===== Lesson video ===== */
 

@@ -27,9 +27,12 @@ export function AuthGuard({
     if (loading) return;
     if (!user) {
       const next = encodeURIComponent(stripLocale(pathname));
-      router.replace(href(`/login?next=${next}`));
+      // Each surface has its own door: a signed-out visit to the console goes
+      // to the console's sign-in, not the student one.
+      const door = requireAdmin ? '/admin/login' : '/login';
+      router.replace(href(`${door}?next=${next}`));
     }
-  }, [user, loading, router, pathname, href]);
+  }, [user, loading, requireAdmin, router, pathname, href]);
 
   if (loading) {
     return <div className="py-24 text-center text-sm text-ink-muted">{t.common.loading}</div>;
