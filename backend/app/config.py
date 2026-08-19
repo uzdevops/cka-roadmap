@@ -93,7 +93,7 @@ class Settings(BaseSettings):
     # enrolment to anyone with progress, but a newly created account has
     # none, and with the gate on it could reach no content and have no way
     # to fix that. Turn it on once there is a button to press.
-    enforce_track_start: bool = False
+    enforce_track_start: bool = True
     # Fallback length for a track whose phases declare no week range and which
     # has no weeks yet - an empty track still needs a target date to show.
     track_default_weeks: int = 20

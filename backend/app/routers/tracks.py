@@ -98,6 +98,9 @@ def _read(track_slug: str, state: enrollment_service.EnrollmentState) -> Enrollm
         actual_week=state.actual_week,
         behind_by_weeks=state.behind_by_weeks,
         completed_at=state.completed_at,
+        total_lessons=state.total_lessons,
+        total_labs=state.total_labs,
+        total_quizzes=state.total_quizzes,
         server_now=enrollment_service.utcnow(),
     )
 

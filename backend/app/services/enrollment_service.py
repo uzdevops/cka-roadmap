@@ -19,7 +19,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
 from app.models import EnrollmentStatus, TargetSource, Track, TrackEnrollment, User
-from app.repositories import enrollment_repo
+from app.repositories import content_repo, enrollment_repo, quiz_repo
 
 
 def utcnow() -> datetime:
@@ -203,6 +203,12 @@ class EnrollmentState:
     behind_by_weeks: int = 0
     completed_at: datetime | None = None
 
+    # What the track contains. The Start screen has to answer "what am I signing
+    # up for" before somebody commits to twenty weeks of it.
+    total_lessons: int = 0
+    total_labs: int = 0
+    total_quizzes: int = 0
+
 
 async def describe(
     session: AsyncSession, user: User, track: Track
@@ -211,6 +217,12 @@ async def describe(
     weeks = await duration_weeks(session, track)
     enrollment = await enrollment_repo.get(session, user.id, track.id)
 
+    counts = {
+        "total_lessons": await content_repo.count_lessons(session, track.id),
+        "total_labs": await content_repo.count_labs(session, track.id),
+        "total_quizzes": await quiz_repo.count_quizzes(session, track.id),
+    }
+
     if enrollment is None:
         # Even un-started, the Start screen shows how long it would take and
         # when it would finish if pressed now.
@@ -218,6 +230,7 @@ async def describe(
             status="not_started",
             duration_weeks=weeks,
             projected_target_date=auto_target_date(today(), weeks),
+            **counts,
         )
 
     clock = countdown(enrollment.started_at, enrollment.target_date)
@@ -239,4 +252,5 @@ async def describe(
         actual_week=actual,
         behind_by_weeks=behind_by_weeks(expected, actual),
         completed_at=enrollment.completed_at,
+        **counts,
     )

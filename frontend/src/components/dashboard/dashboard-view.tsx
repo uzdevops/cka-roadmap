@@ -11,7 +11,10 @@ import { ProgressRing } from '@/components/dashboard/progress-ring';
 import { WeekGrid, WeekStatusBar } from '@/components/dashboard/week-grid';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useI18n } from '@/i18n/provider';
+import { Countdown } from '@/components/countdown/countdown';
 import { apiFetch } from '@/lib/api';
+import { getEnrollment, restartTrack } from '@/lib/tracks-api';
+import type { Enrollment } from '@/lib/types';
 import { useAuth } from '@/lib/auth-context';
 import type { Dashboard, PhaseDetail } from '@/lib/types';
 import { buildWeeks, tallyWeeks } from '@/lib/weeks';
@@ -25,10 +28,11 @@ import { buildWeeks, tallyWeeks } from '@/lib/weeks';
  */
 export function DashboardView() {
   const { user } = useAuth();
-  const { t, href, fill, locale } = useI18n();
+  const { t, href, fill, locale, track } = useI18n();
 
   const [data, setData] = useState<Dashboard | null>(null);
   const [phases, setPhases] = useState<PhaseDetail[] | null>(null);
+  const [enrollment, setEnrollment] = useState<Enrollment | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,11 +41,15 @@ export function DashboardView() {
     void Promise.all([
       apiFetch<Dashboard>('/progress/dashboard'),
       apiFetch<PhaseDetail[]>('/roadmap'),
+      // Separate from the pair above because a failure here should cost the
+      // countdown card, not the whole dashboard.
+      getEnrollment(track).catch(() => null),
     ])
-      .then(([dashboard, roadmap]) => {
+      .then(([dashboard, roadmap, enrolled]) => {
         if (cancelled) return;
         setData(dashboard);
         setPhases(roadmap);
+        setEnrollment(enrolled);
       })
       .catch((err) => {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Failed');
@@ -50,7 +58,7 @@ export function DashboardView() {
     return () => {
       cancelled = true;
     };
-  }, [locale]);
+  }, [locale, track]);
 
   if (error) {
     return <p className="py-16 text-center text-sm text-[var(--critical)]">{error}</p>;
@@ -81,6 +89,19 @@ export function DashboardView() {
         </h1>
         <p className="mt-2 text-ink-secondary">{t.dashboard.intro}</p>
       </header>
+
+      {/* The deadline goes above everything else: it is the one number that
+          changes what somebody does with the next hour. */}
+      {enrollment && enrollment.status !== 'not_started' && (
+        <div className="mt-6">
+          <Countdown
+            enrollment={enrollment}
+            onRestart={() => {
+              void restartTrack(track).then(setEnrollment);
+            }}
+          />
+        </div>
+      )}
 
       {/* Three bands rather than two columns: the twenty week cards want the
           full width far more than the stat tiles want their own column. */}
@@ -176,7 +197,7 @@ export function DashboardView() {
               label={t.dashboard.statLabs}
               value={`${data.completed_labs} / ${data.total_labs}`}
               hint={
-                <Link href={href('/profile')} className="text-[var(--accent)] hover:underline">
+                <Link href={href('/profile')} className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]">
                   {t.dashboard.statLabsHint}
                 </Link>
               }
@@ -263,7 +284,7 @@ function NextSteps({ data }: { data: Dashboard }) {
           {t.dashboard.nextContinuePrefix}{' '}
           <Link
             href={href(`/roadmap/${nextPhase.phase_slug}`)}
-            className="text-[var(--accent)] hover:underline"
+            className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]"
           >
             {nextPhase.phase_title}
           </Link>{' '}
@@ -276,7 +297,7 @@ function NextSteps({ data }: { data: Dashboard }) {
 
       {data.attempted_quizzes === 0 ? (
         <Bullet>
-          <Link href={href('/lessons')} className="text-[var(--accent)] hover:underline">
+          <Link href={href('/lessons')} className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]">
             {t.dashboard.quizWord}
           </Link>{' '}
           — {t.dashboard.nextFirstQuiz}
@@ -298,7 +319,7 @@ function NextSteps({ data }: { data: Dashboard }) {
 
       {data.completed_labs < data.total_labs && (
         <Bullet>
-          <Link href={href('/labs')} className="text-[var(--accent)] hover:underline">
+          <Link href={href('/labs')} className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]">
             {t.dashboard.labsWord}
           </Link>{' '}
           — {fill(t.dashboard.nextLabs, { count: data.total_labs - data.completed_labs })}

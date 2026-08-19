@@ -281,7 +281,7 @@ export function QuizRunner({
             <CardContent className="pt-5 text-sm text-ink-secondary">
               <Link
                 href={href(`/login?next=/quizzes/${quiz.slug}`)}
-                className="text-[var(--accent)] hover:underline"
+                className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]"
               >
                 {t.lessons.signInLink}
               </Link>{' '}

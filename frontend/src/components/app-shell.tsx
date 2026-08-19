@@ -6,6 +6,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 import { BrandMark } from '@/components/brand-mark';
 import { LanguageSwitcher } from '@/components/language-switcher';
+import { TrackSwitcher } from '@/components/tracks/track-switcher';
 import { NavIcon, type IconName } from '@/components/nav-icons';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { stripLocale } from '@/i18n/config';
@@ -92,6 +93,10 @@ function Rail({ onNavigate }: { onNavigate?: () => void }) {
             scale, so it truncates rather than pushing the padding out. */}
         <span className="brand-wordmark">{t.meta.siteName}</span>
       </Link>
+
+      <div className="px-3 pt-3">
+        <TrackSwitcher />
+      </div>
 
       <nav className="mt-2 flex flex-1 flex-col gap-0.5 px-3">
         {main.map((item) => (

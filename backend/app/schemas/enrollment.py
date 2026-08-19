@@ -41,6 +41,12 @@ class EnrollmentRead(BaseModel):
     behind_by_weeks: int = 0
     completed_at: datetime | None = None
 
+    # What the track holds, so the Start screen can say what is being committed
+    # to before somebody commits to it.
+    total_lessons: int = 0
+    total_labs: int = 0
+    total_quizzes: int = 0
+
     # The server's clock. A browser with a wrong clock would otherwise drift the
     # countdown by however far it is off; the client stores the offset once and
     # ticks against that.

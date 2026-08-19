@@ -134,7 +134,7 @@ export default function AdminLessonEditorPage({ params }: { params: { id: string
           <Link
             href={href(`/lessons/${lesson.slug}`)}
             target="_blank"
-            className="text-sm text-[var(--accent)] hover:underline"
+            className="text-sm text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]"
           >
             {t.admin.viewLive}
           </Link>

@@ -2820,3 +2820,415 @@ body:has(.adm-console) .app-main {
   }
 }
 
+
+/* ===== Track switcher ===== */
+
+.trk-switch {
+  position: relative;
+}
+
+.trk-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  transition: border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.trk-trigger:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+.trk-mark,
+.trk-item-mark,
+.trk-card-mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  /* The badge pair rather than the raw accent on a wash of itself: two letters
+     is real text and needs 4.5:1, and --accent on its own 16% tint measured
+     4.19:1. These two tokens are a checked pair in both themes. */
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.trk-mark,
+.trk-item-mark {
+  height: 1.6rem;
+  width: 1.6rem;
+}
+
+.trk-card-mark {
+  height: 2.2rem;
+  width: 2.2rem;
+  font-size: 13px;
+}
+
+.trk-trigger-text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.trk-trigger-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.trk-trigger-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.trk-caret {
+  margin-left: auto;
+  flex: none;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.trk-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  right: 0;
+  max-height: 24rem;
+  overflow-y: auto;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.5);
+  padding: 0.3rem;
+}
+
+.trk-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 8px;
+  padding: 0.45rem 0.5rem;
+}
+
+.trk-item:hover {
+  background: var(--surface-2);
+}
+
+/* The current track is marked by a tinted plate AND stays aria-selected, so it
+   is not carried by colour alone. */
+.trk-item-current {
+  background: var(--surface-2);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.trk-item-body {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.trk-item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.trk-item-kind {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.trk-item-status {
+  flex: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.trk-item-late {
+  color: var(--critical);
+}
+
+.trk-empty {
+  padding: 0.6rem 0.5rem;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.trk-all {
+  display: block;
+  border-top: 1px solid var(--border);
+  margin-top: 0.3rem;
+  padding: 0.5rem;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+/* ===== My tracks ===== */
+
+.trk-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.trk-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.trk-card-name {
+  font-size: 0.9375rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.trk-card-kind {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.trk-card-summary {
+  margin-top: 0.7rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.trk-card-idle {
+  margin-top: 0.9rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.trk-card-late {
+  margin-top: 0.4rem;
+  font-size: 11px;
+  color: var(--critical);
+}
+
+.trk-card-cta {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.trk-card-cta-start {
+  color: var(--good-text);
+}
+
+/* ===== Start screen ===== */
+
+.start-wrap {
+  display: flex;
+  min-height: 60vh;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.start-card {
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: var(--glow-accent);
+  padding: 28px;
+  text-align: center;
+}
+
+.start-title {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.start-summary {
+  margin-top: 0.6rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.start-facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  padding: 0.9rem 0.5rem;
+}
+
+.start-fact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.start-fact-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.start-fact-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.start-projection {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.start-note {
+  margin-top: 1rem;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ===== Countdown ===== */
+
+.cd-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  padding: 18px 20px;
+}
+
+/* Overdue is a border and a word, never the tint alone. */
+.cd-card-overdue {
+  border-color: color-mix(in srgb, var(--critical) 45%, var(--border));
+}
+
+.cd-label-overdue {
+  color: var(--critical);
+}
+
+.cd-main {
+  min-width: 0;
+  flex: 1 1 18rem;
+}
+
+.cd-clock {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-units {
+  display: flex;
+  gap: 14px;
+  margin-top: 0.6rem;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cd-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.cd-card-overdue .cd-value {
+  color: var(--critical);
+}
+
+.cd-unit-label {
+  margin-top: 0.2rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cd-target {
+  margin-top: 0.8rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.cd-manual {
+  color: var(--text-muted);
+}
+
+.cd-restart {
+  margin-top: 0.7rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.cd-restart:hover {
+  text-decoration: underline;
+}
+
+.cd-ring {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cd-behind {
+  margin-top: 0.5rem;
+  max-width: 9rem;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--warning);
+}

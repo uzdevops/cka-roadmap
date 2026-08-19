@@ -3,6 +3,46 @@
 export type Role = 'student' | 'admin';
 
 /** A programme of study, as returned by `GET /tracks`. */
+/**
+ * A user's standing in one track, as returned by `GET /tracks/{slug}/enrollment`.
+ *
+ * Every number here is computed on the server. The browser does no date
+ * arithmetic beyond ticking seconds off `server_now`, so a device with a wrong
+ * clock cannot drift the countdown.
+ */
+export interface Enrollment {
+  track_slug: string;
+  status: 'not_started' | 'active' | 'completed';
+  duration_weeks: number;
+
+  /** Only before Start: what the target would be if pressed now. */
+  projected_target_date: string | null;
+
+  started_at: string | null;
+  target_date: string | null;
+  auto_target_date: string | null;
+  target_source: 'auto' | 'manual' | null;
+
+  days_total: number;
+  days_elapsed: number;
+  /** Negative once the target has passed - that sign is the overdue signal. */
+  days_remaining: number;
+  is_overdue: boolean;
+
+  expected_week: number;
+  actual_week: number;
+  behind_by_weeks: number;
+  completed_at: string | null;
+
+  /** What the track holds, for the Start screen's "what am I signing up for". */
+  total_lessons: number;
+  total_labs: number;
+  total_quizzes: number;
+
+  /** The server's clock, so the client can correct for its own. */
+  server_now: string;
+}
+
 export interface TrackReference {
   title: string;
   url: string;

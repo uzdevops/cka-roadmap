@@ -71,7 +71,7 @@ services:
       # account has none - with the gate on and no Start button, that
       # account can reach no content at all. Same arrangement as
       # ENFORCE_PHASE_UNLOCK above.
-      ENFORCE_TRACK_START: ${ENFORCE_TRACK_START:-false}
+      ENFORCE_TRACK_START: ${ENFORCE_TRACK_START:-true}
       TRACK_DEFAULT_WEEKS: ${TRACK_DEFAULT_WEEKS:-20}
       SEED_ON_START: ${SEED_ON_START:-true}
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}

@@ -209,7 +209,7 @@ export default function AdminLessonsPage() {
                 <td className="px-4 py-2.5 text-right">
                   <Link
                     href={href(`/admin/lessons/${lesson.id}`)}
-                    className="mr-3 text-[var(--accent)] hover:underline"
+                    className="mr-3 text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]"
                   >
                     {t.common.edit}
                   </Link>

@@ -64,7 +64,14 @@ export function normalizeTrack(value: string | undefined | null): TrackSlug {
  * profile and the admin panel are not about one programme of study - so those
  * are passed through with the locale only.
  */
-const TRACKLESS_PREFIXES = ['/login', '/auth', '/profile', '/admin'] as const;
+const TRACKLESS_PREFIXES = [
+  '/login',
+  '/auth',
+  '/profile',
+  '/admin',
+  // Where you pick a track, so it cannot itself sit under one.
+  '/tracks',
+] as const;
 
 /**
  * The sections that live inside a track.
