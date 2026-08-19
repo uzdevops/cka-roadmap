@@ -2,6 +2,37 @@
 
 export type Role = 'student' | 'admin';
 
+/** A programme of study, as returned by `GET /tracks`. */
+export interface TrackReference {
+  title: string;
+  url: string;
+}
+
+export interface TrackEnrollmentStatus {
+  status: 'not_started' | 'active' | 'completed';
+  current_week: number | null;
+  duration_weeks: number;
+  is_overdue: boolean;
+  days_remaining: number | null;
+}
+
+export interface Track {
+  slug: string;
+  title: string;
+  short_title: string;
+  summary: string;
+  provider: string | null;
+  /** A track can be both - CKA, LFCS and AWS each are. */
+  is_topic: boolean;
+  is_certificate: boolean;
+  exam_code: string | null;
+  exam_minutes: number | null;
+  mark: string;
+  accent: string;
+  references: TrackReference[];
+  enrollment: TrackEnrollmentStatus | null;
+}
+
 export interface User {
   id: number;
   email: string;

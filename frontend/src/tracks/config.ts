@@ -66,6 +66,28 @@ export function normalizeTrack(value: string | undefined | null): TrackSlug {
  */
 const TRACKLESS_PREFIXES = ['/login', '/auth', '/profile', '/admin'] as const;
 
+/**
+ * The sections that live inside a track.
+ *
+ * Named explicitly so middleware can tell an old bookmark from a typo:
+ * `/en/lessons` is a pre-track URL and gets the current track prepended, while
+ * `/en/nope/lessons` names a track that does not exist and must 404. Without
+ * this distinction the second one becomes `/en/cka/nope/lessons`, which is
+ * neither what was asked for nor an error.
+ */
+export const TRACK_SECTIONS = [
+  'dashboard',
+  'lessons',
+  'roadmap',
+  'labs',
+  'quizzes',
+  'resources',
+] as const;
+
+export function isTrackSection(value: string | undefined | null): boolean {
+  return !!value && (TRACK_SECTIONS as readonly string[]).includes(value);
+}
+
 export function isTracklessPath(path: string): boolean {
   const clean = path.startsWith('/') ? path : `/${path}`;
   return TRACKLESS_PREFIXES.some(

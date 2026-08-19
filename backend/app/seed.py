@@ -146,15 +146,32 @@ async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
             session.add(track)
             await session.flush()
             counter.create("tracks")
-        elif track.order_index != data.get("order_index", 0):
-            # The one field that is kept in sync on an existing row. It encodes a
-            # RELATIVE ordering, so applying it only to new tracks leaves two
-            # rows sharing an index and the list order goes undefined - which is
-            # exactly what happened when CompTIA was split into three.
-            # Revisit when the admin panel can reorder tracks: this would undo
-            # that.
-            track.order_index = data.get("order_index", 0)
-            counter.update("track order")
+        else:
+            # Two fields are kept in sync on an existing row; everything else is
+            # create-only so an edit made in the admin panel survives a redeploy.
+            #
+            # order_index encodes a RELATIVE ordering, so applying it only to new
+            # rows leaves two tracks sharing an index and the list order goes
+            # undefined - which is exactly what happened when CompTIA was split
+            # into three.
+            #
+            # references are the track's official links, and they are reference
+            # data the repo owns rather than authored content. Create-only meant
+            # the CKA track - which existed before the field did - kept an empty
+            # list while every track added afterwards had its links, so its
+            # resources page was blank. Never blanks a non-empty list with an
+            # empty one, on the same reasoning as lesson references.
+            #
+            # Revisit both when the admin panel can reorder tracks or edit links:
+            # this would undo that.
+            if track.order_index != data.get("order_index", 0):
+                track.order_index = data.get("order_index", 0)
+                counter.update("track order")
+
+            refs = data.get("references") or []
+            if refs and track.references != refs:
+                track.references = refs
+                counter.update("track references")
 
         if track.slug == DEFAULT_TRACK_SLUG:
             default = track

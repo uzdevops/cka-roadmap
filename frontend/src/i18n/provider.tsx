@@ -1,9 +1,15 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 
 import { setApiLocale, setApiTrack } from '@/lib/api';
-import { DEFAULT_TRACK, trackPath, type TrackSlug } from '@/tracks/config';
+import {
+  DEFAULT_TRACK,
+  trackFromPathname,
+  trackPath,
+  type TrackSlug,
+} from '@/tracks/config';
 
 import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
 import { fill, getDictionary, type Dictionary } from '@/i18n';
@@ -30,27 +36,33 @@ const I18nContext = createContext<I18nValue | null>(null);
 
 export function I18nProvider({
   locale,
-  track = DEFAULT_TRACK,
+  track,
   children,
 }: {
   locale: Locale;
   track?: TrackSlug;
   children: ReactNode;
 }) {
+  // The app shell - and with it the whole navigation rail - is mounted by the
+  // LOCALE layout, which sits above the [track] segment and so is never handed
+  // a track. Reading it off the URL is what stops every rail link pointing at
+  // the default track no matter which one you are actually looking at.
+  const pathname = usePathname();
+  const active = track ?? trackFromPathname(pathname ?? '') ?? DEFAULT_TRACK;
   // Set synchronously during render so the first API call of a page already
   // carries the right ?lang= and ?track=, rather than one render behind.
   setApiLocale(locale);
-  setApiTrack(track);
+  setApiTrack(active);
 
   const value = useMemo<I18nValue>(
     () => ({
       locale,
-      track,
+      track: active,
       t: getDictionary(locale),
-      href: (path: string) => trackPath(path, locale, track),
+      href: (path: string) => trackPath(path, locale, active),
       fill,
     }),
-    [locale, track],
+    [locale, active],
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

@@ -102,7 +102,7 @@ export const uz: Dictionary = {
   },
 
   roadmap: {
-    heading: '20 haftalik yo’l xaritasi',
+    heading: 'Yo’l xaritasi',
     intro:
       'Imtihondek o’lchangan olti bosqich. Darslar dushanbadan jumagacha, shanba - laboratoriya kuni, yakshanba - takrorlash. Tartib bilan yuring: har bir bosqich oldingisiga tayanadi.',
     allPhases: '← Barcha bosqichlar',
@@ -115,10 +115,10 @@ export const uz: Dictionary = {
     quizMeta: '{count} savol · o’tish balli {score}%',
     quizMetaTimed: '{count} savol · o’tish balli {score}% · {minutes} daq',
     labMeta: '{difficulty} · {minutes}',
-    pathLabel: 'Yigirma haftalik yo\u2019l, bosqichma-bosqich',
+    pathLabel: 'Yo\u2019l, bosqichma-bosqich',
     nodeLabel: '{phase} \u2014 {done}/{total} dars',
     youAreHere: 'SIZ SHU YERDA',
-    examCapsule: 'CKA IMTIHONI',
+    examCapsule: 'IMTIHON',
     empty: 'Yo\u2019l xaritasini yuklab bo\u2019lmadi. API hali ishga tushayotgan bo\u2019lishi mumkin.',
   },
 
@@ -249,7 +249,7 @@ export const uz: Dictionary = {
       '20 haftalik yo’l xaritasida qayerdasiz va raqamlar tayyorligingiz haqida nima deydi.',
     loading: 'Progressingiz yuklanmoqda…',
 
-    trackerHeading: '20 haftalik progress',
+    trackerHeading: 'Progress kuzatuvi',
     ringCaption: 'yo’l xaritasi bajarildi',
     trackerLessons: '{total} darsdan {done} tasi bajarildi',
     weeksHeading: 'Hafta bo’yicha',
@@ -257,7 +257,7 @@ export const uz: Dictionary = {
     weekComplete: 'Bajarildi',
     weekActive: 'Jarayonda',
     weekPending: 'Boshlanmagan',
-    weekBarLabel: 'Yigirma haftaning har birining holati',
+    weekBarLabel: 'Har bir haftaning holati',
     weekMeterLabel: '{number}-hafta progressi',
 
     readiness: 'Imtihonga tayyorlik',
@@ -531,6 +531,7 @@ export const uz: Dictionary = {
       },
     },
     docsBadge: 'Rasmiy manba',
+    empty: 'Bu yo’nalishga hali manbalar qo’shilmagan.',
   },
 
   notFound: {

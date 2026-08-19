@@ -100,7 +100,7 @@ export const en = {
   },
 
   roadmap: {
-    heading: 'The 20-week roadmap',
+    heading: 'The roadmap',
     intro:
       'Six phases weighted like the exam. Lessons run Monday to Friday, Saturday is lab day, Sunday is review. Work through it in order - each phase assumes the one before it.',
     allPhases: '← All phases',
@@ -112,10 +112,10 @@ export const en = {
     quizMeta: '{count} questions · pass at {score}%',
     quizMetaTimed: '{count} questions · pass at {score}% · {minutes} min',
     labMeta: '{difficulty} · {minutes}',
-    pathLabel: 'The twenty-week path, phase by phase',
+    pathLabel: 'The path, phase by phase',
     nodeLabel: '{phase} — {done}/{total} lessons',
     youAreHere: 'YOU ARE HERE',
-    examCapsule: 'CKA EXAM',
+    examCapsule: 'EXAM',
     empty: 'Could not load the roadmap. The API may still be starting.',
   },
 
@@ -246,7 +246,7 @@ export const en = {
       'Where you are against the 20-week roadmap, and how ready the numbers say you are.',
     loading: 'Loading your progress…',
 
-    trackerHeading: '20-week progress tracker',
+    trackerHeading: 'Progress tracker',
     ringCaption: 'roadmap complete',
     trackerLessons: '{done} of {total} lessons done',
     weeksHeading: 'Week by week',
@@ -254,7 +254,7 @@ export const en = {
     weekComplete: 'Complete',
     weekActive: 'In progress',
     weekPending: 'Not started',
-    weekBarLabel: 'Status of each of the twenty weeks',
+    weekBarLabel: 'Status of each week',
     weekMeterLabel: 'Week {number} progress',
 
     readiness: 'Exam readiness',
@@ -532,6 +532,7 @@ export const en = {
       },
     },
     docsBadge: 'Official source',
+    empty: 'No references have been added to this track yet.',
   },
 
   notFound: {

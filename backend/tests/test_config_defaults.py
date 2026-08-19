@@ -279,3 +279,76 @@ def test_a_missing_secret_file_does_not_raise(
 
     _load_file_backed_secrets()  # must not raise
     assert Settings().secret_key
+
+
+# --- and the Kubernetes manifest, which is a third copy of the same list -----
+
+
+def _find_k8s_config() -> Path | None:
+    candidates = [
+        Path(__file__).resolve().parents[2] / "k8s" / "01-config.yaml",
+        Path("/repo/k8s/01-config.yaml"),
+        Path.cwd() / "k8s" / "01-config.yaml",
+    ]
+    if env := os.environ.get("K8S_CONFIG_PATH"):
+        candidates.insert(0, Path(env))
+    return next((c for c in candidates if c.is_file()), None)
+
+
+K8S_CONFIG = _find_k8s_config()
+
+
+def _k8s_values() -> dict[str, str]:
+    """ConfigMap entries, which are `NAME: "value"` with no ${} indirection."""
+    if K8S_CONFIG is None:
+        return {}
+    pattern = re.compile(r'^\s{2}([A-Z0-9_]+):\s*"(.*)"\s*$', re.M)
+    return {
+        name: value
+        for name, value in pattern.findall(K8S_CONFIG.read_text(encoding="utf-8"))
+        if name not in NOT_MIRRORED
+    }
+
+
+# Behaviour switches: these decide what the application DOES, so they have to
+# mean the same thing wherever it runs. Everything else in the manifest -
+# domains, secrets, ENVIRONMENT, the demo credentials - is deployment-specific
+# and SHOULD differ; comparing those would be asserting something untrue.
+BEHAVIOUR_FLAGS = {
+    "ENFORCE_PHASE_UNLOCK",
+    "ENFORCE_TRACK_START",
+    "TRACK_DEFAULT_WEEKS",
+    "PHASE_UNLOCK_MIN_SCORE",
+    "SEED_ON_START",
+}
+
+
+def test_the_kubernetes_manifest_agrees_on_the_behaviour_flags() -> None:
+    """A third place the same switches are written down.
+
+    Easy to forget precisely because nothing in the local workflow reads it, so
+    a wrong value can sit there for months and surface only on a cluster. It
+    already did: ENFORCE_TRACK_START stayed "true" here after every other file
+    was set to false, which would have gated every user out of their content on
+    Kubernetes and nowhere else.
+    """
+    if K8S_CONFIG is None or COMPOSE is None:
+        pytest.skip("both files are needed for this comparison")
+
+    compose = _compose_defaults()
+    k8s = _k8s_values()
+
+    shared = compose.keys() & k8s.keys() & BEHAVIOUR_FLAGS
+    assert shared, "no behaviour flags found in both files - are the regexes stale?"
+
+    disagreements = {
+        name: (compose[name], k8s[name])
+        for name in shared
+        if compose[name] != k8s[name]
+    }
+    assert not disagreements, (
+        "k8s/01-config.yaml and docker-compose.yml disagree on a behaviour flag: "
+        + ", ".join(
+            f"{n}: compose={c!r} k8s={k!r}" for n, (c, k) in sorted(disagreements.items())
+        )
+    )
