@@ -115,6 +115,18 @@ class Settings(BaseSettings):
     # to switch to a phone and short enough that a forwarded link is dead.
     link_token_ttl_minutes: int = 15
 
+    # --- Daily reminder --------------------------------------------------
+    #
+    # One time for everybody rather than a per-user setting: a personal
+    # schedule sounds better than it works, and it multiplies the number of
+    # states the sender has to reason about by the number of users.
+    #
+    # The zone must be explicit. A server is usually UTC, and 20:30 there is
+    # the middle of the night here - a naive datetime would be silently wrong.
+    reminder_tz: str = "Asia/Tashkent"
+    reminder_hour: int = 20
+    reminder_minute: int = 30
+
     # --- Seed ------------------------------------------------------------
     seed_on_start: bool = True
     demo_student_email: str = "student@demo.local"

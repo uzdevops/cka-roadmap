@@ -107,6 +107,8 @@ export interface LessonSummary {
   day_of_week: number | null;
   is_placeholder: boolean;
   completed: boolean;
+  /** Read via Telegram, but its quiz is still outstanding. */
+  read_pending?: boolean;
 }
 
 export interface LessonDetail extends LessonSummary {

@@ -100,3 +100,38 @@ STATUS_NONE = (
 )
 
 ERROR = "Something went wrong on my side. Try again in a moment."
+
+
+# --- the daily reminder ------------------------------------------------------
+
+REMINDER_HEADER = "\U0001F4CC *Today's lesson* - {track}, week {week} - {weekday}"
+
+REMINDER_QUESTION = "Did you study today?"
+
+BTN_YES = "\u2705 Yes"
+BTN_NO = "\u274C No"
+BTN_ALL_DONE = "\u2705 All done"
+
+# A button pressed on yesterday's message. Not an error - the message was real,
+# it has simply stopped being about today.
+REMINDER_EXPIRED = "This reminder has expired."
+
+ANSWERED_YES = "\u2705 Marked. Good work."
+
+# Read is not the same as finished, and saying so is the point: somebody who
+# pressed Yes and saw no progress move would otherwise assume it was broken.
+ANSWERED_READ_PENDING = (
+    "\u2705 Marked as read. The lesson completes when you pass its quiz:\n{url}"
+)
+
+ANSWERED_NO = (
+    "Noted - the lesson stays on your list.\n\n"
+    "You are {days} days behind your plan ({actual} of {expected} weeks done). "
+    "Don't slow down: tomorrow costs twice as much."
+)
+
+ANSWERED_NO_ON_TRACK = (
+    "Noted - the lesson stays on your list.\n\n"
+    "You are on schedule ({actual} of {expected} weeks done). Pick it up "
+    "tomorrow before that changes."
+)

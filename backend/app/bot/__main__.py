@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import logging
 import sys
+from datetime import time
 
 from app.config import settings
 
@@ -38,9 +39,9 @@ def main() -> int:
 
     # Imported here rather than at module scope so the check above can run - and
     # report a clear reason - even in an image where the library is absent.
-    from telegram.ext import ApplicationBuilder, CommandHandler
+    from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandler
 
-    from app.bot import handlers
+    from app.bot import handlers, reminders
 
     app = ApplicationBuilder().token(settings.telegram_bot_token).build()
 
@@ -49,7 +50,27 @@ def main() -> int:
     app.add_handler(CommandHandler("help", handlers.help_command))
     app.add_handler(CommandHandler("today", handlers.today))
     app.add_handler(CommandHandler("status", handlers.status))
+    app.add_handler(CallbackQueryHandler(reminders.on_answer, pattern=r"^r:"))
     app.add_error_handler(handlers.on_error)
+
+    # The daily nudge. The zone is explicit because the server is usually UTC,
+    # where 20:30 is the middle of the night here - `run_daily` with a naive
+    # time would fire at the wrong hour and nothing would say so.
+    from zoneinfo import ZoneInfo
+
+    zone = ZoneInfo(settings.reminder_tz)
+    when = time(hour=settings.reminder_hour, minute=settings.reminder_minute, tzinfo=zone)
+    if app.job_queue is None:
+        # Without [job-queue] installed there is no scheduler. Better to say so
+        # than to run a bot that silently never reminds anybody.
+        log.error(
+            "No job queue available - install python-telegram-bot[job-queue]. "
+            "Commands will work; the daily reminder will not."
+        )
+    else:
+        app.job_queue.run_daily(reminders.send_daily, time=when, name="daily-reminder")
+        log.info("Daily reminder scheduled for %02d:%02d %s",
+                 settings.reminder_hour, settings.reminder_minute, settings.reminder_tz)
 
     log.info("Bot starting as @%s (long polling)", settings.telegram_bot_username)
     # drop_pending_updates: after a restart, the backlog is stale. Answering a

@@ -247,6 +247,22 @@ replica.
 
 Commands: `/today`, `/status`, `/help`, `/stop`.
 
+**The daily reminder.** At 20:30 (`REMINDER_TZ`, default Asia/Tashkent) the bot
+checks everyone who is linked and studying. If the day's lessons are still
+unfinished, one message arrives listing them, with Yes/No buttons. Weekends are
+silent - Saturday is the lab day and Sunday is review - and so is a day where
+everything is already done: silence is the reward.
+
+Answering **Yes** finishes a lesson exactly the way the web button does. A
+lesson whose quiz has not been passed is *not* completed - it is marked as read,
+and the reply links to the quiz that still stands. The button goes through the
+same service as the website, so it cannot bypass the gate. Answering **No**
+keeps the task open and replies with your real numbers - how many weeks done
+against how many the calendar expects.
+
+A restarted bot cannot send the same day twice: the guarantee is a UNIQUE
+constraint in the database, not a flag in memory.
+
 ## Installing on a server (Docker Swarm)
 
 `docker compose up` stays the way to run this locally. For a server there is a

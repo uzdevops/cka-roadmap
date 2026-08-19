@@ -6,6 +6,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from app.deps import CurrentUser, Locale, SessionDep, StartedTrack
 from app.i18n import has_translation, tr
+from app.services import lesson_service
 from app.repositories import content_repo, progress_repo, quiz_repo
 from app.schemas.content import (
     LessonCompleteResponse,
@@ -23,6 +24,9 @@ async def list_lessons(
 ) -> list[LessonSummary]:
     lessons = await content_repo.list_lessons_ordered(session, track.id)
     done = await content_repo.completed_lesson_ids(session, user.id) if user else set()
+    read = (
+        await content_repo.read_pending_lesson_ids(session, user.id) if user else set()
+    )
     return [
         LessonSummary(
             id=lsn.id,
@@ -34,6 +38,7 @@ async def list_lessons(
             day_of_week=lsn.day_of_week,
             is_placeholder=lsn.is_placeholder,
             completed=lsn.id in done,
+            read_pending=lsn.id in read,
         )
         for lsn in lessons
     ]
@@ -113,9 +118,10 @@ async def _set_completion(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found"
         )
-    await progress_repo.set_lesson_completed(session, user.id, lesson.id, completed)
-    if completed:
-        await progress_repo.record_activity(session, user.id)
+    # Through the service, not straight to the repository: the Telegram button
+    # goes through the same function, and the activity record it writes is what
+    # the study streak and the phase-unlock calculation both count.
+    await lesson_service.set_completion(session, user, lesson, completed)
     await session.commit()
 
     streak = compute_streaks(await progress_repo.activity_days(session, user.id))
@@ -140,17 +146,16 @@ async def complete_lesson(
             status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found"
         )
 
-    quiz = await quiz_repo.get_lesson_quiz(session, lesson.id)
+    # One definition of the gate, shared with the bot.
+    quiz = await lesson_service.gate_for(session, user, lesson)
     if quiz is not None:
-        best, _ = await quiz_repo.attempt_stats_for_quiz(session, user.id, quiz.id)
-        if best is None or best < quiz.pass_score:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail=(
-                    f"This lesson is completed by scoring at least "
-                    f"{quiz.pass_score:.0f}% on its quiz."
-                ),
-            )
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                f"This lesson is completed by scoring at least "
+                f"{quiz.pass_score:.0f}% on its quiz."
+            ),
+        )
 
     return await _set_completion(session, user, slug, True)
 

@@ -40,10 +40,15 @@ function LockGlyph() {
 export function LessonStatus({
   slug,
   completed,
+  readPending = false,
   state,
 }: {
   slug: string;
   completed: boolean;
+  /** Marked read via the Telegram "Yes", but its quiz is still outstanding.
+      Shown as its own state so somebody who answered yes and saw no progress
+      move understands why. */
+  readPending?: boolean;
   state: LessonState;
 }) {
   const { t } = useI18n();
@@ -63,8 +68,10 @@ export function LessonStatus({
     );
   }
 
-  const label =
-    resolved === 'done'
+  const pending = !done && readPending;
+  const label = pending
+    ? t.lessons.readPending
+    : resolved === 'done'
       ? t.labs.status.completed
       : resolved === 'current'
         ? t.labs.status.in_progress
@@ -72,7 +79,12 @@ export function LessonStatus({
 
   return (
     <span className="lsn-status" role="img" aria-label={label} title={label}>
-      {resolved === 'done' ? (
+      {pending ? (
+        // Half-done: an open book, not a tick. The tick is earned by the quiz.
+        <span aria-hidden className="lsn-read">
+          ◐
+        </span>
+      ) : resolved === 'done' ? (
         <span aria-hidden className="lsn-check">
           ✓
         </span>

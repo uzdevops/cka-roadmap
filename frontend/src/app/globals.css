@@ -3332,3 +3332,12 @@ body:has(.adm-console) .app-main {
   margin-top: 1.2rem;
   text-align: left;
 }
+
+/* Read via Telegram, quiz still outstanding. Half-filled on purpose - the full
+   tick is earned by the quiz, and this state exists precisely so "Yes" in a
+   chat does not look like it did nothing. */
+.lsn-read {
+  color: var(--warning);
+  font-size: 13px;
+  line-height: 1;
+}

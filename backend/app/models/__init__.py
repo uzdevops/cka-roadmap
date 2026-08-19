@@ -1,6 +1,7 @@
 """ORM models. Importing this package registers every table on `Base.metadata`."""
 
 from app.models.base import Base, TimestampMixin
+from app.models.reminder import ReminderAnswer, ReminderKind, ReminderLog
 from app.models.telegram import TelegramLinkToken
 from app.models.enrollment import EnrollmentStatus, TargetSource, TrackEnrollment
 from app.models.content import Lab, Lesson, Phase, Track, Week
@@ -15,6 +16,9 @@ __all__ = [
     "Track",
     "TrackEnrollment",
     "TelegramLinkToken",
+    "ReminderLog",
+    "ReminderKind",
+    "ReminderAnswer",
     "EnrollmentStatus",
     "TargetSource",
     "Week",

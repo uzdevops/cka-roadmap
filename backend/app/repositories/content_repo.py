@@ -144,6 +144,16 @@ async def completed_lesson_ids(
     return set((await session.execute(stmt)).scalars().all())
 
 
+async def read_pending_lesson_ids(session: AsyncSession, user_id: int) -> set[int]:
+    """Lessons marked read (Telegram's "Yes") whose completion is still gated."""
+    stmt = select(LessonProgress.lesson_id).where(
+        LessonProgress.user_id == user_id,
+        LessonProgress.completed.is_(False),
+        LessonProgress.read_at.is_not(None),
+    )
+    return set((await session.execute(stmt)).scalars().all())
+
+
 async def get_lesson_progress(
     session: AsyncSession, user_id: int, lesson_id: int
 ) -> LessonProgress | None:

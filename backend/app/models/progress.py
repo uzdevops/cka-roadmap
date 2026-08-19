@@ -28,6 +28,14 @@ class LessonProgress(Base, TimestampMixin):
     __table_args__ = (
         UniqueConstraint("user_id", "lesson_id", name="uq_lesson_progress_user_lesson"),
     )
+    # Read is not the same as completed. Answering "Yes" in Telegram to a lesson
+    # that has a quiz records THIS, and leaves completion to the quiz - a button
+    # in a chat must not be able to step around the gate.
+    read_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    read_source: Mapped[str | None] = mapped_column(String(16), nullable=True)
+
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int] = mapped_column(

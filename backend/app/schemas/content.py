@@ -21,6 +21,10 @@ class LessonSummary(BaseModel):
     day_of_week: int | None = None
     is_placeholder: bool = False
     completed: bool = False
+    # Read (via the Telegram "Yes") but not completed, because its quiz is still
+    # outstanding. Shown in the UI so somebody who answered yes and saw no
+    # progress move understands why.
+    read_pending: bool = False
 
 
 class LessonDetail(LessonSummary):

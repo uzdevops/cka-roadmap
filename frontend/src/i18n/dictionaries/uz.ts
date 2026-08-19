@@ -230,6 +230,7 @@ export const uz: Dictionary = {
     videoPrivacy: 'Siz ijro tugmasini bosmaguningizcha YouTube’ga hech qanday so’rov yuborilmaydi.',
     videoLoadedNote: 'Player youtube-nocookie.com’dan yuklandi - boshlash uchun uning ichidagi ijro tugmasini bosing.',
     videoOpenExternal: 'YouTube’da ochish',
+    readPending: 'O\u2019qilgan - test kutmoqda',
   },
 
   quizzes: {

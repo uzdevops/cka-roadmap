@@ -39,7 +39,12 @@ export function LessonCard({
 
   const body = (
     <>
-      <LessonStatus slug={lesson.slug} completed={lesson.completed} state={state} />
+      <LessonStatus
+        slug={lesson.slug}
+        completed={lesson.completed}
+        readPending={lesson.read_pending}
+        state={state}
+      />
 
       <span className="min-w-0 flex-1">
         <span className="block text-[15px] font-semibold leading-snug text-ink">

@@ -227,6 +227,7 @@ export const en = {
     videoPrivacy: 'Nothing is requested from YouTube until you press play.',
     videoLoadedNote: 'Player loaded from youtube-nocookie.com - press play inside it to start.',
     videoOpenExternal: 'Open on YouTube',
+    readPending: 'Read - quiz pending',
   },
 
   quizzes: {
