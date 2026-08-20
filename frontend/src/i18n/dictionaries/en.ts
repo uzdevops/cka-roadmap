@@ -28,6 +28,13 @@ export const en = {
     seeAll: 'All tracks →',
     none: 'No tracks are available to your account.',
     failed: 'Could not load your tracks.',
+    filterAll: 'All',
+    filterActive: 'In progress',
+    filterNotStarted: 'Not started',
+    statWeeks: 'Weeks',
+    statLessons: 'Lessons',
+    statLabs: 'Labs',
+    statQuizzes: 'Quizzes',
   },
 
   start: {

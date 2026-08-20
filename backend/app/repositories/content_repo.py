@@ -124,6 +124,19 @@ async def count_lessons(session: AsyncSession, track_id: int) -> int:
     return int((await session.execute(stmt)).scalar_one())
 
 
+async def count_lessons_by_track(session: AsyncSession) -> dict[int, int]:
+    """Every track's lesson count in one query - the all-tracks grid shows the
+    number on every card, and a count per card would be a count per track."""
+    stmt = (
+        select(Week.track_id, func.count(Lesson.id))
+        .select_from(Lesson)
+        .join(Week, Lesson.week_id == Week.id)
+        .where(Lesson.is_published.is_(True))
+        .group_by(Week.track_id)
+    )
+    return {track_id: int(n) for track_id, n in (await session.execute(stmt)).all()}
+
+
 async def completed_lesson_ids(
     session: AsyncSession, user_id: int, track_id: int | None = None
 ) -> set[int]:
@@ -245,3 +258,15 @@ async def count_labs(session: AsyncSession, track_id: int) -> int:
         .where(Lab.is_published.is_(True), Phase.track_id == track_id)
     )
     return int((await session.execute(stmt)).scalar_one())
+
+
+async def count_labs_by_track(session: AsyncSession) -> dict[int, int]:
+    """See count_lessons_by_track - same reason, different join."""
+    stmt = (
+        select(Phase.track_id, func.count(Lab.id))
+        .select_from(Lab)
+        .join(Phase, Lab.phase_id == Phase.id)
+        .where(Lab.is_published.is_(True))
+        .group_by(Phase.track_id)
+    )
+    return {track_id: int(n) for track_id, n in (await session.execute(stmt)).all()}

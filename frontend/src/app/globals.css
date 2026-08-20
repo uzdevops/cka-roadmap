@@ -3038,10 +3038,24 @@ body:has(.adm-auth)::after {
 
 /* ===== My tracks ===== */
 
+/* Fixed column counts rather than auto-fill: the cards carry a 4-column stats
+   strip, and auto-fill's in-between widths squeeze it illegibly. */
 .trk-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .trk-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .trk-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .trk-card {
@@ -3095,6 +3109,101 @@ body:has(.adm-auth)::after {
 
 .trk-card-cta-start {
   color: var(--good-text);
+}
+
+/* The 1a card's own pieces: the accent-tinted mark, the stats strip, the
+   in-progress glow and the filter chips. Colours for the mark come inline from
+   the track's own `accent` field - the colour is data, not theme - so the CSS
+   here only fixes shape; the badge-pair fallback underneath still applies when
+   a track has no accent. */
+
+.trk-card-mark-tinted {
+  height: 36px;
+  width: 36px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+/* An in-progress card announces itself from across the grid: the accent takes
+   the border and the good token breathes behind it. Hover still lifts the
+   border the rest of the way, exactly as card-hover does everywhere else. */
+.trk-card-active {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: 0 0 26px color-mix(in srgb, var(--good) 12%, transparent);
+}
+
+.trk-card-active.card-hover:hover {
+  border-color: var(--accent);
+}
+
+/* How big a thing this is, before anyone commits to it. */
+.trk-stats {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.trk-stat {
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+}
+
+.trk-stat + .trk-stat {
+  border-left: 1px solid var(--border);
+}
+
+.trk-stat-value {
+  font-size: 15px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.trk-stat-label {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.trk-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.trk-filter {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  padding: 0.32rem 0.75rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.trk-filter:hover {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* The active chip wears the checked badge pair, so it reads at 4.5:1 in both
+   themes without a colour of its own. */
+.trk-filter-active {
+  border-color: transparent;
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
 }
 
 /* ===== Start screen ===== */

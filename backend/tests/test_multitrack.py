@@ -167,6 +167,23 @@ async def test_listing_returns_only_the_requested_track(
         )
 
 
+async def test_track_listing_carries_content_totals(
+    student_client: AsyncClient, two_tracks: tuple[Track, Track]
+) -> None:
+    """The all-tracks grid prints lessons/labs/quizzes on every card, so the
+    LIST payload has to carry the counts - a request per track would defeat it.
+    Each fixture track holds exactly one of each, which also proves the grouped
+    query does not smear one track's content across another."""
+    response = await student_client.get(f"{API}/tracks")
+    assert response.status_code == 200, response.text
+    rows = {t["slug"]: t["enrollment"] for t in response.json()}
+    for slug in ("alpha", "beta"):
+        entry = rows[slug]
+        assert entry["total_lessons"] == 1, entry
+        assert entry["total_labs"] == 1, entry
+        assert entry["total_quizzes"] == 1, entry
+
+
 async def test_phase_slug_resolves_within_its_track(
     student_client: AsyncClient, two_tracks: tuple[Track, Track]
 ) -> None:

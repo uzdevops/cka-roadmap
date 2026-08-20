@@ -136,6 +136,18 @@ async def count_quizzes(session: AsyncSession, track_id: int) -> int:
     return int((await session.execute(stmt)).scalar_one())
 
 
+async def count_quizzes_by_track(session: AsyncSession) -> dict[int, int]:
+    """Every track's quiz count in one query, for the all-tracks grid."""
+    stmt = (
+        select(Phase.track_id, func.count(Quiz.id))
+        .select_from(Quiz)
+        .join(Phase, Quiz.phase_id == Phase.id)
+        .where(Quiz.is_published.is_(True))
+        .group_by(Phase.track_id)
+    )
+    return {track_id: int(n) for track_id, n in (await session.execute(stmt)).all()}
+
+
 async def count_questions(session: AsyncSession) -> int:
     return int((await session.execute(select(func.count(Question.id)))).scalar_one())
 

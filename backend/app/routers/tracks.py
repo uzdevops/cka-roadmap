@@ -13,7 +13,7 @@ from sqlalchemy import select
 from app.deps import CurrentUser, Locale, SessionDep, _visible_to, resolve_track
 from app.i18n import tr
 from app.models import EnrollmentStatus, Track
-from app.repositories import enrollment_repo, progress_repo
+from app.repositories import content_repo, enrollment_repo, progress_repo, quiz_repo
 from app.schemas.content import TrackRead
 from app.schemas.enrollment import (
     EnrollmentRead,
@@ -41,6 +41,11 @@ async def list_tracks(
     durations = {
         t.id: await enrollment_service.duration_weeks(session, t) for t in tracks
     }
+    # The grid prints lessons/labs/quizzes on every card, so the counts come as
+    # three grouped queries - not three queries per track.
+    lesson_counts = await content_repo.count_lessons_by_track(session)
+    lab_counts = await content_repo.count_labs_by_track(session)
+    quiz_counts = await quiz_repo.count_quizzes_by_track(session)
 
     return [
         TrackRead(
@@ -56,16 +61,24 @@ async def list_tracks(
             mark=t.mark,
             accent=t.accent,
             references=list(tr(t, "references", locale) or []),
-            enrollment=_summary_status(enrollments.get(t.id), durations.get(t.id, 0)),
+            enrollment=_summary_status(
+                enrollments.get(t.id),
+                durations.get(t.id, 0),
+                totals={
+                    "total_lessons": lesson_counts.get(t.id, 0),
+                    "total_labs": lab_counts.get(t.id, 0),
+                    "total_quizzes": quiz_counts.get(t.id, 0),
+                },
+            ),
         )
         for t in tracks
     ]
 
 
-def _summary_status(enrollment, weeks: int) -> TrackSummaryStatus:
+def _summary_status(enrollment, weeks: int, totals: dict[str, int]) -> TrackSummaryStatus:
     """The compact form used by the switcher - no dates, just where they are."""
     if enrollment is None:
-        return TrackSummaryStatus(status="not_started", duration_weeks=weeks)
+        return TrackSummaryStatus(status="not_started", duration_weeks=weeks, **totals)
 
     clock = enrollment_service.countdown(
         enrollment.started_at, enrollment.target_date
@@ -77,6 +90,7 @@ def _summary_status(enrollment, weeks: int) -> TrackSummaryStatus:
         duration_weeks=weeks,
         is_overdue=clock.is_overdue and enrollment.status == EnrollmentStatus.ACTIVE,
         days_remaining=clock.days_remaining,
+        **totals,
     )
 
 

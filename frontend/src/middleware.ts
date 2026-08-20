@@ -99,7 +99,12 @@ export function middleware(request: NextRequest) {
   // console is the guard's question, which owns the refusal screen.
   if (signedIn && withoutTrack === '/login') {
     const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/${track}/dashboard`;
+    // Someone with history goes back to the track the cookie remembers; a
+    // first-timer lands on the picker - guessing a default track for them
+    // would start their journey on a programme nobody chose.
+    url.pathname = isTrack(cookieTrack)
+      ? `/${locale}/${cookieTrack}/dashboard`
+      : `/${locale}/tracks`;
     url.search = '';
     return NextResponse.redirect(url);
   }

@@ -74,3 +74,8 @@ class TrackSummaryStatus(BaseModel):
     duration_weeks: int = 0
     is_overdue: bool = False
     days_remaining: int | None = None
+    # What the track contains, so the all-tracks grid can print its stats strip
+    # without a per-track enrollment request.
+    total_lessons: int = 0
+    total_labs: int = 0
+    total_quizzes: int = 0

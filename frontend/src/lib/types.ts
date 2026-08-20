@@ -54,6 +54,10 @@ export interface TrackEnrollmentStatus {
   duration_weeks: number;
   is_overdue: boolean;
   days_remaining: number | null;
+  /** What the track contains - the grid's stats strip, without a per-track request. */
+  total_lessons: number;
+  total_labs: number;
+  total_quizzes: number;
 }
 
 export interface Track {

@@ -30,6 +30,13 @@ export const uz: Dictionary = {
     seeAll: 'Barcha yo’nalishlar →',
     none: 'Hisobingiz uchun yo’nalish yo’q.',
     failed: 'Yo’nalishlarni yuklab bo’lmadi.',
+    filterAll: 'Hammasi',
+    filterActive: 'Davom etmoqda',
+    filterNotStarted: 'Boshlanmagan',
+    statWeeks: 'Hafta',
+    statLessons: 'Dars',
+    statLabs: 'Lab',
+    statQuizzes: 'Test',
   },
 
   start: {
