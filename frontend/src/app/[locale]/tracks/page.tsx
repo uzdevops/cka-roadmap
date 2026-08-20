@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Meter } from '@/components/ui/meter';
 import { useI18n } from '@/i18n/provider';
@@ -26,6 +27,14 @@ type Filter = 'all' | 'active' | 'not_started';
 
 const isStarted = (entry: Track) =>
   entry.enrollment != null && entry.enrollment.status !== 'not_started';
+
+/** Where pressing Start today would put the finish line - the same sum the
+    Start screen shows, so the card and the screen never disagree. */
+function projectedFinish(weeks: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() + weeks * 7);
+  return date.toISOString().slice(0, 10);
+}
 
 export default function TracksPage() {
   const { t, fill, locale } = useI18n();
@@ -179,6 +188,14 @@ export default function TracksPage() {
                             ))}
                           </dl>
 
+                          {!started && (e?.duration_weeks ?? 0) > 0 && (
+                            <p className="trk-card-projection">
+                              {fill(t.start.projection, {
+                                date: projectedFinish(e!.duration_weeks),
+                              })}
+                            </p>
+                          )}
+
                           {started && e && (
                             <div className="mt-4">
                               <Meter
@@ -194,12 +211,17 @@ export default function TracksPage() {
                             </div>
                           )}
 
-                          <Link
-                            href={`/${locale}/${entry.slug}/dashboard`}
-                            className={cn('trk-card-cta', !started && 'trk-card-cta-start')}
-                          >
-                            {started ? t.tracks.continue : t.tracks.start}
-                          </Link>
+                          {/* A real button, full width, because this is the
+                              one action on the card - but it only navigates:
+                              the clock starts on the track's own Start screen. */}
+                          <div className="mt-auto pt-5">
+                            <Link
+                              href={`/${locale}/${entry.slug}/dashboard`}
+                              className={cn(buttonVariants({ size: 'lg' }), 'w-full')}
+                            >
+                              {started ? t.tracks.continue : t.tracks.start}
+                            </Link>
+                          </div>
                         </Card>
                       </li>
                     );

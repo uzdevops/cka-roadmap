@@ -8,6 +8,7 @@
 
 type IconName =
   | 'dashboard'
+  | 'tracks'
   | 'roadmap'
   | 'lessons'
   | 'quizzes'
@@ -22,6 +23,8 @@ type IconName =
 const PATHS: Record<IconName, string> = {
   // Four panels - the dashboard's own shape.
   dashboard: 'M4 4h6v6H4z M14 4h6v4h-6z M14 12h6v8h-6z M4 14h6v6H4z',
+  // Three stacked planes: the programmes of study, one above the other.
+  tracks: 'M12 3.5 20.5 8 12 12.5 3.5 8z M3.5 12l8.5 4.5 8.5-4.5 M3.5 16l8.5 4.5 8.5-4.5',
   // A route with stops.
   roadmap: 'M7 4v10 M7 18.5v.5 M17 5v.5 M17 10v10 M7 6.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z M17 22a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z M9.5 4h5a2.5 2.5 0 0 1 2.5 2.5',
   // An open book.

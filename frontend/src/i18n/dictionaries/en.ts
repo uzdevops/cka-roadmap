@@ -118,6 +118,7 @@ export const en = {
     labs: 'Labs',
     resources: 'References',
     dashboard: 'Dashboard',
+    tracks: 'Tracks',
     admin: 'Admin',
     profile: 'Profile',
     signIn: 'Sign in',

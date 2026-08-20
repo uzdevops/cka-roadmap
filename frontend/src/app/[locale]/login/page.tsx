@@ -11,17 +11,6 @@ import { useI18n } from '@/i18n/provider';
 import { BROWSER_API_URL } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { cn } from '@/lib/utils';
-import { isTrack, TRACK_COOKIE } from '@/tracks/config';
-
-/** Whether this browser has ever settled on a track - the cookie the
-    middleware and the track switcher maintain. */
-function hasRememberedTrack(): boolean {
-  const value = document.cookie
-    .split('; ')
-    .find((entry) => entry.startsWith(`${TRACK_COOKIE}=`))
-    ?.split('=')[1];
-  return isTrack(value);
-}
 
 /**
  * Sign in - the one screen that renders without the navigation rail, so it is
@@ -51,12 +40,9 @@ function LoginForm() {
     setError(null);
     try {
       await login(identifier, password);
-      // Someone sent here mid-journey goes back where they were headed. With
-      // no destination, history decides: a browser that remembers a track
-      // returns to its dashboard, a first-timer picks one on the grid.
-      // Read at submit time - document does not exist during prerender.
-      const fallback = hasRememberedTrack() ? '/dashboard' : '/tracks';
-      router.push(href(params.get('next') ?? fallback));
+      // Someone sent here mid-journey goes back where they were headed;
+      // everyone else lands on the grid, the front door of the platform.
+      router.push(href(params.get('next') ?? '/tracks'));
     } catch (err) {
       setError(err instanceof Error ? err.message : t.auth.signInFailed);
     } finally {

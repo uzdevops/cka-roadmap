@@ -3099,18 +3099,6 @@ body:has(.adm-auth)::after {
   color: var(--critical);
 }
 
-.trk-card-cta {
-  margin-top: auto;
-  padding-top: 0.9rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--accent);
-}
-
-.trk-card-cta-start {
-  color: var(--good-text);
-}
-
 /* The 1a card's own pieces: the accent-tinted mark, the stats strip, the
    in-progress glow and the filter chips. Colours for the mark come inline from
    the track's own `accent` field - the colour is data, not theme - so the CSS
@@ -3171,6 +3159,15 @@ body:has(.adm-auth)::after {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+/* The finish line if pressed today - the same sentence the Start screen
+   says, so the card never promises a different date. */
+.trk-card-projection {
+  margin-top: 0.8rem;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
 .trk-filters {

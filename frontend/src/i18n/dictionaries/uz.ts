@@ -35,7 +35,7 @@ export const uz: Dictionary = {
     filterNotStarted: 'Boshlanmagan',
     statWeeks: 'Hafta',
     statLessons: 'Dars',
-    statLabs: 'Lab',
+    statLabs: 'Laboratoriya',
     statQuizzes: 'Test',
   },
 
@@ -120,6 +120,7 @@ export const uz: Dictionary = {
     labs: 'Laboratoriyalar',
     resources: 'Manbalar',
     dashboard: 'Panel',
+    tracks: 'Yo’nalishlar',
     admin: 'Admin',
     profile: 'Profil',
     signIn: 'Kirish',

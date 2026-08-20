@@ -37,6 +37,10 @@ function useNav(): { main: NavItem[]; admin: NavItem[] } {
 
   return {
     main: [
+      // First, because it is where a journey starts: every programme, as
+      // cards, in the main panel - the switcher in the rail is for moving
+      // between tracks once you are inside one.
+      { path: '/tracks', label: t.nav.tracks, icon: 'tracks' },
       { path: '/dashboard', label: t.nav.dashboard, icon: 'dashboard' },
       { path: '/roadmap', label: t.nav.roadmap, icon: 'roadmap' },
       { path: '/lessons', label: t.nav.lessons, icon: 'lessons' },
