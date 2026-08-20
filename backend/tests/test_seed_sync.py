@@ -173,3 +173,33 @@ async def test_a_week_that_still_holds_a_forgotten_lesson_is_kept(
     assert counter.removed == {}
     b = (await session.execute(select(Lesson).where(Lesson.slug == "b"))).scalar_one()
     assert b is not None
+
+
+async def test_a_stale_uz_placeholder_is_dropped_once_the_body_is_written(
+    session: AsyncSession, track: Track, tmp_path: Path
+) -> None:
+    """Once English prose exists, the Uzbek side must stop saying "not yet"."""
+    content = _write(tmp_path / "v1", [_phase("one", 1, 1, 1, [_week(1, [_lesson("late")])])])
+    (content.i18n_dir / "uz").mkdir(parents=True)
+    (content.i18n_dir / "uz" / "structure.json").write_text(json.dumps({
+        "locale": "uz", "phases": {}, "weeks": {}, "lessons": {"late": {"title": "Kech", "summary": "x"}},
+    }))
+    await _seed(session, track, content)
+    late = (await session.execute(select(Lesson).where(Lesson.slug == "late"))).scalar_one()
+    assert late.is_placeholder
+    assert "Bu dars hali to'liq yozilmagan" in late.translations["uz"]["content"]
+
+    # The English body arrives; no Uzbek body does.
+    content = _write(tmp_path / "v2", [_phase("one", 1, 1, 1, [_week(1, [_lesson("late")])])])
+    content.lesson_dir.mkdir()
+    (content.lesson_dir / "late.md").write_text("# written at last")
+    (content.i18n_dir / "uz").mkdir(parents=True)
+    (content.i18n_dir / "uz" / "structure.json").write_text(json.dumps({
+        "locale": "uz", "phases": {}, "weeks": {}, "lessons": {"late": {"title": "Kech", "summary": "x"}},
+    }))
+    await _seed(session, track, content)
+    await session.refresh(late)
+
+    assert not late.is_placeholder
+    assert "content" not in late.translations["uz"], "stale placeholder kept"
+    assert late.translations["uz"]["title"] == "Kech"

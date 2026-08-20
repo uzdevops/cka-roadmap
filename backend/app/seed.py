@@ -717,6 +717,18 @@ async def _seed_structure_translations(
             payload["content"] = _placeholder_content_uz(
                 payload.get("title", lesson.title), payload.get("summary", "")
             ) if locale == "uz" else None
+        else:
+            # The English body is real now and this locale has no body of its
+            # own: a placeholder translation must not outlive the placeholder,
+            # or this language keeps saying "not written yet" about a lesson
+            # that is. Dropping it lets the reader fall back to the English
+            # body, with the notice that says so.
+            stored = (lesson.translations or {}).get(locale, {}).get("content") or ""
+            if _PLACEHOLDER_UZ_MARKER in stored:
+                merged = {k: dict(v) for k, v in lesson.translations.items()}
+                merged[locale].pop("content", None)
+                lesson.translations = merged
+                counter.update(f"stale placeholder translations ({locale})")
 
         # A placeholder's description is the seed's in every language; once a
         # real body exists the lesson is authored and the translation is only
@@ -777,12 +789,17 @@ async def _seed_lab_translations(
             counter.update(f"lab translations ({locale})")
 
 
+# The sentence every Uzbek placeholder body carries - how a stale one is
+# recognised once the English body has been written.
+_PLACEHOLDER_UZ_MARKER = "Bu dars hali to'liq yozilmagan"
+
+
 def _placeholder_content_uz(title: str, summary: str) -> str:
     return (
         f"## {title}\n\n"
         f"{summary}\n\n"
         ":::warning\n"
-        "Bu dars hali to'liq yozilmagan. Yo'l xaritasi tuzilishi to'liq - siz "
+        f"{_PLACEHOLDER_UZ_MARKER}. Yo'l xaritasi tuzilishi to'liq - siz "
         "rejalashtira olasiz va harakatlana olasiz, matnlar esa bosqichma-bosqich "
         "to'ldirilmoqda.\n"
         ":::\n\n"
