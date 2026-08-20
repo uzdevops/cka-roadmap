@@ -2871,34 +2871,13 @@ body:has(.adm-auth)::after {
 }
 
 
-/* ===== Track switcher ===== */
+/* ===== Track card mark ===== */
 
-.trk-switch {
-  position: relative;
-}
-
-.trk-trigger {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 0.6rem;
-  border-radius: 9px;
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  padding: 0.45rem 0.6rem;
-  text-align: left;
-  transition: border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.trk-trigger:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-}
-
-.trk-mark,
-.trk-item-mark,
 .trk-card-mark {
   display: inline-flex;
   flex: none;
+  height: 2.2rem;
+  width: 2.2rem;
   align-items: center;
   justify-content: center;
   border-radius: 7px;
@@ -2908,132 +2887,8 @@ body:has(.adm-auth)::after {
   background: var(--accent-badge-bg);
   color: var(--accent-badge-text);
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.trk-mark,
-.trk-item-mark {
-  height: 1.6rem;
-  width: 1.6rem;
-}
-
-.trk-card-mark {
-  height: 2.2rem;
-  width: 2.2rem;
   font-size: 13px;
-}
-
-.trk-trigger-text {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-}
-
-.trk-trigger-label {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.trk-trigger-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.trk-caret {
-  margin-left: auto;
-  flex: none;
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-.trk-menu {
-  position: absolute;
-  z-index: 40;
-  top: calc(100% + 0.35rem);
-  left: 0;
-  right: 0;
-  max-height: 24rem;
-  overflow-y: auto;
-  border-radius: 11px;
-  border: 1px solid var(--border);
-  background: var(--surface-1);
-  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.5);
-  padding: 0.3rem;
-}
-
-.trk-item {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  border-radius: 8px;
-  padding: 0.45rem 0.5rem;
-}
-
-.trk-item:hover {
-  background: var(--surface-2);
-}
-
-/* The current track is marked by a tinted plate AND stays aria-selected, so it
-   is not carried by colour alone. */
-.trk-item-current {
-  background: var(--surface-2);
-  box-shadow: inset 2px 0 0 var(--accent);
-}
-
-.trk-item-body {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  flex-direction: column;
-}
-
-.trk-item-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.trk-item-kind {
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-.trk-item-status {
-  flex: none;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10px;
-  color: var(--text-secondary);
-}
-
-.trk-item-late {
-  color: var(--critical);
-}
-
-.trk-empty {
-  padding: 0.6rem 0.5rem;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.trk-all {
-  display: block;
-  border-top: 1px solid var(--border);
-  margin-top: 0.3rem;
-  padding: 0.5rem;
-  font-size: 12px;
-  color: var(--accent);
+  font-weight: 700;
 }
 
 /* ===== My tracks ===== */
@@ -3043,18 +2898,25 @@ body:has(.adm-auth)::after {
 .trk-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: 1fr;
+  /* minmax(0, 1fr), not 1fr: a grid track's floor is its content's min
+     width, and a one-line summary is as wide as its sentence - which is how
+     the third column walked off the right edge of the screen. */
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.trk-grid > li {
+  min-width: 0;
 }
 
 @media (min-width: 860px) {
   .trk-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1280px) {
   .trk-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -3128,7 +2990,7 @@ body:has(.adm-auth)::after {
 .trk-stats {
   margin-top: 0.9rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface-2);

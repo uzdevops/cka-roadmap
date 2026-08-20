@@ -6,7 +6,6 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 import { BrandMark } from '@/components/brand-mark';
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { TrackSwitcher } from '@/components/tracks/track-switcher';
 import { NavIcon, type IconName } from '@/components/nav-icons';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { stripLocale } from '@/i18n/config';
@@ -37,9 +36,9 @@ function useNav(): { main: NavItem[]; admin: NavItem[] } {
 
   return {
     main: [
-      // First, because it is where a journey starts: every programme, as
-      // cards, in the main panel - the switcher in the rail is for moving
-      // between tracks once you are inside one.
+      // First, because it is where a journey starts - and where a track is
+      // switched: every programme, as cards, in the main panel. The rail
+      // carries no other track picker.
       { path: '/tracks', label: t.nav.tracks, icon: 'tracks' },
       { path: '/dashboard', label: t.nav.dashboard, icon: 'dashboard' },
       { path: '/roadmap', label: t.nav.roadmap, icon: 'roadmap' },
@@ -85,9 +84,9 @@ function Rail({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="flex h-full flex-col">
-      {/* The lockup goes home - and home is the dashboard, not the track root,
-          so the click lands on a page rather than on a redirect. */}
-      <Link href={href('/dashboard')} onClick={onNavigate} className="rail-brand">
+      {/* The lockup goes home, and home is the grid of programmes - the one
+          screen that is not about a single track. */}
+      <Link href={href('/tracks')} onClick={onNavigate} className="rail-brand">
         {/* The tile keeps its gradient and its `--accent-ink` colour; the mark
             inside it is drawn in currentColor, so both themes are already
             handled by the tokens .rail-mark sets. */}
@@ -99,10 +98,6 @@ function Rail({ onNavigate }: { onNavigate?: () => void }) {
             scale, so it truncates rather than pushing the padding out. */}
         <span className="brand-wordmark">{t.meta.siteName}</span>
       </Link>
-
-      <div className="px-3 pt-3">
-        <TrackSwitcher />
-      </div>
 
       <nav className="mt-2 flex flex-1 flex-col gap-0.5 px-3">
         {main.map((item) => (
