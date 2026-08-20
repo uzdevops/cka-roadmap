@@ -1,0 +1,33 @@
+{
+  "slug": "lab-resource-limits",
+  "phase_slug": "scheduling",
+  "week_number": 4,
+  "title": "Lab - Resource limits",
+  "description": "Read, set and break resource requests and limits.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 5,
+  "scenario": "Read, set and break resource requests and limits. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Read them",
+      "instructions": "What CPU and memory does the Pod rabbit request and limit?",
+      "solution": "kubectl get pod rabbit -o jsonpath='{.spec.containers[0].resources}'",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Fix an OOMKilled Pod",
+      "instructions": "Pod elephant keeps restarting. Raise its memory limit to 20Mi.",
+      "solution": "kubectl get pod elephant -o yaml > e.yaml\n# limits.memory: 20Mi\nkubectl replace --force -f e.yaml",
+      "verification": "kubectl get pod elephant  # Running, restarts stop"
+    },
+    {
+      "title": "Task 3 - LimitRange",
+      "instructions": "Create a LimitRange in namespace dev with default CPU request 100m and limit 500m, then create a Pod and read its resources.",
+      "solution": "# kind: LimitRange, spec.limits[].type: Container, default/defaultRequest",
+      "verification": "kubectl get pod -n dev <pod> -o jsonpath='{.spec.containers[0].resources}'"
+    }
+  ]
+}

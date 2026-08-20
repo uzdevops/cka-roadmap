@@ -1,0 +1,33 @@
+{
+  "slug": "lab-rbac",
+  "phase_slug": "security",
+  "week_number": 11,
+  "title": "Lab - Role-based access control",
+  "description": "Grant exactly the permissions a developer needs.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Grant exactly the permissions a developer needs. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Inspect",
+      "instructions": "What authorization modes does the API server use, and which Roles exist in default?",
+      "solution": "kubectl describe pod kube-apiserver-controlplane -n kube-system | grep authorization-mode\nkubectl get roles",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Can I",
+      "instructions": "Can user dev-user list Pods in default?",
+      "solution": "kubectl auth can-i list pods --as dev-user",
+      "verification": "no"
+    },
+    {
+      "title": "Task 3 - Grant",
+      "instructions": "Create Role developer (list, create, delete pods) and bind dev-user to it.",
+      "solution": "kubectl create role developer --verb=list,create,delete --resource=pods\nkubectl create rolebinding dev-user-binding --role=developer --user=dev-user",
+      "verification": "kubectl auth can-i create pods --as dev-user  # yes"
+    }
+  ]
+}

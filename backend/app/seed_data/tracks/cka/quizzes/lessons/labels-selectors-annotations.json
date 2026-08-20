@@ -1,0 +1,142 @@
+{
+  "slug": "labels-selectors-annotations-check",
+  "lesson_slug": "labels-selectors-annotations",
+  "phase_slug": "scheduling",
+  "week_number": 4,
+  "title": "Check: labels, selectors and annotations",
+  "description": "Five questions on how objects find each other.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-label-vs-annotation",
+      "type": "single_choice",
+      "prompt": "What is the difference between a label and an annotation?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Labels are longer than annotations"
+        },
+        {
+          "id": "b",
+          "text": "Labels are for selecting objects; annotations carry data nothing selects on"
+        },
+        {
+          "id": "c",
+          "text": "Annotations are only used by the scheduler"
+        },
+        {
+          "id": "d",
+          "text": "There is no difference"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "Selectors match labels. Annotations hold arbitrary metadata - build ids, tool configuration, checksums - that nothing queries by.",
+      "points": 1
+    },
+    {
+      "key": "q2-selector",
+      "type": "fill_command",
+      "prompt": "Write the command that lists Pods labelled app=web.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl get pods -l app=web",
+        "kubectl get po -l app=web",
+        "kubectl get pods --selector=app=web",
+        "kubectl get pods --selector app=web"
+      ],
+      "explanation": "`-l` and `--selector` are the same flag; both are accepted.",
+      "points": 2
+    },
+    {
+      "key": "q3-service-selector",
+      "type": "single_choice",
+      "prompt": "A Service has `selector: app=web` but sends traffic nowhere. What is the most likely cause?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Service needs a restart"
+        },
+        {
+          "id": "b",
+          "text": "No running Pod carries the label app=web"
+        },
+        {
+          "id": "c",
+          "text": "Services cannot use selectors"
+        },
+        {
+          "id": "d",
+          "text": "The Service is in the wrong phase"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "A Service is a label query. If no ready Pod matches, its EndpointSlice is empty and there is nothing to send traffic to.",
+      "points": 1
+    },
+    {
+      "key": "q4-uses",
+      "type": "multi_select",
+      "prompt": "Which of these are driven by labels? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Which Pods a Service sends traffic to"
+        },
+        {
+          "id": "b",
+          "text": "Which Pods a ReplicaSet owns"
+        },
+        {
+          "id": "c",
+          "text": "Which node a Pod is scheduled onto, via nodeSelector"
+        },
+        {
+          "id": "d",
+          "text": "The order in which containers start inside a Pod"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Labels are the join key of the whole system. Container start order inside a Pod is not a label matter - that is what init containers are for.",
+      "points": 2
+    },
+    {
+      "key": "q5-immutable-selector",
+      "type": "single_choice",
+      "prompt": "You try to change a Deployment's `spec.selector` and the API server rejects it. Why?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selectors are immutable once set"
+        },
+        {
+          "id": "b",
+          "text": "The Deployment must be scaled to zero first"
+        },
+        {
+          "id": "c",
+          "text": "Only the controller manager may change selectors"
+        },
+        {
+          "id": "d",
+          "text": "The label is too long"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "explanation": "A Deployment's selector is immutable: changing it would orphan the ReplicaSets and Pods it already owns.",
+      "points": 1
+    }
+  ]
+}

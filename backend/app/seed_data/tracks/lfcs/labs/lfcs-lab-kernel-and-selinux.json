@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-kernel-and-selinux",
+  "phase_slug": "operations-deployment",
+  "week_number": 7,
+  "title": "Lab - Kernel runtime parameters and SELinux/AppArmor",
+  "description": "Tune a parameter and fix an SELinux denial.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Tune a parameter and fix an SELinux denial. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - sysctl",
+      "instructions": "Enable IPv4 forwarding now and persistently.",
+      "solution": "sysctl -w net.ipv4.ip_forward=1\necho \"net.ipv4.ip_forward = 1\" > /etc/sysctl.d/99-forward.conf",
+      "verification": "sysctl net.ipv4.ip_forward"
+    },
+    {
+      "title": "Task 2 - Context",
+      "instructions": "Move a file into /var/www/html and make its SELinux context match the directory.",
+      "solution": "restorecon -v /var/www/html/index.html",
+      "verification": "ls -Z /var/www/html/index.html"
+    },
+    {
+      "title": "Task 3 - Port",
+      "instructions": "Allow httpd to listen on port 8080 under SELinux.",
+      "solution": "semanage port -a -t http_port_t -p tcp 8080",
+      "verification": "semanage port -l | grep http_port_t"
+    }
+  ]
+}

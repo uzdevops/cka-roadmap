@@ -1,0 +1,33 @@
+{
+  "slug": "lab-lightning-lab-1",
+  "phase_slug": "exam-prep",
+  "week_number": 20,
+  "title": "Lightning lab 1",
+  "description": "Short, timed, mixed tasks across every domain.",
+  "difficulty": "advanced",
+  "estimated_minutes": 60,
+  "order_index": 1,
+  "scenario": "Short, timed, mixed tasks across every domain. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Upgrade",
+      "instructions": "Upgrade the control plane to the next minor version and drain/uncordon correctly.",
+      "solution": "kubeadm upgrade plan / apply",
+      "verification": "kubectl get nodes"
+    },
+    {
+      "title": "Task 2 - Extract",
+      "instructions": "Print the names of all Deployments in namespace admin2406 with their image and ready replicas, sorted by name, to a file.",
+      "solution": "kubectl get deploy -n admin2406 -o custom-columns=DEPLOYMENT:.metadata.name,IMAGE:.spec.template.spec.containers[0].image,READY_REPLICAS:.status.readyReplicas --sort-by=.metadata.name > /opt/admin2406_data",
+      "verification": "cat /opt/admin2406_data"
+    },
+    {
+      "title": "Task 3 - Fix",
+      "instructions": "A kubeconfig at /root/CKA/admin.kubeconfig is broken. Fix it.",
+      "solution": "grep server /root/CKA/admin.kubeconfig  # wrong port",
+      "verification": "kubectl --kubeconfig /root/CKA/admin.kubeconfig get nodes"
+    }
+  ]
+}

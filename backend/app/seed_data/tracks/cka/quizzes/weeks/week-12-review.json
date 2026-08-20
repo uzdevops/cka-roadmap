@@ -1,0 +1,186 @@
+{
+  "slug": "week-12-review",
+  "phase_slug": "networking",
+  "week_number": 16,
+  "title": "Week 16 review - stateful and troubleshooting",
+  "description": "Six questions closing the networking and storage phase.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 12,
+  "questions": [
+    {
+      "key": "w12-q1",
+      "type": "single_choice",
+      "prompt": "volumeClaimTemplates gives a StatefulSet what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One shared PVC"
+        },
+        {
+          "id": "b",
+          "text": "A PVC per replica, named after the Pod"
+        },
+        {
+          "id": "c",
+          "text": "An emptyDir each"
+        },
+        {
+          "id": "d",
+          "text": "A ConfigMap each"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "data-web-0, data-web-1, and so on.",
+      "points": 1
+    },
+    {
+      "key": "w12-q2",
+      "type": "single_choice",
+      "prompt": "You delete a StatefulSet. What happens to its PVCs?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deleted"
+        },
+        {
+          "id": "b",
+          "text": "Kept, so the data survives"
+        },
+        {
+          "id": "c",
+          "text": "Archived"
+        },
+        {
+          "id": "d",
+          "text": "Made read-only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Deleting data should never be a side effect.",
+      "points": 1
+    },
+    {
+      "key": "w12-q3",
+      "type": "single_choice",
+      "prompt": "Pod IP works, ClusterIP does not, on one node only. Which component?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CNI"
+        },
+        {
+          "id": "b",
+          "text": "kube-proxy on that node"
+        },
+        {
+          "id": "c",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "d",
+          "text": "The API server"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pod IP reachability clears the CNI; Service VIPs are per-node programming.",
+      "points": 1
+    },
+    {
+      "key": "w12-q4",
+      "type": "single_choice",
+      "prompt": "Multi-Attach error on a Pending Pod means what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The volume is full"
+        },
+        {
+          "id": "b",
+          "text": "An RWO volume is still attached to another node"
+        },
+        {
+          "id": "c",
+          "text": "Two PVCs share a name"
+        },
+        {
+          "id": "d",
+          "text": "The class is missing"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Usually an old Pod that has not finished terminating.",
+      "points": 1
+    },
+    {
+      "key": "w12-q5",
+      "type": "single_choice",
+      "prompt": "A Pod is stuck ContainerCreating with a mount error. Where is the detail?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Container logs"
+        },
+        {
+          "id": "b",
+          "text": "describe pod events and the kubelet journal"
+        },
+        {
+          "id": "c",
+          "text": "The PVC spec"
+        },
+        {
+          "id": "d",
+          "text": "etcd"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "No container has started, so there are no container logs.",
+      "points": 1
+    },
+    {
+      "key": "w12-q6",
+      "type": "single_choice",
+      "prompt": "Which storage survives rescheduling to a different node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "emptyDir"
+        },
+        {
+          "id": "b",
+          "text": "hostPath"
+        },
+        {
+          "id": "c",
+          "text": "A PVC on networked storage"
+        },
+        {
+          "id": "d",
+          "text": "configMap"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "The first two are node-local by definition.",
+      "points": 1
+    }
+  ]
+}

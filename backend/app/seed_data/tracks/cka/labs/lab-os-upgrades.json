@@ -1,0 +1,33 @@
+{
+  "slug": "lab-os-upgrades",
+  "phase_slug": "cluster-maintenance",
+  "week_number": 9,
+  "title": "Lab - OS upgrades",
+  "description": "Take a node out of service and bring it back.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Take a node out of service and bring it back. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Drain",
+      "instructions": "Drain node01 so it can be rebooted. What flags are needed and why?",
+      "solution": "kubectl drain node01 --ignore-daemonsets",
+      "verification": "kubectl get nodes  # SchedulingDisabled"
+    },
+    {
+      "title": "Task 2 - Uncordon",
+      "instructions": "Bring node01 back and confirm new Pods may land there.",
+      "solution": "kubectl uncordon node01",
+      "verification": "kubectl get nodes"
+    },
+    {
+      "title": "Task 3 - Stuck drain",
+      "instructions": "A Pod on node01 is not managed by a controller. Drain the node anyway, consciously.",
+      "solution": "kubectl drain node01 --ignore-daemonsets --force",
+      "verification": "kubectl get pods -A -o wide | grep node01"
+    }
+  ]
+}

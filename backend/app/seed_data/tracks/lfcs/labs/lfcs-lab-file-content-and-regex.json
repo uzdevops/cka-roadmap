@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-file-content-and-regex",
+  "phase_slug": "essential-commands",
+  "week_number": 2,
+  "title": "Lab - File content and regular expressions",
+  "description": "Slice logs and configuration with the text tools.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 2,
+  "scenario": "Slice logs and configuration with the text tools. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Extract",
+      "instructions": "Print only the usernames from /etc/passwd, sorted, without duplicates.",
+      "solution": "cut -d: -f1 /etc/passwd | sort -u",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Regex",
+      "instructions": "From /var/log/auth.log (or the journal) print lines with a failed password and count them.",
+      "solution": "grep -E \"Failed password\" /var/log/auth.log | wc -l",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Replace",
+      "instructions": "In a copy of /etc/hosts, replace every occurrence of localhost with myhost using sed, in place.",
+      "solution": "cp /etc/hosts /tmp/hosts && sed -i \"s/localhost/myhost/g\" /tmp/hosts",
+      "verification": "grep -c myhost /tmp/hosts"
+    }
+  ]
+}

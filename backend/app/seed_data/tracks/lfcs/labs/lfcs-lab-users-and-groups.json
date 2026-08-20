@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-users-and-groups",
+  "phase_slug": "users-groups",
+  "week_number": 8,
+  "title": "Lab - Manage user accounts and groups",
+  "description": "Create a team of users with the right groups and password policy.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 1,
+  "scenario": "Create a team of users with the right groups and password policy. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Users",
+      "instructions": "Create users ana, bob and cy with home directories and bash shells; set a password for each.",
+      "solution": "useradd -m -s /bin/bash ana  # etc.\npasswd ana",
+      "verification": "getent passwd ana bob cy"
+    },
+    {
+      "title": "Task 2 - Group",
+      "instructions": "Create group devops and add all three as supplementary members.",
+      "solution": "groupadd devops\nusermod -aG devops ana  # etc.",
+      "verification": "getent group devops"
+    },
+    {
+      "title": "Task 3 - Expiry",
+      "instructions": "Force bob to change his password at next login and expire the account on 2030-01-01.",
+      "solution": "chage -d 0 bob\nchage -E 2030-01-01 bob",
+      "verification": "chage -l bob"
+    }
+  ]
+}

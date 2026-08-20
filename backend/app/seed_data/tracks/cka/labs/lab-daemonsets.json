@@ -1,0 +1,33 @@
+{
+  "slug": "lab-daemonsets",
+  "phase_slug": "scheduling",
+  "week_number": 5,
+  "title": "Lab - DaemonSets",
+  "description": "Inspect and write a DaemonSet.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Inspect and write a DaemonSet. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Inventory",
+      "instructions": "How many DaemonSets exist across all namespaces, and which ones?",
+      "solution": "kubectl get ds -A",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Which node",
+      "instructions": "On which nodes does the kube-proxy DaemonSet run Pods?",
+      "solution": "kubectl get pods -n kube-system -l k8s-app=kube-proxy -o wide",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Write one",
+      "instructions": "Create a DaemonSet elasticsearch in kube-system with image registry.k8s.io/fluentd-elasticsearch:1.20.",
+      "solution": "kubectl create deployment elasticsearch -n kube-system --image=registry.k8s.io/fluentd-elasticsearch:1.20 --dry-run=client -o yaml > ds.yaml\n# change kind to DaemonSet, drop replicas and strategy\nkubectl apply -f ds.yaml",
+      "verification": "kubectl get ds -n kube-system elasticsearch"
+    }
+  ]
+}

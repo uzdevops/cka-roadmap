@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-lvm",
+  "phase_slug": "storage",
+  "week_number": 12,
+  "title": "Lab - Manage LVM",
+  "description": "Build a volume group, carve a volume, and grow it online.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Build a volume group, carve a volume, and grow it online. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Create",
+      "instructions": "Make /dev/sdd and /dev/sde physical volumes, group them as vg_data, and create a 2 GiB LV lv_app.",
+      "solution": "pvcreate /dev/sdd /dev/sde\nvgcreate vg_data /dev/sdd /dev/sde\nlvcreate -L 2G -n lv_app vg_data",
+      "verification": "lvs"
+    },
+    {
+      "title": "Task 2 - Use",
+      "instructions": "Format lv_app as ext4 and mount it at /app.",
+      "solution": "mkfs.ext4 /dev/vg_data/lv_app && mkdir -p /app && mount /dev/vg_data/lv_app /app",
+      "verification": "df -h /app"
+    },
+    {
+      "title": "Task 3 - Grow",
+      "instructions": "Extend lv_app by 1 GiB and grow the filesystem without unmounting.",
+      "solution": "lvextend -L +1G -r /dev/vg_data/lv_app",
+      "verification": "df -h /app  # 3G"
+    }
+  ]
+}

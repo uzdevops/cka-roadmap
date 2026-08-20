@@ -1,0 +1,141 @@
+{
+  "slug": "kubernetes-architecture-overview-check",
+  "lesson_slug": "kubernetes-architecture-overview",
+  "phase_slug": "core-concepts",
+  "week_number": 1,
+  "title": "Check: cluster architecture",
+  "description": "Five questions on the two node roles, the API server's position and the path of `kubectl apply`.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-two-roles",
+      "type": "single_choice",
+      "prompt": "What separates a control plane node from a worker node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Control plane nodes have more memory"
+        },
+        {
+          "id": "b",
+          "text": "Control plane nodes make decisions; workers run your containers"
+        },
+        {
+          "id": "c",
+          "text": "Workers cannot run any Kubernetes components"
+        },
+        {
+          "id": "d",
+          "text": "A node can only ever be one or the other"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "The split is by responsibility, not hardware. And a node can be both - in a single-node kind or minikube cluster it is.",
+      "points": 1
+    },
+    {
+      "key": "q2-only-door",
+      "type": "single_choice",
+      "prompt": "Which component is the only one that talks to etcd?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The scheduler"
+        },
+        {
+          "id": "b",
+          "text": "The kubelet"
+        },
+        {
+          "id": "c",
+          "text": "The API server"
+        },
+        {
+          "id": "d",
+          "text": "The controller manager"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "explanation": "Everything else - kubectl, the scheduler, the controllers, every kubelet - is a client of the same REST API. That is what puts access control, auditing and validation in exactly one place.",
+      "points": 1
+    },
+    {
+      "key": "q3-apiserver-down",
+      "type": "single_choice",
+      "prompt": "The API server is down. Your application is still serving traffic. Is that a contradiction?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yes - nothing runs without the API server"
+        },
+        {
+          "id": "b",
+          "text": "No - the data plane keeps working; only new decisions stop"
+        },
+        {
+          "id": "c",
+          "text": "Yes - the kubelet stops the Pods after 30 seconds"
+        },
+        {
+          "id": "d",
+          "text": "No - but only if the scheduler is also down"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "explanation": "The data plane (kubelet, kube-proxy, your containers) keeps running. The control plane just cannot make new decisions or accept changes.",
+      "points": 1
+    },
+    {
+      "key": "q4-apply-path",
+      "type": "multi_select",
+      "prompt": "`kubectl apply` reaches the API server. Which stages does the request pass through before it is stored? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Authentication"
+        },
+        {
+          "id": "b",
+          "text": "Authorisation"
+        },
+        {
+          "id": "c",
+          "text": "Admission control"
+        },
+        {
+          "id": "d",
+          "text": "Scheduling"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Authentication, authorisation and admission all run before the object is validated and written to etcd. Scheduling happens afterwards, when the scheduler notices a Pod with no node.",
+      "points": 2
+    },
+    {
+      "key": "q5-events",
+      "type": "fill_command",
+      "prompt": "Write the command the lesson calls the highest-value single command in the exam: list events, oldest first.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl get events --sort-by=.lastTimestamp",
+        "kubectl get events --sort-by='.lastTimestamp'",
+        "kubectl get ev --sort-by=.lastTimestamp"
+      ],
+      "explanation": "Scheduling failures, image pull failures, probe failures and volume mount failures all announce themselves in events first.",
+      "points": 2
+    }
+  ]
+}

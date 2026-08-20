@@ -1,0 +1,33 @@
+{
+  "slug": "lab-install-vpa",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 8,
+  "title": "Lab - Installing the VPA",
+  "description": "Install the Vertical Pod Autoscaler components.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 3,
+  "scenario": "Install the Vertical Pod Autoscaler components. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Clone and install",
+      "instructions": "Install the VPA from the autoscaler repository.",
+      "solution": "git clone https://github.com/kubernetes/autoscaler.git\ncd autoscaler/vertical-pod-autoscaler && ./hack/vpa-up.sh",
+      "verification": "kubectl get pods -n kube-system | grep vpa"
+    },
+    {
+      "title": "Task 2 - Inspect",
+      "instructions": "Which three components did it deploy and what does each do?",
+      "solution": "kubectl get deploy -n kube-system | grep vpa",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - CRD",
+      "instructions": "Confirm the VerticalPodAutoscaler CRD exists.",
+      "solution": "kubectl get crd | grep verticalpodautoscaler",
+      "verification": "-"
+    }
+  ]
+}

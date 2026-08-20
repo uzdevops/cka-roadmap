@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-nfs",
+  "phase_slug": "storage",
+  "week_number": 12,
+  "title": "Lab - Remote file systems: NFS",
+  "description": "Export a directory and mount it from another host.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 40,
+  "order_index": 1,
+  "scenario": "Export a directory and mount it from another host. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Export",
+      "instructions": "Export /srv/share read-write to 10.0.0.0/24.",
+      "solution": "echo \"/srv/share 10.0.0.0/24(rw,sync,no_subtree_check)\" >> /etc/exports\nexportfs -ra",
+      "verification": "exportfs -v"
+    },
+    {
+      "title": "Task 2 - Mount",
+      "instructions": "From the client, mount it at /mnt/share.",
+      "solution": "mount -t nfs server:/srv/share /mnt/share",
+      "verification": "df -h /mnt/share"
+    },
+    {
+      "title": "Task 3 - Persist",
+      "instructions": "Add an fstab entry with the _netdev option.",
+      "solution": "# server:/srv/share /mnt/share nfs defaults,_netdev 0 0",
+      "verification": "mount -a && findmnt /mnt/share"
+    }
+  ]
+}

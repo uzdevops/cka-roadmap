@@ -1,0 +1,33 @@
+{
+  "slug": "lab-network-policies",
+  "phase_slug": "security",
+  "week_number": 12,
+  "title": "Lab - Network policies",
+  "description": "Lock a database down to one client.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Lock a database down to one client. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Inventory",
+      "instructions": "Which NetworkPolicies exist and which Pods do they select?",
+      "solution": "kubectl get netpol\nkubectl describe netpol <name>",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Test",
+      "instructions": "From the internal Pod, can you reach mysql on 3306 and payroll on 8080?",
+      "solution": "kubectl exec internal -- nc -zv mysql 3306",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Write",
+      "instructions": "Create internal-policy: Pods with name=internal may egress only to mysql:3306 and payroll:8080 (plus DNS on 53).",
+      "solution": "# policyTypes: [Egress]; egress rules with podSelector + ports; allow UDP/TCP 53",
+      "verification": "kubectl exec internal -- nc -zv payroll 8080  # ok; external blocked"
+    }
+  ]
+}

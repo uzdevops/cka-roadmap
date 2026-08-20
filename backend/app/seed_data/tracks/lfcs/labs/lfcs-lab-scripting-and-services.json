@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-scripting-and-services",
+  "phase_slug": "operations-deployment",
+  "week_number": 5,
+  "title": "Lab - Scripting, startup and services",
+  "description": "Write a script, run it as a service, and make it survive reboots.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Write a script, run it as a service, and make it survive reboots. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Script",
+      "instructions": "Write /usr/local/bin/diskreport.sh that appends df -h to /var/log/diskreport.log with a timestamp.",
+      "solution": "#!/bin/bash\n{ date; df -h; } >> /var/log/diskreport.log",
+      "verification": "bash /usr/local/bin/diskreport.sh && tail -3 /var/log/diskreport.log"
+    },
+    {
+      "title": "Task 2 - Unit",
+      "instructions": "Create diskreport.service running it as a oneshot, then start it.",
+      "solution": "# [Service] Type=oneshot ExecStart=/usr/local/bin/diskreport.sh; [Install] WantedBy=multi-user.target\nsystemctl daemon-reload && systemctl start diskreport",
+      "verification": "systemctl status diskreport"
+    },
+    {
+      "title": "Task 3 - Target",
+      "instructions": "Set the default target to multi-user and confirm without rebooting.",
+      "solution": "systemctl set-default multi-user.target",
+      "verification": "systemctl get-default"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "lab-image-security",
+  "phase_slug": "security",
+  "week_number": 11,
+  "title": "Lab - Image security",
+  "description": "Pull from a private registry.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 5,
+  "scenario": "Pull from a private registry. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Inspect",
+      "instructions": "What image does Deployment web use, and which registry is that really?",
+      "solution": "kubectl get deploy web -o jsonpath='{.spec.template.spec.containers[0].image}'",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Secret",
+      "instructions": "Create a docker-registry Secret private-reg-cred for myprivateregistry.com:5000.",
+      "solution": "kubectl create secret docker-registry private-reg-cred --docker-server=myprivateregistry.com:5000 --docker-username=dock_user --docker-password=dock_password --docker-email=dock_user@myprivateregistry.com",
+      "verification": "kubectl get secret private-reg-cred"
+    },
+    {
+      "title": "Task 3 - Use it",
+      "instructions": "Point the Deployment at the private image and use the Secret to pull.",
+      "solution": "kubectl edit deploy web  # image + imagePullSecrets: [{name: private-reg-cred}]",
+      "verification": "kubectl get pods  # Running"
+    }
+  ]
+}

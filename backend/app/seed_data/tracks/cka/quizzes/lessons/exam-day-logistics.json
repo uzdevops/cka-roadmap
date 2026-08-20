@@ -1,0 +1,158 @@
+{
+  "slug": "exam-day-logistics-check",
+  "lesson_slug": "exam-day-logistics",
+  "phase_slug": "exam-prep",
+  "week_number": 20,
+  "title": "Check: exam day",
+  "description": "Five questions on the rules and the environment.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-duration",
+      "type": "single_choice",
+      "prompt": "How long is the CKA exam?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One hour"
+        },
+        {
+          "id": "b",
+          "text": "Two hours"
+        },
+        {
+          "id": "c",
+          "text": "Three hours"
+        },
+        {
+          "id": "d",
+          "text": "Four hours"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It was three hours historically. Courses recorded before the change still say so - the current exam is two.",
+      "points": 1
+    },
+    {
+      "key": "q2-docs",
+      "type": "single_choice",
+      "prompt": "What documentation may you use during the exam?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "The official Kubernetes documentation, in one extra browser tab"
+        },
+        {
+          "id": "c",
+          "text": "Any website"
+        },
+        {
+          "id": "d",
+          "text": "Personal notes only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "kubernetes.io docs, blog and GitHub. Practise finding pages quickly - searching badly costs minutes you do not have.",
+      "points": 1
+    },
+    {
+      "key": "q3-context",
+      "type": "single_choice",
+      "prompt": "Each task starts by giving you a cluster context. Why does it matter?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It sets the exam timer"
+        },
+        {
+          "id": "b",
+          "text": "Correct work in the wrong cluster scores nothing"
+        },
+        {
+          "id": "c",
+          "text": "It changes the kubectl version"
+        },
+        {
+          "id": "d",
+          "text": "It selects the documentation"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Run the given `kubectl config use-context` command first, every single time.",
+      "points": 1
+    },
+    {
+      "key": "q4-first-minute",
+      "type": "single_choice",
+      "prompt": "What is the highest-value thing to do in the first minute?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Read every question"
+        },
+        {
+          "id": "b",
+          "text": "Set up an alias and autocompletion"
+        },
+        {
+          "id": "c",
+          "text": "Check the cluster version"
+        },
+        {
+          "id": "d",
+          "text": "Create a namespace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`alias k=kubectl` plus completion pays for itself many times over in a two-hour terminal exam.",
+      "points": 1
+    },
+    {
+      "key": "q5-skip",
+      "type": "single_choice",
+      "prompt": "You are stuck on a heavily weighted task with plenty of questions left. What is the right move?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Keep going until it works"
+        },
+        {
+          "id": "b",
+          "text": "Flag it, move on, and come back with whatever time remains"
+        },
+        {
+          "id": "c",
+          "text": "Restart the cluster"
+        },
+        {
+          "id": "d",
+          "text": "Guess and submit"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Marks are per task. Time spent stuck is marks not collected elsewhere.",
+      "points": 1
+    }
+  ]
+}

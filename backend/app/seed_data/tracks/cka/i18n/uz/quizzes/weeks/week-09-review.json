@@ -1,0 +1,138 @@
+{
+  "title": "15-hafta takrori - tarmoq va Service’lar",
+  "description": "Tarmoq modeli, Service’lar va DNS bo’yicha oltita savol.",
+  "questions": {
+    "w9-q1": {
+      "prompt": "Kubernetes tarmoq modeli nimalarni talab qiladi? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Har bir Pod’ning o’z IP’si bo’ladi"
+        },
+        {
+          "id": "b",
+          "text": "Pod’lar bir-biriga NAT’siz yeta oladi"
+        },
+        {
+          "id": "c",
+          "text": "Node’dagi agentlar o’sha node’dagi Pod’larga yeta oladi"
+        },
+        {
+          "id": "d",
+          "text": "Trafik shifrlanadi"
+        }
+      ],
+      "explanation": "Shifrlash - plaginning qo’shimcha imkoniyati, model shartnomasining qismi emas."
+    },
+    "w9-q2": {
+      "prompt": "NodePort’ning standart diapazoni qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "1-1024"
+        },
+        {
+          "id": "b",
+          "text": "30000-32767"
+        },
+        {
+          "id": "c",
+          "text": "8000-9000"
+        },
+        {
+          "id": "d",
+          "text": "Istalgan bo’sh port"
+        }
+      ],
+      "explanation": "Buni --service-node-port-range orqali o’zgartirish mumkin."
+    },
+    "w9-q3": {
+      "prompt": "Service Pod’larni tanlayapti, lekin trafikni hech qayerga yubormayapti. Avvalo nimani tekshirasiz?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Node marshrutlarini"
+        },
+        {
+          "id": "b",
+          "text": "Uning EndpointSlice’larini"
+        },
+        {
+          "id": "c",
+          "text": "Ingress’ni"
+        },
+        {
+          "id": "d",
+          "text": "etcd’ni"
+        }
+      ],
+      "explanation": "Bo’sh endpoint’lar - bu label yoki readiness muammosi, tarmoq muammosi emas."
+    },
+    "w9-q4": {
+      "prompt": "prod namespace’idagi api Service’ining FQDN’i qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "api.prod.pod.cluster.local"
+        },
+        {
+          "id": "b",
+          "text": "api.prod.svc.cluster.local"
+        },
+        {
+          "id": "c",
+          "text": "prod.api.svc.cluster.local"
+        },
+        {
+          "id": "d",
+          "text": "api.svc.prod.cluster.local"
+        }
+      ],
+      "explanation": "Shakli doim bitta: <service>.<namespace>.svc.cluster.local."
+    },
+    "w9-q5": {
+      "prompt": "clusterIP: None nima beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Buzilgan Service"
+        },
+        {
+          "id": "b",
+          "text": "To’g’ridan-to’g’ri Pod IP’larini qaytaradigan headless Service"
+        },
+        {
+          "id": "c",
+          "text": "Tashqi Service"
+        },
+        {
+          "id": "d",
+          "text": "NodePort"
+        }
+      ],
+      "explanation": "Aynan shu tarzda StatefulSet a’zolari alohida nomlarga ega bo’ladi."
+    },
+    "w9-q6": {
+      "prompt": "Nom aniqlash ishlamayapti, lekin ClusterIP ishlayapti. Qaysi komponent aybdor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "b",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "c",
+          "text": "CNI plagini"
+        },
+        {
+          "id": "d",
+          "text": "scheduler"
+        }
+      ],
+      "explanation": "IP orqali yo’l ishlashi isbotlangan; faqat nom qidirish buzilgan."
+    }
+  }
+}

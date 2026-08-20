@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-permissions-and-search",
+  "phase_slug": "essential-commands",
+  "week_number": 2,
+  "title": "Lab - File permissions and searching for files",
+  "description": "Audit permissions and hunt down files by their properties.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 1,
+  "scenario": "Audit permissions and hunt down files by their properties. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Octal",
+      "instructions": "Make /opt/lab/bin/run executable by owner and group only, readable by nobody else, in one chmod.",
+      "solution": "chmod 750 /opt/lab/bin/run",
+      "verification": "ls -l /opt/lab/bin/run  # -rwxr-x---"
+    },
+    {
+      "title": "Task 2 - SUID audit",
+      "instructions": "List every SUID binary under /usr/bin.",
+      "solution": "find /usr/bin -perm -4000 -type f",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Recent and large",
+      "instructions": "Find files under /var larger than 10M modified in the last 2 days.",
+      "solution": "find /var -type f -size +10M -mtime -2",
+      "verification": "-"
+    }
+  ]
+}

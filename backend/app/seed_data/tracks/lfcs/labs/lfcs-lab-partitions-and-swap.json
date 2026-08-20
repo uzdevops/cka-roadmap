@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-partitions-and-swap",
+  "phase_slug": "storage",
+  "week_number": 11,
+  "title": "Lab - Manage partitions and swap space",
+  "description": "Partition a disk and add swap two ways.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 1,
+  "scenario": "Partition a disk and add swap two ways. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Partition",
+      "instructions": "Create a 1 GiB GPT partition on /dev/sdb.",
+      "solution": "parted /dev/sdb mklabel gpt mkpart primary 1MiB 1025MiB",
+      "verification": "lsblk /dev/sdb"
+    },
+    {
+      "title": "Task 2 - Swap partition",
+      "instructions": "Make it swap, enable it, and persist it in fstab.",
+      "solution": "mkswap /dev/sdb1 && swapon /dev/sdb1\necho \"UUID=$(blkid -s UUID -o value /dev/sdb1) none swap defaults 0 0\" >> /etc/fstab",
+      "verification": "swapon --show"
+    },
+    {
+      "title": "Task 3 - Swap file",
+      "instructions": "Add a 512 MiB swap file at /swapfile.",
+      "solution": "fallocate -l 512M /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile",
+      "verification": "free -h"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "lab-namespaces",
+  "phase_slug": "core-concepts",
+  "week_number": 3,
+  "title": "Lab - Namespaces",
+  "description": "Create namespaces, run workloads in them and reach across the boundary.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Create namespaces, run workloads in them and reach across the boundary. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Create and use",
+      "instructions": "Create namespace dev and run a Pod in it without the -n flag.",
+      "solution": "kubectl create ns dev\nkubectl config set-context --current --namespace=dev\nkubectl run web --image=nginx",
+      "verification": "kubectl get pods -n dev"
+    },
+    {
+      "title": "Task 2 - Cross-namespace DNS",
+      "instructions": "From a Pod in default, resolve a Service called api in namespace dev.",
+      "solution": "kubectl run t --rm -it --image=busybox -n default -- nslookup api.dev.svc.cluster.local",
+      "verification": "exit code 0 and an address"
+    },
+    {
+      "title": "Task 3 - Count",
+      "instructions": "Count the Pods in every namespace with one command.",
+      "solution": "kubectl get pods -A --no-headers | wc -l",
+      "verification": "-"
+    }
+  ]
+}

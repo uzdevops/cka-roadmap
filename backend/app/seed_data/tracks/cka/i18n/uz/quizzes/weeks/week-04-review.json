@@ -1,0 +1,102 @@
+{
+  "title": "2-hafta takrori - kontrollerlar va namespace’lar",
+  "description": "Deployment, ReplicaSet va namespace qamrovi bo’yicha oltita savol.",
+  "questions": {
+    "w4-q1": {
+      "prompt": "Deployment ostidagi egalik zanjiri qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deployment’dan Pod’ga"
+        },
+        {
+          "id": "b",
+          "text": "Deployment’dan ReplicaSet’ga, undan Pod’ga"
+        },
+        {
+          "id": "c",
+          "text": "ReplicaSet’dan Deployment’ga, undan Pod’ga"
+        },
+        {
+          "id": "d",
+          "text": "Deployment’dan DaemonSet’ga, undan Pod’ga"
+        }
+      ],
+      "explanation": "Rollout - bu bitta ReplicaSet kattalashib, boshqasi kichrayishidan iborat."
+    },
+    "w4-q2": {
+      "prompt": "web Deployment’ini bitta reviziyaga orqaga qaytaradigan buyruqni yozing.",
+      "explanation": "Eski ReplicaSet’lar aynan shuni imkonli qilish uchun saqlab qolinadi."
+    },
+    "w4-q3": {
+      "prompt": "Nega Deployment’ning spec.selector maydoni o’zgarmas (immutable)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Saqlash joyini tejash uchun"
+        },
+        {
+          "id": "b",
+          "text": "Uni o’zgartirish o’ziga qarashli ReplicaSet va Pod’larni yetim qoldirar edi"
+        },
+        {
+          "id": "c",
+          "text": "RBAC buni taqiqlaydi"
+        },
+        {
+          "id": "d",
+          "text": "U o’zgarmas emas"
+        }
+      ],
+      "explanation": "Kubernetes’da egalik - bu label bo’yicha so’rov; so’rovni siljitsangiz, unga qarashli obyektlarni yo’qotasiz."
+    },
+    "w4-q4": {
+      "prompt": "Qaysi resurslar klaster darajasida (cluster-scoped)? Barcha to’g’ri javoblarni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Node"
+        },
+        {
+          "id": "b",
+          "text": "PersistentVolume"
+        },
+        {
+          "id": "c",
+          "text": "Namespace"
+        },
+        {
+          "id": "d",
+          "text": "Secret"
+        }
+      ],
+      "explanation": "`kubectl api-resources --namespaced=false` - ishonchli to’liq ro’yxat."
+    },
+    "w4-q5": {
+      "prompt": "dev namespace’ini context’ingiz uchun standart qiladigan buyruqni yozing.",
+      "explanation": "Shundan keyin har bir buyruqqa -n yozib o’tirish shart bo’lmaydi."
+    },
+    "w4-q6": {
+      "prompt": "Namespace’da CPU bo’yicha ResourceQuota bor. requests ko’rsatilmagan Pod yaratilmoqda. Nima bo’ladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "U odatdagidek rejalashtiriladi"
+        },
+        {
+          "id": "b",
+          "text": "requests e’lon qilmaguncha rad etiladi"
+        },
+        {
+          "id": "c",
+          "text": "Unga bitta CPU beriladi"
+        },
+        {
+          "id": "d",
+          "text": "Kvota e’tiborga olinmaydi"
+        }
+      ],
+      "explanation": "LimitRange standart qiymatlarni bera oladi, shunda manifest muallifi ularni har safar o’zi yozishi shart emas."
+    }
+  }
+}

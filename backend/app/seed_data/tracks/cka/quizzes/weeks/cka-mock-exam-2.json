@@ -1,0 +1,447 @@
+{
+  "slug": "cka-mock-exam-2",
+  "phase_slug": "exam-prep",
+  "week_number": 20,
+  "title": "CKA mock exam 2 - review",
+  "description": "Fifteen more questions, heavier on troubleshooting and cluster administration.",
+  "pass_score": 70,
+  "time_limit_minutes": 60,
+  "order_index": 22,
+  "questions": [
+    {
+      "key": "m2-01",
+      "type": "single_choice",
+      "prompt": "kube-apiserver is down and kubectl hangs. Where do you look first on the control plane node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl logs kube-apiserver"
+        },
+        {
+          "id": "b",
+          "text": "crictl ps -a and crictl logs for the apiserver container"
+        },
+        {
+          "id": "c",
+          "text": "journalctl -u kube-apiserver"
+        },
+        {
+          "id": "d",
+          "text": "/var/log/pods only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "With the API down kubectl cannot help; the container runtime still shows the static Pod container and its logs.",
+      "points": 1
+    },
+    {
+      "key": "m2-02",
+      "type": "single_choice",
+      "prompt": "Which restore command is correct for etcd 3.5+?",
+      "options": [
+        {
+          "id": "a",
+          "text": "etcdctl snapshot restore snap.db --data-dir /var/lib/etcd-new"
+        },
+        {
+          "id": "b",
+          "text": "etcdutl snapshot restore snap.db --data-dir /var/lib/etcd-new"
+        },
+        {
+          "id": "c",
+          "text": "kubeadm etcd restore"
+        },
+        {
+          "id": "d",
+          "text": "etcdctl restore --from snap.db"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Restore moved to etcdutl; etcdctl still takes the snapshot.",
+      "points": 1
+    },
+    {
+      "key": "m2-03",
+      "type": "single_choice",
+      "prompt": "A Deployment's Pods are OOMKilled. What do you change?",
+      "options": [
+        {
+          "id": "a",
+          "text": "spec.replicas"
+        },
+        {
+          "id": "b",
+          "text": "resources.limits.memory on the container"
+        },
+        {
+          "id": "c",
+          "text": "the Service port"
+        },
+        {
+          "id": "d",
+          "text": "the node taint"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "OOMKilled means the container crossed its memory limit; raise the limit or fix the app.",
+      "points": 1
+    },
+    {
+      "key": "m2-04",
+      "type": "single_choice",
+      "prompt": "Which command shows why a Pod is Pending?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl logs <pod>"
+        },
+        {
+          "id": "b",
+          "text": "kubectl describe pod <pod>"
+        },
+        {
+          "id": "c",
+          "text": "kubectl top pod <pod>"
+        },
+        {
+          "id": "d",
+          "text": "kubectl exec <pod> -- dmesg"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Scheduling decisions are events, and describe shows them; there are no logs before a container starts.",
+      "points": 1
+    },
+    {
+      "key": "m2-05",
+      "type": "single_choice",
+      "prompt": "Which component must be configured for kubectl exec and kubectl logs to work?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "b",
+          "text": "kubelet on the node"
+        },
+        {
+          "id": "c",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "d",
+          "text": "etcd"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "exec and logs go API server -> kubelet -> container; a broken kubelet connection breaks both.",
+      "points": 1
+    },
+    {
+      "key": "m2-06",
+      "type": "single_choice",
+      "prompt": "A static Pod shows in kubectl get pods but kubectl delete pod does nothing lasting. Why?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RBAC denies the delete"
+        },
+        {
+          "id": "b",
+          "text": "The kubelet recreates it from the manifest directory"
+        },
+        {
+          "id": "c",
+          "text": "It is a DaemonSet"
+        },
+        {
+          "id": "d",
+          "text": "Finalizers block it"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Static Pods are owned by the kubelet; remove the manifest file to remove the Pod.",
+      "points": 1
+    },
+    {
+      "key": "m2-07",
+      "type": "single_choice",
+      "prompt": "Which flag on kube-apiserver enables an admission plugin?",
+      "options": [
+        {
+          "id": "a",
+          "text": "--admission-control"
+        },
+        {
+          "id": "b",
+          "text": "--enable-admission-plugins"
+        },
+        {
+          "id": "c",
+          "text": "--plugins"
+        },
+        {
+          "id": "d",
+          "text": "--feature-gates"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "--enable-admission-plugins (and --disable-admission-plugins) on the API server static Pod.",
+      "points": 1
+    },
+    {
+      "key": "m2-08",
+      "type": "single_choice",
+      "prompt": "How do you make a Pod run on a specific node without involving the scheduler?",
+      "options": [
+        {
+          "id": "a",
+          "text": "nodeSelector"
+        },
+        {
+          "id": "b",
+          "text": "nodeName in the Pod spec"
+        },
+        {
+          "id": "c",
+          "text": "a toleration"
+        },
+        {
+          "id": "d",
+          "text": "podAffinity"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "nodeName bypasses scheduling entirely; nodeSelector and affinity still go through the scheduler.",
+      "points": 1
+    },
+    {
+      "key": "m2-09",
+      "type": "single_choice",
+      "prompt": "A user's kubeconfig names a client certificate file that does not exist. What do they see?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A 403 Forbidden"
+        },
+        {
+          "id": "b",
+          "text": "An error that the file cannot be read, before any request is made"
+        },
+        {
+          "id": "c",
+          "text": "An empty Pod list"
+        },
+        {
+          "id": "d",
+          "text": "A certificate signed by the wrong CA"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "kubectl loads the credentials first; a missing file fails locally, never reaching the server.",
+      "points": 1
+    },
+    {
+      "key": "m2-10",
+      "type": "single_choice",
+      "prompt": "Which command lists the API resources and their short names?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl api-versions"
+        },
+        {
+          "id": "b",
+          "text": "kubectl api-resources"
+        },
+        {
+          "id": "c",
+          "text": "kubectl explain"
+        },
+        {
+          "id": "d",
+          "text": "kubectl get all"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "api-resources lists kinds, short names, API groups and whether they are namespaced.",
+      "points": 1
+    },
+    {
+      "key": "m2-11",
+      "type": "single_choice",
+      "prompt": "What does kubectl cordon do that drain does not?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Evicts Pods"
+        },
+        {
+          "id": "b",
+          "text": "Only marks the node unschedulable"
+        },
+        {
+          "id": "c",
+          "text": "Deletes the node"
+        },
+        {
+          "id": "d",
+          "text": "Restarts the kubelet"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "cordon is the marking step alone; drain cordons and then evicts.",
+      "points": 1
+    },
+    {
+      "key": "m2-12",
+      "type": "single_choice",
+      "prompt": "Which Ingress field routes /pay to pay-service:8282 in networking.k8s.io/v1?",
+      "options": [
+        {
+          "id": "a",
+          "text": "spec.backend"
+        },
+        {
+          "id": "b",
+          "text": "spec.rules[].http.paths[].backend.service with name and port.number"
+        },
+        {
+          "id": "c",
+          "text": "spec.serviceName"
+        },
+        {
+          "id": "d",
+          "text": "metadata.annotations"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "v1 Ingress nests the backend under service: {name, port: {number}}; the old serviceName form is gone.",
+      "points": 1
+    },
+    {
+      "key": "m2-13",
+      "type": "single_choice",
+      "prompt": "CoreDNS Pods are Running but names do not resolve. What do you check next?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The kube-dns Service and its endpoints"
+        },
+        {
+          "id": "b",
+          "text": "The node taints"
+        },
+        {
+          "id": "c",
+          "text": "etcd quorum"
+        },
+        {
+          "id": "d",
+          "text": "The Ingress controller"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pods resolve through the kube-dns ClusterIP; if the Service or endpoints are wrong, resolution fails.",
+      "points": 1
+    },
+    {
+      "key": "m2-14",
+      "type": "single_choice",
+      "prompt": "Which command generates a Deployment manifest without creating it?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl create deployment web --image=nginx --dry-run=client -o yaml"
+        },
+        {
+          "id": "b",
+          "text": "kubectl get deployment web -o yaml"
+        },
+        {
+          "id": "c",
+          "text": "kubectl run web --image=nginx"
+        },
+        {
+          "id": "d",
+          "text": "kubectl apply --dry-run"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "--dry-run=client -o yaml prints the object the command would have created.",
+      "points": 1
+    },
+    {
+      "key": "m2-15",
+      "type": "single_choice",
+      "prompt": "A Job should run 5 Pods to completion, 2 at a time. Which fields?",
+      "options": [
+        {
+          "id": "a",
+          "text": "replicas: 5, parallelism: 2"
+        },
+        {
+          "id": "b",
+          "text": "completions: 5, parallelism: 2"
+        },
+        {
+          "id": "c",
+          "text": "completions: 2, parallelism: 5"
+        },
+        {
+          "id": "d",
+          "text": "backoffLimit: 5"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "completions is the total to finish; parallelism is how many run at once.",
+      "points": 1
+    }
+  ]
+}

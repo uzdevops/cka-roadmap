@@ -1,0 +1,33 @@
+{
+  "slug": "lab-custom-resource-definition",
+  "phase_slug": "security",
+  "week_number": 12,
+  "title": "Lab - Custom Resource Definitions",
+  "description": "Define a new kind and create one.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 3,
+  "scenario": "Define a new kind and create one. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Inspect",
+      "instructions": "Which CRDs already exist in the cluster?",
+      "solution": "kubectl get crd",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Create a CRD",
+      "instructions": "Create CRD internals.datasets.kodekloud.com with a Namespaced scope and an openAPI schema for spec.internalLoad (string) and spec.range (integer).",
+      "solution": "# kind: CustomResourceDefinition with versions[].schema",
+      "verification": "kubectl api-resources | grep internals"
+    },
+    {
+      "title": "Task 3 - Create an object",
+      "instructions": "Create an Internal object named internal-space with range 80.",
+      "solution": "# apiVersion: datasets.kodekloud.com/v1, kind: Internal",
+      "verification": "kubectl get internals"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "lab-helm-deploy-a-chart",
+  "phase_slug": "helm-kustomize",
+  "week_number": 18,
+  "title": "Lab - Deploying a chart with Helm",
+  "description": "Install, customise and inspect a release.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 2,
+  "scenario": "Install, customise and inspect a release. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Install",
+      "instructions": "Install the bitnami apache chart as release amaze-surf.",
+      "solution": "helm install amaze-surf bitnami/apache",
+      "verification": "helm list"
+    },
+    {
+      "title": "Task 2 - Customise",
+      "instructions": "Install nginx as release happy-browse with replicaCount=2.",
+      "solution": "helm install happy-browse bitnami/nginx --set replicaCount=2",
+      "verification": "kubectl get pods"
+    },
+    {
+      "title": "Task 3 - Inspect",
+      "instructions": "Which chart version did amaze-surf use, and how many revisions does it have?",
+      "solution": "helm list\nhelm history amaze-surf",
+      "verification": "-"
+    }
+  ]
+}

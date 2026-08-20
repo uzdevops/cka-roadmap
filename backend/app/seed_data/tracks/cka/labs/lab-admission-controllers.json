@@ -1,0 +1,33 @@
+{
+  "slug": "lab-admission-controllers",
+  "phase_slug": "scheduling",
+  "week_number": 5,
+  "title": "Lab - Admission controllers",
+  "description": "Enable a built-in admission plugin and watch it act.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 5,
+  "scenario": "Enable a built-in admission plugin and watch it act. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Which are enabled",
+      "instructions": "List the admission plugins the API server currently enables.",
+      "solution": "ps -ef | grep kube-apiserver | grep admission-plugins",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Enable NamespaceAutoProvision",
+      "instructions": "Edit the static Pod manifest to enable NamespaceAutoProvision and create a Pod in a namespace that does not exist.",
+      "solution": "# /etc/kubernetes/manifests/kube-apiserver.yaml: --enable-admission-plugins=NodeRestriction,NamespaceAutoProvision\nkubectl run nginx --image=nginx -n blue",
+      "verification": "kubectl get ns blue"
+    },
+    {
+      "title": "Task 3 - Disable DefaultStorageClass",
+      "instructions": "Disable the DefaultStorageClass plugin and confirm a new PVC gets no class.",
+      "solution": "--disable-admission-plugins=DefaultStorageClass",
+      "verification": "kubectl get pvc <pvc>  # STORAGECLASS empty"
+    }
+  ]
+}

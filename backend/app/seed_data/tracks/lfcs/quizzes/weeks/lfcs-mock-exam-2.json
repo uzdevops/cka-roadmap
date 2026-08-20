@@ -1,0 +1,447 @@
+{
+  "slug": "lfcs-mock-exam-2",
+  "phase_slug": "exam-prep",
+  "week_number": 13,
+  "title": "LFCS mock exam 2 - review",
+  "description": "Fifteen questions across the five LFCS domains, at exam pace.",
+  "pass_score": 70,
+  "time_limit_minutes": 45,
+  "order_index": 2,
+  "questions": [
+    {
+      "key": "l2-01",
+      "type": "single_choice",
+      "prompt": "Which command shows the last 50 journal lines for sshd and follows?",
+      "options": [
+        {
+          "id": "a",
+          "text": "journalctl -u sshd -n 50 -f"
+        },
+        {
+          "id": "b",
+          "text": "tail -f /var/log/sshd"
+        },
+        {
+          "id": "c",
+          "text": "systemctl log sshd"
+        },
+        {
+          "id": "d",
+          "text": "dmesg | grep sshd"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "-u filters by unit, -n limits, -f follows.",
+      "points": 1
+    },
+    {
+      "key": "l2-02",
+      "type": "single_choice",
+      "prompt": "What does the sticky bit on /tmp do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Makes files executable"
+        },
+        {
+          "id": "b",
+          "text": "Only a file's owner may delete it"
+        },
+        {
+          "id": "c",
+          "text": "Runs files as the directory owner"
+        },
+        {
+          "id": "d",
+          "text": "Disables writes"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "On a world-writable directory the sticky bit restricts deletion to the owner.",
+      "points": 1
+    },
+    {
+      "key": "l2-03",
+      "type": "single_choice",
+      "prompt": "Which tar flags create a gzip archive of /etc?",
+      "options": [
+        {
+          "id": "a",
+          "text": "tar xzf etc.tgz /etc"
+        },
+        {
+          "id": "b",
+          "text": "tar czf etc.tgz /etc"
+        },
+        {
+          "id": "c",
+          "text": "tar tzf etc.tgz /etc"
+        },
+        {
+          "id": "d",
+          "text": "tar cjf etc.tgz /etc"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "c create, z gzip, f file; j would be bzip2.",
+      "points": 1
+    },
+    {
+      "key": "l2-04",
+      "type": "single_choice",
+      "prompt": "Which command changes the default boot target to text mode?",
+      "options": [
+        {
+          "id": "a",
+          "text": "systemctl isolate multi-user.target"
+        },
+        {
+          "id": "b",
+          "text": "systemctl set-default multi-user.target"
+        },
+        {
+          "id": "c",
+          "text": "init 3"
+        },
+        {
+          "id": "d",
+          "text": "systemctl disable graphical"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "set-default changes the symlink used at boot; isolate switches now only.",
+      "points": 1
+    },
+    {
+      "key": "l2-05",
+      "type": "single_choice",
+      "prompt": "Which file lists sudo rules and must be edited with visudo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/sudoers"
+        },
+        {
+          "id": "b",
+          "text": "/etc/sudo.conf"
+        },
+        {
+          "id": "c",
+          "text": "/etc/passwd"
+        },
+        {
+          "id": "d",
+          "text": "/etc/security/access.conf"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "visudo checks syntax before saving /etc/sudoers.",
+      "points": 1
+    },
+    {
+      "key": "l2-06",
+      "type": "single_choice",
+      "prompt": "A filesystem is mounted read-only after errors. What do you run after unmounting?",
+      "options": [
+        {
+          "id": "a",
+          "text": "mkfs"
+        },
+        {
+          "id": "b",
+          "text": "fsck"
+        },
+        {
+          "id": "c",
+          "text": "mount -o rw"
+        },
+        {
+          "id": "d",
+          "text": "tune2fs -O"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "fsck checks and repairs; mkfs would destroy the data.",
+      "points": 1
+    },
+    {
+      "key": "l2-07",
+      "type": "single_choice",
+      "prompt": "Which nmcli command applies a changed connection?",
+      "options": [
+        {
+          "id": "a",
+          "text": "nmcli con reload"
+        },
+        {
+          "id": "b",
+          "text": "nmcli con up <name>"
+        },
+        {
+          "id": "c",
+          "text": "nmcli dev status"
+        },
+        {
+          "id": "d",
+          "text": "nmcli gen reload"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "con up re-activates the connection with the modified settings.",
+      "points": 1
+    },
+    {
+      "key": "l2-08",
+      "type": "single_choice",
+      "prompt": "Which file holds NFS exports?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/nfs.conf"
+        },
+        {
+          "id": "b",
+          "text": "/etc/exports"
+        },
+        {
+          "id": "c",
+          "text": "/etc/fstab"
+        },
+        {
+          "id": "d",
+          "text": "/etc/nfsmount.conf"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "/etc/exports lists directories and the clients allowed, then exportfs -ra.",
+      "points": 1
+    },
+    {
+      "key": "l2-09",
+      "type": "single_choice",
+      "prompt": "Which command gives user bob read access to a file via an ACL?",
+      "options": [
+        {
+          "id": "a",
+          "text": "chmod o+r file"
+        },
+        {
+          "id": "b",
+          "text": "setfacl -m u:bob:r file"
+        },
+        {
+          "id": "c",
+          "text": "chown bob file"
+        },
+        {
+          "id": "d",
+          "text": "getfacl bob file"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "setfacl -m modifies ACL entries; getfacl reads them.",
+      "points": 1
+    },
+    {
+      "key": "l2-10",
+      "type": "single_choice",
+      "prompt": "Which command shows block devices and their mount points?",
+      "options": [
+        {
+          "id": "a",
+          "text": "fdisk -l"
+        },
+        {
+          "id": "b",
+          "text": "lsblk"
+        },
+        {
+          "id": "c",
+          "text": "df -i"
+        },
+        {
+          "id": "d",
+          "text": "blkid"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "lsblk shows the device tree with mountpoints; blkid shows UUIDs and types.",
+      "points": 1
+    },
+    {
+      "key": "l2-11",
+      "type": "single_choice",
+      "prompt": "Which signal does kill send by default?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SIGKILL (9)"
+        },
+        {
+          "id": "b",
+          "text": "SIGTERM (15)"
+        },
+        {
+          "id": "c",
+          "text": "SIGHUP (1)"
+        },
+        {
+          "id": "d",
+          "text": "SIGSTOP"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "kill sends TERM unless told otherwise; -9 is the unignorable KILL.",
+      "points": 1
+    },
+    {
+      "key": "l2-12",
+      "type": "single_choice",
+      "prompt": "Which command synchronises the clock with chrony right now?",
+      "options": [
+        {
+          "id": "a",
+          "text": "chronyc makestep"
+        },
+        {
+          "id": "b",
+          "text": "timedatectl set-ntp off"
+        },
+        {
+          "id": "c",
+          "text": "hwclock -w"
+        },
+        {
+          "id": "d",
+          "text": "ntpdate -q"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "makestep forces an immediate step; set-ntp on enables ongoing sync.",
+      "points": 1
+    },
+    {
+      "key": "l2-13",
+      "type": "single_choice",
+      "prompt": "Which command finds files under /home modified in the last 24 hours?",
+      "options": [
+        {
+          "id": "a",
+          "text": "find /home -mtime -1"
+        },
+        {
+          "id": "b",
+          "text": "find /home -newer 24h"
+        },
+        {
+          "id": "c",
+          "text": "ls -lt /home"
+        },
+        {
+          "id": "d",
+          "text": "locate -d1 /home"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "-mtime -1 means modified less than one day ago.",
+      "points": 1
+    },
+    {
+      "key": "l2-14",
+      "type": "single_choice",
+      "prompt": "What does systemctl mask do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Stops the service"
+        },
+        {
+          "id": "b",
+          "text": "Links the unit to /dev/null so it cannot be started"
+        },
+        {
+          "id": "c",
+          "text": "Hides it from status"
+        },
+        {
+          "id": "d",
+          "text": "Disables at boot only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "mask is stronger than disable: even a manual start fails.",
+      "points": 1
+    },
+    {
+      "key": "l2-15",
+      "type": "single_choice",
+      "prompt": "Which option makes rsync delete files in the destination that are gone from the source?",
+      "options": [
+        {
+          "id": "a",
+          "text": "-a"
+        },
+        {
+          "id": "b",
+          "text": "--delete"
+        },
+        {
+          "id": "c",
+          "text": "--prune"
+        },
+        {
+          "id": "d",
+          "text": "-u"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "--delete mirrors removals; -a is archive mode.",
+      "points": 1
+    }
+  ]
+}

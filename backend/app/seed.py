@@ -1,14 +1,24 @@
 """Idempotent database seeding.
 
-Run on every container start. The rule is simple and makes re-runs safe:
+Run on every container start. Two kinds of thing come out of the seed files,
+and they are owned differently:
 
-* objects are matched by their natural key (slug, week number, email);
-* missing objects are created;
-* existing objects are left alone, so edits made through the admin panel
-  survive a restart.
+* **Structure** - which tracks exist, which phases and weeks they have, which
+  lesson sits in which week on which day, which phase a quiz or lab belongs to.
+  This is the repo's, and it is kept in sync on every run: a lesson that moved
+  in `phases.json` moves in the database, a phase that disappeared from the
+  file is removed once nothing points at it any more. Without that rule a
+  rewritten roadmap would leave the old one standing next to the new one.
 
-The one exception is a placeholder lesson: if real markdown later appears for
-its slug, the placeholder is upgraded in place.
+* **Authored content** - a lesson's title, summary, body and timing, a quiz's
+  questions, a lab's tasks. Written once, then left alone, so an edit made
+  through the admin panel survives a restart. The one exception is a
+  placeholder lesson: as long as no real markdown exists for its slug it is
+  still the seed's to describe, and it is upgraded in place when the markdown
+  appears.
+
+Content lives per track under `seed_data/tracks/<slug>/` (phases.json,
+lessons/, quizzes/, labs/, i18n/). A track with no directory is created empty.
 
     python -m app.seed
 """
@@ -21,7 +31,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from sqlalchemy import or_, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
@@ -33,18 +43,11 @@ from app.security import hash_password
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s seed: %(message)s")
 log = logging.getLogger("seed")
 
-
-# The track that owns every phase, week and lesson seeded from these files.
-# Other tracks are created empty until their own content exists.
-DEFAULT_TRACK_SLUG = "cka"
-
 DATA_DIR = Path(__file__).parent / "seed_data"
-LESSON_DIR = DATA_DIR / "lessons"
-QUIZ_DIR = DATA_DIR / "quizzes"
-LAB_DIR = DATA_DIR / "labs"
-I18N_DIR = DATA_DIR / "i18n"
+TRACKS_DIR = DATA_DIR / "tracks"
 REFERENCES_FILE = DATA_DIR / "references.json"
-# {lesson_slug: [{"title", "url"}]}
+# {lesson_slug: [{"title", "url"}]} - lesson slugs are unique across tracks, so
+# one map serves every track.
 _REFERENCES: dict[str, list[dict[str, str]]] = (
     json.loads(REFERENCES_FILE.read_text(encoding="utf-8"))
     if REFERENCES_FILE.is_file()
@@ -56,6 +59,7 @@ class Counter:
     def __init__(self) -> None:
         self.created: dict[str, int] = {}
         self.updated: dict[str, int] = {}
+        self.removed: dict[str, int] = {}
 
     def create(self, kind: str) -> None:
         self.created[kind] = self.created.get(kind, 0) + 1
@@ -63,65 +67,82 @@ class Counter:
     def update(self, kind: str) -> None:
         self.updated[kind] = self.updated.get(kind, 0) + 1
 
+    def remove(self, kind: str) -> None:
+        self.removed[kind] = self.removed.get(kind, 0) + 1
+
     def report(self) -> str:
-        if not self.created and not self.updated:
+        if not self.created and not self.updated and not self.removed:
             return "nothing to do - database already seeded"
         parts = []
-        if self.created:
-            parts.append(
-                "created " + ", ".join(f"{v} {k}" for k, v in sorted(self.created.items()))
-            )
-        if self.updated:
-            parts.append(
-                "updated " + ", ".join(f"{v} {k}" for k, v in sorted(self.updated.items()))
-            )
+        for verb, bucket in (
+            ("created", self.created),
+            ("updated", self.updated),
+            ("removed", self.removed),
+        ):
+            if bucket:
+                parts.append(
+                    f"{verb} " + ", ".join(f"{v} {k}" for k, v in sorted(bucket.items()))
+                )
         return "; ".join(parts)
 
 
+class TrackContent:
+    """The seed files of one track, by convention under one directory."""
+
+    def __init__(self, root: Path) -> None:
+        self.root = root
+        self.phases_file = root / "phases.json"
+        self.lesson_dir = root / "lessons"
+        self.quiz_dir = root / "quizzes"
+        self.lab_dir = root / "labs"
+        self.i18n_dir = root / "i18n"
+
+    @classmethod
+    def for_track(cls, slug: str) -> "TrackContent | None":
+        root = TRACKS_DIR / slug
+        return cls(root) if (root / "phases.json").is_file() else None
+
+
 def _placeholder_content(title: str, summary: str, phase_title: str) -> str:
+    """Stand-in body for a lesson whose markdown has not been written yet.
+
+    It says so plainly - the roadmap is complete and navigable, the prose for
+    this one is still to come - and points at what to do meanwhile, so a
+    learner who lands here is not left staring at an empty page.
+    """
     return (
         f"## {title}\n\n"
         f"{summary}\n\n"
         ":::warning\n"
-        "This lesson is a placeholder. The full write-up for this topic is still "
-        "being authored - the roadmap structure is complete so you can navigate and "
-        "plan, and Phase 1 is fully written.\n"
+        "This lesson is not fully written yet. The roadmap structure is complete - "
+        "you can plan and navigate around it - and the written material is being "
+        "filled in phase by phase.\n"
         ":::\n\n"
-        "## What this lesson will cover\n\n"
-        f"This topic belongs to **{phase_title}**. When it lands it will follow the "
-        "same shape as the Phase 1 lessons:\n\n"
+        "## What this lesson covers\n\n"
+        f"This lesson belongs to **{phase_title}**. When it is ready it will follow "
+        "the same shape as the written lessons:\n\n"
         "- the concept explained from first principles\n"
-        "- the YAML and `kubectl` commands you actually need\n"
-        "- the failure modes and how to diagnose each one\n"
-        "- exam-specific tips and a short self-check\n\n"
+        "- the YAML and `kubectl` you actually need\n"
+        "- failure modes and how to recognise them\n"
+        "- exam-relevant tips and a short self-check\n\n"
         "## In the meantime\n\n"
-        "Work through the official documentation for this topic and practise the "
-        "commands in your own cluster:\n\n"
+        "Work through the official documentation on this topic and practise the "
+        "commands on your own cluster:\n\n"
         "```bash\n"
         "kubectl api-resources\n"
         "kubectl explain <resource> --recursive | less\n"
-        "```\n\n"
-        ":::tip\n"
-        "An administrator can replace this text at any time from the admin panel - "
-        "the seeder never overwrites a lesson that has real content.\n"
-        ":::\n"
+        "```\n"
     )
 
 
-# --- Phases / weeks / lessons -------------------------------------------
+# --- Tracks --------------------------------------------------------------
 
 
-async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
-    """Creates every programme of study and returns the one that owns the
-    existing content.
-
-    Only `cka` has phases today. The rest are created empty on purpose: an empty
-    track cannot collide with another one, because the two things this schema
-    keeps unique per track - a phase slug and a week number - do not exist yet.
-    """
+async def seed_tracks(session: AsyncSession, counter: Counter) -> list[Track]:
+    """Creates every track in tracks.json and returns them all, in file order."""
     payload = json.loads((DATA_DIR / "tracks.json").read_text(encoding="utf-8"))
+    tracks: list[Track] = []
 
-    default: Track | None = None
     for data in payload["tracks"]:
         track = (
             await session.execute(select(Track).where(Track.slug == data["slug"]))
@@ -131,7 +152,7 @@ async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
             track = Track(
                 slug=data["slug"],
                 title=data["title"],
-                short_title=data.get("short_title", ""),
+                short_title=data.get("short_title"),
                 summary=data.get("summary", ""),
                 provider=data.get("provider"),
                 is_topic=data.get("is_topic", False),
@@ -139,9 +160,10 @@ async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
                 exam_code=data.get("exam_code"),
                 exam_minutes=data.get("exam_minutes"),
                 order_index=data.get("order_index", 0),
-                mark=data.get("mark", ""),
+                mark=data.get("mark"),
                 accent=data.get("accent", "sky"),
-                references=data.get("references", []),
+                references=data.get("references") or [],
+                is_published=True,
             )
             session.add(track)
             await session.flush()
@@ -156,14 +178,9 @@ async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
             # into three.
             #
             # references are the track's official links, and they are reference
-            # data the repo owns rather than authored content. Create-only meant
-            # the CKA track - which existed before the field did - kept an empty
-            # list while every track added afterwards had its links, so its
-            # resources page was blank. Never blanks a non-empty list with an
-            # empty one, on the same reasoning as lesson references.
-            #
-            # Revisit both when the admin panel can reorder tracks or edit links:
-            # this would undo that.
+            # data the repo owns rather than authored content. Never blanks a
+            # non-empty list with an empty one, on the same reasoning as lesson
+            # references.
             if track.order_index != data.get("order_index", 0):
                 track.order_index = data.get("order_index", 0)
                 counter.update("track order")
@@ -173,21 +190,21 @@ async def seed_tracks(session: AsyncSession, counter: Counter) -> Track:
                 track.references = refs
                 counter.update("track references")
 
-        if track.slug == DEFAULT_TRACK_SLUG:
-            default = track
+        tracks.append(track)
 
-    if default is None:
-        raise RuntimeError(
-            f"tracks.json must define the {DEFAULT_TRACK_SLUG!r} track - it owns "
-            "all existing phases, weeks and lessons."
-        )
-    return default
+    if not tracks:
+        raise RuntimeError("tracks.json defines no tracks")
+    return tracks
+
+
+# --- Structure -----------------------------------------------------------
 
 
 async def seed_structure(
-    session: AsyncSession, counter: Counter, track: Track
+    session: AsyncSession, counter: Counter, track: Track, content: TrackContent
 ) -> None:
-    payload = json.loads((DATA_DIR / "phases.json").read_text(encoding="utf-8"))
+    """Phases, weeks and lessons - created when new, MOVED when the file moved them."""
+    payload = json.loads(content.phases_file.read_text(encoding="utf-8"))
 
     for phase_data in payload["phases"]:
         phase = (
@@ -198,22 +215,25 @@ async def seed_structure(
             )
         ).scalar_one_or_none()
 
+        fields = dict(
+            title=phase_data["title"],
+            description=phase_data["description"],
+            order_index=phase_data["order_index"],
+            exam_domain=phase_data.get("exam_domain"),
+            exam_weight=phase_data.get("exam_weight", 0),
+            week_start=phase_data["week_start"],
+            week_end=phase_data["week_end"],
+            color=phase_data.get("color", "sky"),
+        )
         if phase is None:
-            phase = Phase(
-                track_id=track.id,
-                slug=phase_data["slug"],
-                title=phase_data["title"],
-                description=phase_data["description"],
-                order_index=phase_data["order_index"],
-                exam_domain=phase_data.get("exam_domain"),
-                exam_weight=phase_data.get("exam_weight", 0),
-                week_start=phase_data["week_start"],
-                week_end=phase_data["week_end"],
-                color=phase_data.get("color", "sky"),
-            )
+            phase = Phase(track_id=track.id, slug=phase_data["slug"], **fields)
             session.add(phase)
             await session.flush()
             counter.create("phases")
+        elif _apply(phase, fields):
+            # A phase is structure through and through - its name, its range,
+            # its weight in the readiness score - so the file always wins.
+            counter.update("phases")
 
         for week_index, week_data in enumerate(phase_data["weeks"], start=1):
             week = (
@@ -225,38 +245,50 @@ async def seed_structure(
                 )
             ).scalar_one_or_none()
 
+            fields = dict(
+                phase_id=phase.id,
+                title=week_data["title"],
+                description=week_data.get("description", ""),
+                order_index=week_index,
+            )
             if week is None:
-                week = Week(
-                    track_id=track.id,
-                    phase_id=phase.id,
-                    number=week_data["number"],
-                    title=week_data["title"],
-                    description=week_data.get("description", ""),
-                    order_index=week_index,
-                )
+                week = Week(track_id=track.id, number=week_data["number"], **fields)
                 session.add(week)
                 await session.flush()
                 counter.create("weeks")
+            elif _apply(week, fields):
+                counter.update("weeks")
 
             for lesson_index, lesson_data in enumerate(week_data["lessons"], start=1):
                 await _seed_lesson(
-                    session, counter, week, phase, lesson_data, lesson_index
+                    session, counter, content, week, phase, lesson_data, lesson_index
                 )
+
+
+def _apply(row: Any, fields: dict[str, Any]) -> bool:
+    """Sets each attribute that differs; reports whether anything changed."""
+    changed = False
+    for key, value in fields.items():
+        if getattr(row, key) != value:
+            setattr(row, key, value)
+            changed = True
+    return changed
 
 
 async def _seed_lesson(
     session: AsyncSession,
     counter: Counter,
+    content: TrackContent,
     week: Week,
     phase: Phase,
     data: dict[str, Any],
     order_index: int,
 ) -> None:
     slug = data["slug"]
-    markdown_file = LESSON_DIR / f"{slug}.md"
+    markdown_file = content.lesson_dir / f"{slug}.md"
     has_real_content = markdown_file.is_file()
 
-    content = (
+    body = (
         markdown_file.read_text(encoding="utf-8")
         if has_real_content
         else _placeholder_content(data["title"], data.get("summary", ""), phase.title)
@@ -275,7 +307,7 @@ async def _seed_lesson(
                 slug=slug,
                 title=data["title"],
                 summary=data.get("summary", ""),
-                content=content,
+                content=body,
                 order_index=order_index,
                 estimated_minutes=data.get("estimated_minutes", 30),
                 day_of_week=data.get("day_of_week"),
@@ -287,6 +319,18 @@ async def _seed_lesson(
         )
         counter.create("lessons")
         return
+
+    # Placement is structure: where the lesson sits is the file's to decide,
+    # and a lesson the roadmap moved has to move with it.
+    if _apply(
+        lesson,
+        dict(
+            week_id=week.id,
+            order_index=order_index,
+            day_of_week=data.get("day_of_week"),
+        ),
+    ):
+        counter.update("lesson placement")
 
     # Links are reference data, not authored content: keep them current even on
     # a lesson somebody has edited, but never clobber a non-empty list with an
@@ -303,20 +347,35 @@ async def _seed_lesson(
         lesson.video_url = video_url
         counter.update("lesson videos")
 
-    # Upgrade a placeholder in place once real markdown appears for its slug.
-    if lesson.is_placeholder and has_real_content:
-        lesson.content = content
-        lesson.is_placeholder = False
-        counter.update("lessons")
+    # A placeholder is still the seed's to describe: its title, summary and
+    # timing follow the file until real markdown arrives, at which point the
+    # body is upgraded in place. A lesson with a real body is authored content
+    # and is left exactly as it is.
+    if lesson.is_placeholder:
+        if _apply(
+            lesson,
+            dict(
+                title=data["title"],
+                summary=data.get("summary", ""),
+                estimated_minutes=data.get("estimated_minutes", 30),
+            ),
+        ):
+            counter.update("lesson descriptions")
+        if has_real_content:
+            lesson.content = body
+            lesson.is_placeholder = False
+            counter.update("lessons")
 
 
 # --- Quizzes -------------------------------------------------------------
 
 
 async def seed_quizzes(
-    session: AsyncSession, counter: Counter, track: Track
+    session: AsyncSession, counter: Counter, track: Track, content: TrackContent
 ) -> None:
-    for path in sorted(QUIZ_DIR.rglob("*.json")):
+    if not content.quiz_dir.is_dir():
+        return
+    for path in sorted(content.quiz_dir.rglob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
 
         phase = (
@@ -380,9 +439,10 @@ async def seed_quizzes(
             session.add(quiz)
             await session.flush()
             counter.create("quizzes")
-        elif quiz.lesson_id != lesson_id and lesson_id is not None:
-            quiz.lesson_id = lesson_id
-            counter.update("quizzes")
+        # Where the quiz hangs is structure and follows the file; its questions
+        # and pass mark are authored and do not.
+        elif _apply(quiz, dict(phase_id=phase.id, week_id=week_id, lesson_id=lesson_id)):
+            counter.update("quiz placement")
 
         existing_keys = set(
             (
@@ -418,16 +478,12 @@ async def seed_quizzes(
 
 
 async def seed_labs(
-    session: AsyncSession, counter: Counter, track: Track
+    session: AsyncSession, counter: Counter, track: Track, content: TrackContent
 ) -> None:
-    for path in sorted(LAB_DIR.glob("*.json")):
+    if not content.lab_dir.is_dir():
+        return
+    for path in sorted(content.lab_dir.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
-
-        existing = (
-            await session.execute(select(Lab).where(Lab.slug == data["slug"]))
-        ).scalar_one_or_none()
-        if existing is not None:
-            continue
 
         phase = (
             await session.execute(
@@ -452,6 +508,15 @@ async def seed_labs(
             ).scalar_one_or_none()
             week_id = week.id if week else None
 
+        existing = (
+            await session.execute(select(Lab).where(Lab.slug == data["slug"]))
+        ).scalar_one_or_none()
+        if existing is not None:
+            # Placement follows the file; the lab's own text does not.
+            if _apply(existing, dict(phase_id=phase.id, week_id=week_id)):
+                counter.update("lab placement")
+            continue
+
         session.add(
             Lab(
                 phase_id=phase.id,
@@ -472,14 +537,83 @@ async def seed_labs(
         counter.create("labs")
 
 
+# --- Pruning -------------------------------------------------------------
+
+
+async def prune_structure(
+    session: AsyncSession, counter: Counter, track: Track, content: TrackContent
+) -> None:
+    """Removes the phases and weeks the file no longer names - but only empty
+    ones. A week that still holds a lesson the file forgot, or a phase a quiz
+    still hangs from, is left standing with a warning: losing somebody's
+    progress is never the seed's call to make."""
+    payload = json.loads(content.phases_file.read_text(encoding="utf-8"))
+    phase_slugs = {p["slug"] for p in payload["phases"]}
+    week_numbers = {w["number"] for p in payload["phases"] for w in p["weeks"]}
+
+    weeks = (
+        await session.execute(select(Week).where(Week.track_id == track.id))
+    ).scalars().all()
+    for week in weeks:
+        if week.number in week_numbers:
+            continue
+        lessons = (
+            await session.execute(
+                select(func.count(Lesson.id)).where(Lesson.week_id == week.id)
+            )
+        ).scalar_one()
+        if lessons:
+            log.warning(
+                "week %s of %s is not in phases.json but still holds %d lesson(s) - kept",
+                week.number, track.slug, lessons,
+            )
+            continue
+        await session.delete(week)
+        counter.remove("weeks")
+    await session.flush()
+
+    phases = (
+        await session.execute(select(Phase).where(Phase.track_id == track.id))
+    ).scalars().all()
+    for phase in phases:
+        if phase.slug in phase_slugs:
+            continue
+        held = {
+            "week": (await session.execute(
+                select(func.count(Week.id)).where(Week.phase_id == phase.id)
+            )).scalar_one(),
+            "quiz": (await session.execute(
+                select(func.count(Quiz.id)).where(Quiz.phase_id == phase.id)
+            )).scalar_one(),
+            "lab": (await session.execute(
+                select(func.count(Lab.id)).where(Lab.phase_id == phase.id)
+            )).scalar_one(),
+        }
+        if any(held.values()):
+            log.warning(
+                "phase %s of %s is not in phases.json but still holds %s - kept",
+                phase.slug, track.slug,
+                ", ".join(f"{n} {k}(s)" for k, n in held.items() if n),
+            )
+            continue
+        await session.delete(phase)
+        counter.remove("phases")
+    await session.flush()
+
+
 # --- Translations --------------------------------------------------------
 
 
-def _fill(current: dict, locale: str, values: dict) -> tuple[dict, bool]:
-    """Adds only the keys this locale does not have yet.
+def _fill(
+    current: dict, locale: str, values: dict, *, overwrite: bool = False
+) -> tuple[dict, bool]:
+    """Merges one locale's values into a translations blob.
 
-    Existing values win, so a translation edited through the admin panel is
-    never overwritten by a later container start.
+    Fill-only by default: existing values win, so a translation edited through
+    the admin panel is never overwritten by a later container start. With
+    `overwrite` the file wins - used for the things the seed owns outright,
+    which is structure (phase and week names) and the description of a lesson
+    that is still a placeholder.
     """
     merged = {k: dict(v) for k, v in (current or {}).items()}
     bucket = merged.setdefault(locale, {})
@@ -487,19 +621,23 @@ def _fill(current: dict, locale: str, values: dict) -> tuple[dict, bool]:
     for key, value in values.items():
         if value in (None, "", [], {}):
             continue
-        if not bucket.get(key):
+        if overwrite:
+            if bucket.get(key) != value:
+                bucket[key] = value
+                changed = True
+        elif not bucket.get(key):
             bucket[key] = value
             changed = True
     return merged, changed
 
 
 async def seed_translations(
-    session: AsyncSession, counter: Counter, track: Track
+    session: AsyncSession, counter: Counter, track: Track, content: TrackContent
 ) -> None:
     for locale in SUPPORTED_LOCALES:
         if locale == DEFAULT_LOCALE:
             continue  # English is the base row itself
-        root = I18N_DIR / locale
+        root = content.i18n_dir / locale
         if not root.is_dir():
             continue
         await _seed_structure_translations(session, counter, locale, root, track)
@@ -523,7 +661,10 @@ async def _seed_structure_translations(
         ).scalar_one_or_none()
         if phase is None:
             continue
-        phase.translations, changed = _fill(phase.translations, locale, values)
+        # Structure: the file's names win, as they do for the English row.
+        phase.translations, changed = _fill(
+            phase.translations, locale, values, overwrite=True
+        )
         if changed:
             counter.update(f"phase translations ({locale})")
 
@@ -537,7 +678,9 @@ async def _seed_structure_translations(
         ).scalar_one_or_none()
         if week is None:
             continue
-        week.translations, changed = _fill(week.translations, locale, values)
+        week.translations, changed = _fill(
+            week.translations, locale, values, overwrite=True
+        )
         if changed:
             counter.update(f"week translations ({locale})")
 
@@ -575,7 +718,12 @@ async def _seed_structure_translations(
                 payload.get("title", lesson.title), payload.get("summary", "")
             ) if locale == "uz" else None
 
-        lesson.translations, changed = _fill(lesson.translations, locale, payload)
+        # A placeholder's description is the seed's in every language; once a
+        # real body exists the lesson is authored and the translation is only
+        # filled in where it is missing.
+        lesson.translations, changed = _fill(
+            lesson.translations, locale, payload, overwrite=lesson.is_placeholder
+        )
         if changed:
             counter.update(f"lesson translations ({locale})")
 
@@ -635,11 +783,11 @@ def _placeholder_content_uz(title: str, summary: str) -> str:
         f"{summary}\n\n"
         ":::warning\n"
         "Bu dars hali to'liq yozilmagan. Yo'l xaritasi tuzilishi to'liq - siz "
-        "rejalashtira olasiz va harakatlana olasiz, 1-bosqich esa to'liq "
-        "yozilgan.\n"
+        "rejalashtira olasiz va harakatlana olasiz, matnlar esa bosqichma-bosqich "
+        "to'ldirilmoqda.\n"
         ":::\n\n"
         "## Bu dars nimani qamrab oladi\n\n"
-        "Tayyor bo'lganda u 1-bosqich darslari bilan bir xil tuzilishga ega "
+        "Tayyor bo'lganda u yozilgan darslar bilan bir xil tuzilishga ega "
         "bo'ladi:\n\n"
         "- tushuncha boshidan tushuntiriladi\n"
         "- sizga haqiqatan kerak bo'ladigan YAML va `kubectl` buyruqlari\n"
@@ -710,23 +858,38 @@ async def seed_users(session: AsyncSession, counter: Counter) -> None:
 # --- Entrypoint ----------------------------------------------------------
 
 
+async def seed_track(
+    session: AsyncSession, counter: Counter, track: Track, content: TrackContent
+) -> None:
+    """Everything one track's directory has to say, in dependency order.
+
+    Structure first, then the quizzes and labs that hang from it, then the
+    prune - which must come after quizzes and labs have been re-pointed, or a
+    phase they moved away from would still look occupied.
+    """
+    await seed_structure(session, counter, track, content)
+    await session.commit()
+    await seed_quizzes(session, counter, track, content)
+    await session.commit()
+    await seed_labs(session, counter, track, content)
+    await session.commit()
+    await prune_structure(session, counter, track, content)
+    await session.commit()
+    await seed_translations(session, counter, track, content)
+    await session.commit()
+
+
 async def run_seed() -> None:
     counter = Counter()
     async with SessionLocal() as session:
-        track = await seed_tracks(session, counter)
+        tracks = await seed_tracks(session, counter)
         await session.commit()
 
-        await seed_structure(session, counter, track)
-        await session.commit()
-
-        await seed_quizzes(session, counter, track)
-        await session.commit()
-
-        await seed_labs(session, counter, track)
-        await session.commit()
-
-        await seed_translations(session, counter, track)
-        await session.commit()
+        for track in tracks:
+            content = TrackContent.for_track(track.slug)
+            if content is None:
+                continue
+            await seed_track(session, counter, track, content)
 
         await seed_users(session, counter)
         await session.commit()

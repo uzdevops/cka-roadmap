@@ -1,0 +1,447 @@
+{
+  "slug": "lfcs-mock-exam-4",
+  "phase_slug": "exam-prep",
+  "week_number": 13,
+  "title": "LFCS mock exam 4 - review",
+  "description": "Fifteen questions across the five LFCS domains, at exam pace.",
+  "pass_score": 70,
+  "time_limit_minutes": 45,
+  "order_index": 4,
+  "questions": [
+    {
+      "key": "l4-01",
+      "type": "single_choice",
+      "prompt": "Which command lists the SELinux context of a process?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ps -eZ"
+        },
+        {
+          "id": "b",
+          "text": "ls -Z"
+        },
+        {
+          "id": "c",
+          "text": "getenforce"
+        },
+        {
+          "id": "d",
+          "text": "sestatus -p"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "ps -Z adds the context column.",
+      "points": 1
+    },
+    {
+      "key": "l4-02",
+      "type": "single_choice",
+      "prompt": "Which file maps hostnames locally before DNS?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/resolv.conf"
+        },
+        {
+          "id": "b",
+          "text": "/etc/hosts"
+        },
+        {
+          "id": "c",
+          "text": "/etc/nsswitch.conf"
+        },
+        {
+          "id": "d",
+          "text": "/etc/hostname"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "/etc/hosts is consulted first when nsswitch says files before dns.",
+      "points": 1
+    },
+    {
+      "key": "l4-03",
+      "type": "single_choice",
+      "prompt": "Which command makes a file immutable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "chmod 000 file"
+        },
+        {
+          "id": "b",
+          "text": "chattr +i file"
+        },
+        {
+          "id": "c",
+          "text": "setfacl -x file"
+        },
+        {
+          "id": "d",
+          "text": "chown root file"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "chattr +i prevents changes and deletion even by root until -i.",
+      "points": 1
+    },
+    {
+      "key": "l4-04",
+      "type": "single_choice",
+      "prompt": "Which LVM command shows physical volumes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "pvs"
+        },
+        {
+          "id": "b",
+          "text": "vgs"
+        },
+        {
+          "id": "c",
+          "text": "lvs"
+        },
+        {
+          "id": "d",
+          "text": "lsblk"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "pvs / vgs / lvs summarise each LVM layer.",
+      "points": 1
+    },
+    {
+      "key": "l4-05",
+      "type": "single_choice",
+      "prompt": "Which at command lists pending jobs?",
+      "options": [
+        {
+          "id": "a",
+          "text": "at -l (or atq)"
+        },
+        {
+          "id": "b",
+          "text": "at -c"
+        },
+        {
+          "id": "c",
+          "text": "atrm"
+        },
+        {
+          "id": "d",
+          "text": "crontab -l"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "atq lists, atrm removes, at -c prints a job.",
+      "points": 1
+    },
+    {
+      "key": "l4-06",
+      "type": "single_choice",
+      "prompt": "Which nginx directive forwards requests to a backend?",
+      "options": [
+        {
+          "id": "a",
+          "text": "root"
+        },
+        {
+          "id": "b",
+          "text": "proxy_pass"
+        },
+        {
+          "id": "c",
+          "text": "listen"
+        },
+        {
+          "id": "d",
+          "text": "server_name"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "proxy_pass inside a location makes nginx a reverse proxy.",
+      "points": 1
+    },
+    {
+      "key": "l4-07",
+      "type": "single_choice",
+      "prompt": "Which command locks a user account's password?",
+      "options": [
+        {
+          "id": "a",
+          "text": "usermod -L bob"
+        },
+        {
+          "id": "b",
+          "text": "passwd -d bob"
+        },
+        {
+          "id": "c",
+          "text": "chage -E 0 bob"
+        },
+        {
+          "id": "d",
+          "text": "userdel bob"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "-L puts a ! in front of the hash; -U unlocks.",
+      "points": 1
+    },
+    {
+      "key": "l4-08",
+      "type": "single_choice",
+      "prompt": "Which command mounts an NFS export manually?",
+      "options": [
+        {
+          "id": "a",
+          "text": "mount -t nfs server:/srv /mnt"
+        },
+        {
+          "id": "b",
+          "text": "nfsmount server:/srv /mnt"
+        },
+        {
+          "id": "c",
+          "text": "mount.cifs server:/srv /mnt"
+        },
+        {
+          "id": "d",
+          "text": "exportfs -m"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "mount -t nfs host:/path mountpoint.",
+      "points": 1
+    },
+    {
+      "key": "l4-09",
+      "type": "single_choice",
+      "prompt": "What does 2>&1 do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sends stdout to stderr"
+        },
+        {
+          "id": "b",
+          "text": "Sends stderr to wherever stdout goes"
+        },
+        {
+          "id": "c",
+          "text": "Appends to a file"
+        },
+        {
+          "id": "d",
+          "text": "Discards errors"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "2>&1 duplicates stderr onto stdout's destination.",
+      "points": 1
+    },
+    {
+      "key": "l4-10",
+      "type": "single_choice",
+      "prompt": "Which command shows memory available to new programs?",
+      "options": [
+        {
+          "id": "a",
+          "text": "free -h (available)"
+        },
+        {
+          "id": "b",
+          "text": "top -o RES"
+        },
+        {
+          "id": "c",
+          "text": "vmstat 1 (si/so)"
+        },
+        {
+          "id": "d",
+          "text": "cat /proc/cpuinfo"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "The available column estimates what can be allocated without swapping.",
+      "points": 1
+    },
+    {
+      "key": "l4-11",
+      "type": "single_choice",
+      "prompt": "Which bonding mode needs no switch configuration and gives failover only?",
+      "options": [
+        {
+          "id": "a",
+          "text": "balance-rr"
+        },
+        {
+          "id": "b",
+          "text": "active-backup"
+        },
+        {
+          "id": "c",
+          "text": "802.3ad"
+        },
+        {
+          "id": "d",
+          "text": "balance-xor"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "active-backup keeps one slave active; 802.3ad needs LACP on the switch.",
+      "points": 1
+    },
+    {
+      "key": "l4-12",
+      "type": "single_choice",
+      "prompt": "Which command reloads sshd after a config change without dropping sessions?",
+      "options": [
+        {
+          "id": "a",
+          "text": "systemctl restart sshd"
+        },
+        {
+          "id": "b",
+          "text": "systemctl reload sshd"
+        },
+        {
+          "id": "c",
+          "text": "kill -9 sshd"
+        },
+        {
+          "id": "d",
+          "text": "sshd -D"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "reload sends HUP; existing sessions stay up.",
+      "points": 1
+    },
+    {
+      "key": "l4-13",
+      "type": "single_choice",
+      "prompt": "Which parted command creates a GPT label on /dev/sdb?",
+      "options": [
+        {
+          "id": "a",
+          "text": "parted /dev/sdb mklabel gpt"
+        },
+        {
+          "id": "b",
+          "text": "fdisk -g /dev/sdb"
+        },
+        {
+          "id": "c",
+          "text": "mkfs.gpt /dev/sdb"
+        },
+        {
+          "id": "d",
+          "text": "gdisk -n /dev/sdb"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "mklabel gpt writes a new partition table (destroying the old).",
+      "points": 1
+    },
+    {
+      "key": "l4-14",
+      "type": "single_choice",
+      "prompt": "Which grep flag prints lines that do NOT match?",
+      "options": [
+        {
+          "id": "a",
+          "text": "-c"
+        },
+        {
+          "id": "b",
+          "text": "-v"
+        },
+        {
+          "id": "c",
+          "text": "-i"
+        },
+        {
+          "id": "d",
+          "text": "-n"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "-v inverts the match.",
+      "points": 1
+    },
+    {
+      "key": "l4-15",
+      "type": "single_choice",
+      "prompt": "Which virsh command starts a defined VM?",
+      "options": [
+        {
+          "id": "a",
+          "text": "virsh start lab"
+        },
+        {
+          "id": "b",
+          "text": "virsh create lab"
+        },
+        {
+          "id": "c",
+          "text": "virt-install lab"
+        },
+        {
+          "id": "d",
+          "text": "virsh define lab"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "start runs a defined domain; create starts from an XML file.",
+      "points": 1
+    }
+  ]
+}

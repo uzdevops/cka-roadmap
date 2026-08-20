@@ -1,0 +1,33 @@
+{
+  "slug": "lab-hpa",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 8,
+  "title": "Lab - Horizontal Pod Autoscaler",
+  "description": "Create an HPA and make it scale.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Create an HPA and make it scale. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Create",
+      "instructions": "Create an HPA for Deployment php-apache: 50% CPU, 1 to 10 replicas.",
+      "solution": "kubectl autoscale deploy php-apache --cpu-percent=50 --min=1 --max=10",
+      "verification": "kubectl get hpa"
+    },
+    {
+      "title": "Task 2 - Load",
+      "instructions": "Generate load from a busybox loop and watch replicas grow.",
+      "solution": "kubectl run load --rm -it --image=busybox -- /bin/sh -c \"while true; do wget -q -O- http://php-apache; done\"",
+      "verification": "kubectl get hpa -w"
+    },
+    {
+      "title": "Task 3 - Cool down",
+      "instructions": "Stop the load and watch the HPA scale back down.",
+      "solution": "Ctrl-C the loop",
+      "verification": "kubectl get hpa  # replicas return to 1 after the stabilisation window"
+    }
+  ]
+}

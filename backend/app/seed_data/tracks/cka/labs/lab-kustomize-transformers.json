@@ -1,0 +1,33 @@
+{
+  "slug": "lab-kustomize-transformers",
+  "phase_slug": "helm-kustomize",
+  "week_number": 18,
+  "title": "Lab - Kustomize transformers",
+  "description": "Transform a whole set of manifests at once.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 5,
+  "scenario": "Transform a whole set of manifests at once. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Labels",
+      "instructions": "Add commonLabels org=KodeKloud to everything in the project.",
+      "solution": "# commonLabels: {org: KodeKloud}",
+      "verification": "kustomize build . | grep org:"
+    },
+    {
+      "title": "Task 2 - Namespace",
+      "instructions": "Place everything under the db directory into namespace db-ns.",
+      "solution": "# namespace: db-ns in db/kustomization.yaml",
+      "verification": "kustomize build db/ | grep namespace"
+    },
+    {
+      "title": "Task 3 - Image",
+      "instructions": "Change the nginx image to nginx:1.23 everywhere.",
+      "solution": "# images: [{name: nginx, newTag: \"1.23\"}]",
+      "verification": "kustomize build . | grep image:"
+    }
+  ]
+}

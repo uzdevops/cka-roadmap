@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-mount-options",
+  "phase_slug": "storage",
+  "week_number": 11,
+  "title": "Lab - Filesystem features and mount options",
+  "description": "Mount with restrictions and prove they apply.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 3,
+  "scenario": "Mount with restrictions and prove they apply. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - noexec",
+      "instructions": "Remount /data with noexec and try to run a script from it.",
+      "solution": "mount -o remount,noexec /data\ncp /usr/local/bin/diskreport.sh /data/ && /data/diskreport.sh",
+      "verification": "Permission denied"
+    },
+    {
+      "title": "Task 2 - Read-only",
+      "instructions": "Remount it read-only and try to touch a file.",
+      "solution": "mount -o remount,ro /data\ntouch /data/x",
+      "verification": "Read-only file system"
+    },
+    {
+      "title": "Task 3 - Persist",
+      "instructions": "Make noexec,nosuid the permanent options in fstab.",
+      "solution": "# edit the options field to defaults,noexec,nosuid",
+      "verification": "findmnt -o OPTIONS /data"
+    }
+  ]
+}

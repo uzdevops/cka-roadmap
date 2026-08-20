@@ -1,0 +1,33 @@
+{
+  "slug": "lab-cluster-roles",
+  "phase_slug": "security",
+  "week_number": 11,
+  "title": "Lab - Cluster roles",
+  "description": "Grant cluster-wide permissions.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 3,
+  "scenario": "Grant cluster-wide permissions. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Count",
+      "instructions": "How many ClusterRoles and ClusterRoleBindings exist?",
+      "solution": "kubectl get clusterroles --no-headers | wc -l\nkubectl get clusterrolebindings --no-headers | wc -l",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Nodes",
+      "instructions": "Grant user michelle permission to list and watch nodes.",
+      "solution": "kubectl create clusterrole node-admin --verb=get,list,watch --resource=nodes\nkubectl create clusterrolebinding michelle-binding --clusterrole=node-admin --user=michelle",
+      "verification": "kubectl auth can-i list nodes --as michelle"
+    },
+    {
+      "title": "Task 3 - Storage",
+      "instructions": "Grant michelle full rights on PersistentVolumes and StorageClasses.",
+      "solution": "kubectl create clusterrole storage-admin --verb=* --resource=persistentvolumes,storageclasses\nkubectl create clusterrolebinding michelle-storage-admin --clusterrole=storage-admin --user=michelle",
+      "verification": "kubectl auth can-i create storageclasses --as michelle"
+    }
+  ]
+}

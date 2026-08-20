@@ -1,0 +1,160 @@
+{
+  "slug": "kubernetes-network-model-check",
+  "lesson_slug": "kubernetes-network-model",
+  "phase_slug": "networking",
+  "week_number": 15,
+  "title": "Check: the network model",
+  "description": "Five questions on the flat network and the plugin that provides it.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-rules",
+      "type": "multi_select",
+      "prompt": "Which rules does the Kubernetes network model require? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Every Pod gets its own IP address"
+        },
+        {
+          "id": "b",
+          "text": "Pods can reach each other without NAT"
+        },
+        {
+          "id": "c",
+          "text": "Agents on a node can reach all Pods on that node"
+        },
+        {
+          "id": "d",
+          "text": "All traffic must be encrypted"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "Those three are the contract every CNI plugin must satisfy. Encryption is a plugin feature, not part of the model.",
+      "points": 2
+    },
+    {
+      "key": "q2-cni",
+      "type": "single_choice",
+      "prompt": "What supplies Pod networking?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "b",
+          "text": "A CNI plugin such as Calico, Cilium or Flannel"
+        },
+        {
+          "id": "c",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "d",
+          "text": "The container runtime alone"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The CNI plugin gives Pods addresses and makes pod-to-pod traffic work. kube-proxy handles Service VIPs, which is a different job.",
+      "points": 1
+    },
+    {
+      "key": "q3-notready",
+      "type": "single_choice",
+      "prompt": "A fresh kubeadm cluster leaves every node NotReady. Why?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The kubelet is misconfigured"
+        },
+        {
+          "id": "b",
+          "text": "No CNI plugin is installed, so NetworkReady is false"
+        },
+        {
+          "id": "c",
+          "text": "etcd has not started"
+        },
+        {
+          "id": "d",
+          "text": "The nodes need a reboot"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Expected behaviour, not a broken cluster. `kubectl describe node` shows the condition in plain words.",
+      "points": 1
+    },
+    {
+      "key": "q4-podcidr",
+      "type": "single_choice",
+      "prompt": "What is the Pod CIDR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The range Services are allocated from"
+        },
+        {
+          "id": "b",
+          "text": "The range Pod IPs are allocated from"
+        },
+        {
+          "id": "c",
+          "text": "The node subnet"
+        },
+        {
+          "id": "d",
+          "text": "The DNS search domain"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`--pod-network-cidr` at kubeadm init must agree with what the CNI plugin expects, or Pods get addresses nothing routes.",
+      "points": 1
+    },
+    {
+      "key": "q5-samepod",
+      "type": "single_choice",
+      "prompt": "Two containers in one Pod communicate over what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Service VIP"
+        },
+        {
+          "id": "b",
+          "text": "localhost, because they share a network namespace"
+        },
+        {
+          "id": "c",
+          "text": "A shared volume only"
+        },
+        {
+          "id": "d",
+          "text": "The node IP"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "One IP per Pod. Containers inside it share the namespace, so they must not both bind the same port.",
+      "points": 1
+    }
+  ]
+}

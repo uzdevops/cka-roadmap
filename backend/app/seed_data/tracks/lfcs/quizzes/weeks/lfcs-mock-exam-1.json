@@ -1,0 +1,447 @@
+{
+  "slug": "lfcs-mock-exam-1",
+  "phase_slug": "exam-prep",
+  "week_number": 13,
+  "title": "LFCS mock exam 1 - review",
+  "description": "Fifteen questions across the five LFCS domains, at exam pace.",
+  "pass_score": 70,
+  "time_limit_minutes": 45,
+  "order_index": 1,
+  "questions": [
+    {
+      "key": "l1-01",
+      "type": "single_choice",
+      "prompt": "Which command shows which package owns /usr/bin/rsync on a Debian-based system?",
+      "options": [
+        {
+          "id": "a",
+          "text": "apt owns /usr/bin/rsync"
+        },
+        {
+          "id": "b",
+          "text": "dpkg -S /usr/bin/rsync"
+        },
+        {
+          "id": "c",
+          "text": "rpm -qf /usr/bin/rsync"
+        },
+        {
+          "id": "d",
+          "text": "which rsync"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "dpkg -S searches the installed file lists; rpm -qf is the RPM equivalent.",
+      "points": 1
+    },
+    {
+      "key": "l1-02",
+      "type": "single_choice",
+      "prompt": "What does chmod 4755 set on a file?",
+      "options": [
+        {
+          "id": "a",
+          "text": "sticky bit"
+        },
+        {
+          "id": "b",
+          "text": "SGID"
+        },
+        {
+          "id": "c",
+          "text": "SUID with rwxr-xr-x"
+        },
+        {
+          "id": "d",
+          "text": "no special bits"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "The leading 4 is SUID; 755 is the ordinary mode.",
+      "points": 1
+    },
+    {
+      "key": "l1-03",
+      "type": "single_choice",
+      "prompt": "Which systemd command makes a service start at boot AND starts it now?",
+      "options": [
+        {
+          "id": "a",
+          "text": "systemctl start"
+        },
+        {
+          "id": "b",
+          "text": "systemctl enable --now"
+        },
+        {
+          "id": "c",
+          "text": "systemctl reload"
+        },
+        {
+          "id": "d",
+          "text": "systemctl mask"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "enable creates the boot link; --now also starts it immediately.",
+      "points": 1
+    },
+    {
+      "key": "l1-04",
+      "type": "single_choice",
+      "prompt": "A hard link and its original: how many inodes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Two"
+        },
+        {
+          "id": "b",
+          "text": "One"
+        },
+        {
+          "id": "c",
+          "text": "Depends on the filesystem"
+        },
+        {
+          "id": "d",
+          "text": "Zero"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A hard link is another directory entry for the same inode.",
+      "points": 1
+    },
+    {
+      "key": "l1-05",
+      "type": "single_choice",
+      "prompt": "Which file defines persistent kernel parameters?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/proc/sys/kernel"
+        },
+        {
+          "id": "b",
+          "text": "/etc/sysctl.d/*.conf"
+        },
+        {
+          "id": "c",
+          "text": "/etc/default/grub"
+        },
+        {
+          "id": "d",
+          "text": "/etc/modules"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "/etc/sysctl.conf and /etc/sysctl.d are read at boot; /proc/sys is the live view.",
+      "points": 1
+    },
+    {
+      "key": "l1-06",
+      "type": "single_choice",
+      "prompt": "Which crontab line runs a job at 02:15 every Sunday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "15 2 * * 0"
+        },
+        {
+          "id": "b",
+          "text": "2 15 * * 7"
+        },
+        {
+          "id": "c",
+          "text": "15 2 0 * *"
+        },
+        {
+          "id": "d",
+          "text": "* 2 15 * 0"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "minute hour dom month dow; Sunday is 0 (or 7).",
+      "points": 1
+    },
+    {
+      "key": "l1-07",
+      "type": "single_choice",
+      "prompt": "Which command shows listening TCP sockets with their processes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "netstat -r"
+        },
+        {
+          "id": "b",
+          "text": "ss -tlnp"
+        },
+        {
+          "id": "c",
+          "text": "ip addr"
+        },
+        {
+          "id": "d",
+          "text": "lsof -i udp"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "ss -t (TCP) -l (listening) -n (numeric) -p (process).",
+      "points": 1
+    },
+    {
+      "key": "l1-08",
+      "type": "single_choice",
+      "prompt": "What is /etc/skel for?",
+      "options": [
+        {
+          "id": "a",
+          "text": "System-wide aliases"
+        },
+        {
+          "id": "b",
+          "text": "Files copied into every new user's home"
+        },
+        {
+          "id": "c",
+          "text": "The root user's profile"
+        },
+        {
+          "id": "d",
+          "text": "Kernel modules"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "useradd -m copies /etc/skel into the new home directory.",
+      "points": 1
+    },
+    {
+      "key": "l1-09",
+      "type": "single_choice",
+      "prompt": "Which option to mount makes binaries on the filesystem unrunnable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "nosuid"
+        },
+        {
+          "id": "b",
+          "text": "noexec"
+        },
+        {
+          "id": "c",
+          "text": "ro"
+        },
+        {
+          "id": "d",
+          "text": "noatime"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "noexec refuses to execute files from that mount.",
+      "points": 1
+    },
+    {
+      "key": "l1-10",
+      "type": "single_choice",
+      "prompt": "Which command extends an LV by 1G and grows the filesystem in one step?",
+      "options": [
+        {
+          "id": "a",
+          "text": "lvextend -L +1G -r"
+        },
+        {
+          "id": "b",
+          "text": "lvresize --fs"
+        },
+        {
+          "id": "c",
+          "text": "resize2fs +1G"
+        },
+        {
+          "id": "d",
+          "text": "vgextend +1G"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "-r (--resizefs) tells lvextend to resize the filesystem too.",
+      "points": 1
+    },
+    {
+      "key": "l1-11",
+      "type": "single_choice",
+      "prompt": "Which firewalld command allows https permanently?",
+      "options": [
+        {
+          "id": "a",
+          "text": "firewall-cmd --add-port=443"
+        },
+        {
+          "id": "b",
+          "text": "firewall-cmd --permanent --add-service=https && firewall-cmd --reload"
+        },
+        {
+          "id": "c",
+          "text": "ufw allow https"
+        },
+        {
+          "id": "d",
+          "text": "iptables -A INPUT -p tcp --dport 443"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "--permanent writes the rule; --reload applies it to the running firewall.",
+      "points": 1
+    },
+    {
+      "key": "l1-12",
+      "type": "single_choice",
+      "prompt": "What does chage -d 0 bob do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Locks bob"
+        },
+        {
+          "id": "b",
+          "text": "Forces a password change at next login"
+        },
+        {
+          "id": "c",
+          "text": "Deletes bob's password"
+        },
+        {
+          "id": "d",
+          "text": "Expires the account"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Setting the last-change date to 0 makes the password expired immediately.",
+      "points": 1
+    },
+    {
+      "key": "l1-13",
+      "type": "single_choice",
+      "prompt": "Which command restores default SELinux contexts under /var/www?",
+      "options": [
+        {
+          "id": "a",
+          "text": "chcon -R /var/www"
+        },
+        {
+          "id": "b",
+          "text": "restorecon -Rv /var/www"
+        },
+        {
+          "id": "c",
+          "text": "setenforce 0"
+        },
+        {
+          "id": "d",
+          "text": "semanage reset"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "restorecon relabels from policy; chcon sets an arbitrary context that restorecon would undo.",
+      "points": 1
+    },
+    {
+      "key": "l1-14",
+      "type": "single_choice",
+      "prompt": "Which key file does ssh-copy-id add to on the server?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/ssh/sshd_config"
+        },
+        {
+          "id": "b",
+          "text": "~/.ssh/authorized_keys"
+        },
+        {
+          "id": "c",
+          "text": "~/.ssh/known_hosts"
+        },
+        {
+          "id": "d",
+          "text": "/etc/ssh/ssh_host_ed25519_key"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "authorized_keys lists the public keys allowed to log in as that user.",
+      "points": 1
+    },
+    {
+      "key": "l1-15",
+      "type": "single_choice",
+      "prompt": "Which command mounts everything in /etc/fstab not yet mounted?",
+      "options": [
+        {
+          "id": "a",
+          "text": "mount -a"
+        },
+        {
+          "id": "b",
+          "text": "mount --all-fstab"
+        },
+        {
+          "id": "c",
+          "text": "systemctl daemon-reload"
+        },
+        {
+          "id": "d",
+          "text": "fsck -A"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "mount -a mounts all fstab entries (except noauto).",
+      "points": 1
+    }
+  ]
+}

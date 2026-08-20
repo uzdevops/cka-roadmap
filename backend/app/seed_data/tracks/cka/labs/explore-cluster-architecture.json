@@ -1,0 +1,63 @@
+{
+  "slug": "explore-cluster-architecture",
+  "phase_slug": "core-concepts",
+  "week_number": 1,
+  "title": "Lab 1 - Explore a real cluster's architecture",
+  "description": "Build a three-node cluster and inspect every control plane component from the inside: static Pod manifests, etcd health, scheduler decisions and node conditions.",
+  "difficulty": "beginner",
+  "estimated_minutes": 60,
+  "order_index": 1,
+  "scenario": "You have just joined a team that runs Kubernetes and nobody can tell you how the cluster is actually put together. Rather than reading a diagram, you are going to open the cluster up and confirm every component for yourself: where the control plane manifests live, which process supervises them, how the scheduler explains its decisions, and what a node reports about its own health.\n\nBy the end you should be able to answer 'what is running where, and who started it' for any cluster you are dropped into.",
+  "environment_setup": "# 1. Create a three-node kind cluster\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\n\nkind create cluster --config kind-cka.yaml\n\n# 2. Confirm the cluster is up\nkubectl get nodes\nkubectl cluster-info\n\n# You should see one control-plane node and two workers, all Ready.",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Identify every control plane component",
+      "instructions": "List the Pods running in the kube-system namespace and identify which ones belong to the control plane, which are networking components, and which are addons. Note which node each one runs on.",
+      "solution": "kubectl get pods -n kube-system -o wide\n\n# Filter to just the control plane:\nkubectl get pods -n kube-system -l tier=control-plane\n\n# Control plane: kube-apiserver, etcd, kube-scheduler, kube-controller-manager\n#   -> all on the control-plane node only\n# Networking:    kube-proxy (one per node, a DaemonSet), kindnet (CNI)\n# Addons:        coredns (a Deployment, usually 2 replicas)",
+      "verification": "kubectl get pods -n kube-system -o wide | grep -E 'apiserver|etcd|scheduler|controller-manager'\n# All four should be Running on the control-plane node."
+    },
+    {
+      "title": "Task 2 - Find the static Pod manifests",
+      "instructions": "The control plane Pods are not created by any controller. Get a shell on the control plane node, find the directory holding their manifests, and identify which process is watching that directory.",
+      "solution": "docker exec -it cka-control-plane bash\n\nls -l /etc/kubernetes/manifests/\n# etcd.yaml  kube-apiserver.yaml  kube-controller-manager.yaml  kube-scheduler.yaml\n\n# The kubelet watches this directory:\nps aux | grep kubelet | head -1\n# Look for --pod-manifest-path, or check the kubelet config:\ngrep -i staticPodPath /var/lib/kubelet/config.yaml\n# staticPodPath: /etc/kubernetes/manifests\n\nexit",
+      "verification": "docker exec cka-control-plane ls /etc/kubernetes/manifests/\n# Four YAML files listed."
+    },
+    {
+      "title": "Task 3 - Read the API server's configuration",
+      "instructions": "Extract the kube-apiserver command-line flags. Find the authorisation modes in use, the etcd endpoints it connects to, and the path to the client CA certificate.",
+      "solution": "docker exec cka-control-plane grep -A40 'command:' /etc/kubernetes/manifests/kube-apiserver.yaml\n\n# Or from the running Pod:\nkubectl -n kube-system get pod -l component=kube-apiserver \\\n  -o jsonpath='{.items[0].spec.containers[0].command}' | tr ',' '\\n'\n\n# Look for:\n#   --authorization-mode=Node,RBAC\n#   --etcd-servers=https://127.0.0.1:2379\n#   --client-ca-file=/etc/kubernetes/pki/ca.crt",
+      "verification": "kubectl -n kube-system get pod -l component=kube-apiserver \\\n  -o jsonpath='{.items[0].spec.containers[0].command}' | tr ',' '\\n' | grep authorization-mode"
+    },
+    {
+      "title": "Task 4 - Check etcd health with etcdctl",
+      "instructions": "Using the certificates referenced by the etcd static Pod manifest, run an endpoint health check and list the cluster members. Do this from inside the etcd container.",
+      "solution": "kubectl -n kube-system exec -it etcd-cka-control-plane -- sh -c '\n  ETCDCTL_API=3 etcdctl \\\n    --endpoints=https://127.0.0.1:2379 \\\n    --cacert=/etc/kubernetes/pki/etcd/ca.crt \\\n    --cert=/etc/kubernetes/pki/etcd/server.crt \\\n    --key=/etc/kubernetes/pki/etcd/server.key \\\n    endpoint health'\n\n# And the member list:\nkubectl -n kube-system exec -it etcd-cka-control-plane -- sh -c '\n  ETCDCTL_API=3 etcdctl \\\n    --endpoints=https://127.0.0.1:2379 \\\n    --cacert=/etc/kubernetes/pki/etcd/ca.crt \\\n    --cert=/etc/kubernetes/pki/etcd/server.crt \\\n    --key=/etc/kubernetes/pki/etcd/server.key \\\n    member list -w table'\n\n# Note the certificate paths - they came straight out of etcd.yaml.\n# You will use this exact command shape for backups in Phase 4.",
+      "verification": "# The health check prints: https://127.0.0.1:2379 is healthy"
+    },
+    {
+      "title": "Task 5 - Watch the scheduler make a decision",
+      "instructions": "Create a Pod and observe, through events, that it was scheduled and onto which node. Then create a Pod that cannot be scheduled and read the scheduler's explanation.",
+      "solution": "# A Pod that schedules normally\nkubectl run schedulable --image=nginx --restart=Never\nkubectl get pod schedulable -o wide\nkubectl describe pod schedulable | grep -A5 Events\n# Normal  Scheduled  default-scheduler  Successfully assigned default/schedulable to cka-worker\n\n# A Pod that cannot possibly be scheduled\nkubectl run impossible --image=nginx --restart=Never \\\n  --overrides='{\"spec\":{\"nodeSelector\":{\"disktype\":\"nvme-that-does-not-exist\"}}}'\n\nkubectl get pod impossible\n# STATUS: Pending\n\nkubectl describe pod impossible | grep -A5 Events\n# Warning  FailedScheduling  default-scheduler\n#   0/3 nodes are available: 3 node(s) didn't match Pod's node affinity/selector.\n\n# Fix it by labelling a node:\nkubectl label node cka-worker disktype=nvme-that-does-not-exist\nkubectl get pod impossible -w   # it schedules within seconds",
+      "verification": "kubectl get pods -o wide\n# Both Pods should eventually be Running on a worker node."
+    },
+    {
+      "title": "Task 6 - Read node conditions and capacity",
+      "instructions": "For one worker node, report its conditions, its allocatable CPU and memory, and the total resources requested by the Pods already on it.",
+      "solution": "kubectl describe node cka-worker\n\n# The three sections that matter:\nkubectl describe node cka-worker | grep -A8 'Conditions:'\n# MemoryPressure, DiskPressure, PIDPressure should be False; Ready should be True\n\nkubectl describe node cka-worker | grep -A6 'Allocatable:'\n\nkubectl describe node cka-worker | grep -A8 'Allocated resources:'\n# Shows Requests and Limits as a percentage of allocatable\n\n# As structured output:\nkubectl get node cka-worker -o jsonpath='{.status.allocatable}' | tr ',' '\\n'",
+      "verification": "kubectl get nodes -o custom-columns='NAME:.metadata.name,CPU:.status.allocatable.cpu,MEM:.status.allocatable.memory'"
+    },
+    {
+      "title": "Task 7 - Break the scheduler and observe the effect",
+      "instructions": "Temporarily stop the scheduler by moving its static Pod manifest aside. Create a Pod and confirm what happens. Then restore the manifest and confirm recovery. This is the single most instructive exercise in the lab.",
+      "solution": "# Move the manifest out of the watched directory\ndocker exec cka-control-plane mv /etc/kubernetes/manifests/kube-scheduler.yaml /tmp/\n\n# Within ~20 seconds the scheduler Pod disappears\nkubectl get pods -n kube-system | grep scheduler\n\n# Now create a Pod\nkubectl run orphan --image=nginx --restart=Never\nkubectl get pod orphan\n# STATUS: Pending - forever, with no FailedScheduling event at all,\n# because nothing is even looking at it.\n\nkubectl describe pod orphan | grep -A5 Events\n# <none>  -- note the absence of any scheduler message. That absence IS the clue.\n\n# Restore it\ndocker exec cka-control-plane mv /tmp/kube-scheduler.yaml /etc/kubernetes/manifests/\n\n# The kubelet restarts the scheduler and the pending Pod is placed\nkubectl get pods -n kube-system | grep scheduler\nkubectl get pod orphan -w",
+      "verification": "kubectl get pod orphan -o wide\n# Should now be Running with a node assigned."
+    },
+    {
+      "title": "Task 8 - Trace a request end to end",
+      "instructions": "Create a Deployment and, using only events and object inspection, write down the ownership chain from Pod back to Deployment, plus the node each Pod landed on.",
+      "solution": "kubectl create deployment trace --image=nginx --replicas=2\n\n# The chain, top down\nkubectl get deploy,rs,pods -l app=trace -o wide\n\n# The chain, bottom up, from a Pod\nPOD=$(kubectl get pods -l app=trace -o jsonpath='{.items[0].metadata.name}')\nkubectl get pod $POD -o jsonpath='{.metadata.ownerReferences[0].kind}/{.metadata.ownerReferences[0].name}{\"\\n\"}'\n# ReplicaSet/trace-xxxxxxxxx\n\nRS=$(kubectl get pod $POD -o jsonpath='{.metadata.ownerReferences[0].name}')\nkubectl get rs $RS -o jsonpath='{.metadata.ownerReferences[0].kind}/{.metadata.ownerReferences[0].name}{\"\\n\"}'\n# Deployment/trace\n\n# The events, in order\nkubectl get events --sort-by=.lastTimestamp | grep trace",
+      "verification": "kubectl get deploy trace\n# READY should be 2/2"
+    }
+  ]
+}

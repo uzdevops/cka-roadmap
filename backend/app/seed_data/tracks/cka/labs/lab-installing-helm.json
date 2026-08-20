@@ -1,0 +1,33 @@
+{
+  "slug": "lab-installing-helm",
+  "phase_slug": "helm-kustomize",
+  "week_number": 18,
+  "title": "Lab - Installing Helm",
+  "description": "Install Helm and add a repository.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 1,
+  "scenario": "Install Helm and add a repository. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Install",
+      "instructions": "Install the Helm CLI on the control plane node.",
+      "solution": "curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash",
+      "verification": "helm version"
+    },
+    {
+      "title": "Task 2 - Repo",
+      "instructions": "Add the bitnami repository and search it for wordpress.",
+      "solution": "helm repo add bitnami https://charts.bitnami.com/bitnami\nhelm search repo wordpress",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Hub",
+      "instructions": "Search Artifact Hub for a consul chart from the CLI.",
+      "solution": "helm search hub consul",
+      "verification": "-"
+    }
+  ]
+}

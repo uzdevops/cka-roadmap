@@ -1,0 +1,33 @@
+{
+  "slug": "lab-gateway-api",
+  "phase_slug": "networking",
+  "week_number": 16,
+  "title": "Lab - Gateway API",
+  "description": "Route traffic with a Gateway and an HTTPRoute.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 3,
+  "scenario": "Route traffic with a Gateway and an HTTPRoute. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - CRDs",
+      "instructions": "Install the Gateway API CRDs and a controller (nginx-gateway or similar).",
+      "solution": "kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/latest/download/standard-install.yaml",
+      "verification": "kubectl get gatewayclass"
+    },
+    {
+      "title": "Task 2 - Gateway",
+      "instructions": "Create Gateway nginx-gateway in namespace nginx-gateway listening on HTTP 80.",
+      "solution": "# kind: Gateway, listeners[].protocol HTTP port 80",
+      "verification": "kubectl get gateway -A"
+    },
+    {
+      "title": "Task 3 - Route",
+      "instructions": "Create an HTTPRoute sending /web to web-service:80.",
+      "solution": "# kind: HTTPRoute with parentRefs to the gateway and a path match",
+      "verification": "curl http://<gateway-ip>/web"
+    }
+  ]
+}

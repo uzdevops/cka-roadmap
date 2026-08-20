@@ -1,0 +1,33 @@
+{
+  "slug": "lab-troubleshoot-network",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Lab - Troubleshoot the network",
+  "description": "Fix a cluster whose networking is broken in two places.",
+  "difficulty": "advanced",
+  "estimated_minutes": 50,
+  "order_index": 4,
+  "scenario": "Fix a cluster whose networking is broken in two places. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - CNI",
+      "instructions": "Pods are stuck ContainerCreating. Is a CNI installed? Install one.",
+      "solution": "ls /etc/cni/net.d\nkubectl apply -f weave.yaml",
+      "verification": "kubectl get pods -A"
+    },
+    {
+      "title": "Task 2 - kube-proxy",
+      "instructions": "Services do not route. Check the kube-proxy DaemonSet and its config path.",
+      "solution": "kubectl logs -n kube-system -l k8s-app=kube-proxy\nkubectl edit ds -n kube-system kube-proxy  # fix the --config path",
+      "verification": "kubectl get pods -n kube-system"
+    },
+    {
+      "title": "Task 3 - DNS",
+      "instructions": "Names do not resolve. Check CoreDNS and the kube-dns Service.",
+      "solution": "kubectl get pods -n kube-system -l k8s-app=kube-dns\nkubectl get svc -n kube-system kube-dns",
+      "verification": "-"
+    }
+  ]
+}

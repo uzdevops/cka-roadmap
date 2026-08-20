@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-networking-and-services",
+  "phase_slug": "networking",
+  "week_number": 9,
+  "title": "Lab - Configure networking and network services",
+  "description": "Give a host a static address and check what it serves.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 40,
+  "order_index": 1,
+  "scenario": "Give a host a static address and check what it serves. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Static IP",
+      "instructions": "Set a static IPv4 address 10.0.0.50/24 with gateway 10.0.0.1 on the primary interface using nmcli (or netplan).",
+      "solution": "nmcli con mod eth0 ipv4.addresses 10.0.0.50/24 ipv4.gateway 10.0.0.1 ipv4.method manual && nmcli con up eth0",
+      "verification": "ip addr show eth0"
+    },
+    {
+      "title": "Task 2 - Hostname",
+      "instructions": "Set the hostname to node1.lab.local and make it resolve locally.",
+      "solution": "hostnamectl set-hostname node1.lab.local\necho \"10.0.0.50 node1.lab.local node1\" >> /etc/hosts",
+      "verification": "getent hosts node1"
+    },
+    {
+      "title": "Task 3 - Listeners",
+      "instructions": "List every TCP port the host listens on, with the owning process.",
+      "solution": "ss -tlnp",
+      "verification": "-"
+    }
+  ]
+}

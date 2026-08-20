@@ -1,0 +1,186 @@
+{
+  "slug": "week-10-review",
+  "phase_slug": "networking",
+  "week_number": 16,
+  "title": "Week 16 review - ingress and policy",
+  "description": "Six questions on getting traffic in and restricting it.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 10,
+  "questions": [
+    {
+      "key": "w10-q1",
+      "type": "single_choice",
+      "prompt": "You create an Ingress and nothing happens. Why?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No ingress controller is installed"
+        },
+        {
+          "id": "b",
+          "text": "Ingress needs a NodePort"
+        },
+        {
+          "id": "c",
+          "text": "TLS is missing"
+        },
+        {
+          "id": "d",
+          "text": "The namespace is wrong"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "The object is only a rule; a controller must act on it.",
+      "points": 1
+    },
+    {
+      "key": "w10-q2",
+      "type": "single_choice",
+      "prompt": "How does an Ingress obtain its certificate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Generated automatically"
+        },
+        {
+          "id": "b",
+          "text": "From a kubernetes.io/tls Secret named in spec.tls"
+        },
+        {
+          "id": "c",
+          "text": "From a ConfigMap"
+        },
+        {
+          "id": "d",
+          "text": "From the controller's store"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Same namespace as the Ingress.",
+      "points": 1
+    },
+    {
+      "key": "w10-q3",
+      "type": "single_choice",
+      "prompt": "pathType: Prefix on /api matches what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only /api"
+        },
+        {
+          "id": "b",
+          "text": "/api and everything below it, by path segment"
+        },
+        {
+          "id": "c",
+          "text": "Anything containing api"
+        },
+        {
+          "id": "d",
+          "text": "A regular expression"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Exact matches the literal path only.",
+      "points": 1
+    },
+    {
+      "key": "w10-q4",
+      "type": "single_choice",
+      "prompt": "With no NetworkPolicy present, what traffic is allowed?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "All of it"
+        },
+        {
+          "id": "c",
+          "text": "Same namespace only"
+        },
+        {
+          "id": "d",
+          "text": "Ingress only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pods are non-isolated until a policy selects them.",
+      "points": 1
+    },
+    {
+      "key": "w10-q5",
+      "type": "single_choice",
+      "prompt": "Two policies select the same Pod. What is permitted?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The first only"
+        },
+        {
+          "id": "b",
+          "text": "The union of both"
+        },
+        {
+          "id": "c",
+          "text": "The intersection"
+        },
+        {
+          "id": "d",
+          "text": "Neither"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Policies are additive allow-lists with no deny rules and no ordering.",
+      "points": 1
+    },
+    {
+      "key": "w10-q6",
+      "type": "single_choice",
+      "prompt": "A default-deny egress policy breaks everything instantly. What was forgotten?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Allowing DNS on port 53"
+        },
+        {
+          "id": "b",
+          "text": "Labelling the namespace"
+        },
+        {
+          "id": "c",
+          "text": "Restarting kube-proxy"
+        },
+        {
+          "id": "d",
+          "text": "A NodePort"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Name resolution is egress traffic too.",
+      "points": 1
+    }
+  ]
+}

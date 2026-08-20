@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-software-management",
+  "phase_slug": "operations-deployment",
+  "week_number": 6,
+  "title": "Lab - Manage software, repositories and build from source",
+  "description": "Install a package, add a repo, and build a tool from source.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Install a package, add a repo, and build a tool from source. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Package",
+      "instructions": "Install tree and find which package owns /usr/bin/tree.",
+      "solution": "apt install -y tree; dpkg -S /usr/bin/tree  # dnf install tree; rpm -qf /usr/bin/tree",
+      "verification": "tree --version"
+    },
+    {
+      "title": "Task 2 - Repository",
+      "instructions": "Add the official Docker repository (with its GPG key) and install docker-ce.",
+      "solution": "see docs.docker.com/engine/install for your distro",
+      "verification": "docker --version"
+    },
+    {
+      "title": "Task 3 - Source",
+      "instructions": "Download a small GNU tool tarball, configure, build and install it under /usr/local.",
+      "solution": "tar xzf hello-2.12.tar.gz && cd hello-2.12 && ./configure && make && make install",
+      "verification": "hello"
+    }
+  ]
+}

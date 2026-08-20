@@ -1,0 +1,33 @@
+{
+  "slug": "lab-helm-upgrade-a-chart",
+  "phase_slug": "helm-kustomize",
+  "week_number": 18,
+  "title": "Lab - Upgrading a Helm chart",
+  "description": "Upgrade and roll back a release.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 3,
+  "scenario": "Upgrade and roll back a release. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Upgrade",
+      "instructions": "Upgrade release dazzling-web to the next chart version.",
+      "solution": "helm upgrade dazzling-web bitnami/nginx --version <next>",
+      "verification": "helm history dazzling-web"
+    },
+    {
+      "title": "Task 2 - Rollback",
+      "instructions": "Roll it back to revision 1.",
+      "solution": "helm rollback dazzling-web 1",
+      "verification": "helm history dazzling-web"
+    },
+    {
+      "title": "Task 3 - Uninstall",
+      "instructions": "Remove the release and confirm the resources are gone.",
+      "solution": "helm uninstall dazzling-web",
+      "verification": "kubectl get all | grep dazzling"
+    }
+  ]
+}

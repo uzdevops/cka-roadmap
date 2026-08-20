@@ -1,0 +1,158 @@
+{
+  "slug": "persistent-volumes-and-claims-check",
+  "lesson_slug": "persistent-volumes-and-claims",
+  "phase_slug": "storage",
+  "week_number": 13,
+  "title": "Check: PV and PVC",
+  "description": "Five questions on durable storage.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-relationship",
+      "type": "single_choice",
+      "prompt": "What is the relationship between a PV and a PVC?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A PVC is a request; a PV is the piece of storage that satisfies it"
+        },
+        {
+          "id": "b",
+          "text": "A PV requests storage from a PVC"
+        },
+        {
+          "id": "c",
+          "text": "They are the same object"
+        },
+        {
+          "id": "d",
+          "text": "A PVC is cluster-scoped, a PV is namespaced"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "The PVC is namespaced and belongs to the app; the PV is cluster-scoped and belongs to the infrastructure.",
+      "points": 1
+    },
+    {
+      "key": "q2-accessmodes",
+      "type": "single_choice",
+      "prompt": "What does ReadWriteOnce mean?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One Pod may mount it, ever"
+        },
+        {
+          "id": "b",
+          "text": "It may be mounted read-write by Pods on a single node"
+        },
+        {
+          "id": "c",
+          "text": "It may be read once"
+        },
+        {
+          "id": "d",
+          "text": "Only the control plane may write to it"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The boundary is the node, not the Pod. ReadWriteOncePod is the newer mode that really does mean one Pod.",
+      "points": 1
+    },
+    {
+      "key": "q3-reclaim",
+      "type": "single_choice",
+      "prompt": "A PVC bound to a PV with `persistentVolumeReclaimPolicy: Delete` is deleted. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The PV is kept and becomes Available"
+        },
+        {
+          "id": "b",
+          "text": "The PV and the underlying storage are deleted"
+        },
+        {
+          "id": "c",
+          "text": "The PV becomes Released and keeps the data"
+        },
+        {
+          "id": "d",
+          "text": "Nothing"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Retain is the policy that keeps the volume - it goes to Released and needs manual cleanup before reuse.",
+      "points": 1
+    },
+    {
+      "key": "q4-pending",
+      "type": "single_choice",
+      "prompt": "A PVC stays Pending. What are the usual causes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Pod has not started"
+        },
+        {
+          "id": "b",
+          "text": "No matching PV exists and no StorageClass can provision one"
+        },
+        {
+          "id": "c",
+          "text": "The namespace is missing"
+        },
+        {
+          "id": "d",
+          "text": "The PVC has no labels"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`kubectl describe pvc` names it: no volume plugin, no matching size or access mode, or a StorageClass that does not exist.",
+      "points": 1
+    },
+    {
+      "key": "q5-expand",
+      "type": "single_choice",
+      "prompt": "You increase a PVC's requested size. When does that work?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Always"
+        },
+        {
+          "id": "b",
+          "text": "Only if its StorageClass sets allowVolumeExpansion: true"
+        },
+        {
+          "id": "c",
+          "text": "Only for ReadWriteMany volumes"
+        },
+        {
+          "id": "d",
+          "text": "Never - size is immutable"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "And even then only upwards. Shrinking is never supported.",
+      "points": 1
+    }
+  ]
+}

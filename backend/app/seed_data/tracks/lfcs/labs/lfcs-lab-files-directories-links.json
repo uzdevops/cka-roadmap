@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-files-directories-links",
+  "phase_slug": "essential-commands",
+  "week_number": 1,
+  "title": "Lab - Files, directories, hard and soft links",
+  "description": "Build and inspect a small directory tree with both kinds of link.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 2,
+  "scenario": "Build and inspect a small directory tree with both kinds of link. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Tree",
+      "instructions": "Create /opt/lab/{bin,etc,logs} in one command and a file in each.",
+      "solution": "mkdir -p /opt/lab/{bin,etc,logs}\ntouch /opt/lab/{bin/run,etc/app.conf,logs/app.log}",
+      "verification": "find /opt/lab -type f"
+    },
+    {
+      "title": "Task 2 - Hard link",
+      "instructions": "Hard-link app.conf to /opt/lab/app.conf.bak and prove they share an inode.",
+      "solution": "ln /opt/lab/etc/app.conf /opt/lab/app.conf.bak\nls -li /opt/lab/etc/app.conf /opt/lab/app.conf.bak",
+      "verification": "same inode number, link count 2"
+    },
+    {
+      "title": "Task 3 - Soft link",
+      "instructions": "Create a relative soft link /opt/lab/current -> logs/app.log, then move the target and observe.",
+      "solution": "ln -s logs/app.log /opt/lab/current\nmv /opt/lab/logs/app.log /opt/lab/logs/old.log",
+      "verification": "ls -l /opt/lab/current  # dangling"
+    }
+  ]
+}

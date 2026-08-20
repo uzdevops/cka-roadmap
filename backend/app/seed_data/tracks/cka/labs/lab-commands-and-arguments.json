@@ -1,0 +1,33 @@
+{
+  "slug": "lab-commands-and-arguments",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 6,
+  "title": "Lab - Commands and arguments",
+  "description": "Override what a container runs.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 4,
+  "scenario": "Override what a container runs. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Read",
+      "instructions": "What command does Pod ubuntu-sleeper run?",
+      "solution": "kubectl get pod ubuntu-sleeper -o jsonpath='{.spec.containers[0].command}'",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Sleep longer",
+      "instructions": "Create ubuntu-sleeper-2 from image ubuntu that sleeps 5000 seconds.",
+      "solution": "kubectl run ubuntu-sleeper-2 --image=ubuntu --command -- sleep 5000",
+      "verification": "kubectl get pod ubuntu-sleeper-2 -o jsonpath='{.spec.containers[0].command}'"
+    },
+    {
+      "title": "Task 3 - Args",
+      "instructions": "Create Pod webapp-green from image kodekloud/webapp-color with argument --color=green.",
+      "solution": "kubectl run webapp-green --image=kodekloud/webapp-color -- --color=green",
+      "verification": "kubectl logs webapp-green | head -3"
+    }
+  ]
+}

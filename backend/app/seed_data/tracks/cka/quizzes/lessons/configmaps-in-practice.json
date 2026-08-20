@@ -1,0 +1,143 @@
+{
+  "slug": "configmaps-in-practice-check",
+  "lesson_slug": "configmaps-in-practice",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 6,
+  "title": "Check: ConfigMaps",
+  "description": "Five questions on getting configuration into a container.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-ways",
+      "type": "multi_select",
+      "prompt": "Which are valid ways to expose a ConfigMap to a container? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "As individual environment variables via valueFrom.configMapKeyRef"
+        },
+        {
+          "id": "b",
+          "text": "As every key at once via envFrom"
+        },
+        {
+          "id": "c",
+          "text": "Mounted as files in a volume"
+        },
+        {
+          "id": "d",
+          "text": "Injected into the container image at build time"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "Env vars, envFrom and volume mounts. Nothing about a ConfigMap touches the image.",
+      "points": 2
+    },
+    {
+      "key": "q2-update",
+      "type": "single_choice",
+      "prompt": "A ConfigMap mounted as a volume changes. What happens in the running Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing until the Pod restarts"
+        },
+        {
+          "id": "b",
+          "text": "The mounted files are updated after a short delay"
+        },
+        {
+          "id": "c",
+          "text": "The Pod is restarted automatically"
+        },
+        {
+          "id": "d",
+          "text": "The mount becomes read-only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Volume-mounted keys are refreshed by the kubelet. Environment variables are NOT - those are fixed for the life of the container.",
+      "points": 1
+    },
+    {
+      "key": "q3-create",
+      "type": "fill_command",
+      "prompt": "Write the command that creates a ConfigMap named app-config with key colour set to blue.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl create configmap app-config --from-literal=colour=blue"
+      ],
+      "explanation": "`--from-file` and `--from-env-file` are the other two forms worth remembering.",
+      "points": 2
+    },
+    {
+      "key": "q4-missing",
+      "type": "single_choice",
+      "prompt": "A Pod references a key that does not exist in the ConfigMap, without marking it optional. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The container starts with an empty value"
+        },
+        {
+          "id": "b",
+          "text": "The Pod stays Pending or the container fails to start"
+        },
+        {
+          "id": "c",
+          "text": "The ConfigMap is created automatically"
+        },
+        {
+          "id": "d",
+          "text": "The reference is ignored"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A required reference that cannot be resolved stops the container from starting; the events name the missing key.",
+      "points": 1
+    },
+    {
+      "key": "q5-immutable",
+      "type": "single_choice",
+      "prompt": "What does setting `immutable: true` on a ConfigMap buy you?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Automatic versioning"
+        },
+        {
+          "id": "b",
+          "text": "Protection from edits, and less API server load from watches"
+        },
+        {
+          "id": "c",
+          "text": "Encryption at rest"
+        },
+        {
+          "id": "d",
+          "text": "Faster mounting"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Immutable ConfigMaps cannot be changed - you replace them - and the kubelet stops watching them, which matters at scale.",
+      "points": 1
+    }
+  ]
+}

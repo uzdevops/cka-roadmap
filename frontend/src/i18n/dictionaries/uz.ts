@@ -140,7 +140,7 @@ export const uz: Dictionary = {
     ctaPrimary: 'Yo’l xaritasini boshlash',
     ctaSecondary: 'Dasturni ko’rish',
     demoHint: 'Ro’yxatdan o’tmasdan sinab ko’ring:',
-    phasesHeading: 'Olti bosqich',
+    phasesHeading: 'Bosqichlar',
     fullRoadmap: 'To’liq yo’l xaritasi →',
     weeksRange: '{start}-{end}-haftalar',
     examWeight: 'imtihonning {weight}%',
@@ -157,7 +157,7 @@ export const uz: Dictionary = {
     features: [
       {
         title: 'Playlist emas, yo’l xaritasi',
-        body: 'Imtihon sohalarini aks ettiruvchi olti bosqichga bo’lingan yigirma hafta: dushanbadan jumagacha darslar, shanba laboratoriya, yakshanba takrorlash.',
+        body: 'Imtihon sohalarini aks ettiruvchi bosqichlarga bo’lingan yigirma hafta: dushanbadan jumagacha darslar, shanba laboratoriya, yakshanba takrorlash.',
       },
       {
         title: 'Imtihondek baholaydigan testlar',
@@ -177,7 +177,7 @@ export const uz: Dictionary = {
   roadmap: {
     heading: 'Yo’l xaritasi',
     intro:
-      'Imtihondek o’lchangan olti bosqich. Darslar dushanbadan jumagacha, shanba - laboratoriya kuni, yakshanba - takrorlash. Tartib bilan yuring: har bir bosqich oldingisiga tayanadi.',
+      'Imtihondek o’lchangan bosqichlar. Darslar dushanbadan jumagacha, shanba - laboratoriya kuni, yakshanba - takrorlash. Tartib bilan yuring: har bir bosqich oldingisiga tayanadi.',
     allPhases: '← Barcha bosqichlar',
     weeklySchedule: 'Haftalik jadval',
     quizzesHeading: 'Testlar',
@@ -605,7 +605,7 @@ export const uz: Dictionary = {
       },
       curriculum: {
         title: 'Imtihon kurikulumi (mavzular)',
-        body: 'CNCF kurikulum repozitoriysi - sohalarning aniq ro’yxati va foiz og’irliklari, har bir reliz uchun alohida versiyalangan. Bu yo’l xaritasining olti bosqichi ana shundan qurilgan.',
+        body: 'CNCF kurikulum repozitoriysi - sohalarning aniq ro’yxati va foiz og’irliklari, har bir reliz uchun alohida versiyalangan. Bu yo’l xaritasining bosqichlari ana shundan qurilgan.',
       },
       handbook: {
         title: 'Nomzod qo’llanmasi',

@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-logging-in-and-documentation",
+  "phase_slug": "essential-commands",
+  "week_number": 1,
+  "title": "Lab - Logging in and system documentation",
+  "description": "Find your way around a fresh system using only its built-in help.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 1,
+  "scenario": "Find your way around a fresh system using only its built-in help. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Which section",
+      "instructions": "Find which man page section documents the passwd file (not the command) and open it.",
+      "solution": "man 5 passwd",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Search",
+      "instructions": "Find every command related to \"compress\" without knowing their names.",
+      "solution": "apropos compress  # or man -k compress",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Switch console",
+      "instructions": "Switch to tty3, log in, and return to the graphical session.",
+      "solution": "Ctrl-Alt-F3 ... Ctrl-Alt-F1 (or F2)",
+      "verification": "who  # shows your tty sessions"
+    }
+  ]
+}

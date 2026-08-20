@@ -1,0 +1,33 @@
+{
+  "slug": "lab-storage-class",
+  "phase_slug": "storage",
+  "week_number": 13,
+  "title": "Lab - Storage classes",
+  "description": "Provision volumes dynamically.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Provision volumes dynamically. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - List",
+      "instructions": "Which StorageClasses exist, which provisioner does each use, and which is the default?",
+      "solution": "kubectl get sc",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Claim",
+      "instructions": "Create PVC local-pvc (500Mi, ReadWriteOnce) using the local-storage class. Why is it Pending?",
+      "solution": "kubectl create -f local-pvc.yaml\nkubectl describe pvc local-pvc",
+      "verification": "WaitForFirstConsumer"
+    },
+    {
+      "title": "Task 3 - Consume",
+      "instructions": "Create Pod nginx mounting it at /var/www/html and watch the claim bind.",
+      "solution": "kubectl run nginx --image=nginx:alpine --dry-run=client -o yaml > p.yaml  # add the volume\nkubectl apply -f p.yaml",
+      "verification": "kubectl get pvc local-pvc  # Bound"
+    }
+  ]
+}

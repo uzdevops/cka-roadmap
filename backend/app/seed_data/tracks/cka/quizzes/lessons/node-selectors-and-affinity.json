@@ -1,0 +1,142 @@
+{
+  "slug": "node-selectors-and-affinity-check",
+  "lesson_slug": "node-selectors-and-affinity",
+  "phase_slug": "scheduling",
+  "week_number": 4,
+  "title": "Check: placement",
+  "description": "Five questions on steering Pods towards nodes and each other.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-nodeselector",
+      "type": "single_choice",
+      "prompt": "What does `nodeSelector` do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Requires the node to carry the listed labels"
+        },
+        {
+          "id": "b",
+          "text": "Prefers nodes with those labels"
+        },
+        {
+          "id": "c",
+          "text": "Excludes nodes with those labels"
+        },
+        {
+          "id": "d",
+          "text": "Selects Pods, not nodes"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "nodeSelector is a hard requirement and the simplest form. Node affinity is the expressive version.",
+      "points": 1
+    },
+    {
+      "key": "q2-required-vs-preferred",
+      "type": "single_choice",
+      "prompt": "`preferredDuringSchedulingIgnoredDuringExecution` means what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Pod will not schedule unless the rule matches"
+        },
+        {
+          "id": "b",
+          "text": "The scheduler tries to honour it but will place the Pod anyway if it cannot"
+        },
+        {
+          "id": "c",
+          "text": "The Pod is evicted if the rule stops matching"
+        },
+        {
+          "id": "d",
+          "text": "The rule applies only at eviction"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "'Preferred' is a soft weight. 'IgnoredDuringExecution' means the rule is not re-checked once the Pod is running.",
+      "points": 1
+    },
+    {
+      "key": "q3-podantiaffinity",
+      "type": "single_choice",
+      "prompt": "You want two replicas never on the same node. Which do you use?",
+      "options": [
+        {
+          "id": "a",
+          "text": "podAffinity with topologyKey kubernetes.io/hostname"
+        },
+        {
+          "id": "b",
+          "text": "podAntiAffinity with topologyKey kubernetes.io/hostname"
+        },
+        {
+          "id": "c",
+          "text": "nodeSelector"
+        },
+        {
+          "id": "d",
+          "text": "A taint"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Anti-affinity repels; the topologyKey defines what 'same place' means - here, the same node.",
+      "points": 1
+    },
+    {
+      "key": "q4-topologykey",
+      "type": "single_choice",
+      "prompt": "What does topologyKey actually name?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Pod label"
+        },
+        {
+          "id": "b",
+          "text": "A node label that defines the failure domain"
+        },
+        {
+          "id": "c",
+          "text": "A namespace"
+        },
+        {
+          "id": "d",
+          "text": "A scheduler profile"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Common values are kubernetes.io/hostname (per node) and topology.kubernetes.io/zone (per zone).",
+      "points": 1
+    },
+    {
+      "key": "q5-label-node",
+      "type": "fill_command",
+      "prompt": "Write the command that labels a node named worker-1 with disk=ssd.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl label node worker-1 disk=ssd",
+        "kubectl label nodes worker-1 disk=ssd"
+      ],
+      "explanation": "Add `--overwrite` when the label already exists.",
+      "points": 2
+    }
+  ]
+}

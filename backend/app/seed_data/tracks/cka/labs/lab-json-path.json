@@ -1,0 +1,33 @@
+{
+  "slug": "lab-json-path",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Lab - JSONPath",
+  "description": "Answer questions about the cluster with one query each.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 5,
+  "scenario": "Answer questions about the cluster with one query each. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Node names",
+      "instructions": "Print all node names, one per line.",
+      "solution": "kubectl get nodes -o jsonpath='{.items[*].metadata.name}'",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Custom columns",
+      "instructions": "Print node name and CPU capacity as two columns.",
+      "solution": "kubectl get nodes -o custom-columns=NAME:.metadata.name,CPU:.status.capacity.cpu",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Sort",
+      "instructions": "List PVs sorted by capacity.",
+      "solution": "kubectl get pv --sort-by=.spec.capacity.storage",
+      "verification": "-"
+    }
+  ]
+}

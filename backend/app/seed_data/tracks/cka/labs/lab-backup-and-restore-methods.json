@@ -1,0 +1,33 @@
+{
+  "slug": "lab-backup-and-restore-methods",
+  "phase_slug": "cluster-maintenance",
+  "week_number": 9,
+  "title": "Lab - Backup and restore",
+  "description": "Take an etcd snapshot, destroy something, restore it.",
+  "difficulty": "advanced",
+  "estimated_minutes": 60,
+  "order_index": 3,
+  "scenario": "Take an etcd snapshot, destroy something, restore it. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Snapshot",
+      "instructions": "Save a snapshot of etcd to /opt/snapshot-pre-boot.db using the correct endpoints and certificates.",
+      "solution": "ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/snapshot-pre-boot.db",
+      "verification": "ls -l /opt/snapshot-pre-boot.db"
+    },
+    {
+      "title": "Task 2 - Break",
+      "instructions": "Delete every Deployment and Service in the default namespace.",
+      "solution": "kubectl delete deploy,svc --all",
+      "verification": "kubectl get all"
+    },
+    {
+      "title": "Task 3 - Restore",
+      "instructions": "Restore the snapshot to a new data dir and point the etcd static Pod at it.",
+      "solution": "etcdutl snapshot restore /opt/snapshot-pre-boot.db --data-dir /var/lib/etcd-from-backup\n# edit /etc/kubernetes/manifests/etcd.yaml hostPath to the new dir",
+      "verification": "kubectl get all  # the Deployments are back"
+    }
+  ]
+}

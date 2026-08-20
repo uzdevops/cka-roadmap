@@ -97,7 +97,7 @@ English field by field**, and a lesson whose body fell back says so in a notice
 above the text - the reader is never left guessing why the language changed.
 
 **Adding translations.** Either drop files into
-`backend/app/seed_data/i18n/uz/` (`structure.json` for titles and summaries,
+`backend/app/seed_data/tracks/<track>/i18n/uz/` (`structure.json` for titles and summaries,
 `lessons/<slug>.md` for bodies, `quizzes/<slug>.json`, `labs/<slug>.json`) and
 restart, or edit them directly in the admin panel's lesson editor. The seeder
 only ever fills in fields that are still empty, so it never overwrites an
@@ -106,7 +106,7 @@ admin's edit.
 **Adding a third language.** Add the code to `LOCALES` in
 `frontend/src/i18n/config.ts` and `SUPPORTED_LOCALES` in `backend/app/i18n.py`,
 copy `frontend/src/i18n/dictionaries/en.ts` to the new code, and add a
-`backend/app/seed_data/i18n/<code>/` directory. Nothing else changes.
+`backend/app/seed_data/tracks/<track>/i18n/<code>/` directory. Nothing else changes.
 
 ## Everyday commands
 
@@ -155,7 +155,7 @@ code change.
 │   │   ├── models/  schemas/   # ORM models and Pydantic schemas, kept apart
 │   │   ├── i18n.py             # locale negotiation + per-field fallback
 │   │   ├── seed.py             # idempotent, runs on every start
-│   │   └── seed_data/          # phases.json, lessons/*.md, quizzes/*.json
+│   │   └── seed_data/          # tracks.json + tracks/<slug>/{phases.json,lessons,quizzes,labs,i18n}
 │   │       └── i18n/uz/        # Uzbek overrides, same shape
 │   └── tests/                  # pytest: auth, quiz scoring, progress
 ├── frontend/                   # Next.js 14 App Router + TypeScript + Tailwind

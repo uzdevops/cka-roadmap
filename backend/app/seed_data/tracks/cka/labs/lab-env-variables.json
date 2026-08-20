@@ -1,0 +1,33 @@
+{
+  "slug": "lab-env-variables",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 6,
+  "title": "Lab - Environment variables and ConfigMaps",
+  "description": "Wire configuration into a Pod three ways.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 5,
+  "scenario": "Wire configuration into a Pod three ways. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Literal",
+      "instructions": "Create ConfigMap webapp-config-map with APP_COLOR=darkblue and APP_OTHER=disregard.",
+      "solution": "kubectl create cm webapp-config-map --from-literal=APP_COLOR=darkblue --from-literal=APP_OTHER=disregard",
+      "verification": "kubectl get cm webapp-config-map -o yaml"
+    },
+    {
+      "title": "Task 2 - envFrom",
+      "instructions": "Make Pod webapp-color read APP_COLOR from that ConfigMap.",
+      "solution": "# env: [{name: APP_COLOR, valueFrom: {configMapKeyRef: {name: webapp-config-map, key: APP_COLOR}}}]",
+      "verification": "kubectl exec webapp-color -- env | grep APP_COLOR"
+    },
+    {
+      "title": "Task 3 - Volume",
+      "instructions": "Mount the ConfigMap as files under /etc/config.",
+      "solution": "# volumes: [{name: cfg, configMap: {name: webapp-config-map}}] + volumeMounts",
+      "verification": "kubectl exec webapp-color -- ls /etc/config"
+    }
+  ]
+}

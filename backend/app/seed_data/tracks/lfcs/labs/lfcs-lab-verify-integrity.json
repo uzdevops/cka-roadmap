@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-verify-integrity",
+  "phase_slug": "operations-deployment",
+  "week_number": 6,
+  "title": "Lab - Verify integrity and availability of resources and key processes",
+  "description": "Check disk, memory and services, and repair a filesystem.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 3,
+  "scenario": "Check disk, memory and services, and repair a filesystem. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Space",
+      "instructions": "Which filesystem is fullest, and which directory under /var uses the most space?",
+      "solution": "df -h\ndu -sh /var/* | sort -h | tail -3",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Memory",
+      "instructions": "How much memory is actually available, as opposed to free?",
+      "solution": "free -h  # available column",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - fsck",
+      "instructions": "Check an unmounted ext4 filesystem for errors.",
+      "solution": "umount /dev/sdb1 && fsck.ext4 -f /dev/sdb1",
+      "verification": "-"
+    }
+  ]
+}

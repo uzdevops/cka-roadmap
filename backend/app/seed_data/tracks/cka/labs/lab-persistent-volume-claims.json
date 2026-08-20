@@ -1,0 +1,33 @@
+{
+  "slug": "lab-persistent-volume-claims",
+  "phase_slug": "storage",
+  "week_number": 13,
+  "title": "Lab - Persistent Volume Claims",
+  "description": "Provision storage and bind a claim.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Provision storage and bind a claim. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Inspect",
+      "instructions": "Where does Pod webapp write its logs, and why are they lost on restart?",
+      "solution": "kubectl exec webapp -- cat /log/app.log\nkubectl get pod webapp -o jsonpath='{.spec.volumes}'",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - PV",
+      "instructions": "Create PV pv-log: 100Mi, ReadWriteMany, hostPath /pv/log, reclaim Retain.",
+      "solution": "# kind: PersistentVolume",
+      "verification": "kubectl get pv"
+    },
+    {
+      "title": "Task 3 - PVC",
+      "instructions": "Create PVC claim-log-1 for 50Mi ReadWriteMany and mount it at /log in webapp.",
+      "solution": "# kind: PersistentVolumeClaim; then volumes.persistentVolumeClaim.claimName",
+      "verification": "kubectl get pvc  # Bound"
+    }
+  ]
+}

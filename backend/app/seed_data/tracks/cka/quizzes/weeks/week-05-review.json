@@ -1,0 +1,172 @@
+{
+  "slug": "week-05-review",
+  "phase_slug": "scheduling",
+  "week_number": 5,
+  "title": "Week 5 review - rollouts and controllers",
+  "description": "Six questions on Deployments, DaemonSets, StatefulSets and Jobs.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 5,
+  "questions": [
+    {
+      "key": "w5-q1",
+      "type": "single_choice",
+      "prompt": "maxUnavailable: 0 with maxSurge: 1 gives you what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A faster rollout"
+        },
+        {
+          "id": "b",
+          "text": "No loss of capacity during the rollout"
+        },
+        {
+          "id": "c",
+          "text": "A Recreate strategy"
+        },
+        {
+          "id": "d",
+          "text": "A paused rollout"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Extra capacity is added before anything is taken away.",
+      "points": 1
+    },
+    {
+      "key": "w5-q2",
+      "type": "single_choice",
+      "prompt": "Which controller places exactly one Pod on every matching node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deployment"
+        },
+        {
+          "id": "b",
+          "text": "StatefulSet"
+        },
+        {
+          "id": "c",
+          "text": "DaemonSet"
+        },
+        {
+          "id": "d",
+          "text": "Job"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "And adds one automatically when a node joins.",
+      "points": 1
+    },
+    {
+      "key": "w5-q3",
+      "type": "single_choice",
+      "prompt": "What does a StatefulSet give that a Deployment does not?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rolling updates"
+        },
+        {
+          "id": "b",
+          "text": "Stable names, stable network identity and per-Pod storage"
+        },
+        {
+          "id": "c",
+          "text": "Health checks"
+        },
+        {
+          "id": "d",
+          "text": "Resource limits"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "web-0 comes back as web-0, with its own PVC.",
+      "points": 1
+    },
+    {
+      "key": "w5-q4",
+      "type": "single_choice",
+      "prompt": "Valid restartPolicy for a Job Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Always"
+        },
+        {
+          "id": "b",
+          "text": "OnFailure or Never"
+        },
+        {
+          "id": "c",
+          "text": "Any"
+        },
+        {
+          "id": "d",
+          "text": "None"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Always would restart a container that succeeded.",
+      "points": 1
+    },
+    {
+      "key": "w5-q5",
+      "type": "single_choice",
+      "prompt": "concurrencyPolicy: Forbid on a CronJob means what?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Runs are queued"
+        },
+        {
+          "id": "b",
+          "text": "A new run is skipped while the previous one is active"
+        },
+        {
+          "id": "c",
+          "text": "The old run is killed"
+        },
+        {
+          "id": "d",
+          "text": "The CronJob is suspended"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Replace kills the old one instead.",
+      "points": 1
+    },
+    {
+      "key": "w5-q6",
+      "type": "fill_command",
+      "prompt": "Write the command that watches a rollout of Deployment api finish.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl rollout status deployment/api",
+        "kubectl rollout status deployment api",
+        "kubectl rollout status deploy/api",
+        "kubectl rollout status deploy api"
+      ],
+      "explanation": "It blocks until the rollout completes or fails.",
+      "points": 2
+    }
+  ]
+}

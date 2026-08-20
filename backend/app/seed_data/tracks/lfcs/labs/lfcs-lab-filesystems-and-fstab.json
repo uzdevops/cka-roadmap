@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-filesystems-and-fstab",
+  "phase_slug": "storage",
+  "week_number": 11,
+  "title": "Lab - Create filesystems and mount them at boot",
+  "description": "Format, mount, and make it permanent.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 2,
+  "scenario": "Format, mount, and make it permanent. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Format",
+      "instructions": "Create an xfs filesystem labelled data on /dev/sdc1.",
+      "solution": "mkfs.xfs -L data /dev/sdc1",
+      "verification": "blkid /dev/sdc1"
+    },
+    {
+      "title": "Task 2 - Mount",
+      "instructions": "Mount it at /data and add a UUID-based fstab entry.",
+      "solution": "mkdir -p /data && mount /dev/sdc1 /data\necho \"UUID=$(blkid -s UUID -o value /dev/sdc1) /data xfs defaults 0 0\" >> /etc/fstab",
+      "verification": "umount /data && mount -a && findmnt /data"
+    },
+    {
+      "title": "Task 3 - Grow",
+      "instructions": "Extend the filesystem after the partition was enlarged.",
+      "solution": "xfs_growfs /data",
+      "verification": "df -h /data"
+    }
+  ]
+}

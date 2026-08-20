@@ -1,0 +1,158 @@
+{
+  "slug": "static-pods-and-manifests-check",
+  "lesson_slug": "static-pods-and-manifests",
+  "phase_slug": "scheduling",
+  "week_number": 5,
+  "title": "Check: static Pods",
+  "description": "Five questions on Pods the kubelet runs by itself.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-who-runs",
+      "type": "single_choice",
+      "prompt": "Who starts a static Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The scheduler"
+        },
+        {
+          "id": "b",
+          "text": "The kubelet, from a directory on disk"
+        },
+        {
+          "id": "c",
+          "text": "The controller manager"
+        },
+        {
+          "id": "d",
+          "text": "kubectl"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "No scheduler and no API server involved - which is exactly how the control plane can start before there is a control plane.",
+      "points": 1
+    },
+    {
+      "key": "q2-directory",
+      "type": "single_choice",
+      "prompt": "Which kubelet setting names that directory?",
+      "options": [
+        {
+          "id": "a",
+          "text": "podManifestPath"
+        },
+        {
+          "id": "b",
+          "text": "staticPodPath"
+        },
+        {
+          "id": "c",
+          "text": "manifestDir"
+        },
+        {
+          "id": "d",
+          "text": "podDir"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`staticPodPath` in the kubelet config, conventionally /etc/kubernetes/manifests.",
+      "points": 1
+    },
+    {
+      "key": "q3-mirror",
+      "type": "single_choice",
+      "prompt": "What appears in the API when a static Pod runs?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "A read-only mirror Pod"
+        },
+        {
+          "id": "c",
+          "text": "A Deployment"
+        },
+        {
+          "id": "d",
+          "text": "A DaemonSet"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "You can see it with kubectl, but deleting the mirror does not stop it - the kubelet recreates it from the file.",
+      "points": 1
+    },
+    {
+      "key": "q4-delete",
+      "type": "single_choice",
+      "prompt": "How do you actually stop a static Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl delete pod"
+        },
+        {
+          "id": "b",
+          "text": "Move or remove its manifest file"
+        },
+        {
+          "id": "c",
+          "text": "Cordon the node"
+        },
+        {
+          "id": "d",
+          "text": "Scale it to zero"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The file is the source of truth. Moving it aside is the standard trick for repairing a broken API server.",
+      "points": 1
+    },
+    {
+      "key": "q5-typo",
+      "type": "single_choice",
+      "prompt": "You edit kube-apiserver.yaml and make a typo. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The change is rejected"
+        },
+        {
+          "id": "b",
+          "text": "The API server restarts, fails, and kubectl stops working"
+        },
+        {
+          "id": "c",
+          "text": "The old Pod keeps running"
+        },
+        {
+          "id": "d",
+          "text": "The kubelet ignores the file"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Keep a backup. The container logs are still readable with `crictl logs` even when kubectl is dead.",
+      "points": 1
+    }
+  ]
+}

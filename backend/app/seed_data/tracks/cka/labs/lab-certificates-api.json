@@ -1,0 +1,33 @@
+{
+  "slug": "lab-certificates-api",
+  "phase_slug": "security",
+  "week_number": 10,
+  "title": "Lab - Certificates API",
+  "description": "Onboard a new user through a CSR.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Onboard a new user through a CSR. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Submit",
+      "instructions": "Create a CSR object for user akshay from akshay.csr, signer kubernetes.io/kube-apiserver-client.",
+      "solution": "cat akshay.csr | base64 -w0  # into spec.request\nkubectl apply -f akshay-csr.yaml",
+      "verification": "kubectl get csr"
+    },
+    {
+      "title": "Task 2 - Approve",
+      "instructions": "Approve it and extract the signed certificate.",
+      "solution": "kubectl certificate approve akshay\nkubectl get csr akshay -o jsonpath='{.status.certificate}' | base64 -d > akshay.crt",
+      "verification": "openssl x509 -in akshay.crt -noout -subject"
+    },
+    {
+      "title": "Task 3 - Deny",
+      "instructions": "A CSR from agent-smith asks for system:masters. Reject it.",
+      "solution": "kubectl get csr agent-smith -o yaml\nkubectl certificate deny agent-smith",
+      "verification": "kubectl get csr agent-smith  # Denied"
+    }
+  ]
+}

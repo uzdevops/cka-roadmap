@@ -1,0 +1,120 @@
+{
+  "title": "11-hafta takrori - kirish nazorati",
+  "description": "RBAC, ServiceAccount’lar va admission bo’yicha oltita savol.",
+  "questions": {
+    "w15-q1": {
+      "prompt": "`dev` namespace’dagi RoleBinding ClusterRole’ga murojaat qilyapti. Nima beriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Butun klaster bo’ylab huquqlar"
+        },
+        {
+          "id": "b",
+          "text": "O’sha huquqlar faqat `dev` ichida"
+        },
+        {
+          "id": "c",
+          "text": "Hech narsa"
+        },
+        {
+          "id": "d",
+          "text": "Faqat o’qish huquqi"
+        }
+      ],
+      "explanation": "Bu `view` yoki `edit` kabi tayyor ClusterRole’larni har bir namespace uchun qayta ishlatishning standart usuli."
+    },
+    "w15-q2": {
+      "prompt": "RBAC’da deny (taqiqlash) qoidalari yo’q. Bundan nima kelib chiqadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Oxirgi mos kelgan qoida g’olib"
+        },
+        {
+          "id": "b",
+          "text": "Ruxsatlar qo’shiluvchi (additive)"
+        },
+        {
+          "id": "c",
+          "text": "Eng tor qoida g’olib"
+        },
+        {
+          "id": "d",
+          "text": "Qoidalar tartibi ahamiyatli"
+        }
+      ],
+      "explanation": "Huquqni ayirib bo’lmaydi - shunchaki kamroq huquq berasiz."
+    },
+    "w15-q3": {
+      "prompt": "`dev` namespace’dagi `build` ServiceAccount pod’larni list qila oladimi - shuni tekshiradigan buyruqni yozing.",
+      "explanation": "Impersonation (`--as`) - binding’ni tekshirishning eng tez yo’li."
+    },
+    "w15-q4": {
+      "prompt": "Zamonaviy Pod’ga ServiceAccount tokeni qanday yetkaziladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Doimiy Secret orqali"
+        },
+        {
+          "id": "b",
+          "text": "Qisqa muddatli projected token orqali"
+        },
+        {
+          "id": "c",
+          "text": "Muhit o’zgaruvchisi orqali"
+        },
+        {
+          "id": "d",
+          "text": "Umuman yetkazilmaydi"
+        }
+      ],
+      "explanation": "U TokenRequest asosida beriladi, audience bilan cheklanadi va muntazam yangilanib turadi."
+    },
+    "w15-q5": {
+      "prompt": "Admission bosqichida qaysi biri avval ishlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Validating"
+        },
+        {
+          "id": "b",
+          "text": "Mutating"
+        },
+        {
+          "id": "c",
+          "text": "Ikkalasi parallel ishlaydi"
+        },
+        {
+          "id": "d",
+          "text": "Alifbo tartibida"
+        }
+      ],
+      "explanation": "Shu tartib tufayli validatsiya obyektning yakuniy holatini ko’radi."
+    },
+    "w15-q6": {
+      "prompt": "PodSecurityPolicy olib tashlangandan keyin Pod Security qanday qo’llanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Faqat RBAC orqali"
+        },
+        {
+          "id": "b",
+          "text": "Namespace yorliqlari boshqaradigan Pod Security admission orqali"
+        },
+        {
+          "id": "c",
+          "text": "NetworkPolicy orqali"
+        },
+        {
+          "id": "d",
+          "text": "CRD orqali"
+        }
+      ],
+      "explanation": "`pod-security.kubernetes.io/enforce=restricted` va shunga o’xshash yorliqlar orqali."
+    }
+  }
+}

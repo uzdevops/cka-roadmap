@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-packet-filtering",
+  "phase_slug": "networking",
+  "week_number": 10,
+  "title": "Lab - Packet filtering",
+  "description": "Open exactly the ports a web server needs.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 40,
+  "order_index": 1,
+  "scenario": "Open exactly the ports a web server needs. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Status",
+      "instructions": "Which zone is the default and which services are allowed in it?",
+      "solution": "firewall-cmd --get-default-zone\nfirewall-cmd --list-all",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Allow",
+      "instructions": "Allow http and https permanently and reload.",
+      "solution": "firewall-cmd --permanent --add-service=http --add-service=https\nfirewall-cmd --reload",
+      "verification": "firewall-cmd --list-services"
+    },
+    {
+      "title": "Task 3 - Port and source",
+      "instructions": "Allow TCP 8080 only from 10.0.0.0/24.",
+      "solution": "firewall-cmd --permanent --add-rich-rule='rule family=ipv4 source address=10.0.0.0/24 port port=8080 protocol=tcp accept'\nfirewall-cmd --reload",
+      "verification": "firewall-cmd --list-rich-rules"
+    }
+  ]
+}

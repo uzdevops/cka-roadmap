@@ -1,0 +1,726 @@
+{
+  "phases": [
+    {
+      "slug": "essential-commands",
+      "title": "Phase 1 - Essential commands",
+      "description": "The shell as a tool: consoles and documentation, files and links, permissions, searching, text processing and regular expressions, archives, redirection, SSL certificates and Git.",
+      "order_index": 1,
+      "exam_domain": "Essential Commands",
+      "exam_weight": 20,
+      "week_start": 1,
+      "week_end": 4,
+      "color": "sky",
+      "weeks": [
+        {
+          "number": 1,
+          "title": "Week 1 - Consoles, documentation, files and links",
+          "description": "Getting in, finding help, and moving files around - the first week is about being at home in a shell.",
+          "lessons": [
+            {
+              "slug": "lfcs-course-introduction",
+              "title": "Course introduction",
+              "summary": "What the LFCS covers and how this track walks it.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-course-structure",
+              "title": "Course structure",
+              "summary": "The five domains and their weights, module by module.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-exam-objectives",
+              "title": "Prerequisites, exam objectives and details",
+              "summary": "What you need before starting and exactly what the exam tests.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-command-cheat-sheet",
+              "title": "LFCS command cheat sheet",
+              "summary": "The reference card to keep open for the whole track.",
+              "estimated_minutes": 15,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-login-consoles",
+              "title": "Log in to local and remote graphical and text mode consoles",
+              "summary": "TTYs, the display manager, and SSH - the three doors into a system.",
+              "estimated_minutes": 16,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-login-consoles-2",
+              "title": "Log in to consoles - part 2",
+              "summary": "Switching TTYs, logging out safely, and what a session actually is.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-system-documentation",
+              "title": "Read and use system documentation",
+              "summary": "man, info, --help, apropos and /usr/share/doc - answering your own questions.",
+              "estimated_minutes": 18,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-files-and-directories",
+              "title": "Create, delete, copy and move files and directories",
+              "summary": "touch, mkdir -p, cp -r, mv, rm -r and the globs that make them fast.",
+              "estimated_minutes": 24,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-hard-links",
+              "title": "Create and manage hard links",
+              "summary": "Inodes, link counts, and why a hard link is the same file with another name.",
+              "estimated_minutes": 16,
+              "day_of_week": 5
+            },
+            {
+              "slug": "lfcs-soft-links",
+              "title": "Create and manage soft links",
+              "summary": "Symbolic links, relative vs absolute targets, and dangling links.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Week 2 - Permissions, search and text",
+          "description": "Who may do what to a file, how to find files, and how to read and reshape their contents.",
+          "lessons": [
+            {
+              "slug": "lfcs-file-permissions",
+              "title": "List, set and change standard file permissions",
+              "summary": "rwx for user, group and other; chmod in symbolic and octal form; chown and chgrp.",
+              "estimated_minutes": 28,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-suid-sgid-sticky",
+              "title": "SUID, SGID and the sticky bit",
+              "summary": "The three special bits, what each does on files and directories, and how to spot them in ls.",
+              "estimated_minutes": 16,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-search-for-files",
+              "title": "Search for files",
+              "summary": "find by name, size, permissions, owner, mtime - and -exec to act on the results.",
+              "estimated_minutes": 26,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-compare-and-manipulate-file-content",
+              "title": "Compare and manipulate file content",
+              "summary": "cat, head, tail, diff, sort, uniq, cut, sed and tr - the text toolbox.",
+              "estimated_minutes": 20,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-pagers-and-vi",
+              "title": "Pagers and vi",
+              "summary": "less and more, then enough vi to survive: modes, save, quit, search, replace.",
+              "estimated_minutes": 12,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-grep",
+              "title": "Search file content using grep",
+              "summary": "grep, -i, -r, -v, -n, -c and friends.",
+              "estimated_minutes": 12,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-basic-regular-expressions",
+              "title": "Analyse text using basic regular expressions",
+              "summary": "Anchors, character classes, repetition - the basic regex grammar grep speaks.",
+              "estimated_minutes": 16,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-extended-regular-expressions",
+              "title": "Extended regular expressions",
+              "summary": "grep -E: alternation, grouping, {n,m} and the shortcuts.",
+              "estimated_minutes": 22,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Week 3 - Archives, backups and redirection",
+          "description": "Packing files up, moving them elsewhere, and wiring commands together.",
+          "lessons": [
+            {
+              "slug": "lfcs-archive-backup-compress",
+              "title": "Archive, back up, compress, unpack and uncompress files",
+              "summary": "tar as the archiver, and the compressors it wraps.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-compress-and-uncompress",
+              "title": "Compress and uncompress files",
+              "summary": "gzip, bzip2, xz and zip - and which flags tar wants for each.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-backup-to-remote",
+              "title": "Back up files to a remote system",
+              "summary": "rsync and scp, and why rsync -a is the habit worth having.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-io-redirection",
+              "title": "Use input-output redirection",
+              "summary": ">, >>, 2>, 2>&1, <, pipes and tee - controlling where data flows.",
+              "estimated_minutes": 26,
+              "day_of_week": 4
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Week 4 - SSL certificates and Git",
+          "description": "Two tools every administrator touches weekly: openssl and git.",
+          "lessons": [
+            {
+              "slug": "lfcs-ssl-certificates",
+              "title": "Work with SSL certificates",
+              "summary": "Keys, CSRs, self-signed certificates and reading a certificate with openssl.",
+              "estimated_minutes": 36,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-git-basic-operations",
+              "title": "Git - basic operations",
+              "summary": "init, clone, status, log - a repository from nothing.",
+              "estimated_minutes": 18,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-git-staging-and-committing",
+              "title": "Git - staging and committing changes",
+              "summary": "add, commit, diff, restore - the staging area explained.",
+              "estimated_minutes": 20,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-git-branches-and-remotes",
+              "title": "Git - branches and remote repositories",
+              "summary": "branch, checkout, merge, push, pull - working with others.",
+              "estimated_minutes": 38,
+              "day_of_week": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "operations-deployment",
+      "title": "Phase 2 - Operations and deployment",
+      "description": "Running a system: boot and targets, scripting, systemd services, processes and logs, scheduling, packages, kernel parameters, SELinux, containers and virtual machines.",
+      "order_index": 2,
+      "exam_domain": "Operations Deployment",
+      "exam_weight": 25,
+      "week_start": 5,
+      "week_end": 7,
+      "color": "violet",
+      "weeks": [
+        {
+          "number": 5,
+          "title": "Week 5 - Boot, services, processes and logs",
+          "description": "How the system comes up, how services are defined, and how to see what is running and what it says.",
+          "lessons": [
+            {
+              "slug": "lfcs-boot-reboot-shutdown",
+              "title": "Boot, reboot and shutdown a system safely",
+              "summary": "systemctl reboot/poweroff, shutdown with a delay, and warning logged-in users.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-operating-modes",
+              "title": "Boot or change the system into different operating modes",
+              "summary": "systemd targets: multi-user, graphical, rescue, emergency - and setting the default.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-scripting-for-maintenance",
+              "title": "Use scripting to automate system maintenance tasks",
+              "summary": "Shell scripts: shebang, variables, conditionals, loops, exit codes.",
+              "estimated_minutes": 24,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-startup-process-and-services",
+              "title": "Manage the startup process and services",
+              "summary": "systemctl start/stop/enable/disable/mask, status, and reading unit dependencies.",
+              "estimated_minutes": 24,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-create-systemd-services",
+              "title": "Create systemd services",
+              "summary": "Writing a unit file: [Unit], [Service], [Install], restart policies and daemon-reload.",
+              "estimated_minutes": 32,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-diagnose-and-manage-processes",
+              "title": "Diagnose and manage processes",
+              "summary": "ps, top, nice and renice, signals and kill, jobs, fg and bg.",
+              "estimated_minutes": 44,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-system-log-files",
+              "title": "Locate and analyse system log files",
+              "summary": "journalctl and its filters, /var/log, rsyslog and logrotate.",
+              "estimated_minutes": 22,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Week 6 - Scheduling, packages and integrity",
+          "description": "Running things on a schedule, installing software three ways, and checking the system is whole.",
+          "lessons": [
+            {
+              "slug": "lfcs-schedule-tasks",
+              "title": "Schedule tasks to run at a set date and time",
+              "summary": "cron and crontab syntax, anacron, at, and systemd timers.",
+              "estimated_minutes": 28,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-package-manager",
+              "title": "Manage software with the package manager",
+              "summary": "apt and dnf: install, remove, search, info, which package owns a file.",
+              "estimated_minutes": 12,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-package-repositories",
+              "title": "Configure the repositories of the package manager",
+              "summary": "sources.list and .repo files, adding a third-party repository and its key.",
+              "estimated_minutes": 20,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-compile-from-source",
+              "title": "Install software by compiling source code",
+              "summary": "Build dependencies, ./configure, make, make install - and why you might not.",
+              "estimated_minutes": 14,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-verify-integrity-and-availability",
+              "title": "Verify integrity and availability of resources and processes",
+              "summary": "df, du, free, uptime, vmstat, checking services, and fsck for filesystems.",
+              "estimated_minutes": 22,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Week 7 - Kernel, SELinux, containers and VMs",
+          "description": "Tuning the kernel, enforcing mandatory access control, and running containers and virtual machines.",
+          "lessons": [
+            {
+              "slug": "lfcs-kernel-runtime-parameters",
+              "title": "Change kernel runtime parameters, persistent and non-persistent",
+              "summary": "sysctl, /proc/sys and /etc/sysctl.d - now and after reboot.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-selinux-contexts",
+              "title": "List and identify SELinux file and process contexts",
+              "summary": "ls -Z, ps -Z, the user:role:type:level tuple, and getenforce.",
+              "estimated_minutes": 20,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-selinux-mac",
+              "title": "Create and enforce MAC using SELinux",
+              "summary": "Modes, booleans, restorecon, semanage fcontext and port labels - fixing denials properly.",
+              "estimated_minutes": 56,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-containers",
+              "title": "Create and manage containers",
+              "summary": "Images, containers, volumes, ports and logs with docker/podman.",
+              "estimated_minutes": 48,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-virtual-machines",
+              "title": "Manage and configure virtual machines",
+              "summary": "KVM, libvirt, virsh - the pieces of a Linux hypervisor.",
+              "estimated_minutes": 18,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-create-and-boot-a-vm",
+              "title": "Create and boot a virtual machine",
+              "summary": "virt-install and cloud images, then starting, stopping and consoling into a VM.",
+              "estimated_minutes": 22,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-install-os-on-a-vm",
+              "title": "Installing an operating system on a virtual machine",
+              "summary": "Attaching an ISO and walking through an installer inside the VM.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "users-groups",
+      "title": "Phase 3 - Users and groups",
+      "description": "Accounts, groups, environment profiles, resource limits, privileges, root access and LDAP.",
+      "order_index": 3,
+      "exam_domain": "Users and Groups",
+      "exam_weight": 10,
+      "week_start": 8,
+      "week_end": 8,
+      "color": "emerald",
+      "weeks": [
+        {
+          "number": 8,
+          "title": "Week 8 - Users and groups",
+          "description": "Accounts, groups, environment, limits, privileges and central directories.",
+          "lessons": [
+            {
+              "slug": "lfcs-local-user-accounts",
+              "title": "Create, delete and modify local user accounts",
+              "summary": "useradd, usermod, userdel, passwd, chage and the files behind them.",
+              "estimated_minutes": 18,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-local-groups",
+              "title": "Create, delete and modify local groups and group memberships",
+              "summary": "groupadd, gpasswd, usermod -aG, primary vs supplementary groups.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-environment-profiles",
+              "title": "Manage system-wide environment profiles",
+              "summary": "/etc/profile, /etc/profile.d, /etc/environment and login vs non-login shells.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-template-user-environment",
+              "title": "Manage the template user environment",
+              "summary": "/etc/skel - what every new home directory starts with.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-user-resource-limits",
+              "title": "Configure user resource limits",
+              "summary": "ulimit and /etc/security/limits.conf - capping processes, files and memory per user.",
+              "estimated_minutes": 14,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-user-privileges",
+              "title": "Manage user privileges",
+              "summary": "sudo, the sudoers file, visudo, and granting just enough.",
+              "estimated_minutes": 12,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-root-access",
+              "title": "Manage access to the root account",
+              "summary": "su, sudo -i, locking root, and why direct root login is usually off.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-ldap-accounts",
+              "title": "Configure the system to use LDAP user and group accounts",
+              "summary": "sssd and PAM against an LDAP directory: one identity across many hosts.",
+              "estimated_minutes": 28,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "networking",
+      "title": "Phase 4 - Networking",
+      "description": "IPv4 and IPv6, hostname resolution, network services, bridges and bonds, firewalls, NAT, reverse proxies, time sync and SSH.",
+      "order_index": 4,
+      "exam_domain": "Networking",
+      "exam_weight": 25,
+      "week_start": 9,
+      "week_end": 10,
+      "color": "amber",
+      "weeks": [
+        {
+          "number": 9,
+          "title": "Week 9 - Addresses, services, bridges and bonds",
+          "description": "Configuring interfaces and name resolution, managing network services, and joining interfaces together.",
+          "lessons": [
+            {
+              "slug": "lfcs-ipv4-ipv6-theory",
+              "title": "Configure IPv4 and IPv6 networking and hostname resolution - theory",
+              "summary": "Addresses, prefixes, gateways, DNS - what has to be true for a host to talk.",
+              "estimated_minutes": 14,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-ipv4-ipv6-demo",
+              "title": "Configure IPv4 and IPv6 networking and hostname resolution - demo",
+              "summary": "nmcli and netplan, static and DHCP, /etc/hosts and resolv.conf, hostnamectl.",
+              "estimated_minutes": 46,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-network-services",
+              "title": "Start, stop and check the status of network services",
+              "summary": "systemctl for network daemons, ss -tulpn to see who listens.",
+              "estimated_minutes": 12,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-bridge-and-bonding-theory",
+              "title": "Configure bridge and bonding devices - theory",
+              "summary": "What a bridge is for, what a bond is for, and the bonding modes.",
+              "estimated_minutes": 16,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-bridge-and-bonding-demo",
+              "title": "Configure bridge and bonding devices - demo",
+              "summary": "Creating a bridge and a bond with nmcli and checking their state.",
+              "estimated_minutes": 30,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "title": "Week 10 - Firewalls, NAT, proxies, time and SSH",
+          "description": "Filtering and translating traffic, fronting services, keeping time, and hardening the door you use most.",
+          "lessons": [
+            {
+              "slug": "lfcs-packet-filtering",
+              "title": "Configure packet filtering (firewall)",
+              "summary": "firewalld zones and services, ufw, and nftables underneath.",
+              "estimated_minutes": 44,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-port-redirection-and-nat",
+              "title": "Port redirection and network address translation (NAT)",
+              "summary": "Masquerading, DNAT and port forwarding with firewalld and nftables.",
+              "estimated_minutes": 42,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-reverse-proxies-and-load-balancers",
+              "title": "Implement reverse proxies and load balancers",
+              "summary": "nginx as a reverse proxy and as a load balancer over several backends.",
+              "estimated_minutes": 30,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-time-servers",
+              "title": "Set and synchronise system time using time servers",
+              "summary": "timedatectl, chrony, time zones and why clocks matter for certificates and logs.",
+              "estimated_minutes": 14,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-ssh-servers-and-clients",
+              "title": "Configure SSH servers and clients",
+              "summary": "sshd_config hardening, key-based auth, ssh-copy-id, client config and port forwarding.",
+              "estimated_minutes": 38,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "storage",
+      "title": "Phase 5 - Storage",
+      "description": "Partitions, swap, filesystems and mount options, NFS and NBD, LVM, storage performance and advanced permissions.",
+      "order_index": 5,
+      "exam_domain": "Storage",
+      "exam_weight": 20,
+      "week_start": 11,
+      "week_end": 12,
+      "color": "rose",
+      "weeks": [
+        {
+          "number": 11,
+          "title": "Week 11 - Partitions, filesystems and mounts",
+          "description": "From a raw disk to a mounted filesystem that comes back after a reboot.",
+          "lessons": [
+            {
+              "slug": "lfcs-storage-partitions",
+              "title": "List, create, delete and modify physical storage partitions",
+              "summary": "lsblk, fdisk and parted, GPT vs MBR, and partition types.",
+              "estimated_minutes": 22,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-swap-space",
+              "title": "Configure and manage swap space",
+              "summary": "mkswap, swapon, swap files vs partitions, and fstab entries.",
+              "estimated_minutes": 12,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-create-file-systems",
+              "title": "Create and configure file systems",
+              "summary": "mkfs for ext4 and xfs, labels and UUIDs, tune2fs and xfs_admin.",
+              "estimated_minutes": 20,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-mount-at-boot",
+              "title": "Configure systems to mount filesystems at or during boot",
+              "summary": "/etc/fstab fields, mount -a, and systemd mount units.",
+              "estimated_minutes": 16,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-filesystem-and-mount-options",
+              "title": "Filesystem and mount options",
+              "summary": "noexec, nosuid, ro, noatime and the rest - and how to remount with them.",
+              "estimated_minutes": 12,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "title": "Week 12 - Network storage, LVM and advanced permissions",
+          "description": "Storage that is not local, storage that can grow, and the permissions beyond rwx.",
+          "lessons": [
+            {
+              "slug": "lfcs-nfs",
+              "title": "Use remote filesystems - NFS",
+              "summary": "Exporting with /etc/exports, exportfs, mounting an NFS share, and fstab for it.",
+              "estimated_minutes": 26,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-nbd",
+              "title": "Use network block devices - NBD",
+              "summary": "nbd-server and nbd-client: a block device over the network, and when that beats NFS.",
+              "estimated_minutes": 24,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-lvm",
+              "title": "Manage and configure LVM storage",
+              "summary": "PV, VG, LV; creating, extending and reducing; resizing the filesystem with it.",
+              "estimated_minutes": 22,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-storage-performance",
+              "title": "Monitor storage performance",
+              "summary": "iostat, iotop, vmstat and reading what the numbers mean.",
+              "estimated_minutes": 32,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-advanced-permissions",
+              "title": "Create, manage and diagnose advanced filesystem permissions",
+              "summary": "ACLs with getfacl and setfacl, default ACLs, and file attributes with chattr.",
+              "estimated_minutes": 24,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "exam-prep",
+      "title": "Phase 6 - Mock exams",
+      "description": "Four mock exams under time pressure, and the course conclusion.",
+      "order_index": 6,
+      "exam_domain": "Exam simulation",
+      "exam_weight": 0,
+      "week_start": 13,
+      "week_end": 13,
+      "color": "indigo",
+      "weeks": [
+        {
+          "number": 13,
+          "title": "Week 13 - Mock exams and conclusion",
+          "description": "Four timed mock exams, then the course conclusion.",
+          "lessons": [
+            {
+              "slug": "lfcs-mock-exams-introduction",
+              "title": "Mock exams - how to use them",
+              "summary": "Time yourself, mark honestly, and turn every wrong answer into a lab.",
+              "estimated_minutes": 15,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-mock-exam-1",
+              "title": "LFCS mock exam 1",
+              "summary": "A full timed mock across all five domains.",
+              "estimated_minutes": 120,
+              "day_of_week": 1
+            },
+            {
+              "slug": "lfcs-mock-exam-2",
+              "title": "LFCS mock exam 2",
+              "summary": "A second full timed mock.",
+              "estimated_minutes": 120,
+              "day_of_week": 2
+            },
+            {
+              "slug": "lfcs-mock-exam-3",
+              "title": "LFCS mock exam 3",
+              "summary": "A third full timed mock.",
+              "estimated_minutes": 120,
+              "day_of_week": 3
+            },
+            {
+              "slug": "lfcs-mock-exam-4",
+              "title": "LFCS mock exam 4",
+              "summary": "The last mock before the real thing.",
+              "estimated_minutes": 120,
+              "day_of_week": 4
+            },
+            {
+              "slug": "lfcs-conclusion",
+              "title": "Conclusion",
+              "summary": "Booking the exam and what to do in the final week.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

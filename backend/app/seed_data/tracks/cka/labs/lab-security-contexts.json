@@ -1,0 +1,33 @@
+{
+  "slug": "lab-security-contexts",
+  "phase_slug": "security",
+  "week_number": 12,
+  "title": "Lab - Security contexts",
+  "description": "Set the user and capabilities a container runs with.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 1,
+  "scenario": "Set the user and capabilities a container runs with. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Who am I",
+      "instructions": "Which user does Pod ubuntu-sleeper run as?",
+      "solution": "kubectl exec ubuntu-sleeper -- whoami",
+      "verification": "root"
+    },
+    {
+      "title": "Task 2 - Run as 1010",
+      "instructions": "Make it run as user 1010.",
+      "solution": "# spec.securityContext.runAsUser: 1010; replace --force",
+      "verification": "kubectl exec ubuntu-sleeper -- whoami"
+    },
+    {
+      "title": "Task 3 - Capabilities",
+      "instructions": "Add SYS_TIME and NET_ADMIN capabilities to the container.",
+      "solution": "# containers[0].securityContext.capabilities.add: [SYS_TIME, NET_ADMIN]",
+      "verification": "kubectl exec ubuntu-sleeper -- date -s \"19 APR 2012 11:14:00\""
+    }
+  ]
+}

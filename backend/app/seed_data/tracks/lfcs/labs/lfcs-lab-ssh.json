@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-ssh",
+  "phase_slug": "networking",
+  "week_number": 10,
+  "title": "Lab - Configure SSH servers and clients",
+  "description": "Move to key-based SSH and close the password door.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 40,
+  "order_index": 2,
+  "scenario": "Move to key-based SSH and close the password door. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Keys",
+      "instructions": "Generate an ed25519 key pair and install it for user ana on the server.",
+      "solution": "ssh-keygen -t ed25519\nssh-copy-id ana@server",
+      "verification": "ssh ana@server true"
+    },
+    {
+      "title": "Task 2 - Harden",
+      "instructions": "Disable password authentication and root login in sshd_config and reload.",
+      "solution": "# PasswordAuthentication no ; PermitRootLogin no\nsshd -t && systemctl reload sshd",
+      "verification": "ssh -o PubkeyAuthentication=no ana@server  # refused"
+    },
+    {
+      "title": "Task 3 - Client config",
+      "instructions": "Add a Host entry so that `ssh lab` reaches ana@server on port 2222.",
+      "solution": "# ~/.ssh/config: Host lab / HostName server / User ana / Port 2222",
+      "verification": "ssh lab hostname"
+    }
+  ]
+}

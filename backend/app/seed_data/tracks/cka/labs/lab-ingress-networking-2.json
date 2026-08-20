@@ -1,0 +1,33 @@
+{
+  "slug": "lab-ingress-networking-2",
+  "phase_slug": "networking",
+  "week_number": 16,
+  "title": "Lab - Ingress networking 2",
+  "description": "Deploy an Ingress controller from scratch.",
+  "difficulty": "advanced",
+  "estimated_minutes": 60,
+  "order_index": 2,
+  "scenario": "Deploy an Ingress controller from scratch. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Namespace and ConfigMap",
+      "instructions": "Create namespace ingress-nginx and an empty ConfigMap ingress-nginx-controller in it.",
+      "solution": "kubectl create ns ingress-nginx\nkubectl create cm ingress-nginx-controller -n ingress-nginx",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - RBAC and Deployment",
+      "instructions": "Create the service account, roles and the controller Deployment.",
+      "solution": "kubectl apply -f ingress-controller.yaml",
+      "verification": "kubectl get pods -n ingress-nginx"
+    },
+    {
+      "title": "Task 3 - Expose and route",
+      "instructions": "Expose the controller as NodePort 30080 and create an Ingress for /wear and /watch.",
+      "solution": "kubectl expose deploy ingress-nginx-controller -n ingress-nginx --type=NodePort --port=80 --dry-run=client -o yaml > svc.yaml  # nodePort 30080\nkubectl create ingress ingress-wear-watch -n app-space --rule=\"/wear=wear-service:8080\" --rule=\"/watch=video-service:8080\"",
+      "verification": "curl http://<node>:30080/wear"
+    }
+  ]
+}

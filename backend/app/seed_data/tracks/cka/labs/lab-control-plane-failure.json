@@ -1,0 +1,33 @@
+{
+  "slug": "lab-control-plane-failure",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Lab - Control plane failure",
+  "description": "Repair a cluster whose control plane is broken.",
+  "difficulty": "advanced",
+  "estimated_minutes": 50,
+  "order_index": 2,
+  "scenario": "Repair a cluster whose control plane is broken. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Scheduler",
+      "instructions": "New Pods stay Pending. Find the typo in the kube-scheduler manifest and fix it.",
+      "solution": "kubectl get pods -n kube-system\nkubectl logs -n kube-system kube-scheduler-controlplane  # or crictl logs",
+      "verification": "kubectl get pods -n kube-system  # scheduler Running"
+    },
+    {
+      "title": "Task 2 - Controller manager",
+      "instructions": "Scaling a Deployment does nothing. Check the controller manager.",
+      "solution": "kubectl describe pod -n kube-system kube-controller-manager-controlplane | tail\n# fix the config path / certificate path",
+      "verification": "kubectl get deploy  # scales"
+    },
+    {
+      "title": "Task 3 - Certificates",
+      "instructions": "The controller manager cannot find its CA file. Fix the hostPath mount.",
+      "solution": "grep -n ca.crt /etc/kubernetes/manifests/kube-controller-manager.yaml",
+      "verification": "-"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "lab-replicasets",
+  "phase_slug": "core-concepts",
+  "week_number": 2,
+  "title": "Lab - ReplicaSets",
+  "description": "Scale, repair and understand the selector of a ReplicaSet.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Scale, repair and understand the selector of a ReplicaSet. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Create a ReplicaSet",
+      "instructions": "Create a ReplicaSet of 3 nginx Pods labelled app=web.",
+      "solution": "kubectl create deployment tmp --image=nginx --dry-run=client -o yaml | sed 's/Deployment/ReplicaSet/' > rs.yaml  # or write it by hand\nkubectl apply -f rs.yaml",
+      "verification": "kubectl get rs"
+    },
+    {
+      "title": "Task 2 - Scale it",
+      "instructions": "Scale the ReplicaSet to 5 without editing the file.",
+      "solution": "kubectl scale rs <name> --replicas=5",
+      "verification": "kubectl get rs <name>  # DESIRED 5"
+    },
+    {
+      "title": "Task 3 - Delete a Pod and watch",
+      "instructions": "Delete one of its Pods and confirm a replacement appears.",
+      "solution": "kubectl delete pod <one-pod>\nkubectl get pods -w",
+      "verification": "kubectl get pods -l app=web | wc -l  # still 5 + header"
+    }
+  ]
+}

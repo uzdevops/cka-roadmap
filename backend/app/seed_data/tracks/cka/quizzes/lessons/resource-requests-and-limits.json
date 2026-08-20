@@ -1,0 +1,158 @@
+{
+  "slug": "resource-requests-and-limits-check",
+  "lesson_slug": "resource-requests-and-limits",
+  "phase_slug": "scheduling",
+  "week_number": 4,
+  "title": "Check: requests, limits and QoS",
+  "description": "Five questions on how a Pod asks for and is capped at resources.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-request-vs-limit",
+      "type": "single_choice",
+      "prompt": "What is the difference between a request and a limit?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A request is a cap; a limit is a reservation"
+        },
+        {
+          "id": "b",
+          "text": "A request is what the scheduler reserves; a limit is what the runtime enforces"
+        },
+        {
+          "id": "c",
+          "text": "They are the same thing"
+        },
+        {
+          "id": "d",
+          "text": "Only limits affect scheduling"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The scheduler only looks at requests when it decides where a Pod fits. Limits are enforced by the container runtime once it is running.",
+      "points": 1
+    },
+    {
+      "key": "q2-guaranteed",
+      "type": "single_choice",
+      "prompt": "Which Pod gets the Guaranteed QoS class?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One with no requests or limits"
+        },
+        {
+          "id": "b",
+          "text": "One where every container sets requests equal to limits for cpu and memory"
+        },
+        {
+          "id": "c",
+          "text": "One with requests but no limits"
+        },
+        {
+          "id": "d",
+          "text": "One with limits on memory only"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Guaranteed needs requests == limits for both resources in every container. Some requests but not matching gives Burstable; nothing at all gives BestEffort.",
+      "points": 1
+    },
+    {
+      "key": "q3-eviction",
+      "type": "single_choice",
+      "prompt": "The node runs out of memory. Which Pods are evicted first?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Guaranteed"
+        },
+        {
+          "id": "b",
+          "text": "Burstable"
+        },
+        {
+          "id": "c",
+          "text": "BestEffort"
+        },
+        {
+          "id": "d",
+          "text": "The newest Pod"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "BestEffort first, then Burstable that exceed their requests, then Guaranteed. QoS is the eviction order.",
+      "points": 1
+    },
+    {
+      "key": "q4-cpu-limit",
+      "type": "single_choice",
+      "prompt": "A container exceeds its CPU limit. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It is killed"
+        },
+        {
+          "id": "b",
+          "text": "It is throttled"
+        },
+        {
+          "id": "c",
+          "text": "The Pod is evicted"
+        },
+        {
+          "id": "d",
+          "text": "The limit is raised"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "CPU is compressible so it gets throttled. Memory is not - exceeding a memory limit means an OOMKill.",
+      "points": 1
+    },
+    {
+      "key": "q5-limitrange",
+      "type": "single_choice",
+      "prompt": "Which object supplies default requests and limits to Pods that omit them?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ResourceQuota"
+        },
+        {
+          "id": "b",
+          "text": "LimitRange"
+        },
+        {
+          "id": "c",
+          "text": "PriorityClass"
+        },
+        {
+          "id": "d",
+          "text": "PodDisruptionBudget"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A LimitRange sets defaults and min/max per namespace. A ResourceQuota caps the namespace total.",
+      "points": 1
+    }
+  ]
+}

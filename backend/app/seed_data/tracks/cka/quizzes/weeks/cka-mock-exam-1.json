@@ -1,0 +1,447 @@
+{
+  "slug": "cka-mock-exam-1",
+  "phase_slug": "exam-prep",
+  "week_number": 20,
+  "title": "CKA mock exam 1 - review",
+  "description": "Fifteen questions across every domain, weighted like the exam. Aim for exam pace: under four minutes each.",
+  "pass_score": 70,
+  "time_limit_minutes": 60,
+  "order_index": 21,
+  "questions": [
+    {
+      "key": "m1-01",
+      "type": "single_choice",
+      "prompt": "A Pod is stuck in Pending and its events say 0/3 nodes are available: 1 node(s) had untolerated taint. What is the quickest fix that keeps the taint?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Remove the taint from the node"
+        },
+        {
+          "id": "b",
+          "text": "Add a matching toleration to the Pod"
+        },
+        {
+          "id": "c",
+          "text": "Set nodeName on the Pod"
+        },
+        {
+          "id": "d",
+          "text": "Delete and recreate the Pod"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A toleration lets the Pod onto the tainted node without changing the node for everyone else.",
+      "points": 1
+    },
+    {
+      "key": "m1-02",
+      "type": "single_choice",
+      "prompt": "Which command saves an etcd snapshot on a kubeadm cluster?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl etcd backup"
+        },
+        {
+          "id": "b",
+          "text": "etcdctl snapshot save /opt/snap.db --endpoints=https://127.0.0.1:2379 --cacert=... --cert=... --key=..."
+        },
+        {
+          "id": "c",
+          "text": "kubeadm etcd snapshot"
+        },
+        {
+          "id": "d",
+          "text": "etcdutl snapshot save"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "snapshot save is etcdctl with the endpoint and the client certificates; etcdutl does the restore.",
+      "points": 1
+    },
+    {
+      "key": "m1-03",
+      "type": "single_choice",
+      "prompt": "kubectl drain node01 fails because of a Pod not managed by a controller. Which flag lets the drain proceed?",
+      "options": [
+        {
+          "id": "a",
+          "text": "--ignore-daemonsets"
+        },
+        {
+          "id": "b",
+          "text": "--force"
+        },
+        {
+          "id": "c",
+          "text": "--delete-emptydir-data"
+        },
+        {
+          "id": "d",
+          "text": "--grace-period=0"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "--force evicts unmanaged Pods; --ignore-daemonsets is for DaemonSet Pods, which drain would otherwise refuse.",
+      "points": 1
+    },
+    {
+      "key": "m1-04",
+      "type": "single_choice",
+      "prompt": "A Service has no endpoints although its Pods are Running. What is the most likely cause?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Service type is ClusterIP"
+        },
+        {
+          "id": "b",
+          "text": "The Service selector does not match the Pod labels"
+        },
+        {
+          "id": "c",
+          "text": "kube-proxy is not running"
+        },
+        {
+          "id": "d",
+          "text": "CoreDNS is down"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Endpoints are computed from the selector; a mismatch gives an empty list even with healthy Pods.",
+      "points": 1
+    },
+    {
+      "key": "m1-05",
+      "type": "single_choice",
+      "prompt": "Which file does the kubelet read static Pod manifests from on a kubeadm control plane?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/kubernetes/manifests"
+        },
+        {
+          "id": "b",
+          "text": "/var/lib/kubelet/pods"
+        },
+        {
+          "id": "c",
+          "text": "/etc/kubernetes/static"
+        },
+        {
+          "id": "d",
+          "text": "/opt/cni/bin"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "staticPodPath in the kubelet config points at /etc/kubernetes/manifests by default.",
+      "points": 1
+    },
+    {
+      "key": "m1-06",
+      "type": "single_choice",
+      "prompt": "What does kubectl rollout undo deployment/web do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deletes the Deployment"
+        },
+        {
+          "id": "b",
+          "text": "Rolls back to the previous revision"
+        },
+        {
+          "id": "c",
+          "text": "Pauses the rollout"
+        },
+        {
+          "id": "d",
+          "text": "Scales to zero"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "undo reverts to the previous ReplicaSet; --to-revision picks a specific one.",
+      "points": 1
+    },
+    {
+      "key": "m1-07",
+      "type": "single_choice",
+      "prompt": "Which object grants a user permission to list nodes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Role bound with a RoleBinding"
+        },
+        {
+          "id": "b",
+          "text": "A ClusterRole bound with a ClusterRoleBinding"
+        },
+        {
+          "id": "c",
+          "text": "A ServiceAccount"
+        },
+        {
+          "id": "d",
+          "text": "A NetworkPolicy"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Nodes are cluster-scoped, so the permission has to come from a ClusterRole.",
+      "points": 1
+    },
+    {
+      "key": "m1-08",
+      "type": "single_choice",
+      "prompt": "A PVC stays Pending with a StorageClass whose volumeBindingMode is WaitForFirstConsumer. What makes it bind?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deleting and recreating the PVC"
+        },
+        {
+          "id": "b",
+          "text": "A Pod that uses the PVC"
+        },
+        {
+          "id": "c",
+          "text": "Setting the PV reclaim policy"
+        },
+        {
+          "id": "d",
+          "text": "Restarting the controller manager"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "WaitForFirstConsumer delays binding until a Pod schedules, so the volume is created near the Pod.",
+      "points": 1
+    },
+    {
+      "key": "m1-09",
+      "type": "single_choice",
+      "prompt": "Which command prints all Pod names with their node as two columns?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl get pods -o wide"
+        },
+        {
+          "id": "b",
+          "text": "kubectl get pods -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName"
+        },
+        {
+          "id": "c",
+          "text": "kubectl describe pods"
+        },
+        {
+          "id": "d",
+          "text": "kubectl top pods"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "custom-columns with JSONPath expressions is the exam's way to shape output exactly.",
+      "points": 1
+    },
+    {
+      "key": "m1-10",
+      "type": "single_choice",
+      "prompt": "After kubeadm upgrade apply on the control plane, what still has to be upgraded by hand there?",
+      "options": [
+        {
+          "id": "a",
+          "text": "etcd"
+        },
+        {
+          "id": "b",
+          "text": "kubelet and kubectl packages"
+        },
+        {
+          "id": "c",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "d",
+          "text": "kube-proxy"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "kubeadm upgrades the control plane static Pods; the kubelet and kubectl binaries are OS packages.",
+      "points": 1
+    },
+    {
+      "key": "m1-11",
+      "type": "single_choice",
+      "prompt": "Which NetworkPolicy field makes a policy apply to egress traffic?",
+      "options": [
+        {
+          "id": "a",
+          "text": "spec.ingress"
+        },
+        {
+          "id": "b",
+          "text": "spec.policyTypes containing Egress"
+        },
+        {
+          "id": "c",
+          "text": "spec.podSelector"
+        },
+        {
+          "id": "d",
+          "text": "metadata.labels"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "policyTypes decides which directions the policy governs; without Egress listed, egress is untouched.",
+      "points": 1
+    },
+    {
+      "key": "m1-12",
+      "type": "single_choice",
+      "prompt": "A node is NotReady. Which is the first thing to check on that node?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl get pods -A"
+        },
+        {
+          "id": "b",
+          "text": "systemctl status kubelet"
+        },
+        {
+          "id": "c",
+          "text": "kubectl describe svc"
+        },
+        {
+          "id": "d",
+          "text": "docker ps"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The kubelet reports the node; if it is down or misconfigured, the node is NotReady.",
+      "points": 1
+    },
+    {
+      "key": "m1-13",
+      "type": "single_choice",
+      "prompt": "Which command creates a Pod and a ClusterIP Service for it in one go?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl run web --image=nginx --port=80 --expose"
+        },
+        {
+          "id": "b",
+          "text": "kubectl create svc web"
+        },
+        {
+          "id": "c",
+          "text": "kubectl expose pod web"
+        },
+        {
+          "id": "d",
+          "text": "kubectl apply -f web.yaml"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "--expose on kubectl run creates the Service alongside the Pod.",
+      "points": 1
+    },
+    {
+      "key": "m1-14",
+      "type": "single_choice",
+      "prompt": "Where does a kubeadm cluster keep the CA certificate the API server uses?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/kubernetes/pki/ca.crt"
+        },
+        {
+          "id": "b",
+          "text": "/var/lib/etcd/ca.crt"
+        },
+        {
+          "id": "c",
+          "text": "/etc/ssl/certs/k8s.pem"
+        },
+        {
+          "id": "d",
+          "text": "/root/.kube/ca.crt"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "kubeadm writes the cluster CA to /etc/kubernetes/pki/ca.crt and the component certs beside it.",
+      "points": 1
+    },
+    {
+      "key": "m1-15",
+      "type": "single_choice",
+      "prompt": "Which JSONPath prints the image of the first container of every Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "{.items[*].spec.containers[0].image}"
+        },
+        {
+          "id": "b",
+          "text": "{.spec.containers.image}"
+        },
+        {
+          "id": "c",
+          "text": "{.items.containers[0]}"
+        },
+        {
+          "id": "d",
+          "text": "{.image}"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "items[*] walks every Pod; containers[0].image reaches the first container's image.",
+      "points": 1
+    }
+  ]
+}

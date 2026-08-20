@@ -1,0 +1,33 @@
+{
+  "slug": "lab-monitoring-cluster-components",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 6,
+  "title": "Lab - Monitoring cluster components",
+  "description": "Install the Metrics Server and read what it reports.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Install the Metrics Server and read what it reports. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Install",
+      "instructions": "Deploy the Metrics Server manifest and wait until it is ready.",
+      "solution": "kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml\n# on kind add --kubelet-insecure-tls to its args",
+      "verification": "kubectl top nodes"
+    },
+    {
+      "title": "Task 2 - Busiest node",
+      "instructions": "Which node uses the most memory?",
+      "solution": "kubectl top node --sort-by=memory",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Busiest Pod",
+      "instructions": "Which Pod in the cluster uses the most CPU?",
+      "solution": "kubectl top pod -A --sort-by=cpu | head",
+      "verification": "-"
+    }
+  ]
+}

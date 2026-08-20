@@ -1,0 +1,158 @@
+{
+  "slug": "highly-available-control-planes-check",
+  "lesson_slug": "highly-available-control-planes",
+  "phase_slug": "cluster-install",
+  "week_number": 17,
+  "title": "Check: HA control planes",
+  "description": "Five questions on removing the single point of failure.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-topologies",
+      "type": "single_choice",
+      "prompt": "What are the two kubeadm HA topologies?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Active/passive and active/active"
+        },
+        {
+          "id": "b",
+          "text": "Stacked etcd and external etcd"
+        },
+        {
+          "id": "c",
+          "text": "Single and multi-region"
+        },
+        {
+          "id": "d",
+          "text": "Managed and self-hosted"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Stacked puts etcd on the control plane nodes; external runs it on its own machines, at the cost of more hosts.",
+      "points": 1
+    },
+    {
+      "key": "q2-count",
+      "type": "single_choice",
+      "prompt": "How many control plane nodes should an HA cluster have?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Two"
+        },
+        {
+          "id": "b",
+          "text": "An odd number, usually three"
+        },
+        {
+          "id": "c",
+          "text": "Any number"
+        },
+        {
+          "id": "d",
+          "text": "Four"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The constraint comes from etcd's Raft quorum. Three tolerates one failure; two tolerates none.",
+      "points": 1
+    },
+    {
+      "key": "q3-loadbalancer",
+      "type": "single_choice",
+      "prompt": "What sits in front of the API servers?",
+      "options": [
+        {
+          "id": "a",
+          "text": "An Ingress"
+        },
+        {
+          "id": "b",
+          "text": "A load balancer on port 6443, whose address is the control plane endpoint"
+        },
+        {
+          "id": "c",
+          "text": "CoreDNS"
+        },
+        {
+          "id": "d",
+          "text": "kube-proxy"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "`--control-plane-endpoint` must point at that load balancer at init time, or you cannot add control plane nodes later.",
+      "points": 1
+    },
+    {
+      "key": "q4-quorum-loss",
+      "type": "single_choice",
+      "prompt": "A three-node stacked cluster loses two control plane nodes. What is the state?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fully working"
+        },
+        {
+          "id": "b",
+          "text": "etcd has no quorum, so the API server cannot serve writes"
+        },
+        {
+          "id": "c",
+          "text": "Only the scheduler stops"
+        },
+        {
+          "id": "d",
+          "text": "Workers stop running Pods"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Without quorum, no writes. Existing Pods keep running - the data plane does not depend on the control plane.",
+      "points": 1
+    },
+    {
+      "key": "q5-scheduler-ha",
+      "type": "single_choice",
+      "prompt": "How do the scheduler and controller manager behave with several control plane nodes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "All instances act at once"
+        },
+        {
+          "id": "b",
+          "text": "They elect a leader; only one is active"
+        },
+        {
+          "id": "c",
+          "text": "They shard the work"
+        },
+        {
+          "id": "d",
+          "text": "Only one may be deployed"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Leader election prevents two schedulers from binding the same Pod twice.",
+      "points": 1
+    }
+  ]
+}

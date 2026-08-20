@@ -1,0 +1,33 @@
+{
+  "slug": "lab-cluster-upgrade-process",
+  "phase_slug": "cluster-maintenance",
+  "week_number": 9,
+  "title": "Lab - Cluster upgrade process",
+  "description": "Upgrade a kubeadm cluster one minor version.",
+  "difficulty": "advanced",
+  "estimated_minutes": 60,
+  "order_index": 2,
+  "scenario": "Upgrade a kubeadm cluster one minor version. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Plan",
+      "instructions": "What version is the cluster on, and what does kubeadm upgrade plan offer?",
+      "solution": "kubectl get nodes\nkubeadm upgrade plan",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Control plane",
+      "instructions": "Drain the control plane, upgrade kubeadm, apply the upgrade, upgrade kubelet and kubectl, uncordon.",
+      "solution": "kubectl drain controlplane --ignore-daemonsets\napt-get install -y kubeadm=1.xx.y-*\nkubeadm upgrade apply v1.xx.y\napt-get install -y kubelet=1.xx.y-* kubectl=1.xx.y-*\nsystemctl daemon-reload && systemctl restart kubelet\nkubectl uncordon controlplane",
+      "verification": "kubectl get nodes  # new VERSION on controlplane"
+    },
+    {
+      "title": "Task 3 - Worker",
+      "instructions": "Repeat for node01 with kubeadm upgrade node.",
+      "solution": "kubectl drain node01 --ignore-daemonsets\n# on node01: upgrade kubeadm, kubeadm upgrade node, upgrade kubelet, restart\nkubectl uncordon node01",
+      "verification": "kubectl get nodes  # both on the new version"
+    }
+  ]
+}

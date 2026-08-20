@@ -1,0 +1,33 @@
+{
+  "slug": "lab-vpa-cpu-resources",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 8,
+  "title": "Lab - Modifying CPU resources with the VPA",
+  "description": "Let the VPA recommend and apply CPU changes.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 4,
+  "scenario": "Let the VPA recommend and apply CPU changes. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Create a VPA",
+      "instructions": "Create a VPA for Deployment hamster in Off mode and read its recommendation.",
+      "solution": "# kind: VerticalPodAutoscaler, updatePolicy.updateMode: Off",
+      "verification": "kubectl describe vpa hamster | grep -A5 Recommendation"
+    },
+    {
+      "title": "Task 2 - Auto mode",
+      "instructions": "Switch the update mode to Auto and watch Pods get recreated with new requests.",
+      "solution": "kubectl edit vpa hamster",
+      "verification": "kubectl get pods -l app=hamster -o jsonpath='{.items[*].spec.containers[0].resources.requests}'"
+    },
+    {
+      "title": "Task 3 - Limits",
+      "instructions": "Bound the recommendation with minAllowed and maxAllowed.",
+      "solution": "# resourcePolicy.containerPolicies[].minAllowed/maxAllowed",
+      "verification": "kubectl describe vpa hamster"
+    }
+  ]
+}

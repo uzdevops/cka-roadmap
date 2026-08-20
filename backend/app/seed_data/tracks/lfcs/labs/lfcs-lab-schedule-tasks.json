@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-schedule-tasks",
+  "phase_slug": "operations-deployment",
+  "week_number": 6,
+  "title": "Lab - Schedule tasks",
+  "description": "Run jobs on a schedule with cron, at and a systemd timer.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 1,
+  "scenario": "Run jobs on a schedule with cron, at and a systemd timer. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - cron",
+      "instructions": "Run the disk report every weekday at 07:30 from the root crontab.",
+      "solution": "crontab -e  # 30 7 * * 1-5 /usr/local/bin/diskreport.sh",
+      "verification": "crontab -l"
+    },
+    {
+      "title": "Task 2 - at",
+      "instructions": "Schedule a one-off job 5 minutes from now that touches /tmp/at-ran.",
+      "solution": "echo \"touch /tmp/at-ran\" | at now + 5 minutes",
+      "verification": "atq"
+    },
+    {
+      "title": "Task 3 - Timer",
+      "instructions": "Create diskreport.timer that fires daily and enable it.",
+      "solution": "# [Timer] OnCalendar=daily Persistent=true; [Install] WantedBy=timers.target\nsystemctl enable --now diskreport.timer",
+      "verification": "systemctl list-timers | grep diskreport"
+    }
+  ]
+}

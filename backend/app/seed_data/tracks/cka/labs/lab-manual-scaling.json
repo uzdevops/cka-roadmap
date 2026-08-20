@@ -1,0 +1,33 @@
+{
+  "slug": "lab-manual-scaling",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 8,
+  "title": "Lab - Manual scaling",
+  "description": "Scale a Deployment by hand and observe.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 1,
+  "scenario": "Scale a Deployment by hand and observe. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Scale up",
+      "instructions": "Scale Deployment frontend to 5 replicas.",
+      "solution": "kubectl scale deploy frontend --replicas=5",
+      "verification": "kubectl get deploy frontend"
+    },
+    {
+      "title": "Task 2 - Scale down",
+      "instructions": "Scale it to 1 and note which Pods were removed.",
+      "solution": "kubectl scale deploy frontend --replicas=1\nkubectl get events --sort-by=.lastTimestamp | tail",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Edit",
+      "instructions": "Set replicas back to 3 by editing the Deployment.",
+      "solution": "kubectl edit deploy frontend",
+      "verification": "kubectl get deploy frontend  # 3/3"
+    }
+  ]
+}

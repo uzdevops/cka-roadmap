@@ -1,0 +1,33 @@
+{
+  "slug": "lab-coredns-in-kubernetes",
+  "phase_slug": "networking",
+  "week_number": 15,
+  "title": "Lab - CoreDNS",
+  "description": "Resolve names and fix a broken resolver.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 4,
+  "scenario": "Resolve names and fix a broken resolver. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Find it",
+      "instructions": "Which Pods run CoreDNS, which Service fronts them, and where is the Corefile?",
+      "solution": "kubectl get pods,svc -n kube-system -l k8s-app=kube-dns\nkubectl get cm coredns -n kube-system -o yaml",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Resolve",
+      "instructions": "From the test Pod, resolve web-service in namespace payroll, using the shortest name that works.",
+      "solution": "kubectl exec test -- nslookup web-service.payroll",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Repair",
+      "instructions": "An app cannot reach its database by name. Fix the Service name in its config.",
+      "solution": "kubectl exec <pod> -- nslookup mysql  # fails; the service is in another namespace\n# use mysql.payroll",
+      "verification": "-"
+    }
+  ]
+}

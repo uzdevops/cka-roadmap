@@ -1,0 +1,33 @@
+{
+  "slug": "lab-labels-and-selectors",
+  "phase_slug": "scheduling",
+  "week_number": 4,
+  "title": "Lab - Labels and selectors",
+  "description": "Query and fix objects by their labels.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Query and fix objects by their labels. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Count by label",
+      "instructions": "How many Pods carry env=dev? How many objects of any kind carry env=prod?",
+      "solution": "kubectl get pods -l env=dev --no-headers | wc -l\nkubectl get all -l env=prod --no-headers | wc -l",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Combine selectors",
+      "instructions": "Find the Pod with env=prod, bu=finance and tier=frontend.",
+      "solution": "kubectl get pods -l env=prod,bu=finance,tier=frontend",
+      "verification": "exactly one Pod"
+    },
+    {
+      "title": "Task 3 - Fix a ReplicaSet",
+      "instructions": "A ReplicaSet fails to create: its selector does not match its template labels. Fix it.",
+      "solution": "kubectl describe rs <rs>\n# make template.metadata.labels match spec.selector.matchLabels, then apply",
+      "verification": "kubectl get rs <rs>  # READY equals DESIRED"
+    }
+  ]
+}

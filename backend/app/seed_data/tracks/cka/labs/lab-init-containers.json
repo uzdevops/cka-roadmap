@@ -1,0 +1,33 @@
+{
+  "slug": "lab-init-containers",
+  "phase_slug": "lifecycle-observability",
+  "week_number": 7,
+  "title": "Lab - Init containers",
+  "description": "Gate a Pod on an init step and debug it when it hangs.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Gate a Pod on an init step and debug it when it hangs. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Identify",
+      "instructions": "Which Pods in the cluster have init containers and what do they run?",
+      "solution": "kubectl get pods -o jsonpath='{range .items[*]}{.metadata.name}{\"\\t\"}{.spec.initContainers[*].image}{\"\\n\"}{end}'",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Add one",
+      "instructions": "Add an init container to Pod red that runs `sleep 20` from busybox.",
+      "solution": "# spec.initContainers: [{name: warm-up, image: busybox, command: [sleep, \"20\"]}]; replace --force",
+      "verification": "kubectl get pod red  # Init:0/1 then Running"
+    },
+    {
+      "title": "Task 3 - Stuck",
+      "instructions": "Pod orange is stuck in Init. Find the bug in its init command and fix it.",
+      "solution": "kubectl logs orange -c init-myservice\n# fix the typo (sleeeep -> sleep)",
+      "verification": "kubectl get pod orange  # Running"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-containers-and-vms",
+  "phase_slug": "operations-deployment",
+  "week_number": 7,
+  "title": "Lab - Manage containers and VMs",
+  "description": "Run a container with a volume and a port, and bring up a VM.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 50,
+  "order_index": 2,
+  "scenario": "Run a container with a volume and a port, and bring up a VM. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Container",
+      "instructions": "Run nginx detached, publishing port 8080 and mounting /opt/web at the web root.",
+      "solution": "docker run -d --name web -p 8080:80 -v /opt/web:/usr/share/nginx/html nginx",
+      "verification": "curl -s localhost:8080 | head -3"
+    },
+    {
+      "title": "Task 2 - Inspect",
+      "instructions": "Read its logs and find the container IP.",
+      "solution": "docker logs web\ndocker inspect -f '{{.NetworkSettings.IPAddress}}' web",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - VM",
+      "instructions": "Define and start a VM from a cloud image with virt-install, then list running domains.",
+      "solution": "virt-install --name lab --memory 1024 --vcpus 1 --disk /var/lib/libvirt/images/lab.qcow2 --import --os-variant ubuntu22.04 --noautoconsole",
+      "verification": "virsh list"
+    }
+  ]
+}

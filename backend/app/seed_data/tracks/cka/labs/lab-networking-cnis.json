@@ -1,0 +1,33 @@
+{
+  "slug": "lab-networking-cnis",
+  "phase_slug": "networking",
+  "week_number": 15,
+  "title": "Lab - Deploying a CNI",
+  "description": "Install a network plugin on a cluster that has none.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Install a network plugin on a cluster that has none. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Symptom",
+      "instructions": "The cluster nodes are NotReady and Pods are stuck ContainerCreating. Why?",
+      "solution": "kubectl describe node node01 | grep -i network",
+      "verification": "no CNI configured"
+    },
+    {
+      "title": "Task 2 - Install",
+      "instructions": "Install the Flannel (or Calico) manifest and set its Pod CIDR to match the cluster.",
+      "solution": "kubectl apply -f kube-flannel.yml  # edit net-conf.json Network to the cluster podCIDR",
+      "verification": "kubectl get nodes  # Ready"
+    },
+    {
+      "title": "Task 3 - Verify",
+      "instructions": "Which IP range do new Pods now get?",
+      "solution": "kubectl run t --image=nginx; kubectl get pod t -o wide",
+      "verification": "-"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "slug": "week-14-review",
+  "phase_slug": "cluster-maintenance",
+  "week_number": 9,
+  "title": "Week 9 review - etcd, certificates, static Pods",
+  "description": "Six questions on cluster state and identity.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 14,
+  "questions": [
+    {
+      "key": "w14-q1",
+      "type": "fill_command",
+      "prompt": "Write the etcdctl subcommand that saves a snapshot to /tmp/etcd.db.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "etcdctl snapshot save /tmp/etcd.db",
+        "ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd.db"
+      ],
+      "explanation": "The cert flags come straight out of the etcd static Pod manifest.",
+      "points": 2
+    },
+    {
+      "key": "w14-q2",
+      "type": "single_choice",
+      "prompt": "Where do you read the etcdctl certificate paths?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubelet config"
+        },
+        {
+          "id": "b",
+          "text": "/etc/kubernetes/manifests/etcd.yaml"
+        },
+        {
+          "id": "c",
+          "text": "A Secret"
+        },
+        {
+          "id": "d",
+          "text": "~/.kube/config"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The manifest lists exactly what the server uses.",
+      "points": 1
+    },
+    {
+      "key": "w14-q3",
+      "type": "single_choice",
+      "prompt": "After snapshot restore, what makes it take effect?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "Pointing the etcd static Pod at the restored data directory"
+        },
+        {
+          "id": "c",
+          "text": "kubeadm init"
+        },
+        {
+          "id": "d",
+          "text": "Deleting all Pods"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Restore only writes files.",
+      "points": 1
+    },
+    {
+      "key": "w14-q4",
+      "type": "fill_command",
+      "prompt": "Write the kubeadm command that reports certificate expiry.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubeadm certs check-expiration",
+        "sudo kubeadm certs check-expiration"
+      ],
+      "explanation": "kubeadm certificates last a year by default.",
+      "points": 2
+    },
+    {
+      "key": "w14-q5",
+      "type": "single_choice",
+      "prompt": "Where does RBAC get a certificate user's groups from?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The CN"
+        },
+        {
+          "id": "b",
+          "text": "The O fields"
+        },
+        {
+          "id": "c",
+          "text": "A label"
+        },
+        {
+          "id": "d",
+          "text": "The kubeconfig name"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "CN is the username; each O is a group.",
+      "points": 1
+    },
+    {
+      "key": "w14-q6",
+      "type": "single_choice",
+      "prompt": "How do you stop a static Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl delete pod"
+        },
+        {
+          "id": "b",
+          "text": "Move its manifest out of the directory"
+        },
+        {
+          "id": "c",
+          "text": "Cordon the node"
+        },
+        {
+          "id": "d",
+          "text": "Scale to zero"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The mirror Pod in the API is read-only.",
+      "points": 1
+    }
+  ]
+}

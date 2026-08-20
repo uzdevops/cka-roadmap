@@ -1,0 +1,158 @@
+{
+  "slug": "volumes-and-volume-types-check",
+  "lesson_slug": "volumes-and-volume-types",
+  "phase_slug": "storage",
+  "week_number": 13,
+  "title": "Check: volumes",
+  "description": "Five questions on attaching storage to a Pod.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-emptydir",
+      "type": "single_choice",
+      "prompt": "What is the lifetime of an emptyDir volume?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Forever"
+        },
+        {
+          "id": "b",
+          "text": "As long as the Pod lives on that node"
+        },
+        {
+          "id": "c",
+          "text": "As long as the container lives"
+        },
+        {
+          "id": "d",
+          "text": "Until the node reboots"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It survives container restarts but dies with the Pod. Good for scratch space and for sharing files between containers in one Pod.",
+      "points": 1
+    },
+    {
+      "key": "q2-hostpath",
+      "type": "single_choice",
+      "prompt": "Why is hostPath risky?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It is slow"
+        },
+        {
+          "id": "b",
+          "text": "It ties the Pod to one node and exposes the node filesystem"
+        },
+        {
+          "id": "c",
+          "text": "It cannot be read-only"
+        },
+        {
+          "id": "d",
+          "text": "It needs a StorageClass"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It breaks portability and is a well-known escape route. Fine for node agents, wrong for applications.",
+      "points": 1
+    },
+    {
+      "key": "q3-projected",
+      "type": "single_choice",
+      "prompt": "What does a projected volume do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Copies a volume to another node"
+        },
+        {
+          "id": "b",
+          "text": "Combines several sources - Secret, ConfigMap, serviceAccountToken - into one directory"
+        },
+        {
+          "id": "c",
+          "text": "Projects a PVC into another namespace"
+        },
+        {
+          "id": "d",
+          "text": "Compresses the volume"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The modern ServiceAccount token is delivered exactly this way, with an audience and an expiry.",
+      "points": 1
+    },
+    {
+      "key": "q4-shared",
+      "type": "single_choice",
+      "prompt": "Two containers in one Pod need to share files. What is the simplest volume?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A PersistentVolumeClaim"
+        },
+        {
+          "id": "b",
+          "text": "emptyDir"
+        },
+        {
+          "id": "c",
+          "text": "hostPath"
+        },
+        {
+          "id": "d",
+          "text": "configMap"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Both mount the same emptyDir. No provisioning, no cleanup, and it disappears with the Pod.",
+      "points": 1
+    },
+    {
+      "key": "q5-subpath",
+      "type": "single_choice",
+      "prompt": "What does `subPath` do in a volumeMount?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mounts a single file or subdirectory instead of the whole volume"
+        },
+        {
+          "id": "b",
+          "text": "Changes the volume's access mode"
+        },
+        {
+          "id": "c",
+          "text": "Creates the directory on the node"
+        },
+        {
+          "id": "d",
+          "text": "Mounts the volume read-only"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Common for dropping one config file into a directory without hiding everything else already there.",
+      "points": 1
+    }
+  ]
+}

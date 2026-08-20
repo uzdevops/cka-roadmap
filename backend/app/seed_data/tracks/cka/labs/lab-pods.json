@@ -1,0 +1,33 @@
+{
+  "slug": "lab-pods",
+  "phase_slug": "core-concepts",
+  "week_number": 2,
+  "title": "Lab - Pods",
+  "description": "Create, inspect and repair Pods from the command line and from manifests.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Create, inspect and repair Pods from the command line and from manifests. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Create a Pod imperatively",
+      "instructions": "Run an nginx Pod named web in the default namespace.",
+      "solution": "kubectl run web --image=nginx",
+      "verification": "kubectl get pod web -o wide"
+    },
+    {
+      "title": "Task 2 - Write a Pod manifest",
+      "instructions": "Generate a manifest for a redis Pod without creating it, save it, then apply it.",
+      "solution": "kubectl run cache --image=redis --dry-run=client -o yaml > cache.yaml\nkubectl apply -f cache.yaml",
+      "verification": "kubectl get pod cache"
+    },
+    {
+      "title": "Task 3 - Diagnose a broken image",
+      "instructions": "Create a Pod with image nginx:doesnotexist and explain why it is not Running.",
+      "solution": "kubectl run broken --image=nginx:doesnotexist\nkubectl describe pod broken | tail -20",
+      "verification": "kubectl get pod broken  # STATUS ImagePullBackOff / ErrImagePull"
+    }
+  ]
+}

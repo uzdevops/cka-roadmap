@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-archive-backup-redirection",
+  "phase_slug": "essential-commands",
+  "week_number": 3,
+  "title": "Lab - Archive, back up, compress and redirection",
+  "description": "Create archives, ship them, and capture command output properly.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 1,
+  "scenario": "Create archives, ship them, and capture command output properly. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - tar",
+      "instructions": "Archive /opt/lab into /tmp/lab.tar.gz, then list its contents without extracting.",
+      "solution": "tar czf /tmp/lab.tar.gz -C /opt lab\ntar tzf /tmp/lab.tar.gz",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - rsync",
+      "instructions": "Mirror /opt/lab to /backup/lab preserving permissions and deleting files that vanished from the source.",
+      "solution": "rsync -a --delete /opt/lab/ /backup/lab/",
+      "verification": "diff -r /opt/lab /backup/lab"
+    },
+    {
+      "title": "Task 3 - Redirect",
+      "instructions": "Run find / -name \"*.conf\" saving matches to /tmp/conf.txt and errors to /tmp/err.txt.",
+      "solution": "find / -name \"*.conf\" > /tmp/conf.txt 2> /tmp/err.txt",
+      "verification": "wc -l /tmp/conf.txt /tmp/err.txt"
+    }
+  ]
+}

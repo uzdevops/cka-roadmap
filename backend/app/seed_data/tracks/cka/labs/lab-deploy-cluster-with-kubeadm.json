@@ -1,0 +1,33 @@
+{
+  "slug": "lab-deploy-cluster-with-kubeadm",
+  "phase_slug": "cluster-install",
+  "week_number": 17,
+  "title": "Lab - Deploy a cluster with kubeadm",
+  "description": "Build a two-node cluster from scratch.",
+  "difficulty": "advanced",
+  "estimated_minutes": 90,
+  "order_index": 1,
+  "scenario": "Build a two-node cluster from scratch. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Prerequisites",
+      "instructions": "On both nodes install containerd, kubeadm, kubelet and kubectl at the same version.",
+      "solution": "apt-get install -y kubeadm=1.xx.y-* kubelet=1.xx.y-* kubectl=1.xx.y-*",
+      "verification": "kubeadm version"
+    },
+    {
+      "title": "Task 2 - Init",
+      "instructions": "Initialise the control plane with pod CIDR 10.244.0.0/16 and set up kubeconfig for your user.",
+      "solution": "kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=<ip>\nmkdir -p $HOME/.kube && cp /etc/kubernetes/admin.conf $HOME/.kube/config",
+      "verification": "kubectl get nodes"
+    },
+    {
+      "title": "Task 3 - CNI and join",
+      "instructions": "Install Flannel and join the worker with the printed command.",
+      "solution": "kubectl apply -f kube-flannel.yml\n# on node01: kubeadm join ...",
+      "verification": "kubectl get nodes  # both Ready"
+    }
+  ]
+}

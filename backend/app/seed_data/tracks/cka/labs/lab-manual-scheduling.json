@@ -1,0 +1,33 @@
+{
+  "slug": "lab-manual-scheduling",
+  "phase_slug": "scheduling",
+  "week_number": 4,
+  "title": "Lab - Manual scheduling",
+  "description": "Place a Pod yourself when the scheduler is gone.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Place a Pod yourself when the scheduler is gone. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Find the stuck Pod",
+      "instructions": "A Pod is Pending. Find out why from its events.",
+      "solution": "kubectl describe pod <pod> | tail -15",
+      "verification": "the event mentions no scheduler / unschedulable"
+    },
+    {
+      "title": "Task 2 - Bind it by hand",
+      "instructions": "Set nodeName on the Pod spec and recreate it.",
+      "solution": "kubectl get pod <pod> -o yaml > p.yaml\n# add spec.nodeName: <node>\nkubectl replace --force -f p.yaml",
+      "verification": "kubectl get pod <pod> -o wide  # Running on the node"
+    },
+    {
+      "title": "Task 3 - Move it",
+      "instructions": "Move the same Pod to a different node.",
+      "solution": "# edit nodeName and replace --force again",
+      "verification": "kubectl get pod <pod> -o wide"
+    }
+  ]
+}

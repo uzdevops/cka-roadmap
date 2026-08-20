@@ -1,0 +1,33 @@
+{
+  "slug": "lab-services",
+  "phase_slug": "core-concepts",
+  "week_number": 3,
+  "title": "Lab - Services",
+  "description": "Expose a Deployment three ways and test each from inside and outside the cluster.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Expose a Deployment three ways and test each from inside and outside the cluster. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - ClusterIP",
+      "instructions": "Expose Deployment api on port 80 as a ClusterIP Service and curl it from a temporary Pod.",
+      "solution": "kubectl expose deployment api --port=80\nkubectl run tmp --rm -it --image=busybox -- wget -qO- api",
+      "verification": "kubectl get svc api"
+    },
+    {
+      "title": "Task 2 - NodePort",
+      "instructions": "Create a NodePort Service for the same Deployment on node port 30080.",
+      "solution": "kubectl expose deployment api --name=api-np --type=NodePort --port=80 --dry-run=client -o yaml > np.yaml\n# set nodePort: 30080 under ports, then\nkubectl apply -f np.yaml",
+      "verification": "kubectl get svc api-np  # 80:30080/TCP"
+    },
+    {
+      "title": "Task 3 - Endpoints",
+      "instructions": "Show which Pod IPs the Service forwards to.",
+      "solution": "kubectl get endpoints api",
+      "verification": "kubectl get pods -l app=api -o wide  # same IPs"
+    }
+  ]
+}

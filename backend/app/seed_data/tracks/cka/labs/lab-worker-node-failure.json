@@ -1,0 +1,33 @@
+{
+  "slug": "lab-worker-node-failure",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Lab - Worker node failure",
+  "description": "Bring a NotReady node back, three different ways.",
+  "difficulty": "advanced",
+  "estimated_minutes": 50,
+  "order_index": 3,
+  "scenario": "Bring a NotReady node back, three different ways. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Service down",
+      "instructions": "node01 is NotReady. Check the kubelet and start it.",
+      "solution": "ssh node01 systemctl status kubelet\nsystemctl start kubelet",
+      "verification": "kubectl get nodes"
+    },
+    {
+      "title": "Task 2 - Wrong cert path",
+      "instructions": "NotReady again. Read the kubelet logs and fix the CA path in its config.",
+      "solution": "journalctl -u kubelet -f\n# /var/lib/kubelet/config.yaml clientCAFile",
+      "verification": "kubectl get nodes"
+    },
+    {
+      "title": "Task 3 - Wrong port",
+      "instructions": "The kubelet points at the wrong API server port in kubelet.conf. Fix it.",
+      "solution": "grep server /etc/kubernetes/kubelet.conf  # 6443",
+      "verification": "kubectl get nodes  # Ready"
+    }
+  ]
+}

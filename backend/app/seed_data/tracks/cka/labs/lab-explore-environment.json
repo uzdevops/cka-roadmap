@@ -1,0 +1,33 @@
+{
+  "slug": "lab-explore-environment",
+  "phase_slug": "networking",
+  "week_number": 14,
+  "title": "Lab - Explore the network environment",
+  "description": "Read the network layout of a real cluster.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 1,
+  "scenario": "Read the network layout of a real cluster. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Nodes",
+      "instructions": "How many nodes, what are their internal IPs, and which interface carries them?",
+      "solution": "kubectl get nodes -o wide\nip addr",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Bridge",
+      "instructions": "Which interface does the container runtime create on the node, and what is its MAC address?",
+      "solution": "ip link show",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Ports",
+      "instructions": "Which port does the kube-scheduler listen on, and how many connections does etcd hold on 2379 vs 2380?",
+      "solution": "netstat -nltp | grep -E \"scheduler|etcd\"",
+      "verification": "-"
+    }
+  ]
+}

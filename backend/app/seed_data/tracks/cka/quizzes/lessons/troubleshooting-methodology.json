@@ -1,0 +1,158 @@
+{
+  "slug": "troubleshooting-methodology-check",
+  "lesson_slug": "troubleshooting-methodology",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Check: a method that scales",
+  "description": "Five questions on working from symptom to component.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-first",
+      "type": "single_choice",
+      "prompt": "A Pod is not serving traffic. What is the highest-value first command?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl logs"
+        },
+        {
+          "id": "b",
+          "text": "kubectl describe pod, for status and events"
+        },
+        {
+          "id": "c",
+          "text": "kubectl delete pod"
+        },
+        {
+          "id": "d",
+          "text": "kubectl top pod"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Status plus events tells you whether it was ever scheduled, whether the image pulled and whether probes pass - before you go looking at logs.",
+      "points": 1
+    },
+    {
+      "key": "q2-pending",
+      "type": "single_choice",
+      "prompt": "Pending means what, precisely?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The container is starting"
+        },
+        {
+          "id": "b",
+          "text": "The Pod has not been bound to a node"
+        },
+        {
+          "id": "c",
+          "text": "The image is pulling"
+        },
+        {
+          "id": "d",
+          "text": "A probe is failing"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pending is a scheduling story: resources, taints, affinity or an unbound PVC. ContainerCreating is the phase where images pull and volumes mount.",
+      "points": 1
+    },
+    {
+      "key": "q3-split",
+      "type": "single_choice",
+      "prompt": "Which check splits a Service problem in half fastest?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Restarting kube-proxy"
+        },
+        {
+          "id": "b",
+          "text": "Whether the Service has ready endpoints"
+        },
+        {
+          "id": "c",
+          "text": "Checking node CPU"
+        },
+        {
+          "id": "d",
+          "text": "Reading the audit log"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Endpoints present means look at the network path; endpoints absent means look at labels and readiness.",
+      "points": 1
+    },
+    {
+      "key": "q4-layer",
+      "type": "single_choice",
+      "prompt": "Traffic fails from outside but works from inside the cluster. Where do you look?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The container image"
+        },
+        {
+          "id": "b",
+          "text": "The ingress path: controller, Ingress rules and the external load balancer"
+        },
+        {
+          "id": "c",
+          "text": "etcd"
+        },
+        {
+          "id": "d",
+          "text": "The scheduler"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Working internally proves Pods, Services and DNS. The fault is in what sits in front of them.",
+      "points": 1
+    },
+    {
+      "key": "q5-change",
+      "type": "single_choice",
+      "prompt": "What is the first question to ask about any sudden failure?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Which node is it on?"
+        },
+        {
+          "id": "b",
+          "text": "What changed - a rollout, a config edit, an upgrade?"
+        },
+        {
+          "id": "c",
+          "text": "How much memory is free?"
+        },
+        {
+          "id": "d",
+          "text": "Is the cluster HA?"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Most incidents are a recent change. `kubectl rollout history` and the events answer it faster than reasoning from first principles.",
+      "points": 1
+    }
+  ]
+}

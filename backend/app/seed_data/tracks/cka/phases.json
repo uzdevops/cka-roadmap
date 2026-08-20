@@ -1,0 +1,1498 @@
+{
+  "phases": [
+    {
+      "slug": "core-concepts",
+      "title": "Phase 1 - Core concepts",
+      "description": "What a cluster is made of and how to talk to it: the control plane piece by piece, containers and container runtimes, Pods, ReplicaSets, Deployments, Services, Namespaces and the kubectl habits that make the rest of the exam fast.",
+      "order_index": 1,
+      "exam_domain": "Cluster Architecture, Installation & Configuration",
+      "exam_weight": 4,
+      "week_start": 1,
+      "week_end": 3,
+      "color": "sky",
+      "weeks": [
+        {
+          "number": 1,
+          "title": "Week 1 - The cluster and its control plane",
+          "description": "What the exam is, what a cluster is made of, and every control plane component one at a time.",
+          "lessons": [
+            {
+              "slug": "what-is-kubernetes",
+              "title": "Course introduction",
+              "summary": "What this track covers, how it is paced, and how to use the labs and quizzes.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "certification-and-exam-format",
+              "title": "The CKA certification",
+              "summary": "What the exam is: format, duration, the domains and their weights, and how it is scored.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "kubernetes-architecture-overview",
+              "title": "Cluster architecture",
+              "summary": "Control plane and worker nodes, and how the components fit together into one system.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "control-plane-components",
+              "title": "Control plane components in detail",
+              "summary": "kube-apiserver, etcd, kube-scheduler and kube-controller-manager: what each one owns and how they fail.",
+              "estimated_minutes": 45,
+              "day_of_week": 2
+            },
+            {
+              "slug": "build-your-lab-environment",
+              "title": "Build your practice cluster with kind and minikube",
+              "summary": "Install a local multi-node cluster, understand kubeconfig, and set up the shell aliases that save minutes in the exam.",
+              "estimated_minutes": 45,
+              "day_of_week": 2
+            },
+            {
+              "slug": "docker-vs-containerd",
+              "title": "Docker vs containerd",
+              "summary": "Where Docker stopped and containerd began: the CRI, runtimes, and the ctr, nerdctl and crictl tools.",
+              "estimated_minutes": 26,
+              "day_of_week": 2
+            },
+            {
+              "slug": "docker-deprecation-note",
+              "title": "A note on Docker deprecation",
+              "summary": "Why dockershim was removed, what that did and did not change for images and workloads.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "etcd-for-beginners",
+              "title": "etcd for beginners",
+              "summary": "A key-value store from first principles: what it holds, how reads and writes work, and the etcdctl basics.",
+              "estimated_minutes": 16,
+              "day_of_week": 3
+            },
+            {
+              "slug": "etcd-in-kubernetes",
+              "title": "etcd in Kubernetes",
+              "summary": "Where the cluster state lives, how etcd is deployed with kubeadm, and how the API server reaches it.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "etcd-commands",
+              "title": "etcd commands",
+              "summary": "The etcdctl API versions and the handful of commands you need: put, get, snapshot, endpoint health.",
+              "estimated_minutes": 15,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kube-api-server",
+              "title": "kube-apiserver",
+              "summary": "The front door to the cluster: authentication, validation, etcd writes, and the flags that configure it.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kube-controller-manager",
+              "title": "kube-controller-manager",
+              "summary": "The reconciliation loops - node, replication and the rest - bundled into one process, and how to configure them.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kube-scheduler",
+              "title": "kube-scheduler",
+              "summary": "Filtering and scoring nodes for a Pod, and where the scheduler itself runs.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            },
+            {
+              "slug": "kubelet",
+              "title": "kubelet",
+              "summary": "The node agent: registering the node, pulling images, running Pods and reporting back.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            },
+            {
+              "slug": "kube-proxy",
+              "title": "kube-proxy",
+              "summary": "How Service IPs become real traffic on every node: iptables and IPVS modes.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Week 2 - Pods, ReplicaSets and Deployments",
+          "description": "The object model from the ground up, with the labs that make kubectl second nature.",
+          "lessons": [
+            {
+              "slug": "kubectl-fundamentals",
+              "title": "kubectl fundamentals",
+              "summary": "get, describe, logs, exec, apply and the imperative generators - plus the output flags that make debugging fast.",
+              "estimated_minutes": 50,
+              "day_of_week": 1
+            },
+            {
+              "slug": "kubernetes-api-objects-and-yaml",
+              "title": "The API object model and writing YAML",
+              "summary": "apiVersion, kind, metadata, spec and status; how to discover any field with kubectl explain instead of memorising it.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "pods-deep-dive",
+              "title": "Pods",
+              "summary": "The smallest deployable unit: one or more containers sharing a network namespace and storage.",
+              "estimated_minutes": 55,
+              "day_of_week": 2
+            },
+            {
+              "slug": "pods-with-yaml",
+              "title": "Pods with YAML",
+              "summary": "The four top-level fields of every manifest, and writing a Pod spec by hand.",
+              "estimated_minutes": 14,
+              "day_of_week": 3
+            },
+            {
+              "slug": "demo-pods-with-yaml",
+              "title": "Demo - Pods with YAML",
+              "summary": "Creating, inspecting and fixing a Pod from a manifest, end to end.",
+              "estimated_minutes": 14,
+              "day_of_week": 3
+            },
+            {
+              "slug": "replicasets",
+              "title": "ReplicaSets",
+              "summary": "Replication controllers and ReplicaSets: selectors, scaling, and what happens when a Pod dies.",
+              "estimated_minutes": 34,
+              "day_of_week": 4
+            },
+            {
+              "slug": "deployments-and-replicasets",
+              "title": "Deployments",
+              "summary": "Deployments manage ReplicaSets and give you rollouts, rollbacks and history.",
+              "estimated_minutes": 50,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Week 3 - Services, Namespaces and the kubectl way",
+          "description": "Exposing Pods, separating teams, and the imperative commands that save minutes in the exam.",
+          "lessons": [
+            {
+              "slug": "services-clusterip-nodeport-loadbalancer",
+              "title": "Services",
+              "summary": "Why Pods need a stable address, and the NodePort Service walked through.",
+              "estimated_minutes": 50,
+              "day_of_week": 1
+            },
+            {
+              "slug": "services-cluster-ip",
+              "title": "Services - ClusterIP",
+              "summary": "The default Service type: a stable virtual IP inside the cluster.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "services-loadbalancer",
+              "title": "Services - LoadBalancer",
+              "summary": "Exposing a Service through a cloud load balancer, and what happens without one.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "namespaces-and-context",
+              "title": "Namespaces",
+              "summary": "Dividing a cluster: namespaces, DNS across them, quotas and switching context.",
+              "estimated_minutes": 40,
+              "day_of_week": 2
+            },
+            {
+              "slug": "imperative-vs-declarative",
+              "title": "Imperative vs declarative",
+              "summary": "create/run/edit versus apply: what each does to the live object and the last-applied annotation.",
+              "estimated_minutes": 28,
+              "day_of_week": 3
+            },
+            {
+              "slug": "imperative-commands-with-kubectl",
+              "title": "Imperative commands for the exam",
+              "summary": "The cheat sheet: --dry-run=client -o yaml, run, create, expose, scale and the flags that matter.",
+              "estimated_minutes": 15,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kubectl-explain",
+              "title": "kubectl explain",
+              "summary": "Reading the API schema without leaving the terminal.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kubectl-apply",
+              "title": "kubectl apply",
+              "summary": "How apply merges the file, the live object and last-applied-configuration.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "scheduling",
+      "title": "Phase 2 - Scheduling",
+      "description": "How the scheduler decides where a Pod runs and how you steer it: labels, taints, affinity, resource requests, DaemonSets, static Pods, priority, multiple schedulers and the admission controllers that gate what gets in.",
+      "order_index": 2,
+      "exam_domain": "Workloads & Scheduling",
+      "exam_weight": 8,
+      "week_start": 4,
+      "week_end": 5,
+      "color": "violet",
+      "weeks": [
+        {
+          "number": 4,
+          "title": "Week 4 - Where Pods land",
+          "description": "Manual placement, labels, taints and tolerations, affinity and resource requests.",
+          "lessons": [
+            {
+              "slug": "manual-scheduling",
+              "title": "Manual scheduling",
+              "summary": "nodeName and the Binding object: what you do when there is no scheduler.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "labels-selectors-annotations",
+              "title": "Labels and selectors",
+              "summary": "Grouping and selecting objects, and how ReplicaSets and Services use selectors.",
+              "estimated_minutes": 35,
+              "day_of_week": 1
+            },
+            {
+              "slug": "taints-and-tolerations",
+              "title": "Taints and tolerations",
+              "summary": "Keeping Pods off nodes unless they tolerate the taint: NoSchedule, PreferNoSchedule, NoExecute.",
+              "estimated_minutes": 40,
+              "day_of_week": 2
+            },
+            {
+              "slug": "node-selectors",
+              "title": "Node selectors",
+              "summary": "Labelling nodes and pinning Pods with nodeSelector - and where it stops being enough.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "node-selectors-and-affinity",
+              "title": "Node affinity",
+              "summary": "requiredDuringScheduling and preferredDuringScheduling, operators, and what IgnoredDuringExecution means.",
+              "estimated_minutes": 50,
+              "day_of_week": 3
+            },
+            {
+              "slug": "taints-tolerations-vs-node-affinity",
+              "title": "Taints and tolerations vs node affinity",
+              "summary": "The two mechanisms side by side, and why you usually need both.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "resource-requests-and-limits",
+              "title": "Resource requirements",
+              "summary": "Requests, limits, LimitRanges and ResourceQuotas - and what OOMKilled and Pending are telling you.",
+              "estimated_minutes": 45,
+              "day_of_week": 4
+            },
+            {
+              "slug": "editing-pods-and-deployments",
+              "title": "A note on editing Pods and Deployments",
+              "summary": "Which Pod fields are mutable, and the delete-and-recreate dance when they are not.",
+              "estimated_minutes": 15,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Week 5 - DaemonSets, static Pods, priority and admission",
+          "description": "The rest of the scheduling toolbox, and the controllers that decide whether an object is admitted at all.",
+          "lessons": [
+            {
+              "slug": "daemonsets-and-statefulsets",
+              "title": "DaemonSets",
+              "summary": "One Pod per node: logging agents, CNI plugins, kube-proxy - and how the scheduler handles them.",
+              "estimated_minutes": 45,
+              "day_of_week": 1
+            },
+            {
+              "slug": "static-pods-and-manifests",
+              "title": "Static Pods",
+              "summary": "Pods the kubelet runs from a directory with no API server involved - which is how the control plane itself starts.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "topology-spread-and-priority",
+              "title": "Priority classes",
+              "summary": "PriorityClass, preemption, and what happens when a high-priority Pod has nowhere to go.",
+              "estimated_minutes": 40,
+              "day_of_week": 2
+            },
+            {
+              "slug": "multiple-schedulers",
+              "title": "Multiple schedulers",
+              "summary": "Deploying a second scheduler and telling a Pod to use it with schedulerName.",
+              "estimated_minutes": 20,
+              "day_of_week": 3
+            },
+            {
+              "slug": "scheduler-profiles",
+              "title": "Configuring scheduler profiles",
+              "summary": "The scheduling framework - extension points, plugins and profiles - and how to enable or disable a plugin.",
+              "estimated_minutes": 20,
+              "day_of_week": 3
+            },
+            {
+              "slug": "admission-control-basics",
+              "title": "Admission controllers",
+              "summary": "The last gate before etcd: what admission controllers do, which are on by default, and how to enable one.",
+              "estimated_minutes": 45,
+              "day_of_week": 4
+            },
+            {
+              "slug": "validating-and-mutating-admission-controllers",
+              "title": "Validating and mutating admission controllers",
+              "summary": "Webhooks: the order they run in, what a mutating response looks like, and how to register one.",
+              "estimated_minutes": 22,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "lifecycle-observability",
+      "title": "Phase 3 - Application lifecycle and observability",
+      "description": "Running applications well: rollouts and rollbacks, commands and environment, ConfigMaps and Secrets, multi-container patterns, init containers, probes, and the autoscaling family - plus the logs and metrics you watch them with.",
+      "order_index": 3,
+      "exam_domain": "Workloads & Scheduling",
+      "exam_weight": 7,
+      "week_start": 6,
+      "week_end": 8,
+      "color": "emerald",
+      "weeks": [
+        {
+          "number": 6,
+          "title": "Week 6 - Observability and configuration",
+          "description": "Metrics and logs, rolling updates, and how an application gets its commands, environment and secrets.",
+          "lessons": [
+            {
+              "slug": "cluster-observability",
+              "title": "Monitoring cluster components",
+              "summary": "The Metrics Server, kubectl top, and where the numbers come from.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "monitoring-and-log-aggregation",
+              "title": "Managing application logs",
+              "summary": "kubectl logs, -f, --previous, and multi-container Pods.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "deployment-strategies-and-rollbacks",
+              "title": "Rolling updates and rollbacks",
+              "summary": "Recreate vs RollingUpdate, revisions, rollout status, history and undo.",
+              "estimated_minutes": 45,
+              "day_of_week": 2
+            },
+            {
+              "slug": "configure-applications",
+              "title": "Configuring applications",
+              "summary": "An overview of the four knobs: commands and arguments, environment variables, ConfigMaps and Secrets.",
+              "estimated_minutes": 15,
+              "day_of_week": 2
+            },
+            {
+              "slug": "commands-and-arguments-in-docker",
+              "title": "Commands and arguments in Docker",
+              "summary": "ENTRYPOINT and CMD, and how a docker run argument overrides them.",
+              "estimated_minutes": 16,
+              "day_of_week": 3
+            },
+            {
+              "slug": "commands-and-arguments-in-kubernetes",
+              "title": "Commands and arguments in Kubernetes",
+              "summary": "command and args on a container, and how they map to ENTRYPOINT and CMD.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "environment-variables",
+              "title": "Environment variables in applications",
+              "summary": "The env field: plain values, and the valueFrom doorway to ConfigMaps and Secrets.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "configmaps-in-practice",
+              "title": "Configuring ConfigMaps in applications",
+              "summary": "Creating ConfigMaps imperatively and from files, and injecting them as env vars or volumes.",
+              "estimated_minutes": 40,
+              "day_of_week": 4
+            },
+            {
+              "slug": "secrets-and-encryption",
+              "title": "Secrets",
+              "summary": "Secret types, base64 is not encryption, and the three ways to consume a Secret.",
+              "estimated_minutes": 45,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Week 7 - Pods that do more than one thing",
+          "description": "Encryption at rest, multi-container patterns, init containers, self-healing and batch work.",
+          "lessons": [
+            {
+              "slug": "encrypting-secret-data-at-rest",
+              "title": "Demo - Encrypting Secret data at rest",
+              "summary": "Seeing a Secret in etcd in the clear, then configuring an EncryptionConfiguration and re-encrypting.",
+              "estimated_minutes": 38,
+              "day_of_week": 1
+            },
+            {
+              "slug": "multi-container-pods",
+              "title": "Multi-container Pods",
+              "summary": "Why two containers share a Pod, and what they share.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "multi-container-pod-design-patterns",
+              "title": "Multi-container Pod design patterns",
+              "summary": "Sidecar, adapter and ambassador - and native sidecars as restartable init containers.",
+              "estimated_minutes": 14,
+              "day_of_week": 2
+            },
+            {
+              "slug": "init-containers",
+              "title": "Init containers",
+              "summary": "Containers that run to completion before the app starts, in order, and what happens when one fails.",
+              "estimated_minutes": 15,
+              "day_of_week": 3
+            },
+            {
+              "slug": "probes-and-self-healing",
+              "title": "Self-healing applications",
+              "summary": "Restart policies, ReplicaSets and probes: how Kubernetes notices and repairs a broken app.",
+              "estimated_minutes": 40,
+              "day_of_week": 4
+            },
+            {
+              "slug": "jobs-and-cronjobs",
+              "title": "Jobs and CronJobs",
+              "summary": "Run-to-completion workloads, parallelism, backoff limits and scheduled execution.",
+              "estimated_minutes": 40,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "title": "Week 8 - Autoscaling",
+          "description": "Scaling by hand, then the HPA, in-place resize and the VPA.",
+          "lessons": [
+            {
+              "slug": "introduction-to-autoscaling",
+              "title": "Introduction to autoscaling",
+              "summary": "Vertical vs horizontal, cluster vs workload - the map of what autoscaling means.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "horizontal-pod-autoscaling",
+              "title": "Horizontal Pod Autoscaler",
+              "summary": "Scaling replicas on CPU, memory or custom metrics: the HPA object, its algorithm and its flags.",
+              "estimated_minutes": 45,
+              "day_of_week": 2
+            },
+            {
+              "slug": "in-place-resize-of-pods",
+              "title": "In-place resize of Pods",
+              "summary": "Changing a running container's CPU or memory without a restart: resizePolicy and the feature gate.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "vertical-pod-autoscaling",
+              "title": "Vertical Pod Autoscaler",
+              "summary": "The VPA components, update modes, and when to prefer it over the HPA.",
+              "estimated_minutes": 20,
+              "day_of_week": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cluster-maintenance",
+      "title": "Phase 4 - Cluster maintenance",
+      "description": "Keeping a cluster alive over time: draining nodes for OS work, understanding releases, upgrading with kubeadm, and backing up and restoring etcd.",
+      "order_index": 4,
+      "exam_domain": "Cluster Architecture, Installation & Configuration",
+      "exam_weight": 5,
+      "week_start": 9,
+      "week_end": 9,
+      "color": "amber",
+      "weeks": [
+        {
+          "number": 9,
+          "title": "Week 9 - Upgrades, backups and restores",
+          "description": "Node maintenance, Kubernetes releases, upgrading with kubeadm, and etcd backup and restore.",
+          "lessons": [
+            {
+              "slug": "node-maintenance-cordon-drain",
+              "title": "OS upgrades",
+              "summary": "cordon, drain and uncordon - emptying a node safely and what the eviction timeout does.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "kubernetes-releases",
+              "title": "Kubernetes releases",
+              "summary": "Versioning, the supported skew between components, and how long a minor is maintained.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "cluster-upgrades",
+              "title": "Cluster upgrade introduction",
+              "summary": "The upgrade order - kubeadm, control plane, kubelets, workers one by one - and the version skew rules behind it.",
+              "estimated_minutes": 55,
+              "day_of_week": 2
+            },
+            {
+              "slug": "demo-cluster-upgrade",
+              "title": "Demo - Cluster upgrade",
+              "summary": "A full minor upgrade on a kubeadm cluster, control plane first, then each worker.",
+              "estimated_minutes": 38,
+              "day_of_week": 3
+            },
+            {
+              "slug": "etcd-backup-and-restore",
+              "title": "Backup and restore methods",
+              "summary": "What to back up - manifests, etcd - and the snapshot save / restore workflow with the right certificates.",
+              "estimated_minutes": 55,
+              "day_of_week": 4
+            },
+            {
+              "slug": "etcdctl-and-etcdutl",
+              "title": "Working with etcdctl and etcdutl",
+              "summary": "Which tool does what after etcd 3.5: snapshot save with etcdctl, restore with etcdutl.",
+              "estimated_minutes": 15,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "security",
+      "title": "Phase 5 - Security",
+      "description": "Who may do what, and how the cluster proves it: TLS and certificates, kubeconfig, authentication and authorization, RBAC, service accounts, image security, security contexts, network policies, and the CRD and operator model.",
+      "order_index": 5,
+      "exam_domain": "Cluster Architecture, Installation & Configuration",
+      "exam_weight": 7,
+      "week_start": 10,
+      "week_end": 12,
+      "color": "rose",
+      "weeks": [
+        {
+          "number": 10,
+          "title": "Week 10 - TLS and certificates",
+          "description": "From what a certificate is to the Certificates API: the trust that every component relies on.",
+          "lessons": [
+            {
+              "slug": "kubernetes-security-primitives",
+              "title": "Kubernetes security primitives",
+              "summary": "The attack surface: who can reach the API server and what they may do once there.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "authentication",
+              "title": "Authentication",
+              "summary": "Static password and token files, certificates, and external providers - how a request proves who it is.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "tls-introduction",
+              "title": "TLS introduction",
+              "summary": "Why the cluster speaks TLS everywhere.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "tls-basics",
+              "title": "TLS basics",
+              "summary": "Symmetric and asymmetric encryption, certificates, CAs and the handshake - the whole picture.",
+              "estimated_minutes": 42,
+              "day_of_week": 2
+            },
+            {
+              "slug": "tls-in-kubernetes",
+              "title": "TLS in Kubernetes",
+              "summary": "Every server and client certificate in the cluster, and which CA signed it.",
+              "estimated_minutes": 16,
+              "day_of_week": 3
+            },
+            {
+              "slug": "tls-certificate-creation",
+              "title": "TLS in Kubernetes - certificate creation",
+              "summary": "Generating a CA, a server cert and a client cert with openssl, and where kubeadm puts them.",
+              "estimated_minutes": 22,
+              "day_of_week": 4
+            },
+            {
+              "slug": "view-certificate-details",
+              "title": "View certificate details",
+              "summary": "Reading a certificate with openssl x509 and checking the health of the whole set.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "certificates-api",
+              "title": "Certificates API",
+              "summary": "CertificateSigningRequest: a user submits a CSR, an admin approves, the cluster CA signs.",
+              "estimated_minutes": 14,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "title": "Week 11 - Authorization and accounts",
+          "description": "kubeconfig, API groups, RBAC, cluster roles, service accounts and image pull security.",
+          "lessons": [
+            {
+              "slug": "certificates-and-kubeconfig",
+              "title": "KubeConfig",
+              "summary": "Clusters, users and contexts in one file, and how kubectl picks which to use.",
+              "estimated_minutes": 50,
+              "day_of_week": 1
+            },
+            {
+              "slug": "api-groups",
+              "title": "API groups",
+              "summary": "core vs named groups, resources and verbs - the vocabulary RBAC is written in.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "authorization",
+              "title": "Authorization",
+              "summary": "Node, ABAC, RBAC, Webhook and the authorization-mode flag - how a proven identity gets permissions.",
+              "estimated_minutes": 16,
+              "day_of_week": 2
+            },
+            {
+              "slug": "rbac-roles-and-bindings",
+              "title": "Role-based access control",
+              "summary": "Roles, RoleBindings and kubectl auth can-i.",
+              "estimated_minutes": 55,
+              "day_of_week": 3
+            },
+            {
+              "slug": "cluster-roles",
+              "title": "Cluster roles",
+              "summary": "Cluster-scoped resources - nodes, PVs, namespaces - and the ClusterRole / ClusterRoleBinding pair.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "service-accounts-and-tokens",
+              "title": "Service accounts",
+              "summary": "Identity for Pods: bound tokens, the TokenRequest API, and mounting or not mounting a token.",
+              "estimated_minutes": 40,
+              "day_of_week": 4
+            },
+            {
+              "slug": "image-security",
+              "title": "Image security",
+              "summary": "Fully qualified image names, private registries and imagePullSecrets.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "title": "Week 12 - Pod security, network policies and extensions",
+          "description": "Security contexts, NetworkPolicies, and the CRD, custom controller and operator model.",
+          "lessons": [
+            {
+              "slug": "security-in-docker",
+              "title": "Prerequisite - Security in Docker",
+              "summary": "Users, capabilities and namespaces in a container - the foundation security contexts build on.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "security-contexts",
+              "title": "Security contexts",
+              "summary": "runAsUser, capabilities and friends at Pod and container level, and which wins.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "network-policies",
+              "title": "Network policies",
+              "summary": "Ingress and egress rules, selectors, and the fact that the CNI has to support them.",
+              "estimated_minutes": 50,
+              "day_of_week": 2
+            },
+            {
+              "slug": "developing-network-policies",
+              "title": "Developing network policies",
+              "summary": "Writing a policy step by step: podSelector, namespaceSelector, ipBlock, and how rules combine.",
+              "estimated_minutes": 22,
+              "day_of_week": 2
+            },
+            {
+              "slug": "kubectx-and-kubens",
+              "title": "kubectx and kubens",
+              "summary": "Two small tools for switching contexts and namespaces without typing the flags.",
+              "estimated_minutes": 15,
+              "day_of_week": 3
+            },
+            {
+              "slug": "crds-and-operators",
+              "title": "Custom Resource Definitions",
+              "summary": "Extending the API with your own kinds: CRD schema, scope, and creating custom objects.",
+              "estimated_minutes": 45,
+              "day_of_week": 4
+            },
+            {
+              "slug": "custom-controllers",
+              "title": "Custom controllers",
+              "summary": "What watches a custom resource and acts: the controller loop, client-go and informers in outline.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "operator-framework",
+              "title": "Operator framework",
+              "summary": "CRD plus controller packaged together: operators, OperatorHub, and when to reach for one.",
+              "estimated_minutes": 15,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "storage",
+      "title": "Phase 6 - Storage",
+      "description": "From Docker storage drivers to the CSI: volumes, PersistentVolumes and claims, StorageClasses and dynamic provisioning, and what a stateful workload actually needs.",
+      "order_index": 6,
+      "exam_domain": "Storage",
+      "exam_weight": 10,
+      "week_start": 13,
+      "week_end": 13,
+      "color": "indigo",
+      "weeks": [
+        {
+          "number": 13,
+          "title": "Week 13 - Storage",
+          "description": "Docker storage, the CSI, volumes, PVs and PVCs, StorageClasses and stateful workloads.",
+          "lessons": [
+            {
+              "slug": "storage-in-docker",
+              "title": "Storage in Docker",
+              "summary": "Layered images, the writable layer, volume and bind mounts, and storage drivers.",
+              "estimated_minutes": 26,
+              "day_of_week": 1
+            },
+            {
+              "slug": "volume-driver-plugins-in-docker",
+              "title": "Volume driver plugins in Docker",
+              "summary": "Where volume drivers sit relative to storage drivers, and why Kubernetes needed something more general.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "container-storage-interface",
+              "title": "Container Storage Interface",
+              "summary": "The CSI contract between Kubernetes and any storage vendor: CreateVolume, DeleteVolume, and friends.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "volumes-and-volume-types",
+              "title": "Volumes",
+              "summary": "Attaching storage to a Pod: emptyDir, hostPath and why hostPath does not scale.",
+              "estimated_minutes": 40,
+              "day_of_week": 2
+            },
+            {
+              "slug": "persistent-volumes",
+              "title": "Persistent Volumes",
+              "summary": "Cluster-wide storage objects: capacity, access modes, reclaim policy.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "persistent-volumes-and-claims",
+              "title": "Persistent Volume Claims",
+              "summary": "Binding a claim to a volume: matching, the one-to-one rule, and what happens on delete.",
+              "estimated_minutes": 50,
+              "day_of_week": 3
+            },
+            {
+              "slug": "using-pvc-in-pods",
+              "title": "Using PVCs in Pods",
+              "summary": "persistentVolumeClaim as a Pod volume, in Deployments and in StatefulSets.",
+              "estimated_minutes": 15,
+              "day_of_week": 4
+            },
+            {
+              "slug": "storage-classes-and-dynamic-provisioning",
+              "title": "Storage classes",
+              "summary": "Dynamic provisioning: a StorageClass creates the PV when a claim asks for it.",
+              "estimated_minutes": 45,
+              "day_of_week": 4
+            },
+            {
+              "slug": "stateful-workloads-with-storage",
+              "title": "Running stateful workloads",
+              "summary": "volumeClaimTemplates, headless Services and ordered rollouts.",
+              "estimated_minutes": 50,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "networking",
+      "title": "Phase 7 - Networking",
+      "description": "The prerequisites first - switching, routing, DNS, namespaces, CNI - then Pod and Service networking, CoreDNS, Ingress and the Gateway API.",
+      "order_index": 7,
+      "exam_domain": "Services & Networking",
+      "exam_weight": 20,
+      "week_start": 14,
+      "week_end": 16,
+      "color": "sky",
+      "weeks": [
+        {
+          "number": 14,
+          "title": "Week 14 - Networking prerequisites",
+          "description": "Switching, routing, DNS, network namespaces, Docker networking and the CNI - before any Kubernetes networking.",
+          "lessons": [
+            {
+              "slug": "networking-prerequisites-switching-routing",
+              "title": "Prerequisite - Switching, routing and gateways",
+              "summary": "Interfaces, switches, routers, default gateways and the ip command - Linux networking from the ground up.",
+              "estimated_minutes": 26,
+              "day_of_week": 1
+            },
+            {
+              "slug": "networking-prerequisites-dns",
+              "title": "Prerequisite - DNS",
+              "summary": "/etc/hosts, resolv.conf, search domains and record types - how a name becomes an address.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "networking-prerequisites-coredns",
+              "title": "Prerequisite - CoreDNS",
+              "summary": "Running CoreDNS by hand with a Corefile, before meeting it inside the cluster.",
+              "estimated_minutes": 15,
+              "day_of_week": 2
+            },
+            {
+              "slug": "networking-prerequisites-network-namespaces",
+              "title": "Prerequisite - Network namespaces",
+              "summary": "Isolated network stacks, veth pairs and bridges - the mechanism every container network is built on.",
+              "estimated_minutes": 32,
+              "day_of_week": 3
+            },
+            {
+              "slug": "networking-prerequisites-docker-networking",
+              "title": "Prerequisite - Docker networking",
+              "summary": "none, host and bridge, and how Docker wires a container onto docker0.",
+              "estimated_minutes": 16,
+              "day_of_week": 3
+            },
+            {
+              "slug": "networking-prerequisites-cni",
+              "title": "Prerequisite - CNI",
+              "summary": "The Container Network Interface: the contract, the plugins, and who calls them.",
+              "estimated_minutes": 14,
+              "day_of_week": 4
+            },
+            {
+              "slug": "cluster-networking",
+              "title": "Cluster networking",
+              "summary": "Which ports each component listens on and what the exam expects you to know about the CNI.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "title": "Week 15 - Pod, Service and DNS networking",
+          "description": "How Pods get addresses, how Services get routed, and how names resolve inside the cluster.",
+          "lessons": [
+            {
+              "slug": "kubernetes-network-model",
+              "title": "Pod networking",
+              "summary": "Every Pod an IP, every Pod reachable: the model, and how a CNI plugin delivers it.",
+              "estimated_minutes": 45,
+              "day_of_week": 1
+            },
+            {
+              "slug": "cni-in-kubernetes",
+              "title": "CNI in Kubernetes",
+              "summary": "Where the kubelet finds its plugins and configuration: /opt/cni/bin and /etc/cni/net.d.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "ipam",
+              "title": "IPAM",
+              "summary": "Who hands out Pod IPs: host-local, DHCP and the IPAM plugins the CNI can call.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "service-networking",
+              "title": "Service networking",
+              "summary": "ClusterIP and NodePort under the hood: kube-proxy, iptables rules and the service CIDR.",
+              "estimated_minutes": 18,
+              "day_of_week": 3
+            },
+            {
+              "slug": "dns-in-kubernetes",
+              "title": "DNS in Kubernetes",
+              "summary": "Service and Pod DNS names: the svc.cluster.local hierarchy and search domains.",
+              "estimated_minutes": 12,
+              "day_of_week": 4
+            },
+            {
+              "slug": "coredns-and-service-discovery",
+              "title": "CoreDNS in Kubernetes",
+              "summary": "The CoreDNS Deployment, its Corefile ConfigMap, and how Pods are pointed at it.",
+              "estimated_minutes": 40,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "title": "Week 16 - Ingress and the Gateway API",
+          "description": "Routing HTTP into the cluster: Ingress controllers and rules, then the Gateway API.",
+          "lessons": [
+            {
+              "slug": "ingress-controllers-and-rules",
+              "title": "Ingress",
+              "summary": "Why a LoadBalancer per Service does not scale, and how an Ingress controller plus Ingress resources solve it.",
+              "estimated_minutes": 50,
+              "day_of_week": 1
+            },
+            {
+              "slug": "ingress-article",
+              "title": "Article - Ingress",
+              "summary": "The current state of Ingress in the API: the networking.k8s.io/v1 shape and what changed from the beta.",
+              "estimated_minutes": 15,
+              "day_of_week": 1
+            },
+            {
+              "slug": "ingress-annotations-and-rewrite-target",
+              "title": "Ingress - annotations and rewrite-target",
+              "summary": "Controller-specific behaviour through annotations, with rewrite-target worked through.",
+              "estimated_minutes": 15,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gateway-api-introduction",
+              "title": "Introduction to the Gateway API",
+              "summary": "GatewayClass, Gateway and HTTPRoute: the role-oriented successor to Ingress.",
+              "estimated_minutes": 40,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gateway-api-practical-guide",
+              "title": "Practical guide to the Gateway API",
+              "summary": "Installing a Gateway controller and routing real traffic with HTTPRoute, step by step.",
+              "estimated_minutes": 15,
+              "day_of_week": 4
+            },
+            {
+              "slug": "phase-3-consolidation",
+              "title": "Consolidation - networking end to end",
+              "summary": "One walk from a browser to a Pod and back: Gateway, Service, DNS, CNI, kube-proxy.",
+              "estimated_minutes": 60,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cluster-install",
+      "title": "Phase 8 - Designing and installing a cluster",
+      "description": "Sizing and choosing infrastructure, high availability and etcd topologies, and bringing a cluster up with kubeadm from bare VMs.",
+      "order_index": 8,
+      "exam_domain": "Cluster Architecture, Installation & Configuration",
+      "exam_weight": 5,
+      "week_start": 17,
+      "week_end": 17,
+      "color": "violet",
+      "weeks": [
+        {
+          "number": 17,
+          "title": "Week 17 - Designing and installing a cluster",
+          "description": "Sizing, infrastructure, HA and etcd topology, then kubeadm from bare VMs.",
+          "lessons": [
+            {
+              "slug": "designing-a-kubernetes-cluster",
+              "title": "Designing a Kubernetes cluster",
+              "summary": "Purpose, size, cloud or on-prem, and how many control plane nodes - the questions before the first command.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "choosing-kubernetes-infrastructure",
+              "title": "Choosing Kubernetes infrastructure",
+              "summary": "Turnkey, hosted and self-managed options, and what each hands you and takes away.",
+              "estimated_minutes": 12,
+              "day_of_week": 1
+            },
+            {
+              "slug": "highly-available-control-planes",
+              "title": "Configuring high availability",
+              "summary": "Multiple API servers behind a load balancer, leader election for the scheduler and controller manager.",
+              "estimated_minutes": 45,
+              "day_of_week": 2
+            },
+            {
+              "slug": "etcd-in-ha",
+              "title": "etcd in HA",
+              "summary": "Quorum, the RAFT protocol, odd member counts, and stacked vs external etcd topologies.",
+              "estimated_minutes": 26,
+              "day_of_week": 2
+            },
+            {
+              "slug": "kubernetes-the-hard-way",
+              "title": "Kubernetes the hard way",
+              "summary": "Why building a cluster by hand once is still the best way to understand it, and where to find the walkthrough.",
+              "estimated_minutes": 15,
+              "day_of_week": 3
+            },
+            {
+              "slug": "kubeadm-introduction",
+              "title": "Deployment with kubeadm - introduction",
+              "summary": "What kubeadm does and does not do, and the order of init, CNI and join.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "provision-vms-with-vagrant",
+              "title": "Provisioning VMs with Vagrant",
+              "summary": "Standing up the nodes for a kubeadm cluster reproducibly.",
+              "estimated_minutes": 12,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kubeadm-cluster-bootstrap",
+              "title": "Demo - Deployment with kubeadm",
+              "summary": "Container runtime, kubeadm, kubelet, init, the CNI and the join command, start to finish.",
+              "estimated_minutes": 60,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "helm-kustomize",
+      "title": "Phase 9 - Helm and Kustomize",
+      "description": "Packaging and customising what you deploy: Helm charts, values and lifecycle, then Kustomize bases, transformers, patches, overlays and components.",
+      "order_index": 9,
+      "exam_domain": "Cluster Architecture, Installation & Configuration",
+      "exam_weight": 4,
+      "week_start": 18,
+      "week_end": 18,
+      "color": "emerald",
+      "weeks": [
+        {
+          "number": 18,
+          "title": "Week 18 - Helm and Kustomize",
+          "description": "Packaging with Helm, then layering configuration with Kustomize.",
+          "lessons": [
+            {
+              "slug": "helm-and-kustomize-basics",
+              "title": "Helm and Kustomize - the overview",
+              "summary": "Two answers to the same problem - reusing manifests across environments - and when to reach for which.",
+              "estimated_minutes": 45,
+              "day_of_week": 1
+            },
+            {
+              "slug": "helm-introduction",
+              "title": "Helm - introduction",
+              "summary": "The package manager for Kubernetes: charts, releases and repositories.",
+              "estimated_minutes": 14,
+              "day_of_week": 1
+            },
+            {
+              "slug": "helm-installation-and-configuration",
+              "title": "Helm - installation and configuration",
+              "summary": "Installing the Helm CLI and pointing it at a cluster.",
+              "estimated_minutes": 10,
+              "day_of_week": 1
+            },
+            {
+              "slug": "helm2-vs-helm3",
+              "title": "A quick note about Helm 2 vs Helm 3",
+              "summary": "Tiller is gone, three-way merge arrived - what changed and why it matters for rollbacks.",
+              "estimated_minutes": 18,
+              "day_of_week": 1
+            },
+            {
+              "slug": "helm-components",
+              "title": "Helm components",
+              "summary": "CLI, charts, releases, revisions, repositories and the release secrets in the cluster.",
+              "estimated_minutes": 16,
+              "day_of_week": 1
+            },
+            {
+              "slug": "helm-charts",
+              "title": "Helm charts",
+              "summary": "Chart.yaml, templates and values.yaml - the anatomy of a chart.",
+              "estimated_minutes": 16,
+              "day_of_week": 1
+            },
+            {
+              "slug": "working-with-helm-basics",
+              "title": "Working with Helm - basics",
+              "summary": "install, list, uninstall, upgrade - the everyday verbs.",
+              "estimated_minutes": 14,
+              "day_of_week": 2
+            },
+            {
+              "slug": "customizing-chart-parameters",
+              "title": "Customizing chart parameters",
+              "summary": "--set, --values and pulling a chart to edit it before installing.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "helm-lifecycle-management",
+              "title": "Lifecycle management with Helm",
+              "summary": "upgrade, history, rollback - and what a rollback does and does not restore.",
+              "estimated_minutes": 16,
+              "day_of_week": 2
+            },
+            {
+              "slug": "kustomize-problem-statement",
+              "title": "Kustomize - problem statement and ideology",
+              "summary": "Bases and overlays instead of copy-pasted YAML per environment.",
+              "estimated_minutes": 18,
+              "day_of_week": 2
+            },
+            {
+              "slug": "kustomize-vs-helm",
+              "title": "Kustomize vs Helm",
+              "summary": "Templating versus patching: the trade-offs, and that they coexist.",
+              "estimated_minutes": 10,
+              "day_of_week": 2
+            },
+            {
+              "slug": "kustomize-installation",
+              "title": "Kustomize - installation and setup",
+              "summary": "kubectl -k and the standalone kustomize binary.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "kustomization-yaml-file",
+              "title": "The kustomization.yaml file",
+              "summary": "resources, and the sections that transform them - the file at the centre of everything.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "kustomize-output",
+              "title": "Kustomize output",
+              "summary": "kustomize build, and piping it into kubectl apply.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "kustomize-apiversion-and-kind",
+              "title": "Kustomize apiVersion and kind",
+              "summary": "The header every kustomization.yaml carries.",
+              "estimated_minutes": 10,
+              "day_of_week": 3
+            },
+            {
+              "slug": "kustomize-managing-directories",
+              "title": "Managing directories",
+              "summary": "Nesting kustomizations: a root that points at sub-directories.",
+              "estimated_minutes": 14,
+              "day_of_week": 3
+            },
+            {
+              "slug": "kustomize-managing-directories-demo",
+              "title": "Managing directories - demo",
+              "summary": "Building the directory layout by hand and applying it from the root.",
+              "estimated_minutes": 20,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kustomize-common-transformers",
+              "title": "Common transformers",
+              "summary": "commonLabels, namePrefix, namespace, commonAnnotations - applied to everything at once.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kustomize-image-transformers",
+              "title": "Image transformers",
+              "summary": "Swapping an image name or tag without touching the manifest.",
+              "estimated_minutes": 10,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kustomize-transformers-demo",
+              "title": "Transformers - demo",
+              "summary": "The common and image transformers applied to a real project.",
+              "estimated_minutes": 24,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kustomize-patches-intro",
+              "title": "Patches - intro",
+              "summary": "Targeted changes with JSON 6902 and strategic merge patches.",
+              "estimated_minutes": 18,
+              "day_of_week": 4
+            },
+            {
+              "slug": "kustomize-patch-types",
+              "title": "Different types of patches",
+              "summary": "Inline versus separate-file patches, and which to choose.",
+              "estimated_minutes": 10,
+              "day_of_week": 5
+            },
+            {
+              "slug": "kustomize-patches-dictionary",
+              "title": "Patches - dictionary",
+              "summary": "Replacing, adding and removing keys in a map.",
+              "estimated_minutes": 14,
+              "day_of_week": 5
+            },
+            {
+              "slug": "kustomize-patches-list",
+              "title": "Patches - list",
+              "summary": "Replacing, adding and removing entries in a list, by index.",
+              "estimated_minutes": 14,
+              "day_of_week": 5
+            },
+            {
+              "slug": "kustomize-overlays",
+              "title": "Overlays",
+              "summary": "base/ and overlays/dev, overlays/prod - the layout that makes environments cheap.",
+              "estimated_minutes": 12,
+              "day_of_week": 5
+            },
+            {
+              "slug": "kustomize-components",
+              "title": "Components",
+              "summary": "Reusable pieces you can switch on per overlay - optional features without copying.",
+              "estimated_minutes": 18,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "troubleshooting",
+      "title": "Phase 10 - Troubleshooting",
+      "description": "The largest exam domain: application, control plane, worker node and network failures worked as a method, plus JSONPath for pulling exactly the field you need.",
+      "order_index": 10,
+      "exam_domain": "Troubleshooting",
+      "exam_weight": 30,
+      "week_start": 19,
+      "week_end": 19,
+      "color": "amber",
+      "weeks": [
+        {
+          "number": 19,
+          "title": "Week 19 - Troubleshooting and JSONPath",
+          "description": "Application, control plane, worker node and network failures as a method, and JSONPath for precise answers.",
+          "lessons": [
+            {
+              "slug": "troubleshooting-methodology",
+              "title": "A troubleshooting methodology that scales",
+              "summary": "The describe -> events -> logs -> exec loop and how to avoid rabbit holes.",
+              "estimated_minutes": 40,
+              "day_of_week": 1
+            },
+            {
+              "slug": "debugging-pods-and-containers",
+              "title": "Application failure",
+              "summary": "Working a failing app from the front: Service, selectors, ports, Pod status, logs, environment.",
+              "estimated_minutes": 55,
+              "day_of_week": 1
+            },
+            {
+              "slug": "control-plane-failures",
+              "title": "Control plane failure",
+              "summary": "When kubectl itself misbehaves: static Pod manifests, component logs, certificates and flags.",
+              "estimated_minutes": 50,
+              "day_of_week": 2
+            },
+            {
+              "slug": "node-not-ready",
+              "title": "Worker node failure",
+              "summary": "A NotReady node: kubelet status and logs, certificates, and the kubelet config file.",
+              "estimated_minutes": 50,
+              "day_of_week": 2
+            },
+            {
+              "slug": "network-troubleshooting",
+              "title": "Network troubleshooting",
+              "summary": "CNI plugins, kube-proxy and CoreDNS as the three places cluster networking breaks.",
+              "estimated_minutes": 50,
+              "day_of_week": 3
+            },
+            {
+              "slug": "troubleshooting-network-and-storage",
+              "title": "Troubleshooting networking and storage",
+              "summary": "A repeatable checklist for connectivity and mount failures.",
+              "estimated_minutes": 45,
+              "day_of_week": 4
+            },
+            {
+              "slug": "json-path-prerequisites",
+              "title": "Prerequisite - JSONPath",
+              "summary": "Dictionaries, lists, filters and wildcards in the JSONPath language itself.",
+              "estimated_minutes": 15,
+              "day_of_week": 4
+            },
+            {
+              "slug": "json-path-in-kubernetes",
+              "title": "JSONPath in Kubernetes",
+              "summary": "-o jsonpath, range, custom-columns and --sort-by - pulling exactly the field you need.",
+              "estimated_minutes": 24,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "exam-prep",
+      "title": "Phase 11 - Lightning labs and mock exams",
+      "description": "Exam conditions: three timed mock exams with worked solutions, a lightning lab, speed drills and a last review of your weakest domain.",
+      "order_index": 11,
+      "exam_domain": "Exam simulation",
+      "exam_weight": 0,
+      "week_start": 20,
+      "week_end": 20,
+      "color": "rose",
+      "weeks": [
+        {
+          "number": 20,
+          "title": "Week 20 - Mock exams",
+          "description": "Exam conditions: three timed mocks with worked solutions, a lightning lab, speed drills and a last review.",
+          "lessons": [
+            {
+              "slug": "exam-day-logistics",
+              "title": "Mock exams - introduction",
+              "summary": "How the mocks are scored, how to time yourself, and what to do with a wrong answer.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "mock-exam-one",
+              "title": "Mock exam 1",
+              "summary": "A full timed mock under exam conditions.",
+              "estimated_minutes": 120,
+              "day_of_week": 1
+            },
+            {
+              "slug": "mock-exam-one-solutions",
+              "title": "Mock exam 1 - step-by-step solutions",
+              "summary": "Every question of mock 1 worked through, with the fast path and the trap.",
+              "estimated_minutes": 66,
+              "day_of_week": 2
+            },
+            {
+              "slug": "mock-exam-two",
+              "title": "Mock exam 2",
+              "summary": "A second full timed mock.",
+              "estimated_minutes": 120,
+              "day_of_week": 2
+            },
+            {
+              "slug": "mock-exam-two-solutions",
+              "title": "Mock exam 2 - step-by-step solutions",
+              "summary": "Every question of mock 2 worked through.",
+              "estimated_minutes": 112,
+              "day_of_week": 3
+            },
+            {
+              "slug": "mock-exam-three",
+              "title": "Mock exam 3",
+              "summary": "A third full timed mock - the hardest of the three.",
+              "estimated_minutes": 120,
+              "day_of_week": 3
+            },
+            {
+              "slug": "mock-exam-three-solutions",
+              "title": "Mock exam 3 - step-by-step solutions",
+              "summary": "Every question of mock 3 worked through.",
+              "estimated_minutes": 98,
+              "day_of_week": 4
+            },
+            {
+              "slug": "speed-drills-and-imperative-commands",
+              "title": "Speed drills and imperative commands",
+              "summary": "The generator commands and dry-run patterns that buy you time.",
+              "estimated_minutes": 45,
+              "day_of_week": 4
+            },
+            {
+              "slug": "weak-domain-review",
+              "title": "Weak domain review",
+              "summary": "Using your dashboard readiness breakdown to decide what to revisit.",
+              "estimated_minutes": 60,
+              "day_of_week": 5
+            },
+            {
+              "slug": "final-checklist",
+              "title": "What's next",
+              "summary": "Booking the exam, the day itself, and where to go after the CKA.",
+              "estimated_minutes": 30,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

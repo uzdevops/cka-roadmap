@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-profiles-and-skel",
+  "phase_slug": "users-groups",
+  "week_number": 8,
+  "title": "Lab - Environment profiles and template user environments",
+  "description": "Give every user, present and future, the same defaults.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 2,
+  "scenario": "Give every user, present and future, the same defaults. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Profile",
+      "instructions": "Export EDITOR=vim for all users via /etc/profile.d.",
+      "solution": "echo \"export EDITOR=vim\" > /etc/profile.d/editor.sh",
+      "verification": "su - ana -c \"echo \\$EDITOR\""
+    },
+    {
+      "title": "Task 2 - skel",
+      "instructions": "Add a README to /etc/skel and create a new user to prove it arrives.",
+      "solution": "echo welcome > /etc/skel/README\nuseradd -m dee",
+      "verification": "ls /home/dee"
+    },
+    {
+      "title": "Task 3 - Alias",
+      "instructions": "Give user ana a personal alias ll='ls -la' that survives logout.",
+      "solution": "echo \"alias ll='ls -la'\" >> /home/ana/.bashrc",
+      "verification": "su - ana -c 'type ll'"
+    }
+  ]
+}

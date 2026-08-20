@@ -1,0 +1,143 @@
+{
+  "slug": "control-plane-failures-check",
+  "lesson_slug": "control-plane-failures",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Check: control plane failures",
+  "description": "Five questions on diagnosing the cluster's own components.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-kubectl-dead",
+      "type": "single_choice",
+      "prompt": "kubectl returns 'connection refused' against the API server. Where do you look first?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Pod logs via kubectl"
+        },
+        {
+          "id": "b",
+          "text": "crictl on the control plane node, and the static Pod manifest"
+        },
+        {
+          "id": "c",
+          "text": "etcd metrics via kubectl"
+        },
+        {
+          "id": "d",
+          "text": "The Ingress"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "With kubectl dead you fall back to the node: `crictl ps -a`, `crictl logs`, and /etc/kubernetes/manifests.",
+      "points": 1
+    },
+    {
+      "key": "q2-etcd-down",
+      "type": "single_choice",
+      "prompt": "etcd is down. What still works?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "Running Pods keep running; no cluster state can be read or written"
+        },
+        {
+          "id": "c",
+          "text": "Only reads"
+        },
+        {
+          "id": "d",
+          "text": "Only the scheduler"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The data plane is independent. Everything that needs the API stops.",
+      "points": 1
+    },
+    {
+      "key": "q3-scheduler-down",
+      "type": "single_choice",
+      "prompt": "New Pods are Pending, existing ones healthy, and `kubectl get nodes` works. Which component?",
+      "options": [
+        {
+          "id": "a",
+          "text": "etcd"
+        },
+        {
+          "id": "b",
+          "text": "The scheduler"
+        },
+        {
+          "id": "c",
+          "text": "kube-proxy"
+        },
+        {
+          "id": "d",
+          "text": "CoreDNS"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A working API rules out etcd and the API server. Pending with no node assignment is the scheduler's signature.",
+      "points": 1
+    },
+    {
+      "key": "q4-cert-expiry",
+      "type": "single_choice",
+      "prompt": "After a year of neglect kubectl reports a certificate error. What is the likely cause and fix?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Clock skew; sync NTP"
+        },
+        {
+          "id": "b",
+          "text": "kubeadm certificates expired; renew with kubeadm certs renew"
+        },
+        {
+          "id": "c",
+          "text": "The CA was deleted; reinstall the cluster"
+        },
+        {
+          "id": "d",
+          "text": "RBAC changed"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "kubeadm certificates last a year. `kubeadm certs check-expiration` tells you before it becomes an outage.",
+      "points": 1
+    },
+    {
+      "key": "q5-crictl-logs",
+      "type": "fill_command",
+      "prompt": "Write the crictl command that lists containers including exited ones.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "crictl ps -a",
+        "sudo crictl ps -a",
+        "crictl ps --all"
+      ],
+      "explanation": "Then `crictl logs <id>` reads a control plane container's output when kubectl cannot.",
+      "points": 2
+    }
+  ]
+}

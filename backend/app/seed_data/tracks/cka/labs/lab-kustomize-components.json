@@ -1,0 +1,33 @@
+{
+  "slug": "lab-kustomize-components",
+  "phase_slug": "helm-kustomize",
+  "week_number": 18,
+  "title": "Lab - Kustomize components",
+  "description": "Add an optional feature with a component.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 35,
+  "order_index": 8,
+  "scenario": "Add an optional feature with a component. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Component",
+      "instructions": "Create components/caching that adds a redis Deployment and patches the api to use it.",
+      "solution": "# kind: Component",
+      "verification": "kustomize build components/caching 2>/dev/null || true"
+    },
+    {
+      "title": "Task 2 - Enable",
+      "instructions": "Enable the component only in the premium overlay.",
+      "solution": "# components: [../../components/caching]",
+      "verification": "kustomize build overlays/premium | grep redis"
+    },
+    {
+      "title": "Task 3 - Confirm",
+      "instructions": "Confirm the standard overlay has no redis.",
+      "solution": "kustomize build overlays/standard | grep -c redis",
+      "verification": "0"
+    }
+  ]
+}

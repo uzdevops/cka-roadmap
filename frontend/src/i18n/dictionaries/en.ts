@@ -138,7 +138,7 @@ export const en = {
     ctaPrimary: 'Start the roadmap',
     ctaSecondary: 'Browse the syllabus',
     demoHint: 'Try it without signing up:',
-    phasesHeading: 'The six phases',
+    phasesHeading: 'The phases',
     fullRoadmap: 'Full roadmap →',
     weeksRange: 'Weeks {start}-{end}',
     examWeight: '{weight}% of the exam',
@@ -155,7 +155,7 @@ export const en = {
     features: [
       {
         title: 'A roadmap, not a playlist',
-        body: 'Twenty weeks split into six phases that mirror the exam domains, with a Monday-to-Friday lesson rhythm, Saturday labs and Sunday review.',
+        body: 'Twenty weeks split into phases that mirror the exam domains, with a Monday-to-Friday lesson rhythm, Saturday labs and Sunday review.',
       },
       {
         title: 'Quizzes that grade like the exam',
@@ -175,7 +175,7 @@ export const en = {
   roadmap: {
     heading: 'The roadmap',
     intro:
-      'Six phases weighted like the exam. Lessons run Monday to Friday, Saturday is lab day, Sunday is review. Work through it in order - each phase assumes the one before it.',
+      'Phases weighted like the exam. Lessons run Monday to Friday, Saturday is lab day, Sunday is review. Work through it in order - each phase assumes the one before it.',
     allPhases: '← All phases',
     weeklySchedule: 'Weekly schedule',
     quizzesHeading: 'Quizzes',
@@ -605,7 +605,7 @@ export const en = {
       },
       curriculum: {
         title: 'Exam curriculum (topics)',
-        body: 'The CNCF curriculum repository - the exact domain list and percentage weights, versioned per release. The six phases of this roadmap are built from it.',
+        body: 'The CNCF curriculum repository - the exact domain list and percentage weights, versioned per release. The phases of this roadmap are built from it.',
       },
       handbook: {
         title: 'Candidate handbook',

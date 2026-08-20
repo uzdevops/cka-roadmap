@@ -1,0 +1,160 @@
+{
+  "slug": "gateway-api-introduction-check",
+  "lesson_slug": "gateway-api-introduction",
+  "phase_slug": "networking",
+  "week_number": 16,
+  "title": "Check: Gateway API",
+  "description": "Five questions on the successor to Ingress.",
+  "pass_score": 90,
+  "time_limit_minutes": null,
+  "order_index": 0,
+  "questions": [
+    {
+      "key": "q1-why",
+      "type": "single_choice",
+      "prompt": "What problem does the Gateway API set out to solve?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ingress is too slow"
+        },
+        {
+          "id": "b",
+          "text": "Ingress packs every feature into annotations and mixes operator and developer concerns"
+        },
+        {
+          "id": "c",
+          "text": "Ingress cannot do TLS"
+        },
+        {
+          "id": "d",
+          "text": "Ingress only supports one namespace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Gateway API splits the roles into separate resources with a real schema instead of vendor-specific annotations.",
+      "points": 1
+    },
+    {
+      "key": "q2-resources",
+      "type": "multi_select",
+      "prompt": "Which are Gateway API resources? Choose all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "GatewayClass"
+        },
+        {
+          "id": "b",
+          "text": "Gateway"
+        },
+        {
+          "id": "c",
+          "text": "HTTPRoute"
+        },
+        {
+          "id": "d",
+          "text": "IngressClass"
+        }
+      ],
+      "correct_options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "GatewayClass is the infrastructure type, Gateway an instance, HTTPRoute the routing rules. IngressClass belongs to the older API.",
+      "points": 2
+    },
+    {
+      "key": "q3-roles",
+      "type": "single_choice",
+      "prompt": "Who typically owns the Gateway, and who owns the HTTPRoute?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Both the developer"
+        },
+        {
+          "id": "b",
+          "text": "The cluster operator owns the Gateway; application teams own HTTPRoutes"
+        },
+        {
+          "id": "c",
+          "text": "Both the operator"
+        },
+        {
+          "id": "d",
+          "text": "The API server owns both"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "That separation is the whole point: infrastructure is configured once, routes are attached to it by the teams that own the apps.",
+      "points": 1
+    },
+    {
+      "key": "q4-crd",
+      "type": "single_choice",
+      "prompt": "How does the Gateway API ship?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Built into the API server"
+        },
+        {
+          "id": "b",
+          "text": "As CRDs you install into the cluster"
+        },
+        {
+          "id": "c",
+          "text": "As a kubectl plugin"
+        },
+        {
+          "id": "d",
+          "text": "As part of the CNI plugin"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The CRDs plus a controller that implements them. Nothing is built in yet.",
+      "points": 1
+    },
+    {
+      "key": "q5-crossnamespace",
+      "type": "single_choice",
+      "prompt": "What lets an HTTPRoute in one namespace attach to a Gateway in another?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing - it is forbidden"
+        },
+        {
+          "id": "b",
+          "text": "The Gateway's allowedRoutes, and a ReferenceGrant for cross-namespace backends"
+        },
+        {
+          "id": "c",
+          "text": "A ClusterRole"
+        },
+        {
+          "id": "d",
+          "text": "A shared label"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Explicit permission in both directions is deliberate - it is what stops a team from hijacking someone else's hostname.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,447 @@
+{
+  "slug": "cka-mock-exam-3",
+  "phase_slug": "exam-prep",
+  "week_number": 20,
+  "title": "CKA mock exam 3 - review",
+  "description": "The hardest set: multi-step scenarios that mix domains, the way the real exam does.",
+  "pass_score": 70,
+  "time_limit_minutes": 60,
+  "order_index": 23,
+  "questions": [
+    {
+      "key": "m3-01",
+      "type": "single_choice",
+      "prompt": "After a cluster upgrade, kubectl get nodes shows the control plane on the new version and the worker on the old one. What has not happened yet?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubeadm upgrade apply"
+        },
+        {
+          "id": "b",
+          "text": "kubeadm upgrade node plus a kubelet upgrade on the worker"
+        },
+        {
+          "id": "c",
+          "text": "A CNI reinstall"
+        },
+        {
+          "id": "d",
+          "text": "An etcd restore"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Each worker is upgraded separately: drain, kubeadm upgrade node, upgrade kubelet, uncordon.",
+      "points": 1
+    },
+    {
+      "key": "m3-02",
+      "type": "single_choice",
+      "prompt": "A PersistentVolume with reclaimPolicy Retain is released. What is the state of the data?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deleted"
+        },
+        {
+          "id": "b",
+          "text": "Kept; the PV must be cleaned or deleted by hand before reuse"
+        },
+        {
+          "id": "c",
+          "text": "Moved to another PV"
+        },
+        {
+          "id": "d",
+          "text": "Compressed"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Retain keeps the volume and its data; an admin decides what happens next.",
+      "points": 1
+    },
+    {
+      "key": "m3-03",
+      "type": "single_choice",
+      "prompt": "Which command shows a container's logs from its previous crash?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl logs <pod> --previous"
+        },
+        {
+          "id": "b",
+          "text": "kubectl logs <pod> --since=1h"
+        },
+        {
+          "id": "c",
+          "text": "kubectl describe pod <pod>"
+        },
+        {
+          "id": "d",
+          "text": "kubectl logs <pod> -f"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "--previous reads the log of the last terminated instance of the container.",
+      "points": 1
+    },
+    {
+      "key": "m3-04",
+      "type": "single_choice",
+      "prompt": "A Pod needs to reach an external IP but an egress NetworkPolicy blocks it. Which rule type allows a CIDR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "podSelector"
+        },
+        {
+          "id": "b",
+          "text": "namespaceSelector"
+        },
+        {
+          "id": "c",
+          "text": "ipBlock"
+        },
+        {
+          "id": "d",
+          "text": "hostNetwork"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "ipBlock is the only selector that names IP ranges; the others select Pods by labels.",
+      "points": 1
+    },
+    {
+      "key": "m3-05",
+      "type": "single_choice",
+      "prompt": "Which command approves a CertificateSigningRequest named akshay?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl approve csr akshay"
+        },
+        {
+          "id": "b",
+          "text": "kubectl certificate approve akshay"
+        },
+        {
+          "id": "c",
+          "text": "kubectl csr approve akshay"
+        },
+        {
+          "id": "d",
+          "text": "kubectl sign akshay"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "certificate approve (and certificate deny) are the CSR verbs.",
+      "points": 1
+    },
+    {
+      "key": "m3-06",
+      "type": "single_choice",
+      "prompt": "kube-scheduler is Running but nothing gets scheduled. What is a likely cause in a kubeadm cluster?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A typo in the scheduler static Pod manifest making it crash-loop or misconfigured"
+        },
+        {
+          "id": "b",
+          "text": "Too many nodes"
+        },
+        {
+          "id": "c",
+          "text": "The Service CIDR is wrong"
+        },
+        {
+          "id": "d",
+          "text": "CoreDNS is down"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "The scheduler is a static Pod; a bad flag or path in its manifest is the classic control plane fault.",
+      "points": 1
+    },
+    {
+      "key": "m3-07",
+      "type": "single_choice",
+      "prompt": "Which object lets a Pod authenticate to the API server?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Secret of type Opaque"
+        },
+        {
+          "id": "b",
+          "text": "A ServiceAccount and its projected token"
+        },
+        {
+          "id": "c",
+          "text": "A ConfigMap"
+        },
+        {
+          "id": "d",
+          "text": "A kubeconfig on the node"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pods run as a ServiceAccount; the kubelet projects a short-lived token for it.",
+      "points": 1
+    },
+    {
+      "key": "m3-08",
+      "type": "single_choice",
+      "prompt": "A HorizontalPodAutoscaler shows <unknown> for CPU. What is missing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A LimitRange"
+        },
+        {
+          "id": "b",
+          "text": "The Metrics Server, or CPU requests on the Pods"
+        },
+        {
+          "id": "c",
+          "text": "A PodDisruptionBudget"
+        },
+        {
+          "id": "d",
+          "text": "A PriorityClass"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The HPA needs metrics (metrics-server) and a request to compute a percentage against.",
+      "points": 1
+    },
+    {
+      "key": "m3-09",
+      "type": "single_choice",
+      "prompt": "Which Helm command installs a chart with a values override?",
+      "options": [
+        {
+          "id": "a",
+          "text": "helm install myrel repo/chart --set key=value"
+        },
+        {
+          "id": "b",
+          "text": "helm apply -f values.yaml"
+        },
+        {
+          "id": "c",
+          "text": "helm create myrel"
+        },
+        {
+          "id": "d",
+          "text": "helm template --install"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "--set (or -f values.yaml) on helm install or upgrade.",
+      "points": 1
+    },
+    {
+      "key": "m3-10",
+      "type": "single_choice",
+      "prompt": "In Kustomize, which file section changes an image tag across a whole project?",
+      "options": [
+        {
+          "id": "a",
+          "text": "patches"
+        },
+        {
+          "id": "b",
+          "text": "images"
+        },
+        {
+          "id": "c",
+          "text": "resources"
+        },
+        {
+          "id": "d",
+          "text": "namespace"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "images: [{name, newTag}] is the image transformer.",
+      "points": 1
+    },
+    {
+      "key": "m3-11",
+      "type": "single_choice",
+      "prompt": "Which kubectl command shows the last-applied configuration stored by apply?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl get <kind> <name> -o yaml and read the annotation kubectl.kubernetes.io/last-applied-configuration"
+        },
+        {
+          "id": "b",
+          "text": "kubectl diff"
+        },
+        {
+          "id": "c",
+          "text": "kubectl edit"
+        },
+        {
+          "id": "d",
+          "text": "kubectl rollout history"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "apply stores the last applied manifest in an annotation on the object.",
+      "points": 1
+    },
+    {
+      "key": "m3-12",
+      "type": "single_choice",
+      "prompt": "The API server cannot reach etcd after someone rotated certificates. Which manifest do you check?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/etc/kubernetes/manifests/kube-apiserver.yaml for --etcd-cafile, --etcd-certfile, --etcd-keyfile"
+        },
+        {
+          "id": "b",
+          "text": "/etc/kubernetes/kubelet.conf"
+        },
+        {
+          "id": "c",
+          "text": "/etc/cni/net.d"
+        },
+        {
+          "id": "d",
+          "text": "/etc/kubernetes/admin.conf"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "The API server's etcd client certificates are flags on its static Pod.",
+      "points": 1
+    },
+    {
+      "key": "m3-13",
+      "type": "single_choice",
+      "prompt": "Which resource makes a Pod run once per node, including new nodes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ReplicaSet"
+        },
+        {
+          "id": "b",
+          "text": "DaemonSet"
+        },
+        {
+          "id": "c",
+          "text": "Job"
+        },
+        {
+          "id": "d",
+          "text": "StatefulSet"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "DaemonSets schedule one Pod onto every (matching) node as nodes join.",
+      "points": 1
+    },
+    {
+      "key": "m3-14",
+      "type": "single_choice",
+      "prompt": "A Gateway API HTTPRoute is Accepted but traffic does not flow. What else must exist?",
+      "options": [
+        {
+          "id": "a",
+          "text": "An Ingress"
+        },
+        {
+          "id": "b",
+          "text": "A Gateway with a listener the route's parentRef points at, backed by a controller"
+        },
+        {
+          "id": "c",
+          "text": "A NodePort"
+        },
+        {
+          "id": "d",
+          "text": "A NetworkPolicy"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "HTTPRoutes attach to Gateways; without a matching Gateway and controller there is no data path.",
+      "points": 1
+    },
+    {
+      "key": "m3-15",
+      "type": "single_choice",
+      "prompt": "Which command sorts Pods by restart count?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl get pods --sort-by=.status.containerStatuses[0].restartCount"
+        },
+        {
+          "id": "b",
+          "text": "kubectl get pods -o wide"
+        },
+        {
+          "id": "c",
+          "text": "kubectl top pods"
+        },
+        {
+          "id": "d",
+          "text": "kubectl get pods --watch"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "--sort-by takes a JSONPath expression; restartCount lives on each containerStatus.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "lfcs-lab-git-and-ssl",
+  "phase_slug": "essential-commands",
+  "week_number": 4,
+  "title": "Lab - Git and SSL certificates",
+  "description": "Generate a certificate and keep the config in Git.",
+  "difficulty": "beginner",
+  "estimated_minutes": 35,
+  "order_index": 1,
+  "scenario": "Generate a certificate and keep the config in Git. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own VM and expand your notes as you go.",
+  "environment_setup": "# Any Linux VM with sudo will do - Ubuntu 22.04 or Rocky 9, 2 vCPU, 2 GB RAM.\n# Snapshot it before you start so a broken task is a revert away.\nsudo -i\nhostnamectl",
+  "cleanup": "# Revert the VM snapshot, or undo the changes you made by hand.",
+  "tasks": [
+    {
+      "title": "Task 1 - Key and CSR",
+      "instructions": "Generate a 2048-bit RSA key and a CSR for CN=lab.local.",
+      "solution": "openssl req -newkey rsa:2048 -nodes -keyout lab.key -out lab.csr -subj \"/CN=lab.local\"",
+      "verification": "openssl req -in lab.csr -noout -subject"
+    },
+    {
+      "title": "Task 2 - Self-sign",
+      "instructions": "Self-sign it for 365 days and read the expiry.",
+      "solution": "openssl x509 -req -in lab.csr -signkey lab.key -days 365 -out lab.crt\nopenssl x509 -in lab.crt -noout -dates",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Git",
+      "instructions": "Initialise a repo in /opt/lab, commit the .conf files on a branch called config, and show the log.",
+      "solution": "cd /opt/lab && git init && git checkout -b config && git add \"*.conf\" && git commit -m \"config\"",
+      "verification": "git log --oneline"
+    }
+  ]
+}

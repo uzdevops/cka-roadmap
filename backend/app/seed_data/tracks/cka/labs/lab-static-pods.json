@@ -1,0 +1,33 @@
+{
+  "slug": "lab-static-pods",
+  "phase_slug": "scheduling",
+  "week_number": 5,
+  "title": "Lab - Static Pods",
+  "description": "Find, create and delete static Pods on a node.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "order_index": 2,
+  "scenario": "Find, create and delete static Pods on a node. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Count them",
+      "instructions": "How many static Pods are running in the cluster? How can you tell from the name?",
+      "solution": "kubectl get pods -A | grep -- -controlplane  # suffix is the node name",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Find the directory",
+      "instructions": "On the control plane node, where does the kubelet read static Pod manifests from?",
+      "solution": "grep staticPodPath /var/lib/kubelet/config.yaml",
+      "verification": "/etc/kubernetes/manifests"
+    },
+    {
+      "title": "Task 3 - Create one",
+      "instructions": "Create a static Pod static-busybox that runs `sleep 1000` with image busybox.",
+      "solution": "kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml",
+      "verification": "kubectl get pods | grep static-busybox"
+    }
+  ]
+}

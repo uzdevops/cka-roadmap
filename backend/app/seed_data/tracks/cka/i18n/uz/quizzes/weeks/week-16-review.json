@@ -1,0 +1,102 @@
+{
+  "title": "9-hafta takrori - klasterni ekspluatatsiya qilish",
+  "description": "Texnik xizmat, kengaytmalar va kuzatuvchanlik bo’yicha oltita savol.",
+  "questions": {
+    "w16-q1": {
+      "prompt": "emptyDir ishlatadigan Pod’lar bilan birga `worker-3` ni drain qiladigan buyruqni yozing.",
+      "explanation": "Bu flagsiz drain ma’lumotni sezdirmay yo’qotib yuborish o’rniga bajarilishdan bosh tortadi."
+    },
+    "w16-q2": {
+      "prompt": "Drain osilib qoldi va hech qanday Pod evict qilinmayapti. Odatdagi sabab nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "API server ishlamayapti"
+        },
+        {
+          "id": "b",
+          "text": "PodDisruptionBudget keyingi evict’larni to’sib turibdi"
+        },
+        {
+          "id": "c",
+          "text": "Node allaqachon cordon qilingan"
+        },
+        {
+          "id": "d",
+          "text": "Yorliqlar yo’q"
+        }
+      ],
+      "explanation": "Bu - PDB o’z vazifasini bajarayotgani."
+    },
+    "w16-q3": {
+      "prompt": "Operator nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Odam - klasterni qo’lda boshqaradigan mutaxassis"
+        },
+        {
+          "id": "b",
+          "text": "Custom resource’ni moslashtirib turadigan kontroller"
+        },
+        {
+          "id": "c",
+          "text": "kubectl plagini"
+        },
+        {
+          "id": "d",
+          "text": "Service turi"
+        }
+      ],
+      "explanation": "CRD ustiga kontroller - xuddi shu reconciliation siklida ishlaydi."
+    },
+    "w16-q4": {
+      "prompt": "Yolg’iz CRD sizga nima beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ishlaydigan kontroller"
+        },
+        {
+          "id": "b",
+          "text": "Saqlanadigan va API orqali beriladigan yangi tur - lekin unga hech kim ta’sir qilmaydi"
+        },
+        {
+          "id": "c",
+          "text": "Admission webhook"
+        },
+        {
+          "id": "d",
+          "text": "Namespace"
+        }
+      ],
+      "explanation": "Kontrollersiz bunday obyektlar shunchaki yotib qolaveradi."
+    },
+    "w16-q5": {
+      "prompt": "Har bir node bo’yicha CPU va xotira sarfini ko’rsatadigan buyruqni yozing.",
+      "explanation": "Buning uchun klasterda metrics-server o’rnatilgan bo’lishi kerak."
+    },
+    "w16-q6": {
+      "prompt": "Event’lar sukut bo’yicha qancha vaqt saqlanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Abadiy"
+        },
+        {
+          "id": "b",
+          "text": "Taxminan bir soat"
+        },
+        {
+          "id": "c",
+          "text": "Bir hafta"
+        },
+        {
+          "id": "d",
+          "text": "Pod o’chirilgunicha"
+        }
+      ],
+      "explanation": "Aynan shu sababli ularni tashqi tizimga jo’natib turishga arziydi."
+    }
+  }
+}

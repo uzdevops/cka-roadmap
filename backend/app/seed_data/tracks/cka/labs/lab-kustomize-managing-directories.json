@@ -1,0 +1,33 @@
+{
+  "slug": "lab-kustomize-managing-directories",
+  "phase_slug": "helm-kustomize",
+  "week_number": 18,
+  "title": "Lab - Kustomize directories",
+  "description": "Compose a project from nested directories.",
+  "difficulty": "beginner",
+  "estimated_minutes": 30,
+  "order_index": 4,
+  "scenario": "Compose a project from nested directories. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Root",
+      "instructions": "Write a root kustomization.yaml that includes the api and db directories.",
+      "solution": "# resources: [api/, db/]",
+      "verification": "kustomize build ."
+    },
+    {
+      "title": "Task 2 - Sub",
+      "instructions": "Give each sub-directory its own kustomization.yaml listing its manifests.",
+      "solution": "# resources: [api-deploy.yaml, api-svc.yaml]",
+      "verification": "kubectl apply -k ."
+    },
+    {
+      "title": "Task 3 - Verify",
+      "instructions": "Confirm both the api and db objects were created from one apply.",
+      "solution": "kubectl get all",
+      "verification": "-"
+    }
+  ]
+}

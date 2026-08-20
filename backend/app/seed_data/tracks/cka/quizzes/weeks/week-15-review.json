@@ -1,0 +1,170 @@
+{
+  "slug": "week-15-review",
+  "phase_slug": "security",
+  "week_number": 11,
+  "title": "Week 11 review - access control",
+  "description": "Six questions on RBAC, ServiceAccounts and admission.",
+  "pass_score": 80,
+  "time_limit_minutes": 20,
+  "order_index": 15,
+  "questions": [
+    {
+      "key": "w15-q1",
+      "type": "single_choice",
+      "prompt": "A RoleBinding in dev references a ClusterRole. What is granted?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cluster-wide rights"
+        },
+        {
+          "id": "b",
+          "text": "Those rights inside dev only"
+        },
+        {
+          "id": "c",
+          "text": "Nothing"
+        },
+        {
+          "id": "d",
+          "text": "Read-only access"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The standard way to reuse view or edit per namespace.",
+      "points": 1
+    },
+    {
+      "key": "w15-q2",
+      "type": "single_choice",
+      "prompt": "RBAC has no deny rules. What follows?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Last match wins"
+        },
+        {
+          "id": "b",
+          "text": "Permissions are additive"
+        },
+        {
+          "id": "c",
+          "text": "Narrowest wins"
+        },
+        {
+          "id": "d",
+          "text": "Order matters"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "You grant less rather than subtracting.",
+      "points": 1
+    },
+    {
+      "key": "w15-q3",
+      "type": "fill_command",
+      "prompt": "Write the command that checks whether ServiceAccount build in dev may list pods.",
+      "options": [],
+      "correct_options": [],
+      "accepted_answers": [
+        "kubectl auth can-i list pods --as=system:serviceaccount:dev:build -n dev",
+        "kubectl auth can-i list pods -n dev --as=system:serviceaccount:dev:build"
+      ],
+      "explanation": "Impersonation is the fastest way to test a binding.",
+      "points": 2
+    },
+    {
+      "key": "w15-q4",
+      "type": "single_choice",
+      "prompt": "How is a ServiceAccount token delivered to a modern Pod?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A permanent Secret"
+        },
+        {
+          "id": "b",
+          "text": "A short-lived projected token"
+        },
+        {
+          "id": "c",
+          "text": "An env var"
+        },
+        {
+          "id": "d",
+          "text": "It is not"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "TokenRequest-based, audience-scoped and rotated.",
+      "points": 1
+    },
+    {
+      "key": "w15-q5",
+      "type": "single_choice",
+      "prompt": "Which runs first at admission?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Validating"
+        },
+        {
+          "id": "b",
+          "text": "Mutating"
+        },
+        {
+          "id": "c",
+          "text": "In parallel"
+        },
+        {
+          "id": "d",
+          "text": "Alphabetical"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "So validation sees the final object.",
+      "points": 1
+    },
+    {
+      "key": "w15-q6",
+      "type": "single_choice",
+      "prompt": "How is Pod Security enforced now that PodSecurityPolicy is gone?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RBAC only"
+        },
+        {
+          "id": "b",
+          "text": "Pod Security admission, driven by namespace labels"
+        },
+        {
+          "id": "c",
+          "text": "NetworkPolicy"
+        },
+        {
+          "id": "d",
+          "text": "A CRD"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "pod-security.kubernetes.io/enforce=restricted and friends.",
+      "points": 1
+    }
+  ]
+}

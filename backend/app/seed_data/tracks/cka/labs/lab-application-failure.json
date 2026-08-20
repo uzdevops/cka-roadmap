@@ -1,0 +1,33 @@
+{
+  "slug": "lab-application-failure",
+  "phase_slug": "troubleshooting",
+  "week_number": 19,
+  "title": "Lab - Application failure",
+  "description": "Find the broken link in a two-tier app, repeatedly.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 50,
+  "order_index": 1,
+  "scenario": "Find the broken link in a two-tier app, repeatedly. This lab is a skeleton: the tasks name what to do and how to check it; work them on your own cluster and expand your notes as you go.",
+  "environment_setup": "# A three-node kind cluster is enough for this lab\ncat <<'EOF' > kind-cka.yaml\nkind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cka\nnodes:\n  - role: control-plane\n  - role: worker\n  - role: worker\nEOF\nkind create cluster --config kind-cka.yaml\nkubectl get nodes",
+  "cleanup": "kind delete cluster --name cka\nrm -f kind-cka.yaml",
+  "tasks": [
+    {
+      "title": "Task 1 - Service",
+      "instructions": "Users cannot reach the web app. Check the Service, its selector and the endpoints.",
+      "solution": "kubectl describe svc web-service -n alpha\nkubectl get endpoints -n alpha",
+      "verification": "-"
+    },
+    {
+      "title": "Task 2 - Environment",
+      "instructions": "The web Pod cannot log in to the database. Compare its DB_User env with the mysql Pod.",
+      "solution": "kubectl describe pod webapp-mysql -n beta | grep -A5 Environment",
+      "verification": "-"
+    },
+    {
+      "title": "Task 3 - Port",
+      "instructions": "The NodePort returns connection refused. Check the port numbers end to end.",
+      "solution": "kubectl get svc -n gamma -o yaml | grep -E \"port|targetPort|nodePort\"",
+      "verification": "-"
+    }
+  ]
+}
