@@ -69,7 +69,7 @@ kind delete cluster --name cka
 
 ## kubeconfig’ni tushunish
 
-Har bir `kubectl` buyrug’i `~/.kube/config` dan uchta narsani aniqlaydi:
+Har bir `kubectl` buyrug’i `~/.kube/config`’dan uchta narsani aniqlaydi:
 **cluster** (qayerda), **user** (kim) va **namespace** - bularning hammasi
 **context** ichida jamlangan.
 
@@ -104,7 +104,7 @@ current-context: kind-cka
 :::warning
 Imtihon vazifalari tez-tez "`xyz` klasterida" yoki "`abc` namespace’ida" deb
 boshlanadi. To’g’ri buyruqni noto’g’ri kontekstda bajarish nol ball beradi.
-`kubectl config use-context` ni har bir savolda birinchi yozadigan narsangizga
+`kubectl config use-context`’ni har bir savolda birinchi yozadigan narsangizga
 aylantiring.
 :::
 
@@ -127,7 +127,7 @@ k run nginx --image=nginx $do > pod.yaml
 k delete pod nginx $now
 ```
 
-Yangi terminal ularni saqlab qolishi uchun `~/.bashrc` ga qo’shing:
+Yangi terminal ularni saqlab qolishi uchun `~/.bashrc`’ga qo’shing:
 
 ```bash
 cat <<'EOF' >> ~/.bashrc
@@ -154,7 +154,7 @@ EOF
 ```
 
 :::exam-tip
-`vim` da hujjatlardan blok nusxalashdan oldin `:set paste` qilish ketma-ket
+`vim`’da hujjatlardan blok nusxalashdan oldin `:set paste` qilish ketma-ket
 avtomatik indentatsiyaning oldini oladi. Blokni tanlash uchun `Ctrl-v`, keyin
 bir nechta qatorga yozish uchun `Shift-i` - nusxalangan parchani indentatsiya
 qilishning eng tez yo’li.
@@ -177,7 +177,7 @@ Agar bularning har biri ishlasa, sizda ishlaydigan klaster va ishlaydigan CLI
 bor.
 
 :::tip
-`metrics-server` ni erta o’rnating, shunda `kubectl top` ishlaydi - u sizga
+`metrics-server`’ni erta o’rnating, shunda `kubectl top` ishlaydi - u sizga
 autoscaling va nosozlikni bartaraf etish bosqichlarida kerak bo’ladi. kind’da
 unga bitta qo’shimcha flag kerak, chunki kubelet serving sertifikatlari
 o’z-o’zidan imzolangan:

@@ -104,7 +104,7 @@ kuzating, Pod yarating, bog’lanishini kuzating.
 
 ## Class’dan keladigan reclaim policy va kengaytirish
 
-Dinamik yaratilgan PV `reclaimPolicy` ni class’dan meros oladi - sukut
+Dinamik yaratilgan PV `reclaimPolicy`’ni class’dan meros oladi - sukut
 bo’yicha `Delete`, ya’ni **claim’ni o’chirish diskni ham o’chiradi**. Qayta
 tiklab bo’lmaydigan ma’lumot uchun class’larga `Retain` qo’ying.
 `allowVolumeExpansion: true` esa keyinchalik `kubectl patch pvc` bilan

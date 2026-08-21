@@ -50,7 +50,7 @@ tarzda sozlanadi.
 Scheduler ishlamay qolsa, yangi Pod’lar shunchaki **Pending** bo’lib qoladi va
 node’lar haqida umuman event bo’lmaydi - `kubectl describe pod` yaratilish
 qatoridan keyin hech narsa ko’rsatmaydi, chunki unga hech kim qaramagan.
-`nodeName`ni o’zingiz yozib, Pod’ni qo’lda joylashtirishingiz mumkin (qo’lda
+`nodeName`’ni o’zingiz yozib, Pod’ni qo’lda joylashtirishingiz mumkin (qo’lda
 rejalashtirish darsi); kubelet bu maydonni kim yozganiga ahamiyat bermaydi.
 
 ```bash
@@ -61,7 +61,7 @@ kubectl get events --sort-by=.lastTimestamp | tail
 
 :::exam-tip
 Pending Pod’lar ikki xil bo’ladi. **Event yo’q** = scheduler uni umuman
-ko’rmagan: scheduler ishlamayapti yoki Pod mavjud bo’lmagan `schedulerName`ni
+ko’rmagan: scheduler ishlamayapti yoki Pod mavjud bo’lmagan `schedulerName`’ni
 ko’rsatgan. **FailedScheduling event** = scheduler uni ko’rgan, lekin node
 topmagan: xabarni o’qing - u so’zma-so’z har bir node nega rad etilganini
 sanab beradi ("1 node(s) had untolerated taint", "Insufficient cpu").

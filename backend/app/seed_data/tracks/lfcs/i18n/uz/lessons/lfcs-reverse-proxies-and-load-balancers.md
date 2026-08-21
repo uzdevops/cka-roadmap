@@ -87,7 +87,7 @@ server {
 | `hash $request_uri consistent` | URL bo’yicha tanlangan serverga - cache’lar uchun foydali |
 | `weight=3` | kattaroq serverga proporsional ravishda ko’proq trafik |
 
-Passiv health check’lar `max_fails`/`fail_timeout`dan keladi: N marta
+Passiv health check’lar `max_fails`/`fail_timeout`’dan keladi: N marta
 nosozlikdan keyin backend bir muddat chetlab o’tiladi. (Aktiv health
 check’lar - nginx Plus imkoniyati; HAProxy ularni bepul versiyada ham
 qiladi.)

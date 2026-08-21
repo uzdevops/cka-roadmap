@@ -63,7 +63,7 @@ spec:
 ```
 
 **Ambassador** - chiquvchi ulanishlarni proksilaydi, shuning uchun ilova
-`localhost:6379` ga ulanadi, ambassador esa sharding yoki TLS bilan
+`localhost:6379`’ga ulanadi, ambassador esa sharding yoki TLS bilan
 shug’ullanadi.
 
 **Adapter** - ilova chiqishini standart formatga keltiradi, masalan eski log
@@ -99,7 +99,7 @@ spec:
       image: myapp:1.0
 ```
 
-`Init:0/2` da qotib qolgan Pod birinchi init konteyner tugamaganini bildiradi.
+`Init:0/2`’da qotib qolgan Pod birinchi init konteyner tugamaganini bildiradi.
 Uning loglarini aynan alohida o’qing:
 
 ```bash
@@ -225,7 +225,7 @@ spec:
 ```
 
 O’chirishda Kubernetes: Pod’ni Service endpoint’laridan olib tashlaydi,
-`preStop`ni bajaradi, `SIGTERM` yuboradi, grace period tugagunicha kutadi,
+`preStop`’ni bajaradi, `SIGTERM` yuboradi, grace period tugagunicha kutadi,
 keyin `SIGKILL` yuboradi. O’sha `sleep 5` yuk muvozanatlagichlarga jarayon
 so’rovlarni rad qila boshlashidan oldin yangi ulanishlar yuborishni
 to’xtatish uchun vaqt beradi.

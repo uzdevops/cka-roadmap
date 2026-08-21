@@ -69,8 +69,8 @@ kubectl apply -f ds.yaml
 ```
 
 :::exam-tip
-Uchta tahrir - `kind`, `replicas`ni olib tashlash, `strategy`ni olib tashlash -
-yigirma soniya oladi. `replicas`ni unutsangiz, validatsiya xatosi aynan shu
+Uchta tahrir - `kind`, `replicas`’ni olib tashlash, `strategy`’ni olib tashlash -
+yigirma soniya oladi. `replicas`’ni unutsangiz, validatsiya xatosi aynan shu
 maydonni nomlab beradi, ya’ni xatoning ham narxi arzon.
 :::
 
@@ -103,5 +103,5 @@ tutiladigan bir qatorli farq:
    qo’shilganda nima bo’ladi?
 2. DaemonSet’ingiz worker’larda ishlayapti, lekin control plane node’ida
    ishlamayapti. Shablonda nima yetishmayapti?
-3. `kubectl create deployment ... $do` dan boshlab, natijani yaroqli
+3. `kubectl create deployment ... $do`’dan boshlab, natijani yaroqli
    DaemonSet’ga aylantirish uchun qaysi uchta tahrir kerak?

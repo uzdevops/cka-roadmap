@@ -43,7 +43,7 @@ sudo lvcreate -l 100%FREE -n lv_z vg0        # qolgan hammasi
 ```
 
 Qurilma ham `/dev/vg0/lv_data`, ham `/dev/mapper/vg0-lv_data` sifatida
-paydo bo’ladi - fstab’da istalganini ishlating (ular `/dev/sdX` dan
+paydo bo’ladi - fstab’da istalganini ishlating (ular `/dev/sdX`’dan
 farqli o’laroq barqaror nomlar).
 
 ## Ko’rib chiqish

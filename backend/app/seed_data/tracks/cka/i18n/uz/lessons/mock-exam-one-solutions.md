@@ -18,7 +18,7 @@ k run messaging --image=redis:alpine -l tier=msg
 k get pod messaging --show-labels
 ```
 
-Tuzoq: `--labels` ham ishlaydi; `run`dagi `-l` label qo’yadi (`get`da esa
+Tuzoq: `--labels` ham ishlaydi; `run`’dagi `-l` label qo’yadi (`get`’da esa
 filtrlaydi).
 
 ### 3. Namespace
@@ -48,7 +48,7 @@ k get svc messaging-service; k get ep messaging-service      # endpoint'lar bo's
 
 Tuzoq: `expose pod` Pod’ning label’larini selektor sifatida avtomatik
 oladi - Service’ni qo’lda yozishdan tezroq va xavfsizroq. `--target-port`
-sukut bo’yicha `--port`ga teng bo’ladi.
+sukut bo’yicha `--port`’ga teng bo’ladi.
 
 ### 6. Deployment
 
@@ -68,7 +68,7 @@ Tuzoqlar: buyruqdan oldin `--command --` turishi kerak, aks holda
 `sleep 1000` image’ning entrypoint’iga **args** bo’lib qoladi; fayl
 **control plane node’ida**, **kubelet’ning staticPodPath**ida bo’lishi
 shart (kubeadm’da `/etc/kubernetes/manifests` - ishonchingiz komil
-bo’lmasa `/var/lib/kubelet/config.yaml`ni ko’ring). Topshiriqda worker
+bo’lmasa `/var/lib/kubelet/config.yaml`’ni ko’ring). Topshiriqda worker
 nomlangan bo’lsa, avval o’sha yerga `ssh` qiling.
 
 ### 8. Namespace ichidagi Pod
@@ -78,7 +78,7 @@ k create ns finance            # agar mavjud bo'lmasa
 k run temp-bus --image=redis:alpine -n finance
 ```
 
-Tuzoq: `-n finance` `run`da bo’lsin, faqat `get`da emas.
+Tuzoq: `-n finance` `run`’da bo’lsin, faqat `get`’da emas.
 
 ### 9. Ishlamayotgan orange Pod’i
 
@@ -104,7 +104,7 @@ k apply -f svc.yaml
 k get svc hr-web-app-service     # 8080:30082/TCP
 ```
 
-Tuzoq: `expose`da `--node-port` flagi yo’q - dry-run bilan YAML’ga
+Tuzoq: `expose`’da `--node-port` flagi yo’q - dry-run bilan YAML’ga
 chiqaring, uni qo’shing, apply qiling. `--target-port` 8080 bo’ladi, chunki
 ilova 8080 ni tinglaydi.
 
@@ -152,7 +152,7 @@ k get deploy web-front -n frontend                   # 3/3 AVAILABLE
 ```
 
 Tuzoq: `undo` oldingi revision’ga qaytaradi; muayyan biri uchun
-`--to-revision=N`. Buyruq qaytganini emas, `AVAILABLE`ni tekshiring.
+`--to-revision=N`. Buyruq qaytganini emas, `AVAILABLE`’ni tekshiring.
 
 ## Baholash va u nimani ko’rsatadi
 
@@ -178,6 +178,6 @@ shundan iborat.
 ## O’zingizni tekshiring
 
 1. Static Pod buyrug’ida `sleep 1000` uchun nega `--command --` kerak?
-2. `expose`da buning flagi yo’qligini hisobga olsak, muayyan nodePort’ni
+2. `expose`’da buning flagi yo’qligini hisobga olsak, muayyan nodePort’ni
    qanday qo’yasiz?
 3. Init konteynerdagi 127 exit kodi sizga nima deydi?

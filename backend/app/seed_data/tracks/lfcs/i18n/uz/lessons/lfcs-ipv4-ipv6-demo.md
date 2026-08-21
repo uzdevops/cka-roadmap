@@ -6,7 +6,7 @@
  DHCP             → server tarqatadigan konfiguratsiya
 ```
 
-Ko’rish va sinash uchun `ip`dan foydalaning; o’zgarish saqlanib qolishi
+Ko’rish va sinash uchun `ip`’dan foydalaning; o’zgarish saqlanib qolishi
 uchun doimiy vositadan foydalaning. Qaysi doimiy vosita: Ubuntu server
 **netplan**dan foydalanadi (u esa NetworkManager yoki systemd-networkd’ni
 boshqaradi); desktop’lar va RHEL to’g’ridan-to’g’ri **NetworkManager**dan
@@ -138,7 +138,7 @@ sudo vi /etc/hosts
 ::1             localhost ip6-localhost ip6-loopback
 ```
 
-`/etc/hosts` dagi yozuv DNS’ni yengadi (`nsswitch.conf` bo’yicha) - qat’iy
+`/etc/hosts`’dagi yozuv DNS’ni yengadi (`nsswitch.conf` bo’yicha) - qat’iy
 moslik uchun qulay va "aynan shu mashinada noto’g’ri manzilga yechilyapti"
 degan holatning klassik sababi.
 
@@ -155,7 +155,7 @@ host example.com; nslookup example.com
 getent hosts example.com                    # dasturlar qanday yechsa, shunday (hosts + DNS)
 ```
 
-systemd-resolved ishlaydigan tizimlarda DNS’ni `/etc/resolv.conf`ni
+systemd-resolved ishlaydigan tizimlarda DNS’ni `/etc/resolv.conf`’ni
 tahrirlab emas, nmcli/netplan orqali sozlang - u yaratilgan stub faylga
 symlink.
 
@@ -179,6 +179,6 @@ ko’p tushirib qoldiriladigan qism bo’lgan DNS yarmini unutmang.
 
 1. Nega `ip addr add` manzilni sozlash uchun yetarli emas va u nimaga
    yaraydi?
-2. `eth0`da statik manzil, gateway va DNS o’rnatadigan nmcli buyrug’ini
+2. `eth0`’da statik manzil, gateway va DNS o’rnatadigan nmcli buyrug’ini
    yozing.
 3. Nega SSH orqali `netplan apply` emas, `netplan try` ishlatish kerak?

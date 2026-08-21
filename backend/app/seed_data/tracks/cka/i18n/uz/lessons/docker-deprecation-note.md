@@ -36,19 +36,19 @@ Natijada node boshqacha emas, *kamroq* dasturiy ta’minot ishlatadi.
 Agar node Docker’ni runtime sifatida ishlatgan bo’lsa, migratsiya shunday edi:
 
 1. containerd’ni o’rnating (odatda allaqachon mavjud - Docker unga bog’liq) va
-   `/etc/containerd/config.toml` da uning CRI plaginini yoqing.
+   `/etc/containerd/config.toml`’da uning CRI plaginini yoqing.
 2. Kubelet’ni containerd soketiga yo’naltiring:
    `--container-runtime-endpoint=unix:///run/containerd/containerd.sock`.
 3. Node’ni drain qiling, kubelet’ni qayta ishga tushiring, uncordon qiling.
 
-Node’larda `dockerd` ni saqlab qolmoqchi bo’lganlar uchun Docker’ning o’z
+Node’larda `dockerd`’ni saqlab qolmoqchi bo’lganlar uchun Docker’ning o’z
 javobi - Mirantis qo’llab-quvvatlaydigan tashqi shim **cri-dockerd**. U
 ishlaydi, lekin deyarli hech kimga kerak emas.
 
 :::warning
 Zamonaviy node’da `docker ps` u yerda ishlayotgan Pod’lar haqida **hech narsa**
 ko’rsatmaydi - kubelet Docker’dan foydalanmayapti. "Node’da bir docker ps qilib
-ko’ray" odati - tashlash kerak bo’lgani. `crictl ps` dan foydalaning.
+ko’ray" odati - tashlash kerak bo’lgani. `crictl ps`’dan foydalaning.
 :::
 
 ## Imtihonda u qayerda hamon uchraydi

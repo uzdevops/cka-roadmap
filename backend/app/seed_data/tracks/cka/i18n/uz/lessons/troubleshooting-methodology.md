@@ -42,7 +42,7 @@ kubectl describe pod web-7d9f -n shop | tail -20
 kubectl get events -n shop --sort-by=.lastTimestamp | tail -20      # namespace event'lari, eng yangisi oxirida
 ```
 
-**2. status / condition’lar** - `kubectl get pods`dagi `STATUS` - bu
+**2. status / condition’lar** - `kubectl get pods`’dagi `STATUS` - bu
 xulosa; `describe` esa konteynerning **State**, **Last State**,
 **Reason**, **Exit Code** qiymatlarini ko’rsatadi. `Exit Code 1` - ilova;
 `137` - OOMKilled yoki SIGKILL; `CrashLoopBackOff` u o’lishda davom etyapti
@@ -72,7 +72,7 @@ nodes`. Tekshirilmagan tuzatish - taxmin.
 - **Xatoni to’liq o’qing.** `Back-off pulling image "nginx:1.99"` ichida
   javobning o’zi turibdi. `0/3 nodes are available: 3 node(s) had
   untolerated taint` da ham shunday. Imtihondagi ko’p nosozliklar - bitta
-  `describe` da ko’rinib turgan xato yozilgan so’z.
+  `describe`’da ko’rinib turgan xato yozilgan so’z.
 - **Bitta narsani o’zgartiring, keyin tekshiring.** Ikkita o’zgarish va
   bitta tuzatish sizga hech narsa o’rgatmaydi va boshqa narsani buzgan
   bo’lishi mumkin.

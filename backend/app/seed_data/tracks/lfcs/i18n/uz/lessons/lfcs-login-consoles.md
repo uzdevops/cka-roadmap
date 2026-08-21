@@ -13,8 +13,8 @@ ishda esa asosan uchinchisi ishlatiladi.
 
 ## Matnli konsollar: TTY’lar
 
-Kernel bir nechta **virtual konsol** beradi - `/dev/tty1` dan `/dev/tty6`
-gacha, har biri o’z login prompt’i bilan (systemd’ning `getty@.service`
+Kernel bir nechta **virtual konsol** beradi - `/dev/tty1`’dan
+`/dev/tty6`’gacha, har biri o’z login prompt’i bilan (systemd’ning `getty@.service`
 ostida `agetty` xizmat qiladi). Ular orasida **Ctrl+Alt+F1 … F6** bilan
 almashing; desktop’siz serverda boot paytida shulardan biriga tushasiz.
 
@@ -61,7 +61,7 @@ exit
 SSH sizga masofadagi hostda psevdo-terminal (`/dev/pts/N`) beradi; shell
 uchun bu mashina oldida o’tirish bilan bir xil. Server tomoni - `sshd`;
 uni sozlash 10-haftada. Hozircha ikkita amaliy izoh: birinchi ulanish
-sizdan host kalitiga ishonishni so’raydi (va uni `~/.ssh/known_hosts` ga
+sizdan host kalitiga ishonishni so’raydi (va uni `~/.ssh/known_hosts`’ga
 saqlaydi); yopilgan tarmoq ulanishi esa sessiyani va unda ishlayotgan
 hamma narsani o’ldiradi, agar `nohup`, `tmux` yoki `screen` ishlatmagan
 bo’lsangiz.
@@ -80,7 +80,7 @@ Imtihonda sizga beriladigan terminal allaqachon shell. Topshiriq baribir
 "X hostga kiring" deyishi mumkin - bu `ssh`, host nomi esa topshiriqda.
 VM konsoli yagona kirish yo’li bo’lgan holat uchun `Ctrl+Alt+Fn`
 almashuvini biling, "qaysi user’lar va qayerdan kirgan" uchun esa
-`who`/`w` ni biling.
+`who`/`w`’ni biling.
 :::
 
 ## O’zingizni tekshiring

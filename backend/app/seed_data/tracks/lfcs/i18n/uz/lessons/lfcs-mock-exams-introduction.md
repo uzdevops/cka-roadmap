@@ -26,7 +26,7 @@ handbook’idan tasdiqlang - ular qayta ko’rib chiqiladi.
 
 1. **Ikki soat, bir o’tirishda, brauzersiz.** Faqat `man`. Agar qidiruv
    tizimiga qo’l cho’zayotganingizni sezsangiz, bu - topilma: uni yozib
-   qo’ying va o’rniga `man -k` dan foydalaning.
+   qo’ying va o’rniga `man -k`’dan foydalaning.
 2. **Avval VM snapshot’ini oling**
    (`virsh snapshot-create-as lab01 pre-mock`). Bir nechta topshiriq
    partition’larni, firewall’larni va user’larni o’zgartiradi; ortga
@@ -53,7 +53,7 @@ yo’li aynan shu.
 | Nega xato ketdi | Tuzatish |
 |---|---|
 | buyruqni bilmagan | o’sha darsni qayta o’qing, labini qayta bajaring |
-| bilgan, lekin `man` da yetarlicha tez topolmagan | `man -k` ni mashq qiling va qaysi bo’lim ekanini o’rganing (config fayllar uchun 5, admin buyruqlar uchun 8) |
+| bilgan, lekin `man`’da yetarlicha tez topolmagan | `man -k`’ni mashq qiling va qaysi bo’lim ekanini o’rganing (config fayllar uchun 5, admin buyruqlar uchun 8) |
 | bilgan, yozgan, tekshirmagan - va u xato edi | tekshiruvni odatingizga qo’shing: har bir topshiriq tekshirish buyrug’i bilan tugaydi |
 | doimiy qilishni unutgan | fstab, `systemctl enable`, `sysctl --system`, `--permanent` - refleksni shakllantiring |
 | vaqt yetmagan | uzun topshiriqlarni (LVM, bonding, firewall) mexanik bo’lguncha mashq qiling |

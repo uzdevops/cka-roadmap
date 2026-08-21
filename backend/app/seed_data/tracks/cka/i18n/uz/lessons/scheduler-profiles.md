@@ -14,7 +14,7 @@ queueSort ─▶ preFilter ─▶ filter ─▶ postFilter ─▶ preScore ─�
 | `postFilter` | hech bir node o’tmasa nima qilish kerakligi | `DefaultPreemption` |
 | `score` | omon qolganlarni 0-100 oralig’ida baholaydi | `NodeResourcesBalancedAllocation`, `ImageLocality`, `NodeAffinity`, `PodTopologySpread` |
 | `reserve` / `permit` | resurslarni ushlab turadi, kerak bo’lsa kutadi | (gang scheduling, extender’lar) |
-| `bind` | `nodeName`ni yozadi | `DefaultBinder` |
+| `bind` | `nodeName`’ni yozadi | `DefaultBinder` |
 
 Bu bosqichda o’rgangan hamma narsangiz - o’sha pluginlardan biri: taint’lar -
 filter’dagi `TaintToleration`, node affinity - filter va score’dagi
@@ -56,7 +56,7 @@ profiles:
 ```
 
 `disabled: [{name: "*"}]` o’sha kengaytma nuqtasidagi sukut to’plamini
-tozalaydi; keyin `enabled` siz xohlaganlarini tartib bilan qaytarib qo’shadi.
+tozalaydi; keyin `enabled`’siz xohlaganlarini tartib bilan qaytarib qo’shadi.
 `pluginConfig` esa pluginga argumentlar uzatadi.
 
 ## Faylni ulash
@@ -93,7 +93,7 @@ kube-scheduler-controlplane -n kube-system` u yuklagan profillarni ko’rsatadi.
 :::exam-tip
 Bu yerda ikkita xato eng ko’p vaqt oladi. Konfiguratsiya faylini static Pod
 ichiga **mount qilishni** unutish - scheduler "no such file" bilan
-crash-loop’ga tushadi. Va `profiles` ro’yxatidan `default-scheduler`ni
+crash-loop’ga tushadi. Va `profiles` ro’yxatidan `default-scheduler`’ni
 tushirib qoldirish - shunda klasterdagi har bir oddiy Pod Pending bo’lib
 qoladi, chunki bu nomga endi hech kim xizmat qilmaydi. Sukut profilni
 ro’yxatda doim saqlang.

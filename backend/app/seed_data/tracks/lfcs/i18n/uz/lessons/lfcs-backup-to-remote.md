@@ -92,7 +92,7 @@ crontab -e
 # 0 2 * * * rsync -a --delete -e 'ssh -i /home/ahmad/.ssh/backup_key' /data/ backup@host:/backup/data/ >> /var/log/backup.log 2>&1
 ```
 
-(Kalitlar va `sshd` ni qattiqlashtirish - 10-hafta; cron - 6-hafta.
+(Kalitlar va `sshd`’ni qattiqlashtirish - 10-hafta; cron - 6-hafta.
 Pattern - parol iborasiz kalit, cheklangan user, logga yozilgan chiqish -
 standart hisoblanadi.)
 
@@ -117,4 +117,4 @@ xabar qiladigan ikkinchi rsync ishga tushirishi bilan tekshiring.
 1. `rsync -av /data /backup/` va `rsync -av /data/ /backup/` orasidagi
    farq nima?
 2. `-a` nimalarni o’z ichiga oladi va nega u sukut bo’yicha odat?
-3. Nega `--delete` dan oldin doim dry run bo’lishi kerak?
+3. Nega `--delete`’dan oldin doim dry run bo’lishi kerak?

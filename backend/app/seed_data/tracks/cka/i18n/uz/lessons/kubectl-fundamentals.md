@@ -21,7 +21,7 @@ kubectl get pods --field-selector status.phase=Running
 kubectl get all -n kube-system            # keng tarqalgan turlar birdaniga
 ```
 
-Saralash va maxsus ustunlar `get`ni hisobot vositasiga aylantiradi:
+Saralash va maxsus ustunlar `get`’ni hisobot vositasiga aylantiradi:
 
 ```bash
 kubectl get pods --sort-by=.status.startTime

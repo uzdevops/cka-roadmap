@@ -20,7 +20,7 @@ spec:
 ```
 
 Har bir Pod *qandaydir* ServiceAccount sifatida ishlaydi - hech narsa
-aytmasangiz, `default` sifatida. `default`ga RBAC hech qanday ruxsat
+aytmasangiz, `default` sifatida. `default`’ga RBAC hech qanday ruxsat
 bermagan, shuning uchun u zararsiz, lekin foydasiz ham: ruxsat kerak
 bo’ladigan Pod o’z akkaunti va o’z binding’ini oladi.
 
@@ -32,7 +32,7 @@ kubectl set serviceaccount deployment web-dashboard dashboard-sa      # Pod'larn
 ```
 
 RBAC subyektlarida ServiceAccount - bu `namespace` bilan birga kelgan
-`kind: ServiceAccount`; `--as`da va xabarlarda esa u
+`kind: ServiceAccount`; `--as`’da va xabarlarda esa u
 `system:serviceaccount:<ns>:<name>` ko’rinishida bo’ladi.
 
 ## Token’lar: Pod o’zini qanday isbotlaydi
@@ -84,7 +84,7 @@ metadata:
 type: kubernetes.io/service-account-token
 ```
 
-`data.token`ni controller manager to’ldiradi. Unga muddati hech qachon
+`data.token`’ni controller manager to’ldiradi. Unga muddati hech qachon
 tugamaydigan parol sifatida qarang, chunki u aynan shunday.
 
 :::exam-tip
@@ -100,7 +100,7 @@ u yerda hech narsa yo’q.
 - API’ga hech qachon murojaat qilmaydigan workload’lar uchun - ular
   ko’pchilik - Pod spec’ida (yoki ServiceAccount’da)
   `automountServiceAccountToken: false`.
-- `default`ga hech narsa bermang; har bir workload’ga o’z akkauntini bering.
+- `default`’ga hech narsa bermang; har bir workload’ga o’z akkauntini bering.
 - ServiceAccount’dagi `imagePullSecrets` uni ishlatadigan har bir Pod’ga
   meros bo’lib o’tadi - registry hisob ma’lumotlari uchun qulay joy.
 - Audit: subyekt sifatida `system:serviceaccounts` turgan joylarni
@@ -109,9 +109,9 @@ u yerda hech narsa yo’q.
 
 ## O’zingizni tekshiring
 
-1. Pod `serviceAccountName`ni ko’rsatmagan. Uning shaxsi qanday bo’ladi va u
+1. Pod `serviceAccountName`’ni ko’rsatmagan. Uning shaxsi qanday bo’ladi va u
    nima qila oladi?
 2. Klasterdan tashqarida ishlatish uchun ServiceAccount tokenini qanday
    olasiz va u qancha muddat amal qiladi?
-3. `/var/run/secrets/kubernetes.io/serviceaccount/` ga nima mount qilinadi va
+3. `/var/run/secrets/kubernetes.io/serviceaccount/`’ga nima mount qilinadi va
    Pod’ning qaysi maydoni buni o’chiradi?

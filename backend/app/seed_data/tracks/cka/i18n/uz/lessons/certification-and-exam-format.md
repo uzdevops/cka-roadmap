@@ -67,7 +67,7 @@ ulushi sizda qoladi. Bundan ikkita xulosa:
 :::tip
 Terminalni birinchi daqiqada sozlang: `alias k=kubectl`, `export
 do="--dry-run=client -o yaml"` va `export now="--force --grace-period 0"` -
-o’zini oqlaydigan uchtasi. Imtihon muhiti `.bashrc`ni tahrirlashga ruxsat
+o’zini oqlaydigan uchtasi. Imtihon muhiti `.bashrc`’ni tahrirlashga ruxsat
 beradi.
 :::
 

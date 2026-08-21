@@ -2,8 +2,8 @@
 
 Konteynerlar paketlash muammosini hal qildi. Konteyner image’i ilovangizni
 uning bog’liqliklari bilan birga o’raydi, shuning uchun u noutbukda, CI’da va
-productionda bir xil ishlaydi. Konteynerlar hal qilmagan narsa - `docker run`
-dan **keyin** sodir bo’ladigan hamma narsa:
+productionda bir xil ishlaydi. Konteynerlar hal qilmagan narsa -
+`docker run`’dan **keyin** sodir bo’ladigan hamma narsa:
 
 - Node soat 03:00 da o’ladi. Unda ishlayotgan o’n ikkita konteynerni kim qayta
   ishga tushiradi?
@@ -84,7 +84,7 @@ Kubernetesdagi har bir kontroller bir xil tsiklni bajaradi:
 ```
 
 Shuning uchun har bir Kubernetes obyektining ikki yarmi bor: siz yozadigan
-`spec` va tizim yozadigan `status`. `status`ni o’qishga o’rganish - klasterni
+`spec` va tizim yozadigan `status`. `status`’ni o’qishga o’rganish - klasterni
 tekshira oladiganlarni faqat narsa yarata oladiganlardan ajratadigan narsa.
 
 ```bash

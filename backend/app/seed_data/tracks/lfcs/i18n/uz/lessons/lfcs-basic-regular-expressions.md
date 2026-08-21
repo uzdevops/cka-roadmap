@@ -1,7 +1,7 @@
 ## Pattern’lar uchun grammatika
 
 Muntazam ifoda satrlar to’plamini tasvirlaydi. `grep`, `sed`, `awk`,
-`vi`ning `/` va `:s`, `less`, `find -regex` - hammasi shu tilda gapiradi.
+`vi`’ning `/` va `:s`, `less`, `find -regex` - hammasi shu tilda gapiradi.
 **Oddiy** muntazam ifodalar (BRE) - `grep` va `sed` sukut bo’yicha
 ishlatadigani; keyingi dars kengaytirilgan operatorlarni qo’shadi. Bu
 dars esa - hammaga kerak bo’ladigan asos.
@@ -97,7 +97,7 @@ grep '\<cat\>' file                 # so'z sifatida cat (grep -w cat bilan bir x
 3. `*` - "oldingisidan nol yoki undan ko’p", `.*` esa - "istalgan narsa".
 4. `^`/`$` bog’laydi; `[^...]` sinfni inkor qiladi.
 5. **BRE**’da `+ ? { } ( ) |` - harfma-harf belgilar va operator bo’lishi
-   uchun `\` talab qiladi - yoki ular `\` siz operator bo’lgan `grep -E`dan
+   uchun `\` talab qiladi - yoki ular `\`’siz operator bo’lgan `grep -E`’dan
    (keyingi dars) foydalaning.
 
 :::exam-tip
@@ -105,7 +105,7 @@ Imtihondagi ko’pchilik regex - anchor va sinf bilan `grep`: raqam bilan
 boshlanadigan qatorlar (`'^[0-9]'`), `.conf` bilan tugaydigan qatorlar
 (`'\.conf$'`), izoh bo’lmagan qatorlar (`'^[^#]'`). Pattern’ni avval
 ekranda sinab ko’ring, keyin yo’naltiring. Pattern’ga `+` yoki `|` kerak
-bo’lganda `grep -E`ga o’ting - backslash’lar yo’qoladi.
+bo’lganda `grep -E`’ga o’ting - backslash’lar yo’qoladi.
 :::
 
 ## O’zingizni tekshiring

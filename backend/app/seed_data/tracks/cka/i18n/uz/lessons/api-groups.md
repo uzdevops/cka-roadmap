@@ -34,7 +34,7 @@ apiGroup’i bo’sh satrdir.
 
 ## Yodda turadigan jadval
 
-| Guruh | RBAC `apiGroups` da | Resurslar |
+| Guruh | RBAC `apiGroups`’da | Resurslar |
 |---|---|---|
 | core | `""` | pods, services, configmaps, secrets, namespaces, nodes, persistentvolumes, persistentvolumeclaims, serviceaccounts, events, endpoints |
 | `apps` | `apps` | deployments, replicasets, daemonsets, statefulsets |
@@ -56,7 +56,7 @@ kubectl api-versions                        # server beradigan har bir guruh/ver
 
 `kubectl api-resources` - bu jadvalning *sizning* klasteringiz uchun ishonchli
 varianti, CRD’lar bilan birga. Uning APIVERSION ustuni - aynan manifestdagi
-`apiVersion` ga yoziladigan satr, uning guruh qismi esa RBAC’ga tushadigan
+`apiVersion`’ga yoziladigan satr, uning guruh qismi esa RBAC’ga tushadigan
 narsa.
 
 ## Resurslar, subresurslar, verb’lar

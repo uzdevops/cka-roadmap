@@ -108,5 +108,5 @@ u satr).
 1. VPA’ning uchta komponentini va har biri nima qilishini ayting.
 2. `Recreate` rejimida VPA ishlab turgan Pod’ning request’larini qanday
    o’zgartiradi va nega bu uzilishga sabab bo’ladi?
-3. VPA Pod’ga umuman tegmasdan tavsiya olish uchun qaysi `updateMode`ni
+3. VPA Pod’ga umuman tegmasdan tavsiya olish uchun qaysi `updateMode`’ni
    tanlaysiz?

@@ -44,7 +44,7 @@ spec:
           readOnly: true
 ```
 
-Ilova `/var/log/app/app.log` ga yozadi; yig’uvchi esa o’sha faylni umumiy
+Ilova `/var/log/app/app.log`’ga yozadi; yig’uvchi esa o’sha faylni umumiy
 `emptyDir` orqali o’qiydi. Ikkalasi ham bir-birining borligini bilmaydi.
 
 ## Ular bilan ishlash

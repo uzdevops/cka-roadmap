@@ -144,10 +144,10 @@ ajratib turadi: `type: LoadBalancer` Service’lar uchun load balancer yaratish,
 bulut disklarini ulash va node’larni region/zone bilan belgilash.
 
 :::tip
-`kind` yoki `minikube` da cloud controller yo’q, shuning uchun
+`kind` yoki `minikube`’da cloud controller yo’q, shuning uchun
 `type: LoadBalancer` Service tashqi IP’si uchun abadiy `<pending>` bo’lib
 qolaveradi. Bu to’g’ri xatti-harakat, xato emas. Lokalda `NodePort`,
-`kubectl port-forward` yoki `minikube tunnel` dan foydalaning.
+`kubectl port-forward` yoki `minikube tunnel`’dan foydalaning.
 :::
 
 ## Nosozlik holatlari, komponent bo’yicha

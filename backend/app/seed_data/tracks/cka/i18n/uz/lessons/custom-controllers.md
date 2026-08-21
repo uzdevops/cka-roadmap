@@ -2,7 +2,7 @@
 
 Har bir o’rnatilgan kind’ning kontrolleri bor: o’sha kind obyektlarini
 kuzatadigan, ular so’ragan narsani mavjud narsa bilan solishtiradigan va
-farqni yopadigan jarayon. ReplicaSet kontrolleri `replicas: 3` ni va ikkita
+farqni yopadigan jarayon. ReplicaSet kontrolleri `replicas: 3`’ni va ikkita
 Pod’ni ko’radi-da, bittasini yaratadi. **Custom kontroller** - sizning
 CRD’ingiz uchun yozilgan o’sha tsiklning o’zi.
 

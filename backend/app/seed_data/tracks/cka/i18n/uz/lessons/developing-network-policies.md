@@ -22,7 +22,7 @@ policyTypes:
 
 Hech qanday `ingress:` qoidasi sanalmagani uchun `internal` uchun Ingress
 **to’liq taqiqlanadi** - "boshqa hech nima ichkariga" aynan shuni so’ragan
-edi. (Agar `internal` ga, aytaylik, front end 8080 portda yeta olishi kerak
+edi. (Agar `internal`’ga, aytaylik, front end 8080 portda yeta olishi kerak
 bo’lsa, bu yana bitta `ingress` qoidasi.)
 
 ### 2. Mos keladigan label’larni toping
@@ -62,7 +62,7 @@ egress:
 
 Har bir `- to:` yozuvi *o’zining* manzillarini *o’zining* portlari bilan
 juftlaydi. Ikkala Pod’ni bitta `to:` ichiga ikkala port bilan qo’yish
-`mysql:8080` va `payroll:3306` ga ham ruxsat bergan bo’lardi - bu yerda
+`mysql:8080` va `payroll:3306`’ga ham ruxsat bergan bo’lardi - bu yerda
 zararsiz, lekin prinsipial jihatdan xato, va tekshiruvchi buni sinashi
 mumkin.
 

@@ -33,10 +33,10 @@ va qisqa test bilan tugaydi.
 
 ## Buni qanday o’rganish kerak
 
-- **Har bir buyruqni yozing.** `chmod 2775` ni o’qish - uni yozib, `ls -l`
-  da `s` paydo bo’lganini ko’rish bilan bir xil emas. Kerakli yagona jihoz -
+- **Har bir buyruqni yozing.** `chmod 2775`’ni o’qish - uni yozib,
+  `ls -l`’da `s` paydo bo’lganini ko’rish bilan bir xil emas. Kerakli yagona jihoz -
   VM (7-haftaga qarang) yoki buzsangiz bo’ladigan istalgan Linux mashinasi.
-- **man sahifasini dars aytishidan oldin oching.** Imtihon sizga `man` dan
+- **man sahifasini dars aytishidan oldin oching.** Imtihon sizga `man`’dan
   boshqa hech narsa bermaydi; unga qo’l cho’zish odati bayroqlarni yodlashdan
   qimmatroq.
 - **Cheat sheet’ni** (shu haftaning 4-darsi) ochiq tuting va unga qo’shib

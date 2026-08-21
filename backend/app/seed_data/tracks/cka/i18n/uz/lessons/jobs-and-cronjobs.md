@@ -46,9 +46,9 @@ anglatishini o’zgartiradi:
 | `restartPolicy` | Nosozlikda | `backoffLimit` nimani sanaydi |
 |---|---|---|
 | `OnFailure` | **konteyner** o’sha Pod ichida qayta ishga tushiriladi | konteyner restart’lari (RESTARTS ustunida ko’rinadi) |
-| `Never` | Pod Failed holatida qoldiriladi va **yangi Pod** yaratiladi | ishlamagan Pod’lar (ular `get pods` da to’planib boradi - loglar uchun foydali) |
+| `Never` | Pod Failed holatida qoldiriladi va **yangi Pod** yaratiladi | ishlamagan Pod’lar (ular `get pods`’da to’planib boradi - loglar uchun foydali) |
 
-Har ikki holatda ham `backoffLimit` ga yetilgach, Job’ning condition’larida
+Har ikki holatda ham `backoffLimit`’ga yetilgach, Job’ning condition’larida
 `Failed` paydo bo’ladi va u urinishni to’xtatadi.
 
 ## completions va parallelism
@@ -61,7 +61,7 @@ parallelism: 2
 "Menga beshta muvaffaqiyatli ishga tushirish kerak; bir vaqtda ko’pi bilan
 ikkitasi ishlasin." Bu - qat’iy belgilangan completion soni. Har bir Pod
 elementlar tugaguncha ularni navbatdan olaveradigan work queue uchun
-`completions`ni qo’ymang, faqat `parallelism`ni bering; bunda **istalgan**
+`completions`’ni qo’ymang, faqat `parallelism`’ni bering; bunda **istalgan**
 Pod muvaffaqiyatli tugab, qolganlari chiqib ketganda Job tugaydi. Indexed
 Job’lar (`completionMode: Indexed`) har bir Pod’ga `JOB_COMPLETION_INDEX`
 beradi, shunda beshta Pod ma’lumotning beshdan bir qismini alohida qayta
@@ -129,9 +129,9 @@ orqada.
 
 ## O’zingizni tekshiring
 
-1. Nega Job’ning Pod shabloni `restartPolicy: Always` dan foydalana olmaydi?
+1. Nega Job’ning Pod shabloni `restartPolicy: Always`’dan foydalana olmaydi?
 2. `restartPolicy: Never` va `backoffLimit: 3` bilan hech qachon
    muvaffaqiyatli tugamaydigan Job uchun nechta Pod ko’rishingiz mumkin?
-3. "Har dushanba soat 06:00 da" uchun `schedule`ni yozing va o’zi bilan
-   ustma-ust tushmasligi kerak bo’lgan job uchun qaysi `concurrencyPolicy`ni
+3. "Har dushanba soat 06:00 da" uchun `schedule`’ni yozing va o’zi bilan
+   ustma-ust tushmasligi kerak bo’lgan job uchun qaysi `concurrencyPolicy`’ni
    qo’yasiz?

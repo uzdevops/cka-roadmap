@@ -31,7 +31,7 @@ kubectl scale deployment web --replicas=5                         # gorizontal, 
 kubectl set resources deployment web --requests=cpu=500m,memory=512Mi   # vertikal, qo'lda (Pod'larni rollout qiladi)
 ```
 
-HPA siz uchun `spec.replicas`ni yozadi; VPA siz uchun resurs request’larini
+HPA siz uchun `spec.replicas`’ni yozadi; VPA siz uchun resurs request’larini
 yozadi. Shu ikki buyruqni tushunsangiz, kontrollerlarga nimaga tegishga
 ruxsat berilganini tushunasiz.
 

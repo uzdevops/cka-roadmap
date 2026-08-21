@@ -33,14 +33,14 @@ cat /etc/resolv.conf
 - `nameserver` - kimdan so’rash kerakligi (uchtagacha; tartib bo’yicha
   sinaladi).
 - `search` - nomda nuqta bo’lmaganda qo’shiladigan qo’shimchalar: `ping web`
-  avval `web.mycompany.com`, keyin `web.prod.mycompany.com` ni sinaydi.
+  avval `web.mycompany.com`, keyin `web.prod.mycompany.com`’ni sinaydi.
 - `ndots` - nuqtalari shundan kam bo’lgan nom **avval** search
   qo’shimchalari bilan sinaladi; ko’p bo’lsa, avval o’zi bor holicha.
 
-Zamonaviy Ubuntu’da `/etc/resolv.conf` ni `systemd-resolved` generatsiya
+Zamonaviy Ubuntu’da `/etc/resolv.conf`’ni `systemd-resolved` generatsiya
 qiladi (nameserver `127.0.0.53`, lokal stub) - haqiqiy upstream’larni
 `resolvectl status` ko’rsatadi. **Pod** ichida bu faylni kubelet yozadi va
-aynan u har qanday Pod’dan `curl api` ni ishlatadi; bu - Kubernetes’dagi
+aynan u har qanday Pod’dan `curl api`’ni ishlatadi; bu - Kubernetes’dagi
 DNS darsining mavzusi.
 
 ## Tanishingiz kerak bo’lgan record turlari
@@ -67,13 +67,13 @@ host web.example.com
 getent hosts web                       # libc qanday aniqlasa shunday: /etc/hosts KEYIN DNS
 ```
 
-`nslookup` va `dig` **faqat** DNS’ga murojaat qiladi - ular `/etc/hosts` ni
+`nslookup` va `dig` **faqat** DNS’ga murojaat qiladi - ular `/etc/hosts`’ni
 e’tiborsiz qoldiradi. `ping`, `curl`, `getent` esa libc orqali o’tadi va
 hosts faylini hamda search ro’yxatini hisobga oladi. "ping ishlaydi, dig
 ishlamaydi" yoki aksincha bo’lganda, tushuntirish - aynan shu farq.
 
 :::exam-tip
-Pod ichida kerakli vosita ko’pincha bo’lmaydi. `busybox` da `nslookup` bor;
+Pod ichida kerakli vosita ko’pincha bo’lmaydi. `busybox`’da `nslookup` bor;
 `kubectl run -it --rm t --image=busybox:1.36 -- nslookup kubernetes` -
 universal DNS testi. To’liq `dig` uchun
 `registry.k8s.io/e2e-test-images/jessie-dnsutils` kabi image’dan foydalaning.
@@ -94,6 +94,6 @@ ajratib olsangiz, DNS’ni tekshirishning yarmi tayyor.
 
 1. `ping web` `/etc/hosts` va DNS’ga qanday tartibda murojaat qiladi va bu
    tartibni qaysi fayl belgilaydi?
-2. `resolv.conf` dagi `search` qatori `api` nomiga nima qiladi?
+2. `resolv.conf`’dagi `search` qatori `api` nomiga nima qiladi?
 3. Pod ichidan `nslookup` "connection timed out" deyapti. Nom noto’g’rimi
    yoki gap boshqa narsadami?

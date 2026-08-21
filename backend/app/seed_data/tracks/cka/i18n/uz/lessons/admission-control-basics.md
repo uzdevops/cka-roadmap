@@ -31,7 +31,7 @@ Ba’zi o’rnatilgan pluginlar ikkalasini ham qiladi.
 | `DefaultStorageClass` | class’i ko’rsatilmagan PVC’ga sukut class’ni beradi |
 | `NodeRestriction` | kubelet’ning boshqa node’lar obyektlarini o’zgartirishiga yo’l qo’ymaydi - kubeadm’da sukut bo’yicha yoqilgan |
 | `NamespaceAutoProvision` | hali mavjud bo’lmagan namespace’ni rad etish o’rniga yaratadi (sukut bo’yicha o’chiq) |
-| `AlwaysPullImages` | `imagePullPolicy: Always`ni majburlaydi |
+| `AlwaysPullImages` | `imagePullPolicy: Always`’ni majburlaydi |
 | `MutatingAdmissionWebhook` / `ValidatingAdmissionWebhook` | o’zingizning webhook’laringizga murojaat qiladi - keyingi dars |
 
 ```bash
@@ -103,7 +103,7 @@ bo’lmasin" degan talabga zamonaviy javob.
 
 1. So’rov quvurida admission avtorizatsiyadan oldin ishlaydimi yoki keyin va
    nega bu tartib muhim?
-2. `NamespaceAutoProvision`ni qanday yoqasiz va buni qilayotganingizda
+2. `NamespaceAutoProvision`’ni qanday yoqasiz va buni qilayotganingizda
    kubectl’ga nima bo’ladi?
 3. Sukut klasterda `kubectl run x --image=nginx -n doesnotexist` ishlamaydi.
    Uni qaysi plugin rad etdi?

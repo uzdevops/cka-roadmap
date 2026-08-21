@@ -29,7 +29,7 @@ sudo usermod -aG libvirt,kvm "$USER"       # virsh'ni sudo'siz ishlatish uchun c
 virt-host-validate                          # yuqoridagi hammasini tekshiradi va yetishmayotganini aytadi
 ```
 
-Agar `/proc/cpuinfo` da `vmx`/`svm` ko’rinmasa, virtualizatsiya BIOS/UEFI’da
+Agar `/proc/cpuinfo`’da `vmx`/`svm` ko’rinmasa, virtualizatsiya BIOS/UEFI’da
 o’chirilgan yoki siz allaqachon ichma-ich virtualizatsiyasiz VM ichidasiz.
 
 ## virsh: lug’at

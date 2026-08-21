@@ -37,7 +37,7 @@ klassik tasodifiy world-export.
 | `rw` / `ro` | yozish mumkin / faqat o’qish |
 | `sync` | ma’lumot diskka tushgandan keyingina javob beradi (xavfsiz; sukut bo’yicha) |
 | `async` | erta javob beradi - tezroq, crash paytida ma’lumot yo’qotish xavfi bor |
-| `root_squash` | **sukut bo’yicha**: masofadagi root `nobody` ga o’tkaziladi |
+| `root_squash` | **sukut bo’yicha**: masofadagi root `nobody`’ga o’tkaziladi |
 | `no_root_squash` | masofadagi root bu yerda **root bo’ladi** - xavfli, faqat aniq admin hostlar uchun ishlating |
 | `all_squash` | har bir masofadagi foydalanuvchi `nobody` bo’ladi - ochiq, faqat o’qish uchun share’larga yaxshi |
 | `anonuid=`/`anongid=` | squash qilingan foydalanuvchilar qaysi lokal identifikatsiyani oladi |
@@ -91,7 +91,7 @@ qo’yishiga yo’l qo’ymaydi.
 | Klient option’i | Ta’siri |
 |---|---|
 | `hard` (sukut bo’yicha) | server yo’qolsa **abadiy** qayta urinadi - jarayonlar `D` holatida osilib qoladi, lekin ma’lumot yo’qolmaydi |
-| `soft` | `timeo`×`retrans` dan keyin voz kechadi - osilish o’rniga I/O xatolari; yozishda ma’lumot yo’qotish xavfi bor |
+| `soft` | `timeo`×`retrans`’dan keyin voz kechadi - osilish o’rniga I/O xatolari; yozishda ma’lumot yo’qotish xavfi bor |
 | `intr` | (eskirgan) signallar uzishiga ruxsat beradi; zamonaviy kernel’lar buni o’zi hal qiladi |
 | `timeo=`, `retrans=` | har bir urinishga soniyaning o’ndan bir ulushlari, va nechta urinish bo’lishi |
 | `rsize=`/`wsize=` | uzatish o’lchamlari; tuning qilmasangiz, kelishuvga qoldiring |
@@ -133,7 +133,7 @@ findmnt -t nfs4
 
 | Belgi | Sababi |
 |---|---|
-| `access denied by server` | klient `/etc/exports` da yo’q, yoki `exportfs -ra` ishga tushirilmagan |
+| `access denied by server` | klient `/etc/exports`’da yo’q, yoki `exportfs -ra` ishga tushirilmagan |
 | yozishda `Permission denied` | `ro` bilan export qilingan, yoki Unix ruxsatlari, yoki `root_squash` va siz root’siz |
 | `No route to host` / timeout | firewall (2049), yoki server o’chgan |
 | `mount: wrong fs type` | klientda `nfs-common`/`nfs-utils` o’rnatilmagan |
@@ -154,8 +154,8 @@ Ikkala yarmi ham so’ralishi mumkin: berilgan option’lar bilan directory’ni
 export qilish (`/etc/exports` + `exportfs -arv` + firewall, `showmount -e
 localhost` bilan tekshiriladi) va uni klientda doimiy qilib mount qilish
 (fstab’da `_netdev`, `mount -a`, `df -h` bilan tekshiriladi).
-`/etc/exports` dagi bo’sh joy yo’q qoidasiga e’tibor bering va har bir
-tahrirdan keyin `exportfs -arv` ni unutmang.
+`/etc/exports`’dagi bo’sh joy yo’q qoidasiga e’tibor bering va har bir
+tahrirdan keyin `exportfs -arv`’ni unutmang.
 :::
 
 ## O’zingizni tekshiring

@@ -77,7 +77,7 @@ klaster node’larida image qurish baribir anti-pattern - bu CI’ning ishi.
 
 ## Bu administrator uchun nega muhim
 
-- **Klaster o’rnatishda**: kubeadm’ga `kubeadm init` dan oldin CRI runtime
+- **Klaster o’rnatishda**: kubeadm’ga `kubeadm init`’dan oldin CRI runtime
   mavjud bo’lishi kerak - containerd’ni o’rnatish va sozlash bu yo’l
   xaritasidagi keyingi o’rnatish darsining birinchi qadami.
 - **Node nosozligini topishda**: konteyner runtime’i o’lgan `NotReady` node

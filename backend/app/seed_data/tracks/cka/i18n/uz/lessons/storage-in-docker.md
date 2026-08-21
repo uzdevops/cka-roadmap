@@ -6,8 +6,8 @@ ls /var/lib/docker
 ```
 
 Docker saqlaydigan hamma narsa `/var/lib/docker` ostida yotadi: image
-qatlamlari `image/` va `overlay2/` da, konteynerning yoziladigan qatlami
-`containers/` da, nomlangan volume’lar `volumes/` da. containerd ishlaydigan
+qatlamlari `image/` va `overlay2/`’da, konteynerning yoziladigan qatlami
+`containers/`’da, nomlangan volume’lar `volumes/`’da. containerd ishlaydigan
 Kubernetes node’larida ularning ekvivalenti `/var/lib/containerd` va
 `/run/containerd` ostida; tushunchalar bir xil va keyingi CSI darslari shular
 ustiga quriladi.
@@ -102,7 +102,7 @@ Docker hayrati; keyingi darslar - undan chiqish yo’llari.
 
 ## O’zingizni tekshiring
 
-1. Konteyner o’chirilganda uning ichida `/var/log/app.log` ga yozilgan faylga
+1. Konteyner o’chirilganda uning ichida `/var/log/app.log`’ga yozilgan faylga
    nima bo’ladi - va nega?
 2. Volume mount va bind mount orasidagi farq nima?
 3. Ikkita image ham `FROM ubuntu` bilan boshlanadi. Diskda Ubuntu qatlamining

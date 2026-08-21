@@ -28,9 +28,9 @@ virt-viewer lab01                # desktop'ingiz bo'lsa
 # masofadan: ssh -L 5900:127.0.0.1:5900 host   keyin VNC klientini localhost:5900 ga qarating
 ```
 
-Serial konsol orqali faqat matnli o’rnatish uchun `--location` ni
+Serial konsol orqali faqat matnli o’rnatish uchun `--location`’ni
 `--extra-args 'console=ttyS0,115200n8'` bilan (oldingi dars) va
-`virsh console lab01` ni ishlating.
+`virsh console lab01`’ni ishlating.
 
 ## O’rnatuvchi bo’ylab yurish
 

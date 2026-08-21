@@ -61,8 +61,8 @@ kubectl logs app -c wait-for-db --previous  # ishlamay qolgan urinish
 ```
 
 :::exam-tip
-`Init:...` da qotib qolgan Pod - init konteyner muammosi, ilova konteyneriga
-aloqasi yo’q - va `-c` siz ishlatilgan `kubectl logs <pod>` sizga init
+`Init:...`’da qotib qolgan Pod - init konteyner muammosi, ilova konteyneriga
+aloqasi yo’q - va `-c`’siz ishlatilgan `kubectl logs <pod>` sizga init
 konteynerni **ko’rsatmaydi** (u hali ishga tushmagan ilovani ko’rsatishga
 urinadi va xato beradi). Yechim har doim `kubectl logs <pod> -c <init-name>`
 va o’n holatning to’qqiztasida sabab - init buyrug’idagi xato: `sleeeep`,

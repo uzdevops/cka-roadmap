@@ -64,7 +64,7 @@ $[?(@ > 40)]                                           →  raqamlar ro'yxatida:
 
 `?()` filtrni boshlaydi; uning ichida `@` - "tekshirilayotgan element"
 degani. Operatorlar: `==`, `!=`, `>`, `<`, `>=`, `<=`, ba’zi
-implementatsiyalarda `in`/`nin` ham bor. `[?(@.location == "rear-right")]` ni
+implementatsiyalarda `in`/`nin` ham bor. `[?(@.location == "rear-right")]`’ni
 "location’i rear-right bo’lgan elementlar" deb o’qing.
 
 ## Wildcard’lar va birikmalar

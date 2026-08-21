@@ -47,6 +47,13 @@ That pair is the house style. Match it.
    fences and inline code, keep whatever the English has (ASCII).
    Correct: `bo’ladi`, `o’qing`, `yo’q`, `Pod’lar`.
 
+4b. **A suffix after an inline code span attaches with `’`**:
+   `` `man`’dan ``, `` `kubectl get pods`’ni ``, `` `/mnt/data`’ga `` - never
+   `` `man` dan `` (a detached suffix is as wrong here as in plain prose) and
+   never `` `man`dan `` (the apostrophe is what marks the boundary). If the
+   span would end a wrapped line, move the span down so it stays with its
+   suffix.
+
 5. **Technical nouns stay English** and inflect with `’`:
    `Pod’ni`, `Service’lar`, `node’da`, `namespace’ga`, `Deployment’ning`,
    `kubelet’ni`, `ConfigMap’dan`, `label’lar`, `image’i`.

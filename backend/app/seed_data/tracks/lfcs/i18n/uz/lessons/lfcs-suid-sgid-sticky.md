@@ -1,7 +1,7 @@
 ## rwx dan tashqari uchta bit
 
 To’rtinchi octal raqam. Har bir bit fayllarda bir narsani,
-directory’larda boshqa narsani anglatadi va ulardan ikkitasi `ls -l` da
+directory’larda boshqa narsani anglatadi va ulardan ikkitasi `ls -l`’da
 `x` turishi kerak bo’lgan joyda `s` yoki `t` sifatida ko’rinadi.
 
 | Bit | Octal | Bajariladigan faylda | Directory’da |
@@ -54,7 +54,7 @@ touch /srv/project/a; ls -l /srv/project/a
 ```
 
 SGID’siz alice yaratgan fayl alice’ning asosiy guruhini oladi va bob unga
-yoza olmaydi. SGID bilan har bir fayl `devs` ni oladi va (umask `002`
+yoza olmaydi. SGID bilan har bir fayl `devs`’ni oladi va (umask `002`
 bo’lganda) guruh bir-birining ishini tahrirlay oladi. Bu - "guruh
 birgalikda foydalanadigan directory" so’roviga **standart javob**.
 
@@ -96,11 +96,11 @@ Simvolik: `u+s`, `g+s`, `+t`; olib tashlash uchun `u-s`, `g-s`, `-t`.
 
 :::exam-tip
 "X guruhi birgalikda foydalanadigan, ichida yaratilgan fayllar X ga
-tegishli bo’ladigan directory yarating" → `chgrp X` dan keyin `chmod 2770`
+tegishli bo’ladigan directory yarating" → `chgrp X`’dan keyin `chmod 2770`
 (yoki `2775`); fayl yaratib, uning guruhini o’qib tekshiring. "User’lar
 yarata olsin, lekin faqat o’zinikini o’chira olsin" → `chmod 1777`.
 "Barcha SUID fayllarni topib, ro’yxatini saqlang" →
-`find / -perm -4000 -type f > file`. Tekshiruvingiz - `ls -l` dagi `s`/`t`.
+`find / -perm -4000 -type f > file`. Tekshiruvingiz - `ls -l`’dagi `s`/`t`.
 :::
 
 ## O’zingizni tekshiring

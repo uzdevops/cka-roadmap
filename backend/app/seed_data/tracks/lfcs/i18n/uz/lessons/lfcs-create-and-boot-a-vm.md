@@ -31,7 +31,7 @@ sudo virt-install \
 | `--import` | o’rnatmaydi: mavjud disk image’ini boot qiladi |
 | `--noautoconsole` | konsolni darhol ulamaydi |
 
-`--os-variant` ni to’g’ri berishga arziydi: u virtio drayverlari va sukut
+`--os-variant`’ni to’g’ri berishga arziydi: u virtio drayverlari va sukut
 qiymatlarni hal qiladi, noto’g’ri qiymat esa unumdorlikka tushadi.
 
 ## Tez yo’l: cloud image
@@ -129,7 +129,7 @@ chalkashtiradi.
 
 :::exam-tip
 LFCS sizdan VM yaratib, boot qilishni so’raydi, libvirt’ni mukammal
-bilishni emas. `virt-install` ni `--name --memory --vcpus --disk --os-variant
+bilishni emas. `virt-install`’ni `--name --memory --vcpus --disk --os-variant
 --network` bilan biling, `virsh start/shutdown/list --all/autostart/console`
 ni biling va `--import` mavjud image’ni boot qilishini, `--cdrom`/`--location`
 esa yangisini o’rnatishini biling.
@@ -137,7 +137,7 @@ esa yangisini o’rnatishini biling.
 
 ## O’zingizni tekshiring
 
-1. `virt-install` da `--import`, `--cdrom` va `--location` ning har biri
+1. `virt-install`’da `--import`, `--cdrom` va `--location`’ning har biri
    nima qiladi?
 2. VM’ning IP manzilini host’dan qanday qilib ikki xil yo’l bilan
    topasiz?

@@ -40,7 +40,7 @@ kubectl get svc -A | head           # kubernetes, kube-dns va sizniki - hammasi 
 ```
 
 :::note
-Oraliqdagi birinchi manzil, `10.96.0.1`, doim `default` dagi `kubernetes`
+Oraliqdagi birinchi manzil, `10.96.0.1`, doim `default`’dagi `kubernetes`
 Service’i bo’ladi: API server’ning o’zi, Pod’larga ClusterIP sifatida
 ochilgan. `kube-dns` Service’i esa an’anaviy ravishda `10.96.0.10`.
 :::
@@ -99,7 +99,7 @@ nomini oladi (`db-0.db.payroll.svc.cluster.local`). Agar topshiriqda
 
 ## Selector’siz
 
-`selector` ni yozmasangiz, endpoint’lar avtomatik yaratilmaydi - siz
+`selector`’ni yozmasangiz, endpoint’lar avtomatik yaratilmaydi - siz
 EndpointSlice’ni (yoki eski Endpoints’ni) o’zingiz yaratasiz va uni xohlagan
 IP’laringizga qaratasiz. Klaster tashqi ma’lumotlar bazasi uchun barqaror
 ichki nomni ana shunday oladi:
@@ -133,6 +133,6 @@ hollarning 99 % ida to’g’ri bo’ladi. Noto’g’ri bo’lganda - topshiriq
 
 1. Nega ClusterIP’ga ping qila olmaysiz va bu "Service" aslida qayerda
    mavjudligi haqida nima deydi?
-2. `default` dagi Pod’dan `payroll` namespace’idagi `api` Service’iga yetadigan
+2. `default`’dagi Pod’dan `payroll` namespace’idagi `api` Service’iga yetadigan
    eng qisqa nom qanday?
 3. `clusterIP: None` nimani o’zgartiradi va qaysi workload unga tayanadi?

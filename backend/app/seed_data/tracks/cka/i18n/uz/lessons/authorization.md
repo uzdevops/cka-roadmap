@@ -67,7 +67,7 @@ yozing va uni bog’lang. `403 Forbidden` = avtorizatsiya yo’q dedi;
 Forbidden xabarini *so’zma-so’z* o’qing va uni Role’ga ko’chiring: resurs
 `pods` → `resources: ["pods"]`; API guruh `""` → `apiGroups: [""]`; verb
 `list` → `verbs: ["list"]`; namespace `dev` → Role ham, RoleBinding ham
-`dev`da bo’ladi. Keyin tasdiqlash uchun `auth can-i`. To’qson soniya.
+`dev`’da bo’ladi. Keyin tasdiqlash uchun `auth can-i`. To’qson soniya.
 :::
 
 ## Node authorizer, qisqacha

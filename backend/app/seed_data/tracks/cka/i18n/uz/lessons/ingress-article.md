@@ -1,7 +1,7 @@
 ## API ko’chdi; eski misollar esa qolib ketdi
 
-Ingress yillar davomida `extensions/v1beta1` da, so’ng
-`networking.k8s.io/v1beta1` da turdi va internetdagi misollarning aksariyati
+Ingress yillar davomida `extensions/v1beta1`’da, so’ng
+`networking.k8s.io/v1beta1`’da turdi va internetdagi misollarning aksariyati
 o’sha paytda yozilgan. Kubernetes 1.19 dan beri xizmat ko’rsatiladigan yagona
 versiya - **`networking.k8s.io/v1`** va uning shakli o’zgargan. Bu eslatma -
 o’sha o’tkazish jadvali: ko’chirib olingan manifest
@@ -46,7 +46,7 @@ kubectl explain ingress.spec.rules.http.paths.backend --recursive            # v
 | `Prefix` | `/wear`, `/wear/`, `/wear/anything` - `/` bo’yicha bo’linadi, shuning uchun `/wearable` **emas** |
 | `ImplementationSpecific` | kontroller nimani qaror qilsa (nginx: Prefix kabi, annotatsiya so’rasa regex ham) |
 
-Deyarli har doim sizga `Prefix` kerak bo’ladi. `pathType` ni unutish - v1 da
+Deyarli har doim sizga `Prefix` kerak bo’ladi. `pathType`’ni unutish - v1 da
 eng ko’p uchraydigan xato:
 `spec.rules[0].http.paths[0].pathType: Required value`.
 
@@ -71,13 +71,13 @@ spec:
 kubectl get ingressclass
 ```
 
-**Hech qanday** `ingressClassName` ga ega bo’lmagan va sukut bo’yicha klassi
+**Hech qanday** `ingressClassName`’ga ega bo’lmagan va sukut bo’yicha klassi
 ham **yo’q** Ingress’ni hech kim qayta ishlamaydi. Kontroller "hech narsa
 qilmayotganda" tekshiriladigan narsa ana shu.
 
 :::exam-tip
-Imtihon klasterlari zamonaviy: `networking.k8s.io/v1` deb yozing, `pathType`
-ni qo’shing, `ingressClassName` dan foydalaning. `kubectl create ingress`
+Imtihon klasterlari zamonaviy: `networking.k8s.io/v1` deb yozing,
+`pathType`’ni qo’shing, `ingressClassName`’dan foydalaning. `kubectl create ingress`
 uchalasini ham siz uchun bajaradi - bu yozish o’rniga generatsiya qilishning
 yana bir sababi.
 :::
@@ -99,7 +99,7 @@ yo’li.
 
 ## O’zingizni tekshiring
 
-1. `backend: {serviceName: api, servicePort: 80}` ni v1 shaklida qayta yozing.
+1. `backend: {serviceName: api, servicePort: 80}`’ni v1 shaklida qayta yozing.
 2. v1 da qaysi maydon majburiy bo’ldi va uning uchta qiymati qanday?
 3. Ingress’da `ingressClassName` yo’q va klasterda sukut bo’yicha IngressClass
    ham yo’q. Nima bo’ladi?

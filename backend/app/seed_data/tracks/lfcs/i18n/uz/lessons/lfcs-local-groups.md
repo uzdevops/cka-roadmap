@@ -131,5 +131,5 @@ etadi, a’zolik esa kuchga kirishi uchun yangi login talab qiladi.
    qayerda qayd etiladi?
 2. User endigina guruhga qo’shildi, lekin baribir "permission denied"
    olyapti. Nega va ikkita yechim qanday?
-3. `/srv/team` ni `team` guruhi uchun umumiy directory qiladigan va yangi
+3. `/srv/team`’ni `team` guruhi uchun umumiy directory qiladigan va yangi
    fayllar guruh egaligi `team` bo’lib qoladigan buyruqlarni yozing.

@@ -61,7 +61,7 @@ bilan ACL’lar.
 
 Ko’pchilik topshiriq - ikki-uchta buyruq va bitta tekshiruv, maqsadlar
 ro’yxatidagidek ifodalangan: "`vg0` volume group’ida `data` nomli 2 GiB
-logical volume yarating, uni ext4 formatlang va `/mnt/data` ga doimiy
+logical volume yarating, uni ext4 formatlang va `/mnt/data`’ga doimiy
 qilib mount qiling." Har bir kalit so’z - alohida qadam va nosozlik nuqtasi.
 13-haftadagi mock’lar aynan shu ohangda yozilgan, toki bu til begona
 tuyulmay qolsin.

@@ -60,7 +60,7 @@ Control plane node’da, yangi kubeadm o’rnatilgan holda:
 
 1. klaster sog’ligini va versiya sakrashi qonuniyligini tekshiradi;
 2. yangi control plane image’larini tortib oladi;
-3. `/etc/kubernetes/manifests` dagi static Pod manifestlarini bittalab qayta
+3. `/etc/kubernetes/manifests`’dagi static Pod manifestlarini bittalab qayta
    yozadi va har biri sog’lom holda qaytishini kutadi (ularni kubelet qayta
    ishga tushiradi);
 4. kube-proxy DaemonSet’ini va CoreDNS’ni yangilaydi;
@@ -104,10 +104,10 @@ VERSION ustuni - kubelet versiyasi.
 
 | Belgi | Sababi |
 |---|---|
-| `kubeadm=1.30.2-*` topilmadi | paket repozitoriysi hali ham `/v1.29/` ga qaraydi |
+| `kubeadm=1.30.2-*` topilmadi | paket repozitoriysi hali ham `/v1.29/`’ga qaraydi |
 | `upgrade apply` rad etadi: "skipping phase ... pre-flight" | control plane sog’lom emas - avval shuni yoki u nomlagan aniq tekshiruvni tuzating |
 | yangilashdan keyin node eski versiyani ko’rsatadi | kubelet yangilanmagan yoki qayta ishga tushirilmagan |
-| drain paytida Pod qotib qoldi | PDB yoki `--force` siz boshqarilmaydigan Pod |
+| drain paytida Pod qotib qoldi | PDB yoki `--force`’siz boshqarilmaydigan Pod |
 
 ## O’zingizni tekshiring
 
@@ -115,5 +115,5 @@ VERSION ustuni - kubelet versiyasi.
    node’da bajarilishini ayting.
 2. `kubeadm upgrade apply` nimani o’zgartiradi va nimani sizga qo’lda qilish
    uchun qoldiradi?
-3. Barcha buyruqlarni bajarganingizdan keyin ham `kubectl get nodes` da worker
+3. Barcha buyruqlarni bajarganingizdan keyin ham `kubectl get nodes`’da worker
    eski versiyani ko’rsatyapti. Ehtimol nimani o’tkazib yubordingiz?

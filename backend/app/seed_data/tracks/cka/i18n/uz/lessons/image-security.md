@@ -18,8 +18,8 @@ image: docker.io/library/nginx:latest
 | user / tashkilot | `library` (Docker’ning rasmiy image’lari) |
 | tag | `latest` |
 
-Demak, `nginx` `docker.io/library/nginx:latest`ni tortadi;
-`kodekloud/webapp-color` `docker.io/kodekloud/webapp-color:latest`ni tortadi;
+Demak, `nginx` `docker.io/library/nginx:latest`’ni tortadi;
+`kodekloud/webapp-color` `docker.io/kodekloud/webapp-color:latest`’ni tortadi;
 `registry.k8s.io/kube-apiserver:v1.30.2` esa to’liq yozilgan. Yopiq registry -
 shunchaki birinchi bo’lagi boshqa: `myregistry.io:5000/apps/web:1.4`.
 
@@ -104,7 +104,7 @@ CKA tortish bilan tugaydi; CKS undan uzoqroq boradi, lekin umumiy manzara bir
 abzatsga arziydi:
 
 - **Digest’ni qat’iy belgilang**, shunda image tag ostida o’zgarib ketmaydi.
-- Admission siyosati bilan **registry’larni cheklang** (`myregistry.io`dan
+- Admission siyosati bilan **registry’larni cheklang** (`myregistry.io`’dan
   kelmagan image’larni rad etadigan validating webhook yoki
   `ValidatingAdmissionPolicy`).
 - CI’da **image’larni skanerlang**; ularni **imzolang** va imzolarni
@@ -114,7 +114,7 @@ abzatsga arziydi:
 
 ## O’zingizni tekshiring
 
-1. `kodekloud/webapp-color`ni to’liq yozilgan shakliga yoying.
+1. `kodekloud/webapp-color`’ni to’liq yozilgan shakliga yoying.
 2. Registry hisob ma’lumotlarini qaysi turdagi Secret saqlaydi va Pod
    spec’ining qayerida unga murojaat qilinadi?
 3. `unauthorized` bilan kelgan `ErrImagePull` - qaysi ikki narsani

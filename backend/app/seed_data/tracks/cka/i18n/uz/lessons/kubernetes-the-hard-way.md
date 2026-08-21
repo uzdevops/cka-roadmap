@@ -21,7 +21,7 @@ kubeadm yashiradigan har bir narsa - imtihon buza oladigan narsa:
 |---|---|
 | CA va har bir komponent sertifikatini `cfssl`/`openssl` bilan, CN va O’ni belgilab generatsiya qilish | nega `CN=system:node:node01, O=system:nodes`; sertifikatni o’qib, u kimga tegishliligini aniqlash |
 | `kubelet.kubeconfig`, `kube-proxy.kubeconfig`, `admin.kubeconfig` fayllarini yozish | kubeconfig nimalardan tuzilgani; buzilganini tuzatish |
-| `kube-apiserver`ni 30 ta flag bilan systemd unit sifatida ishga tushirish | har bir `--etcd-*`, `--client-ca-file`, `--service-cluster-ip-range` flagi nima qilishi va xato yozuv nima qilishi |
+| `kube-apiserver`’ni 30 ta flag bilan systemd unit sifatida ishga tushirish | har bir `--etcd-*`, `--client-ca-file`, `--service-cluster-ip-range` flagi nima qilishi va xato yozuv nima qilishi |
 | etcd’ni `--initial-cluster`, peer va client sertifikatlari bilan sozlash | etcd’ning ikkita porti, ikkita CA’si va backup buyrug’ining flaglari |
 | node’lar orasida Pod CIDR’lari uchun statik route’lar yozish | CNI plugini aslida siz uchun nima qilayotgani |
 | CoreDNS’ni manifestdan deploy qilish | Corefile va kube-dns Service’i |
@@ -37,7 +37,7 @@ marta o’z qo’li bilan yozgan odam nosozlikni bir necha soniyada ko’radi.
 | KTHW | kubeadm |
 |---|---|
 | control plane systemd xizmatlari sifatida | control plane kubelet ostidagi static Pod’lar sifatida |
-| sertifikatlar `/var/lib/kubernetes` da | sertifikatlar `/etc/kubernetes/pki` da |
+| sertifikatlar `/var/lib/kubernetes`’da | sertifikatlar `/etc/kubernetes/pki`’da |
 | route’lar qo’lda | CNI plugini |
 | yangilash yo’li yo’q | `kubeadm upgrade` |
 

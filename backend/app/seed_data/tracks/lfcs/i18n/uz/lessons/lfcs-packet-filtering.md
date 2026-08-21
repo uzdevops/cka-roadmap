@@ -176,5 +176,5 @@ bilan tekshiring.
    qilishingiz kerak?
 2. firewalld’da runtime va permanent o’zgarish orasidagi farq nima va
    qaysi ikki buyruq ularni bir-biriga bog’laydi?
-3. Nega nftables input chain’i `ct state established,related`ni erta
+3. Nega nftables input chain’i `ct state established,related`’ni erta
    qabul qilishi kerak?

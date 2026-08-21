@@ -47,8 +47,8 @@ grep server /etc/kubernetes/kubelet.conf
 
 :::exam-tip
 Worker node’dagi nosozlikni bartaraf etish topshiriqlari deyarli har doim
-o’sha fayllarning biriga borib taqaladi. `kubelet.conf`dagi noto’g’ri
-`server:` porti, `config.yaml`dagi noto’g’ri CA yo’li yoki shunchaki
+o’sha fayllarning biriga borib taqaladi. `kubelet.conf`’dagi noto’g’ri
+`server:` porti, `config.yaml`’dagi noto’g’ri CA yo’li yoki shunchaki
 to’xtatilgan kubelet - uchala holatda ham alomat bir xil: `NotReady` node.
 `journalctl -u kubelet` esa ularni bitta ekranda ajratib beradi.
 :::

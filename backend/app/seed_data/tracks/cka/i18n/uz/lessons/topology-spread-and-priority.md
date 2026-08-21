@@ -89,7 +89,7 @@ spec:
 ```
 
 Buni shunday o’qing: `app=web` label’i bor Pod’lar orasida bitta zonadagi soni
-boshqa istalgan zonadagi sondan `maxSkew` dan ortiq oshib ketmasligi kerak.
+boshqa istalgan zonadagi sondan `maxSkew`’dan ortiq oshib ketmasligi kerak.
 `DoNotSchedule` bilan bu - qat’iy qoida (Pod’lar uni buzgandan ko’ra Pending
 bo’lib turadi); `ScheduleAnyway` bilan esa bu - afzallik. Kalit sifatida
 `kubernetes.io/hostname` zonalar o’rniga node’lar bo’ylab tarqatadi.

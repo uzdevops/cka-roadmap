@@ -97,7 +97,7 @@ kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedul
 | `join` ishlamaydi: token yaroqsiz | muddati tugagan (24 soat) - `kubeadm token create --print-join-command` |
 | `join` ishlamaydi: `/etc/kubernetes/kubelet.conf already exists` | oldingi urinishdan qolgan eski holat - worker’da `kubeadm reset -f`, so’ng join |
 | control plane’da `kubectl`: `connection refused localhost:8080` | `admin.conf` nusxasini olishni o’tkazib yubordingiz |
-| `kubectl get nodes -o wide` NAT IP 10.0.2.15 ni ko’rsatadi | `/etc/default/kubelet` da `KUBELET_EXTRA_ARGS=--node-ip=<private ip>` ni belgilang, kubelet’ni qayta ishga tushiring |
+| `kubectl get nodes -o wide` NAT IP 10.0.2.15 ni ko’rsatadi | `/etc/default/kubelet`’da `KUBELET_EXTRA_ARGS=--node-ip=<private ip>`’ni belgilang, kubelet’ni qayta ishga tushiring |
 
 :::exam-tip
 O’rnatish vazifasi `kubectl get nodes` har bir node’ni so’ralgan versiyada

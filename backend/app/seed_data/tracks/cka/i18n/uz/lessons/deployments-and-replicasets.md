@@ -62,7 +62,7 @@ spec:
 ```
 
 :::warning
-Deployment mavjud bo’lgandan keyin `spec.selector`ni o’zgartirib bo’lmaydi.
+Deployment mavjud bo’lgandan keyin `spec.selector`’ni o’zgartirib bo’lmaydi.
 Agar topshiriqda boshqa selector label’lari talab qilinsa, o’chirib qayta
 yarating. `kubectl edit` urinishi `field is immutable` qaytaradi.
 :::
@@ -87,7 +87,7 @@ kubectl rollout undo deployment/web --to-revision=2
 kubectl rollout restart deployment/web       # Pod'larni qayta yaratadi, shablon o'sha
 ```
 
-`kubectl rollout restart`ni alohida eslab qolishga arziydi: u image’ni
+`kubectl rollout restart`’ni alohida eslab qolishga arziydi: u image’ni
 o’zgartirmasdan yangi Pod’larni majburan yaratadi - environment variable
 sifatida ulangan ConfigMap yoki Secret o’zgarganda uni shu yo’l bilan olasiz.
 

@@ -251,7 +251,7 @@ sudo crictl logs <container-id>
 
 :::note
 Ba’zi klasterlarda sakkizinchi quti ham bor: **cloud-controller-manager**. U
-ixtiyoriy va bare metal, `kind` hamda `minikube`da mavjud emas. U bulutga xos
+ixtiyoriy va bare metal, `kind` hamda `minikube`’da mavjud emas. U bulutga xos
 mantiqni ajratadi: `type: LoadBalancer` Service’lari uchun load balancer
 yaratish, bulut disklarini ulash, node’larni region va zona bilan belgilash.
 Lokalda uning yo’qligi sababli `type: LoadBalancer` Service’ining tashqi IP’si
@@ -281,7 +281,7 @@ kube-proxy, konteynerlaringiz) ishlashda davom etadi; control plane shunchaki
 yangi qaror qabul qila olmaydi yoki o’zgarishlarni qabul qila olmaydi.
 :::
 
-## `kubectl apply` ning yo’li
+## `kubectl apply`’ning yo’li
 
 Buni boshdan-oxir kuzating - buni yodlashga arziydi, chunki nosozlik
 aniqlashning yarmi qaysi bosqichni tekshirish kerakligini bilishdir.

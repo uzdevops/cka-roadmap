@@ -52,14 +52,14 @@ Policy’larning xatti-harakatini belgilaydigan qoida: **biror policy Pod’ni
 bir yo’nalish uchun tanlashi bilanoq, o’sha Pod uchun o’sha yo’nalish sukut
 bo’yicha taqiqlanadi va uni faqat sanab o’tilgan qoidalar ochadi.**
 Policy’dan oldin `role: db` Pod’lari hamma narsani qabul qilardi; undan keyin
-esa faqat `role: api` dan TCP 3306 ni qabul qiladi va faqat `role: backup` ga
+esa faqat `role: api`’dan TCP 3306 ni qabul qiladi va faqat `role: backup`’ga
 80 portda yubora oladi. Hech bir policy tanlamagan Pod’lar tegilmagan
 qoladi - hamon to’la ochiq.
 
 Yo’nalishni hisobga oladigan narsa - `policyTypes`. `policyTypes:
 [Ingress]` va `egress:` bloki bor policy egress blokini e’tiborsiz qoldiradi;
 `policyTypes: [Ingress, Egress]` bor va hech qanday `egress:` qoidasi yo’q
-policy **barcha** egress’ni rad etadi. `policyTypes`ni tushirib
+policy **barcha** egress’ni rad etadi. `policyTypes`’ni tushirib
 qoldirsangiz, u sukut bo’yicha Ingress bo’ladi, agar `egress` bloki mavjud
 bo’lsa, ustiga Egress ham.
 
@@ -72,8 +72,8 @@ narsaga shunchaki ruxsat bermaysiz.
 
 ## Javoblar bilan muammo yo’q
 
-Policy’lar yangi ulanishlar haqida. Agar `db` ga 3306 portda `api` dan
-ingress ruxsat etilgan bo’lsa, javoblar `db` da egress qoidasisiz qaytib
+Policy’lar yangi ulanishlar haqida. Agar `db`’ga 3306 portda `api`’dan
+ingress ruxsat etilgan bo’lsa, javoblar `db`’da egress qoidasisiz qaytib
 oqadi - CNI ulanishni kuzatib turadi. Egress qoidasi faqat `db` ulanishni
 *o’zi boshlaganda* kerak bo’ladi.
 
@@ -152,7 +152,7 @@ va selektorlaringizning VA/YOKI mantiqi ravshan bo’ladi.
 
 ## O’zingizni tekshiring
 
-1. `role: db` ni tanlaydigan va faqat ingress qoidasi bor policy
+1. `role: db`’ni tanlaydigan va faqat ingress qoidasi bor policy
    yaratganingizdan keyin db ning chiquvchi ulanishlariga nima bo’ladi?
 2. "env=prod label’li namespace’lardagi api Pod’lar" uchun - VA sifatida -
    `from` blokini yozing, va "api Pod’lar YOKI env=prod namespace’laridagi

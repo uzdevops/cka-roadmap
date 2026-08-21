@@ -100,8 +100,8 @@ egalladi va har qanday holatni uddalaydi. `patches:` deb yozing.
 Agar topshiriq sizga patch **fayli**ni bersa, uni `- path:` bilan ulang (JSON
 6902 bo’lsa, ustiga `target:`). Agar o’zgarish jumla bilan tasvirlangan
 bo’lsa, inline `patch: |-` eng tez yo’l. Har ikki holatda ham odatdagi xato -
-`patch: |-` ostidagi chekinish: patch tanasi `patch:`ning o’zidan ko’proq
-chekintirilishi kerak, strategic merge tanasi esa `apiVersion:`dan
+`patch: |-` ostidagi chekinish: patch tanasi `patch:`’ning o’zidan ko’proq
+chekintirilishi kerak, strategic merge tanasi esa `apiVersion:`’dan
 boshlanishi shart.
 :::
 

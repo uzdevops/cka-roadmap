@@ -133,17 +133,17 @@ ularni tahrirlab bo’lmaydi.
   boshqa turdagi volume’ga tegishli.
 - U **namespace’ga tegishli**: Pod faqat o’z namespace’idagi ConfigMap’ga
   murojaat qila oladi.
-- `env`/`volumes`da nomlangan ConfigMap yo’q bo’lsa, konteyner bloklanadi:
+- `env`/`volumes`’da nomlangan ConfigMap yo’q bo’lsa, konteyner bloklanadi:
   abadiy `CreateContainerConfigError` / `ContainerCreating`, nomi esa
   `describe pod` hodisalarida ko’rinadi. `optional: true` buni "usiz ishga
   tush"ga o’zgartiradi.
-- Binar ma’lumot `data`ga emas, `binaryData`ga (base64) yoziladi.
+- Binar ma’lumot `data`’ga emas, `binaryData`’ga (base64) yoziladi.
 
 ## O’zingizni tekshiring
 
 1. `app.properties` faylini xuddi shu nomdagi ConfigMap kalitiga
    aylantiradigan `kubectl create configmap` buyrug’ini yozing.
-2. ConfigMap’ni `/etc/app`ga mount qildingiz va image’ning `/etc/app`
+2. ConfigMap’ni `/etc/app`’ga mount qildingiz va image’ning `/etc/app`
    ichidagi o’z fayllari yo’qoldi. Nega, va uning o’rniga bitta faylni nima
    mount qiladi?
 3. Uchta ishlatish shaklidan qaysi biri ConfigMap tahririni Pod’ni qayta

@@ -51,7 +51,7 @@ rm report.txt; cat final.txt        # hamon "draft"
 | Nima qila olmaydi | Nega |
 |---|---|
 | **filesystem’lar** orasida link qilish | inode raqami faqat o’z filesystem’i ichida ma’noga ega; `ln: failed to create hard link ... Invalid cross-device link` |
-| **directory**’ga link qilish | daraxtda tsikllarga yo’l ochardi; faqat `.` va `..` ga ruxsat (ularni kernel yaratadi) |
+| **directory**’ga link qilish | daraxtda tsikllarga yo’l ochardi; faqat `.` va `..`’ga ruxsat (ularni kernel yaratadi) |
 | qaysi nom "asli" ekanini aytish | bunday nom yo’q; hamma nomlar teng |
 
 Soft link’lar (keyingi dars) aynan shu ikki holat uchun mavjud.
@@ -79,7 +79,7 @@ drwxr-xr-x 5 ahmad ahmad 4096 ... projects   <- 5 = . + 3 ta subdirectory'ning .
 ```
 
 :::exam-tip
-"`/etc/app/config` ga `/etc/app/config.bak` nomli hard link yarating" -
+"`/etc/app/config`’ga `/etc/app/config.bak` nomli hard link yarating" -
 bu `ln /etc/app/config /etc/app/config.bak`. `ls -li` bilan tekshiring -
 inode bir xil, link soni 2. Topshiriqdagi ikki yo’l turli
 filesystem’larda bo’lsa (aytaylik, `/boot` va `/home`), hard link imkonsiz
@@ -88,7 +88,7 @@ va javob - symbolic link; topshiriq odatda qaysi biri kerakligini aytadi.
 
 ## O’zingizni tekshiring
 
-1. `ls -l` da ruxsatlardan keyingi raqam nimani anglatadi va u nolga
+1. `ls -l`’da ruxsatlardan keyingi raqam nimani anglatadi va u nolga
    yetganda faylning ma’lumotlariga nima bo’ladi?
 2. Hard link qila olmaydigan ikki narsani ayting.
 3. `/var/app/data.db` bilan bir xil faylga ishora qiluvchi har bir nomni

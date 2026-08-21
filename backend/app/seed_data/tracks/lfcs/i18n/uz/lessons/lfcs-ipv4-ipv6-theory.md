@@ -96,9 +96,9 @@ cat /etc/resolv.conf
 resolvectl status           # systemd-resolved'ning haqiqiy ko'rinishi (resolv.conf stub symlink bo'lishi mumkin)
 ```
 
-Tartib: `/etc/hosts`, keyin `/etc/resolv.conf` dagi DNS serverlar.
+Tartib: `/etc/hosts`, keyin `/etc/resolv.conf`’dagi DNS serverlar.
 systemd-resolved ishlaydigan tizimlarda `/etc/resolv.conf` stub’ga
-(`127.0.0.53`) symlink bo’ladi va haqiqiy serverlar `resolvectl status` da
+(`127.0.0.53`) symlink bo’ladi va haqiqiy serverlar `resolvectl status`’da
 turadi - unda faylni to’g’ridan-to’g’ri tahrirlash befoyda, chunki u qayta
 yaratiladi.
 
@@ -135,7 +135,7 @@ bu marshrutlash yoki NAT; "manzil yo’q" - bu DHCP yoki konfiguratsiya.
 :::exam-tip
 Nazariyani imtihonning amaliy savollariga javob bera oladigan darajada
 biling: `/26` qaysi netmask ekani, gateway berilgan manzildan yetib
-boriladimi va nega `127.0.0.1` dagi servisga masofadan yetib bo’lmaydi.
+boriladimi va nega `127.0.0.1`’dagi servisga masofadan yetib bo’lmaydi.
 Keyingi dars sozlash bilan shug’ullanadi; bu narvon esa har bir
 o’zgarishdan oldin va keyin ishga tushiradigan narsangiz.
 :::
@@ -144,7 +144,7 @@ o’zgarishdan oldin va keyin ishga tushiradigan narsangiz.
 
 1. Host boshqa hostga nom orqali yetib borishi uchun qaysi to’rtta narsa
    bajarilgan bo’lishi kerak?
-2. `/26` da nechta foydalanish mumkin bo’lgan manzil bor va ishlatib
+2. `/26`’da nechta foydalanish mumkin bo’lgan manzil bor va ishlatib
    bo’lmaydigan ikkitasi qaysi?
-3. `8.8.8.8` ga ping ishlaydi, lekin `ping google.com` ishlamaydi. Nima
+3. `8.8.8.8`’ga ping ishlaydi, lekin `ping google.com` ishlamaydi. Nima
    buzilgan?

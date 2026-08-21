@@ -36,7 +36,7 @@ spec:
 
 YAML nuqtai nazaridan har bir qator - qo’shtirnoqli satr (`value: "mortein"`),
 operator esa `Equal` (kalit ham, qiymat ham mos kelishi kerak) yoki `Exists`
-(faqat kalit; `value` ni yozmang). **Kalitsiz va `operator: Exists`** bo’lgan
+(faqat kalit; `value`’ni yozmang). **Kalitsiz va `operator: Exists`** bo’lgan
 toleration hamma narsaga chidaydi - ba’zi DaemonSet’lar har qanday node’da
 shu tarzda ishlaydi.
 

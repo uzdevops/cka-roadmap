@@ -2,7 +2,7 @@
 
 HorizontalPodAutoscaler Deployment’ning (yoki ReplicaSet, StatefulSet)
 Pod’laridagi metrikani kuzatadi va metrikani minimum bilan maksimum orasida
-maqsadga yaqin ushlab turish uchun `spec.replicas`ni yozadi.
+maqsadga yaqin ushlab turish uchun `spec.replicas`’ni yozadi.
 
 ```bash
 kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
@@ -99,7 +99,7 @@ Yukni to’xtating va besh daqiqadan keyin u yana 1 gacha tushib boradi.
 | describe’da `FailedGetResourceMetric` | o’sha ikki sabab, ochiq yozilgani |
 | hech qachon N dan oshmaydi | `maxReplicas`, yoki Deployment ko’proq Pod joylashtira olmaydi (joy yo’q - bu Cluster Autoscaler’ning ishi) |
 | yuqoriga-pastga sakrayveradi | maqsad juda tor, yoki ilovaning CPU’si tepkili - `behavior` oynalarini kengaytiring |
-| har `kubectl apply` da replikalar tiklanadi | Deployment faylingizda `replicas: 1` bor; HPA egalik qilganda `replicas`ni fayldan olib tashlang |
+| har `kubectl apply`’da replikalar tiklanadi | Deployment faylingizda `replicas: 1` bor; HPA egalik qilganda `replicas`’ni fayldan olib tashlang |
 
 :::exam-tip
 `kubectl autoscale deployment X --cpu-percent=50 --min=2 --max=8` - odatiy

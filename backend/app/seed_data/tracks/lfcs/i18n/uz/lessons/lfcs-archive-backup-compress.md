@@ -46,7 +46,7 @@ tar -czf backup.tar.gz /etc/nginx
 # tar: Removing leading `/' from member names
 ```
 
-tar `etc/nginx/...` ni (nisbiy) saqlaydi, shuning uchun chiqarish tasodifan
+tar `etc/nginx/...`’ni (nisbiy) saqlaydi, shuning uchun chiqarish tasodifan
 `/etc` ustiga yoza olmaydi - u joriy directory ostiga tushadi. Joyida
 tiklash uchun:
 
@@ -70,7 +70,7 @@ tar -czf logs.tar.gz $(find /var/log -name '*.log' -mtime -1)
 tar -czf sel.tar.gz -T filelist.txt             # nomlar fayldan
 ```
 
-`--exclude` ni yo’llardan **oldin** qo’ying; pattern’lar - saqlangan
+`--exclude`’ni yo’llardan **oldin** qo’ying; pattern’lar - saqlangan
 (nisbiy) nomlarga solishtiriladigan globlar.
 
 ## Inkremental va snapshot’simon backup’lar
@@ -127,7 +127,7 @@ tekshiring.
 
 1. `-c`, `-x`, `-t` va `-f` nima qiladi va nega guruhlangan bayroqlar
    orasida `-f` oxirgi bo’lishi kerak?
-2. tar nega boshidagi `/` ni kesib tashlaydi va arxivni joyida qanday
+2. tar nega boshidagi `/`’ni kesib tashlaydi va arxivni joyida qanday
    tiklaysiz?
-3. `*.log` ni chiqarib tashlagan holda `/var/www` ni xz bilan siqilgan
+3. `*.log`’ni chiqarib tashlagan holda `/var/www`’ni xz bilan siqilgan
    `/backup/www.tar.xz` sifatida arxivlaydigan buyruqni yozing.

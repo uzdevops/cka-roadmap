@@ -3,8 +3,8 @@
 Har bir node’da CNI’ni chaqiruvchi - **konteyner runtime**’i, ya’ni
 containerd. Kubelet containerd’dan Pod sandbox so’raydi; containerd tarmoq
 namespace’ini yaratadi va uning uchun CNI plugin’ni chaqiradi; plugin IP’ni
-qaytaradi; containerd buni kubelet’ga yetkazadi; kubelet esa `status.podIP`
-ni yozadi.
+qaytaradi; containerd buni kubelet’ga yetkazadi; kubelet esa
+`status.podIP`’ni yozadi.
 
 ```
 kubelet ──CRI──▶ containerd ──CNI (exec)──▶ /opt/cni/bin/<type>  ADD/DEL
@@ -41,17 +41,17 @@ cat /etc/cni/net.d/10-flannel.conflist
 
 `.conflist` - bu **zanjir**: `flannel` interfeys va IP’ni sozlaydi (buni
 node’ning subnet’i bilan `bridge` va `host-local` reference plugin’lariga
-topshiradi), keyin `portmap` `hostPort` ni ishlatadigan iptables qoidalarini
-qo’shadi. `DEL` da zanjir teskari tartibda ishlaydi.
+topshiradi), keyin `portmap` `hostPort`’ni ishlatadigan iptables qoidalarini
+qo’shadi. `DEL`’da zanjir teskari tartibda ishlaydi.
 
 ## CNI DaemonSet’i nima qiladi
 
 Flannel yoki Calico’ni o’rnatish - bu `kubectl apply -f <manifest>`, u
 DaemonSet yaratadi. Har bir node’da uning Pod’i:
 
-1. plugin binary’sini `/opt/cni/bin` ga nusxalaydi (hostPath mount’dan);
-2. config faylni `/etc/cni/net.d` ga yozadi (ConfigMap’dan);
-3. node darajasidagi qismni sozlaydi - `node.spec.podCIDR` ni o’qiydi,
+1. plugin binary’sini `/opt/cni/bin`’ga nusxalaydi (hostPath mount’dan);
+2. config faylni `/etc/cni/net.d`’ga yozadi (ConfigMap’dan);
+3. node darajasidagi qismni sozlaydi - `node.spec.podCIDR`’ni o’qiydi,
    overlay qurilmasini yaratadi yoki marshrutlarni o’rnatadi, BGP agentini
    ishga tushiradi;
 4. node’lar qo’shilib-chiqib turganda marshrutlarni saqlab turadigan agent
@@ -85,7 +85,7 @@ Calico uchun: `kubectl apply -f .../tigera-operator.yaml`, keyin
 `spec.calicoNetwork.ipPools[0].cidr` sizning Pod CIDR’ingizga teng bo’lgan
 `custom-resources.yaml`. Weave uchun:
 `kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml`
-va CIDR’ingiz boshqacha bo’lsa, `IPALLOC_RANGE` ni sozlab qo’ying.
+va CIDR’ingiz boshqacha bo’lsa, `IPALLOC_RANGE`’ni sozlab qo’ying.
 
 :::exam-tip
 O’rnatish topshirig’i node’larning Ready bo’lishi va Pod’larning IP olishi

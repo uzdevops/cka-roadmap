@@ -113,14 +113,14 @@ ps aux --sort=-%mem | head -5 | awk '{print $2, $4, $11}'           # xotira bo'
 Bu sohadagi topshiriqlar "Z dan Y ni o’z ichiga olgan X faylni hosil
 qiling" ko’rinishida bo’ladi: javob - `> X` bilan tugaydigan pipeline.
 Uni chapdan o’ngga quring, har bir bosqich chiqishini ekranda tekshirib
-boring, keyin redirect’ni qo’shing. `uniq` dan oldin `sort`, raqamlar
-uchun `-n`, ajratgichlar uchun `-t`/`-d`, `sed -i` ni esa faqat `sed`
-chiqishini `-i` siz ko’rganingizdan keyin.
+boring, keyin redirect’ni qo’shing. `uniq`’dan oldin `sort`, raqamlar
+uchun `-n`, ajratgichlar uchun `-t`/`-d`, `sed -i`’ni esa faqat `sed`
+chiqishini `-i`’siz ko’rganingizdan keyin.
 :::
 
 ## O’zingizni tekshiring
 
-1. `sort` nega `uniq` dan oldin turishi kerak?
-2. `/etc/passwd` dagi eng ko’p uchraydigan beshta shell’ni sanoq bilan
+1. `sort` nega `uniq`’dan oldin turishi kerak?
+2. `/etc/passwd`’dagi eng ko’p uchraydigan beshta shell’ni sanoq bilan
    ro’yxatlaydigan pipeline’ni yozing.
 3. `sed 's/a/b/' f` va `sed -i 's/a/b/g' f` orasidagi farq nima?

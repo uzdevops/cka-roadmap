@@ -27,7 +27,7 @@ ls /var/lib/cni/networks/cbr0/
 cat /var/lib/cni/networks/cbr0/10.244.1.2      # uni band qilib turgan konteyner ID'si
 ```
 
-Flannel aynan `host-local` ga topshiradi va ko’p plugin’lar uni ichki
+Flannel aynan `host-local`’ga topshiradi va ko’p plugin’lar uni ichki
 qismida ishlatadi. Node’lar orasidagi betakrorlik oddiy: har bir node’da
 **boshqa subnet** bo’ladi, shuning uchun ikki node to’qnasha olmaydi - node
 ichida esa fayllar daftar vazifasini bajaradi.
@@ -43,8 +43,8 @@ kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.pod
 
 **Controller manager** (`--allocate-node-cidrs=true`,
 `--cluster-cidr=10.244.0.0/16`, `--node-cidr-mask-size=24`) klasterning Pod
-CIDR’ini har bir node uchun `/24` larga bo’lib chiqadi va har birini
-`node.spec.podCIDR` ga yozadi. CNI DaemonSet’i buni o’qiydi va node’ning
+CIDR’ini har bir node uchun `/24`’larga bo’lib chiqadi va har birini
+`node.spec.podCIDR`’ga yozadi. CNI DaemonSet’i buni o’qiydi va node’ning
 IPAM config’iga yozadi. Ya’ni zanjir shunday: `kubeadm init --pod-network-cidr`
 → controller manager flag’lari → `node.spec.podCIDR` → CNI config →
 `host-local` → Pod IP.
@@ -55,10 +55,10 @@ ortadi, lekin aynan shu sabab `/16` klaster CIDR’i 256 ta node’da to’xtayd
 
 ## O’z IPAM’i bor plugin’lar
 
-Calico va Cilium `host-local` ni ishlatmaydi. Calico’ning IPAM’i node’larga
+Calico va Cilium `host-local`’ni ishlatmaydi. Calico’ning IPAM’i node’larga
 IP pool’lardan talab bo’yicha kichikroq bloklar (`/26`) beradi, shuning
 uchun ko’p Pod ishlatadigan node bir nechtasini olishi mumkin, kam
-ishlatadigani esa `/24` ni behuda sarflamaydi; daftarni fayllarda emas,
+ishlatadigani esa `/24`’ni behuda sarflamaydi; daftarni fayllarda emas,
 Kubernetes API’sida saqlaydi (Calico’ning `IPAMBlock` CRD’lari). G’oya
 o’sha-o’sha - daftar va betakrorlik kafolati - faqat moslashuvchanroq.
 
@@ -70,11 +70,11 @@ calicoctl ipam show 2>/dev/null
 :::exam-tip
 Imtihon savoli odatda "node01’dagi Pod’larga qaysi diapazondan manzil
 beriladi" (`node.spec.podCIDR`) yoki "bu CNI qaysi IPAM’ni ishlatadi"
-(`/etc/cni/net.d` dagi faylning `ipam` blokini o’qing) shaklida bo’ladi.
+(`/etc/cni/net.d`’dagi faylning `ipam` blokini o’qing) shaklida bo’ladi.
 Event’larida `failed to allocate
 for range` bilan qotib qolgan Pod - o’sha node’ning subnet’i tugagani yoki
 IPAM daftari tiqilib qolgani; qattiq qayta yuklashdan keyin
-`/var/lib/cni/networks` da qolib ketgan eski fayllar - ma’lum sabab, va
+`/var/lib/cni/networks`’da qolib ketgan eski fayllar - ma’lum sabab, va
 o’sha eski yozuvlarni o’chirish buni tuzatadi.
 :::
 
@@ -82,6 +82,6 @@ o’sha eski yozuvlarni o’chirish buni tuzatadi.
 
 1. Odatiy CNI config’ida Pod IP’sini aslida qaysi plugin tanlaydi va u
    nimani tarqatganini qayerda qayd etadi?
-2. `node.spec.podCIDR` ni kim tayinlaydi va qaysi flag asosida?
+2. `node.spec.podCIDR`’ni kim tayinlaydi va qaysi flag asosida?
 3. Nega `host-local` ishlatadigan ikki node hech qachon bir xil IP ajrata
    olmaydi?

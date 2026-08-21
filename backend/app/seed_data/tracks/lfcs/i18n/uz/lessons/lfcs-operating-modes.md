@@ -36,13 +36,13 @@ sudo init 3                                  # hamon ishlaydi: isolate multi-use
 ```
 
 `isolate` target’ning unit’larini ishga tushiradi va **unga kirmagan hamma
-narsani to’xtatadi** - oddiy `start` dan farqi shu. Agar target network’ni
+narsani to’xtatadi** - oddiy `start`’dan farqi shu. Agar target network’ni
 o’z ichiga olmasa, uni SSH orqali `isolate` qilmang: `rescue.target`
 ulanishingizni uzadi.
 
 ## Boot paytida rejim tanlash
 
-GRUB menyusida yozuv ustida `e` ni bosing va `linux` satriga qo’shing:
+GRUB menyusida yozuv ustida `e`’ni bosing va `linux` satriga qo’shing:
 
 | Qo’shimcha | Ta’siri |
 |---|---|
@@ -71,7 +71,7 @@ exec /sbin/init          # yoki: mount -o remount,ro / ; reboot -f
 |---|---|---|
 | filesystem’lar | lokallari rw bilan mount qilingan | faqat `/`, **faqat o’qish uchun** |
 | service’lar | asosiylari ishga tushirilgan | hech biri |
-| nimaga kerak | buzilgan service’ni, to’lgan diskni tuzatish | `/etc/fstab` ni, mount bo’lmayotgan filesystem’ni tuzatish |
+| nimaga kerak | buzilgan service’ni, to’lgan diskni tuzatish | `/etc/fstab`’ni, mount bo’lmayotgan filesystem’ni tuzatish |
 
 Emergency rejimida birinchi buyruq deyarli har doim shu:
 
@@ -89,7 +89,7 @@ sudo systemctl mask broken.service      # uni /dev/null ga bog'laydi: umuman ish
 sudo systemctl unmask broken.service
 ```
 
-`mask` `disable` dan kuchliroq va "bu service boot’ni osib qo’yadi" holati
+`mask` `disable`’dan kuchliroq va "bu service boot’ni osib qo’yadi" holati
 uchun mo’ljallangan asbob - service’lar darsida yana ko’rib chiqiladi.
 
 :::exam-tip

@@ -19,7 +19,7 @@ EOF
 
 ## Uch tomonlama birlashtirish
 
-`apply`ni takrorlashga xavfsiz qiladigan narsa - u uchta hujjatni
+`apply`’ni takrorlashga xavfsiz qiladigan narsa - u uchta hujjatni
 solishtiradi:
 
 ```
@@ -67,7 +67,7 @@ kubectl apply --server-side --force-conflicts -f deployment.yaml   # ziddiyatli 
 - **Katalogdan olib tashlagan obyektlaringizni o’chirish.** `apply -f dir/`
   faqat o’sha yerda turgan fayllarni ko’radi. `--prune` bor, lekin xavfli;
   amalda `kubectl delete -f old.yaml` qilasiz.
-- **`kubectl scale` yoki `edit`ni o’zi bekor qilish.** Bekor qiladi - lekin
+- **`kubectl scale` yoki `edit`’ni o’zi bekor qilish.** Bekor qiladi - lekin
   faqat faylingizda 3, jonli obyektda esa 5 bo’lgani uchun 3 ni qo’yadi. Bu -
   o’tgan darsdagi uslublarni aralashtirish tuzog’i.
 
@@ -80,7 +80,7 @@ Imperativ yaratilgan obyekt ustida `kubectl apply` oxirgi qo’llangan
 annotatsiya yo’qligi haqida ogohlantirish chiqaradi va keyin shunchaki
 ishlaydi, annotatsiyani qo’shib qo’yadi. Bu ogohlantirishni "tuzatish"ga
 to’xtamang. Xuddi shunday, mavjud obyekt ustida `kubectl create -f`
-ishlamaydi - obyekt bor-yo’qligiga ishonchingiz komil bo’lmasa `apply`ga
+ishlamaydi - obyekt bor-yo’qligiga ishonchingiz komil bo’lmasa `apply`’ga
 murojaat qiling.
 :::
 

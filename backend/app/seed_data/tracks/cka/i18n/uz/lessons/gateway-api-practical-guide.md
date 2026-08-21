@@ -70,7 +70,7 @@ kubectl get svc -n nginx-gateway         # kontrollerning Service'i: LoadBalance
 `PROGRAMMED True` - kontroller o’zini shu Gateway uchun sozlagani. Yuk
 muvozanatlagichi yo’q klasterda ADDRESS NodePort Service’ining node IP’si
 bo’lishi mumkin, yoki bo’sh bo’ladi-yu, Service hamon o’z NodePort’ida
-yetib boriladigan bo’ladi - kontroller namespace’ida `kubectl get svc` ni
+yetib boriladigan bo’ladi - kontroller namespace’ida `kubectl get svc`’ni
 o’qing.
 
 ### 4. HTTPRoute yaratish

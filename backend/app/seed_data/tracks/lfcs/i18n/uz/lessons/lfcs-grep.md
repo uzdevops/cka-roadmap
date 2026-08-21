@@ -1,7 +1,7 @@
 ## Qatorlarni topish
 
 `grep` o’z inputidan pattern’ga mos keladigan qatorlarni chiqaradi. Bu -
-shu yo’nalishda `ls`dan keyin eng ko’p yozadigan buyrug’ingiz.
+shu yo’nalishda `ls`’dan keyin eng ko’p yozadigan buyrug’ingiz.
 
 ```bash
 grep root /etc/passwd                   # "root" bor qatorlar
@@ -37,7 +37,7 @@ env | grep -i proxy
 ## Pattern’lar: aslida nima yozayotganingiz
 
 grep pattern’i - bu **muntazam ifoda**, glob emas. `grep *.log file`
-".log fayllari" degani emas - shell avval `*.log`ni yoyadi, qolgani esa
+".log fayllari" degani emas - shell avval `*.log`’ni yoyadi, qolgani esa
 `.` "istalgan belgi" ma’nosini beradigan regex. Regex darslarigacha
 chalkashlikdan saqlaydigan uchta qoida:
 

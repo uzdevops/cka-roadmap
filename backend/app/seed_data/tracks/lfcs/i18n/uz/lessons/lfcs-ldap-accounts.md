@@ -137,13 +137,13 @@ uchun odatiy yo’l shu, unda `sssd.conf`’ni qo’lda yozish shart emas.
 | `Could not start TLS ... peer certificate` | CA `ldap_tls_cacert` ichida yo’q yoki hostname mos kelmayapti |
 | SSSD ishga tushishni rad etadi | `sssd.conf` rejimi 0600 emas yoki sintaksis xatosi - `journalctl -u sssd` |
 | login’da home directory yo’q | `pam_mkhomedir` yoqilmagan |
-| ishlaydi, parol almashgandan keyin to’xtaydi | eskirgan kesh - SSSD’ni qayta ishga tushiring yoki `/var/lib/sss/db` ni tozalang |
+| ishlaydi, parol almashgandan keyin to’xtaydi | eskirgan kesh - SSSD’ni qayta ishga tushiring yoki `/var/lib/sss/db`’ni tozalang |
 | sudo directory user’lariga amal qilmaydi | nsswitch’ga `sudoers: files sss` qo’shing yoki guruh uchun lokal `/etc/sudoers.d` qoidasi |
 
 :::warning
 `ldap_default_authtok` - bu konfiguratsiya faylidagi parol, shuning uchun
 rejim 0600 va minimal subtree ustidan **faqat o’qish** huquqiga ega
-service account kerak. Production’ni hech qachon TLS’siz `ldap://` ga
+service account kerak. Production’ni hech qachon TLS’siz `ldap://`’ga
 yo’naltirmang: bind parollari va user ma’lumotlari tarmoq bo’ylab ochiq
 holda o’tadi. `ldap_tls_reqcert = never` esa LDAPS’ni ma’noli qiladigan
 yagona tekshiruvni o’chirib qo’yadi.

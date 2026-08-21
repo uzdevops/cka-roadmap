@@ -77,7 +77,7 @@ sizniki - `who` baribir sizni ko’rsatadi - va `sudo` logi nima
 qilganingizni yozib qo’yadi.
 
 :::tip
-Masofadagi har qanday ishda `tmux` ni refleksga aylantiring: boshida
+Masofadagi har qanday ishda `tmux`’ni refleksga aylantiring: boshida
 `tmux new -s work`, uzilgan ulanishdan keyin `tmux attach -t work`. Bu
 "tarmoq uzildi va 40 daqiqalik ishim o’ldi" ni "qayta ulanib davom etaman"
 ga aylantiradi.

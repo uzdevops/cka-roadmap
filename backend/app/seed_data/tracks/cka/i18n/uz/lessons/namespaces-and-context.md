@@ -6,7 +6,7 @@ mumkin. RBAC Role’lari, ResourceQuota, LimitRange va NetworkPolicy’lar
 hammasi namespace bo’yicha qo’llanadi.
 
 Namespace nima **emas**: u o’zicha xavfsizlik chegarasi emas.
-NetworkPolicy’larsiz `dev` dagi Pod `prod` dagi Pod’ga to’g’ridan-to’g’ri IP
+NetworkPolicy’larsiz `dev`’dagi Pod `prod`’dagi Pod’ga to’g’ridan-to’g’ri IP
 orqali yeta oladi.
 
 ```bash
@@ -72,7 +72,7 @@ kubectl config view --minify | grep namespace
 Imtihon savollari namespace’ni odamlar sezganidan ancha ko’p ko’rsatadi va
 tekshiruvchi namespace’ni nazorat qiladi. Sizni ikkita odat himoya qiladi:
 savol boshida context’da namespace’ni belgilang **va** shundan keyin ham
-obyektni yaratadigan buyruqda `-n` ni aniq yozing. Ikki qavat ehtiyot uch
+obyektni yaratadigan buyruqda `-n`’ni aniq yozing. Ikki qavat ehtiyot uch
 soniya turadi.
 :::
 
@@ -101,7 +101,7 @@ Service DNS nomlari namespace’ni o’zida saqlaydi:
 <service>.<namespace>.svc.cluster.local
 ```
 
-`dev` dagi Pod’dan:
+`dev`’dagi Pod’dan:
 
 ```bash
 curl http://api                       # dev'dagi api (bir xil namespace)
@@ -109,7 +109,7 @@ curl http://api.prod                  # prod'dagi api
 curl http://api.prod.svc.cluster.local
 ```
 
-Qisqa shakl `/etc/resolv.conf` dagi qidiruv domenlari tufayli ishlaydi:
+Qisqa shakl `/etc/resolv.conf`’dagi qidiruv domenlari tufayli ishlaydi:
 
 ```bash
 kubectl exec -it mypod -- cat /etc/resolv.conf
@@ -144,7 +144,7 @@ kubectl describe quota -n dev
 ```
 
 :::warning
-Namespace’da `requests.cpu` yoki `limits.memory` ni belgilaydigan
+Namespace’da `requests.cpu` yoki `limits.memory`’ni belgilaydigan
 ResourceQuota paydo bo’lgach, u yerda yaratiladigan **har bir** Pod o’sha
 maydonlarni belgilashi shart. Ularsiz Pod’lar butunlay rad etiladi:
 
@@ -213,4 +213,4 @@ kubectl get apiservice | grep -v True    # sog'lom bo'lmagan agregatsiyalangan A
    PersistentVolumeClaim, Role, ClusterRole, StorageClass?
 2. Kvota bilan cheklangan namespace’dagi Deployment birorta Pod yaratmayapti.
    Xato xabari qayerda?
-3. `dev` dagi Pod’dan `prod` dagi `api` Service’iga qaysi DNS nom yetadi?
+3. `dev`’dagi Pod’dan `prod`’dagi `api` Service’iga qaysi DNS nom yetadi?

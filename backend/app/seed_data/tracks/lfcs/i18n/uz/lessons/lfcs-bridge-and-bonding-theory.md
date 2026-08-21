@@ -102,7 +102,7 @@ o’sha suhbatlarda uchrab turadi.
 Ikkala o’zgarish ham o’z ulanishingizni uzishi mumkin: siz ulanib turgan
 interfeysni qo’shish IP’ni bridge yoki bond’ga ko’chiradi va biror qadam
 noto’g’ri bo’lsa, sessiya o’ladi. Buni konsoldan qiling (`virsh console`,
-IPMI), yoki `nmcli`ni skriptlangan rollback bilan ishlating, yoki jismoniy
+IPMI), yoki `nmcli`’ni skriptlangan rollback bilan ishlating, yoki jismoniy
 kirish kerak bo’lishi mumkinligini qabul qiling. Masofadagi production
 hostda hech qachon "shunchaki sinab ko’ray" demang.
 :::
@@ -110,8 +110,8 @@ hostda hech qachon "shunchaki sinab ko’ray" demang.
 :::exam-tip
 Atamalarni va ikkita rejim nomini biling: `active-backup` (switch’ni
 sozlash shart emas) va `802.3ad` (LACP, switch kerak). IP qo’shilgan
-interfeyslarga emas, `br0`/`bond0`ga tegishli ekanini va bond’ning haqiqiy
-holatini `/proc/net/bonding/bond0` dan o’qish kerakligini biling. Keyingi
+interfeyslarga emas, `br0`/`bond0`’ga tegishli ekanini va bond’ning haqiqiy
+holatini `/proc/net/bonding/bond0`’dan o’qish kerakligini biling. Keyingi
 dars ikkalasini quradi.
 :::
 
@@ -120,5 +120,5 @@ dars ikkalasini quradi.
 1. Bridge qaysi muammoni yechadi va bond qaysi muammoni yechadi?
 2. Qaysi bonding rejimi switch’ni sozlashni talab qilmaydi va qaysi biri
    kelishiladigan standart?
-3. `eth0` `br0`ga qo’shilgandan keyin IP manzil qaysi interfeysda turadi
+3. `eth0` `br0`’ga qo’shilgandan keyin IP manzil qaysi interfeysda turadi
    va nega?

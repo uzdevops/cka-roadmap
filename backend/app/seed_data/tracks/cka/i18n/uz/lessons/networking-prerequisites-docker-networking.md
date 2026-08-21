@@ -10,12 +10,12 @@ docker run nginx                     # sukut bo'yicha: bridge
 |---|---|---|
 | `none` | o’ziniki, bo’sh | na ichkariga, na tashqariga |
 | `host` | host’niki | host’da bor hamma narsa; host bilan port to’qnashuvi |
-| `bridge` | o’ziniki, `docker0`ga ulangan | bridge’dagi boshqa konteynerlar va NAT orqali tashqarisi |
+| `bridge` | o’ziniki, `docker0`’ga ulangan | bridge’dagi boshqa konteynerlar va NAT orqali tashqarisi |
 
 Kubernetes’da xuddi shu ikki chekka Pod maydonlari sifatida bor:
 `hostNetwork: true` - bu `--network host` (ba’zi CNI va monitoring
 DaemonSet’lari ishlatadi), CNI sozlanmagan Pod esa amalda `none`
-(`ContainerCreating`da qotib qoladi).
+(`ContainerCreating`’da qotib qoladi).
 
 ## Bridge tarmog’i - o’tgan darsdagi sxemaning o’zi
 
@@ -29,7 +29,7 @@ ip netns                    # Docker o'z namespace'larini yashiradi; quyiga qara
 
 Docker siz uchun quyidagilarni qildi: network namespace yaratdi, veth
 juftligini yaratdi, uning bir uchini namespace ichiga 172.17.0.2/16 manzilli
-`eth0` sifatida qo’ydi, ikkinchi uchini `docker0`ga uladi, namespace ichida
+`eth0` sifatida qo’ydi, ikkinchi uchini `docker0`’ga uladi, namespace ichida
 172.17.0.1 orqali default route qo’shdi va - birinchi ishga tushishda -
 konteyner internetga chiqa olishi uchun 172.17.0.0/16 ga iptables MASQUERADE
 qoidasini qo’shdi.

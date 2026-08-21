@@ -1,7 +1,7 @@
 ## Manifestga tegmasdan image’ni o’zgartirish
 
-Muhitlar orasidagi eng keng tarqalgan farq - image tegi: `dev` `main`ni
-ishlatadi, `prod` esa `2.1.0`ni. `images` transformer’i barcha resurslardagi
+Muhitlar orasidagi eng keng tarqalgan farq - image tegi: `dev` `main`’ni
+ishlatadi, `prod` esa `2.1.0`’ni. `images` transformer’i barcha resurslardagi
 har bir konteyner va initContainer ichidagi image havolalarini o’zgartiradi
 va moslikni image **nomi** bo’yicha topadi.
 
@@ -36,7 +36,7 @@ images:
     digest: sha256:4f3e2a...                       # teg o'rniga digest bilan qotiradi
 ```
 
-| Maydon | `image: nginx:1.25` ga ta’siri |
+| Maydon | `image: nginx:1.25`’ga ta’siri |
 |---|---|
 | `newTag: "1.27.1"` | `nginx:1.27.1` |
 | `newName: registry.example.com/nginx` | `registry.example.com/nginx:1.25` |
@@ -64,7 +64,7 @@ images:
     newName: harbor.corp/cache/postgres
 ```
 
-`newTag`siz `newName` original tegni saqlab qoladi - butun overlay’ni ichki
+`newTag`’siz `newName` original tegni saqlab qoladi - butun overlay’ni ichki
 mirror’ga aynan shu tarzda yo’naltirish mumkin.
 
 ## Pipeline ichida
@@ -89,8 +89,8 @@ hech narsaga mos kelmagan `images` yozuvi haqida ogohlantirmaydi.
 
 ## O’zingizni tekshiring
 
-1. `images: [{name: nginx, newTag: "2"}]` da `name` nima bilan solishtiriladi
+1. `images: [{name: nginx, newTag: "2"}]`’da `name` nima bilan solishtiriladi
    - konteyner nomi bilanmi yoki image nomi bilanmi?
-2. `postgres:16`ni `harbor.corp/postgres:16`ga ko’chiradigan yozuvni yozing.
+2. `postgres:16`’ni `harbor.corp/postgres:16`’ga ko’chiradigan yozuvni yozing.
 3. Uchta Deployment ishlatadigan tegni o’zgartirish uchun nega `images` patch’dan
    yaxshiroq?

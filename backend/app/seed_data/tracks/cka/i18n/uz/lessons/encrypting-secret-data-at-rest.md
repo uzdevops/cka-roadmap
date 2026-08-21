@@ -81,7 +81,7 @@ Saqlang; kubelet API serverni qayta ishga tushiradi; kuting; keyin
 :::warning
 Endi etcd snapshot’i bilan har bir Secret orasida turgan yagona narsa -
 shifrlash kaliti. **Kalitni snapshot’lardan alohida backup qiling** va
-`/etc/kubernetes/enc`ni yoping (`chmod 600`). Kalitni yo’qotsangiz, har bir
+`/etc/kubernetes/enc`’ni yoping (`chmod 600`). Kalitni yo’qotsangiz, har bir
 shifrlangan obyekt butunlay yo’qoladi.
 :::
 
@@ -111,7 +111,7 @@ bor - konfiguratsiya fayli, flag, volume mount va `replace` buyrug’i. Bu -
 joyini bilib qo’yishga arziydigan sahifalardan biri, chunki topshiriq deyarli
 butunlay "qadamlarni xatosiz bajarish"dan iborat. Qimmatga tushadigan ikki
 xato: volume mount’ni unutish (API server crash-loop’ga tushadi,
-`no such file`) va `identity`ni birinchi qo’yish (hech narsa shifrlanmaydi va
+`no such file`) va `identity`’ni birinchi qo’yish (hech narsa shifrlanmaydi va
 tekshiruv ishlamaydi).
 :::
 

@@ -50,7 +50,7 @@ kubectl logs webapp-mysql -n shop --previous        # qulagan konteynerning chiq
 | `ImagePullBackOff` / `ErrImagePull` | image | nom/teg xatosi, imagePullSecret’siz yopiq registry, tarmoq yo’q |
 | `CreateContainerConfigError` | config | murojaat qilingan ConfigMap/Secret kaliti mavjud emas |
 | `CrashLoopBackOff` | ishga tushadi va o’ladi | `logs --previous`; exit code; command/args; yetishmayotgan env/config |
-| `OOMKilled` (describe ichida) | memory limiti | `limits.memory`ni oshiring yoki sizib chiqishni tuzating |
+| `OOMKilled` (describe ichida) | memory limiti | `limits.memory`’ni oshiring yoki sizib chiqishni tuzating |
 | `Error` / `Completed` | ishladi va chiqib ketdi | Job uchun normal; server uchun xato - jarayon chiqib ketgan |
 | `Running`, lekin `0/1` READY | readiness probe o’tmayapti | probe path/port; ilova hali tinglamayapti |
 | `Running` `1/1` va baribir buzuq | ilovaning o’zi | loglar, env, ichkariga exec qilib bog’liqlikka curl |

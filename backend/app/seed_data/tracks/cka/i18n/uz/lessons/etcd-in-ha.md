@@ -67,7 +67,7 @@ etcdctl member list --write-out=table
 ## Topologiya
 
 **Stacked** (kubeadm’ning sukut varianti): har bir control plane node static
-Pod sifatida bitta etcd a’zosini ishga tushiradi; har bir `etcd.yaml` dagi
+Pod sifatida bitta etcd a’zosini ishga tushiradi; har bir `etcd.yaml`’dagi
 `--initial-cluster` barcha peer’larni sanab beradi;
 `kubeadm join --control-plane` yangi a’zoni siz uchun qo’shadi.
 

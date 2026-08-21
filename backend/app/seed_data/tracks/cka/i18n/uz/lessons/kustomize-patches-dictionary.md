@@ -110,8 +110,8 @@ JSON pointer yo’li - `/` bilan ajratilgan kalitlar:
 ```
 
 Oxirgisi slash’li annotation’lar uchun muhim (`prometheus.io/scrape`,
-`nginx.ingress.kubernetes.io/rewrite-target`): `/` belgisi `~1` ga
-aylanadi, `~` esa `~0` ga. Strategic merge patch’da esa kalitni shunchaki
+`nginx.ingress.kubernetes.io/rewrite-target`): `/` belgisi `~1`’ga
+aylanadi, `~` esa `~0`’ga. Strategic merge patch’da esa kalitni shunchaki
 qo’shtirnoq ichida yozasiz.
 
 ```yaml
@@ -137,7 +137,7 @@ o’chirishlar uchun va keyingi darsdagi list’lar uchun saqlang.
 
 ## O’zingizni tekshiring
 
-1. Pod template’idagi `component` label’ini `web` ga o’zgartiradigan
+1. Pod template’idagi `component` label’ini `web`’ga o’zgartiradigan
    patch’ning ikkala shaklini yozing.
 2. Strategic merge patch bilan kalitni qanday o’chirasiz?
 3. Pod template’idagi `prometheus.io/scrape` annotation’i uchun JSON

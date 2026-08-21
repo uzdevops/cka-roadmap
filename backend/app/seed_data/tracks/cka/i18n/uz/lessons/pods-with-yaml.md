@@ -9,7 +9,7 @@ metadata:     # nom, namespace, label'lar, annotatsiyalar
 spec:         # siz nima xohlayotganingiz
 ```
 
-Beshinchisini, `status`ni, siz emas, klaster yozadi. Pod uchun:
+Beshinchisini, `status`’ni, siz emas, klaster yozadi. Pod uchun:
 
 ```yaml
 apiVersion: v1
@@ -43,7 +43,7 @@ kubectl explain pod.spec.containers            # konteyner obyekti
 kubectl explain pod.spec.containers.resources --recursive
 ```
 
-Odamlar `apiVersion`da xato qiladi. Taxminiy qoida:
+Odamlar `apiVersion`’da xato qiladi. Taxminiy qoida:
 
 | Kind | apiVersion |
 |---|---|
@@ -102,6 +102,6 @@ narsani o’z ichiga olishi shart.
 
 1. Har bir manifestda qaysi to’rtta yuqori darajali maydon bo’ladi va
    beshinchisini nega hech qachon yozmasligingiz kerak?
-2. Deployment, Job va Ingress uchun `apiVersion`ni yoddan yozing.
+2. Deployment, Job va Ingress uchun `apiVersion`’ni yoddan yozing.
 3. `kubectl apply` maydon o’zgarmas deb aytmoqda. Bir qatorli yechim nima va u
    ishlab turgan Pod’ga nima qiladi?

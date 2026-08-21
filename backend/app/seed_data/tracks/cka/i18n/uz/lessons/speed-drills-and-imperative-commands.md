@@ -26,7 +26,7 @@ oshirish/kamaytirish uchun visual blok bilan `>>`/`<<`, `u` - undo.
 
 ## Generatorlar
 
-Imperativ `create`/`run` ga ega har bir obyekt va muhim bo’lgan flag’lar:
+Imperativ `create`/`run`’ga ega har bir obyekt va muhim bo’lgan flag’lar:
 
 | Obyekt | Buyruq |
 |---|---|
@@ -55,7 +55,7 @@ Bularga generator yo’q: PV, PVC, StorageClass, NetworkPolicy, DaemonSet,
 StatefulSet, LimitRange, static Pod’larni joylashtirish, asosiylardan
 tashqaridagi Pod maydonlari. Ular uchun: **eng yaqinini generatsiya
 qiling, keyin tahrirlang** (`k run ...
-$do > f.yaml`; `k create deploy ... $do` va `kind`ni o’zgartiring) yoki
+$do > f.yaml`; `k create deploy ... $do` va `kind`’ni o’zgartiring) yoki
 hujjatlardan ko’chiring.
 
 ## dry-run shablonlari
@@ -123,13 +123,13 @@ marta ura olmaguningizcha takrorlang.
    **[60 s]**
 4. Control plane’da `sleep 1d` bilan busybox `drill4` static Pod’i.
    **[60 s]**
-5. `$do` + vi orqali `/cache` da emptyDir va `requests.cpu: 100m` bilan
+5. `$do` + vi orqali `/cache`’da emptyDir va `requests.cpu: 100m` bilan
    `drill5` Pod’i. **[90 s]**
-6. `drill` ichida default-deny ingress NetworkPolicy, keyin `role=fe` dan
-   `app=d1` ga 80-portni ochish. **[120 s]**
+6. `drill` ichida default-deny ingress NetworkPolicy, keyin `role=fe`’dan
+   `app=d1`’ga 80-portni ochish. **[120 s]**
 7. Har bir node’ning nomi va InternalIP’sini faylga eksport qiling.
    **[45 s]**
-8. `/opt/s.db` ga etcd snapshot va `snapshot status`. **[90 s]**
+8. `/opt/s.db`’ga etcd snapshot va `snapshot status`. **[90 s]**
 9. Worker’ni `cordon`, `drain`, `uncordon` qiling; Pod’lar ko’chganini
    tasdiqlang. **[60 s]**
 10. Buzilgan image tag’li Deployment’ni toping (bittasini yarating), uni

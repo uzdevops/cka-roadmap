@@ -78,10 +78,10 @@ envFrom:
 
 `envFrom` - "butun ConfigMap’ni kiritish" uchun qisqa yo’l. Muhit
 o’zgaruvchisi nomi sifatida yaroqsiz kalitlar tashlab ketiladi (hodisa bilan
-birga). Agar bir nom `env`da ham, `envFrom`da ham bo’lsa, **`env` yutadi**.
+birga). Agar bir nom `env`’da ham, `envFrom`’da ham bo’lsa, **`env` yutadi**.
 
 :::exam-tip
-"Pod `APP_COLOR`ni `webapp-config-map` ConfigMap’idan o’qisin" -
+"Pod `APP_COLOR`’ni `webapp-config-map` ConfigMap’idan o’qisin" -
 `valueFrom.configMapKeyRef`. "ConfigMap’ning hamma kalitini kiriting" -
 `envFrom.configMapRef`. Ikkinchisi qisqaroq; topshiriqda aniq kalit
 nomlanmagan yoki kalitdan boshqa o’zgaruvchi nomi so’ralmagan bo’lsa, o’shani
@@ -92,12 +92,12 @@ ishlating.
 
 | Alomat | Sababi |
 |---|---|
-| `CreateContainerConfigError` | `valueFrom`da nomlangan ConfigMap/Secret yoki **kalit** mavjud emas - `describe pod` qaysi biri ekanini aytadi |
+| `CreateContainerConfigError` | `valueFrom`’da nomlangan ConfigMap/Secret yoki **kalit** mavjud emas - `describe pod` qaysi biri ekanini aytadi |
 | o’zgaruvchi bor, lekin eskirgan | Pod ishga tushgandan keyin ConfigMap o’zgargan; env faqat ishga tushishda o’qiladi - Pod’ni qayta yarating (rollout) |
 | faylda qiymat `8080`, lekin API rad etadi | satr bo’lishi shart: `"8080"` |
 | `envFrom` bir kalitni indamay tashlab ketdi | kalit yaroqli o’zgaruvchi nomi emas (`-` yoki `.` bor) |
 
-`configMapKeyRef`/`secretKeyRef`dagi `optional: true` manba yo’q bo’lsa ham
+`configMapKeyRef`/`secretKeyRef`’dagi `optional: true` manba yo’q bo’lsa ham
 Pod’ning ishga tushishiga imkon beradi - foydali, va o’zgaruvchi nega umuman
 yo’qligini o’ylayotganingizda tuzoq.
 
@@ -119,10 +119,10 @@ so’rayotganini bilib oling.
 
 ## O’zingizni tekshiring
 
-1. `db-secret` Secret’ining `password` kalitidan `DB_PASSWORD`ni
+1. `db-secret` Secret’ining `password` kalitidan `DB_PASSWORD`’ni
    o’rnatadigan `env` yozuvini yozing.
 2. ConfigMap’ni yangiladingiz. Uni `env` orqali o’qiydigan Pod bir soatdan
    keyin ham eski qiymatni ko’rsatyapti. Nega, va buni Deployment uchun
    qanday tuzatasiz?
-3. `env` ham, `envFrom` ham `APP_MODE`ni turli qiymat bilan belgilagan.
+3. `env` ham, `envFrom` ham `APP_MODE`’ni turli qiymat bilan belgilagan.
    Konteyner qaysi birini ko’radi?

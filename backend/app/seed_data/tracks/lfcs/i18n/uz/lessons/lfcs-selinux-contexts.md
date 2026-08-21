@@ -31,7 +31,7 @@ system_u:object_r:httpd_sys_content_t:s0
 Kundalik SELinux ishining deyarli hammasi **tip** haqida. Kelishuv:
 process tiplari `_t` bilan tugaydi va **domen** deb ataladi (`httpd_t`,
 `sshd_t`); fayl tiplari ham `_t` bilan tugaydi (`httpd_sys_content_t`,
-`ssh_home_t`). Policy, masalan, "`httpd_t` dagi process
+`ssh_home_t`). Policy, masalan, "`httpd_t`’dagi process
 `httpd_sys_content_t` deb belgilangan fayllarni o’qishi mumkin" deydi - va
 boshqa hech narsani emas.
 
@@ -44,7 +44,7 @@ ls -Z /etc/ssh/sshd_config
 ls -dZ /home/ahmad
 ```
 
-Oddiy `ls -l` da ruxsatlardan keyin turgan `.` "bu faylda SELinux context’i
+Oddiy `ls -l`’da ruxsatlardan keyin turgan `.` "bu faylda SELinux context’i
 bor" degani (`+` esa unda ACL borligini bildiradi).
 
 ## Label qayerdan keladi
@@ -83,7 +83,7 @@ type=AVC msg=audit(...): avc: denied { read } for pid=1234 comm="httpd"
   tcontext=unconfined_u:object_r:user_home_t:s0 tclass=file
 ```
 
-Buni shunday o’qing: `httpd_t` dagi process `user_home_t` deb belgilangan
+Buni shunday o’qing: `httpd_t`’dagi process `user_home_t` deb belgilangan
 faylni `read` qilmoqchi bo’ldi, policy esa yo’q dedi. Yechim - faylga
 to’g’ri label berish, SELinux’ni o’chirib qo’yish emas.
 
@@ -102,11 +102,11 @@ hamma narsani ro’yxatlaydi. Keyin qayta belgilang va enforcing’ga qayting.
 Tuzatish keyingi darsda.
 
 :::warning
-`/etc/selinux/config` dagi `SELINUX=disabled` label qo’yishni butunlay
+`/etc/selinux/config`’dagi `SELINUX=disabled` label qo’yishni butunlay
 to’xtatadi; uni qaytadan yoqqaningizda fayl tizimi to’liq qayta belgilashni
 talab qiladi (`sudo touch /.autorelabel && reboot`), bu katta diskda uzoq
 vaqt oladi. Agar bo’shashtirish shart bo’lsa, `disabled` o’rniga
-`permissive` ni tanlang.
+`permissive`’ni tanlang.
 :::
 
 :::exam-tip
@@ -122,5 +122,5 @@ maydon tip ekanini va aynan o’sha muhimligini biling.
    qaysinisiga tegishli?
 2. Nega `/var/www` ichiga `mv` qilish ko’pincha web server’ni buzadi,
    `cp` esa buzmaydi?
-3. `ausearch -m avc` dagi denial sizga scontext va tcontext nuqtai
+3. `ausearch -m avc`’dagi denial sizga scontext va tcontext nuqtai
    nazaridan nimani aytadi?

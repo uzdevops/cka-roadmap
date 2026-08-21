@@ -87,9 +87,9 @@ Muvozanat kerak bo’lsa, Deployment’larni qayta aylantirasiz
 (`kubectl rollout restart`) yoki buni descheduler qiladi.
 
 :::exam-tip
-Ball keltiradigan ketma-ketlik: `drain --ignore-daemonsets` (`--force` ni faqat
+Ball keltiradigan ketma-ketlik: `drain --ignore-daemonsets` (`--force`’ni faqat
 topshiriq yalang’och Pod’ni yo’qotishga rozi bo’lsa qo’shing,
-`--delete-emptydir-data` ni esa u shikoyat qilsa), ishni bajaring, `uncordon`.
+`--delete-emptydir-data`’ni esa u shikoyat qilsa), ishni bajaring, `uncordon`.
 Uncordon’ni unutish - klassik yarim ball: topshiriq o’z tekshiruvidan o’tadi,
 keyingi topshiriqning Pod’lari esa sirli tarzda o’sha node’ga hech
 joylashmaydi.
@@ -101,5 +101,5 @@ joylashmaydi.
 2. `drain` kontroller tomonidan boshqarilmaydigan ("not managed by") Pod
    tufayli rad etdi. `--force` o’sha Pod’ga nima qiladi va uni qachon
    ishlatmaslik kerak?
-3. `uncordon` dan keyin evict qilingan Pod’lar node’ga qaytadimi? Ularni nima
+3. `uncordon`’dan keyin evict qilingan Pod’lar node’ga qaytadimi? Ularni nima
    qaytara oladi?

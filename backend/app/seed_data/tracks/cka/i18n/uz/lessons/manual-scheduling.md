@@ -63,7 +63,7 @@ curl --header "Content-Type: application/json" --request POST \
   http://localhost:8001/api/v1/namespaces/default/pods/nginx/binding/
 ```
 
-(Boshqa terminalda `kubectl proxy` `localhost:8001` ni beradi.) Bu allaqachon
+(Boshqa terminalda `kubectl proxy` `localhost:8001`’ni beradi.) Bu allaqachon
 mavjud va Pending holatdagi Pod’ni bog’laydi. Imtihonda o’chirib-qayta yaratish
 yo’li tezroq, agar topshiriqda Pod qayta yaratilmasligi kerak deb aytilmagan
 bo’lsa.
@@ -85,7 +85,7 @@ kubectl get pod nginx -o wide            # node02 da Running
 "Event yo’q" - asosiy belgi. Scheduler *ko’rgan*, lekin joylashtira olmagan
 Pod’da sababni tushuntiradigan `FailedScheduling` event bo’ladi. Events
 bo’limi bo’sh bo’lgan Pod’ga esa umuman qaralmagan: scheduler yo’q yoki Pod
-mavjud bo’lmagan `schedulerName` ni so’ragan. Qo’lda joylashtirish alomatni
+mavjud bo’lmagan `schedulerName`’ni so’ragan. Qo’lda joylashtirish alomatni
 tuzatadi; scheduler’ning o’zini ham tuzatishni unutmang, aks holda keyingi Pod
 ham qotib qoladi.
 :::

@@ -56,7 +56,7 @@ kubectl explain cronjob.spec.jobTemplate.spec.template.spec.containers.resources
 
 `--api-version` bitta kind bir nechta guruh versiyasida mavjud bo’lganda
 kerakligini tanlaydi (masalan, HorizontalPodAutoscaler `autoscaling/v1` va
-`autoscaling/v2` da bor).
+`autoscaling/v2`’da bor).
 
 ## Qisqa nomlar ham ishlaydi
 

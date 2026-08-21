@@ -57,7 +57,7 @@ vagrant halt / vagrant destroy -f
 Bir kunni tejaydigan ikkita tafsilot:
 
 - **Qat’iy IP’li `private_network`.** Sukut bo’yicha NAT interfeysi har bir
-  VM’ga bir xil `10.0.2.15` ni beradi; kubeadm esa private manzilda e’lon
+  VM’ga bir xil `10.0.2.15`’ni beradi; kubeadm esa private manzilda e’lon
   qilishi kerak (`--apiserver-advertise-address=192.168.56.11`), va
   `kubectl get nodes -o wide` to’g’ri manzilni ko’rsatishi uchun kubelet’ga
   `/etc/default/kubelet` ichida `--node-ip` kerak bo’lishi mumkin.
@@ -108,7 +108,7 @@ qotirilgan repozitoriy → keyinroq `kubeadm upgrade` ishlaydi.
 
 :::exam-tip
 Imtihonda node’lar tayyorlangan va sozlangan bo’ladi; siz yozadigan narsa
-`kubeadm init` dan boshlanadi. Lekin o’rnatish vazifasi preflight’dan
+`kubeadm init`’dan boshlanadi. Lekin o’rnatish vazifasi preflight’dan
 o’tmaganda, xato yuqoridagi satrlardan birini nomlaydi (`[ERROR Swap]`,
 `[ERROR NumCPU]`,
 `[ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]`) va
@@ -119,6 +119,6 @@ yechim - o’sha satr.
 
 1. Nega har bir Vagrant VM’iga `private_network` IP’si beriladi va kubeadm’ning
    qaysi flagi undan foydalanadi?
-2. `prep.sh` dagi qaysi uchta narsani kubeadm’ning preflight’i bevosita
+2. `prep.sh`’dagi qaysi uchta narsani kubeadm’ning preflight’i bevosita
    tekshiradi?
 3. `SystemdCgroup = true` satri nimaning oldini oladi?

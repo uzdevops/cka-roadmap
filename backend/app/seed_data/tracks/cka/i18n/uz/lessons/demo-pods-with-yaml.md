@@ -32,7 +32,7 @@ spec:
 status: {}
 ```
 
-`creationTimestamp: null`, `resources: {}` va `status: {}` ga e’tibor bering -
+`creationTimestamp: null`, `resources: {}` va `status: {}`’ga e’tibor bering -
 bular generator qoldirib ketadigan zararsiz shovqin. Ularni o’chirsangiz ham,
 e’tiborsiz qoldirsangiz ham bo’ladi.
 

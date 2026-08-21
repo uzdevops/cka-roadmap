@@ -107,7 +107,7 @@ bajaradigan har bir tekshiruvni sanab beradi.
 
 1. Autentifikatsiya, admission va avtorizatsiya qanday tartibda bajariladi va
    nega bu tartib muhim?
-2. `kube-apiserver.yaml` dagi flagni o’zgartirdingiz. API serverni nima qayta
+2. `kube-apiserver.yaml`’dagi flagni o’zgartirdingiz. API serverni nima qayta
    ishga tushiradi?
 3. `kubectl get pods` ishlaydi, lekin `kubectl logs` xato qaytaradi. Qaysi API
    server flaglari ishtirok etadi va narigi uchida qaysi komponent turadi?

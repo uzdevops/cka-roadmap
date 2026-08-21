@@ -6,10 +6,10 @@ narsa kerak:
 
 1. **barqaror identifikatsiya** - `db-0` doim primary, `db-1` doim birinchi
    replika bo’ladi va ular bir-birini nom orqali topadi;
-2. **o’ziga ergashadigan o’z storage’i** - `db-1` ning ma’lumoti keyin
-   yaratilgan qaysidir Pod’ga emas, aynan `db-1` ga qaytadi;
-3. **tartiblangan amallar** - `db-0` ni `db-1` dan oldin ishga tushirish,
-   `db-2` ni `db-1` dan oldin to’xtatish, shunda replikatsiya va kvorum
+2. **o’ziga ergashadigan o’z storage’i** - `db-1`’ning ma’lumoti keyin
+   yaratilgan qaysidir Pod’ga emas, aynan `db-1`’ga qaytadi;
+3. **tartiblangan amallar** - `db-0`’ni `db-1`’dan oldin ishga tushirish,
+   `db-2`’ni `db-1`’dan oldin to’xtatish, shunda replikatsiya va kvorum
    mantiqqa ega bo’ladi.
 
 **StatefulSet** uchalasini ham beradi; bu dars esa ular shu haftaning storage
@@ -102,7 +102,7 @@ kubectl scale sts db --replicas=3           # avval db-4, keyin db-3 olib tashla
 biri oldingisi Running va Ready bo’lishini kutadi; o’chirish esa teskari
 tartibda. `Parallel` buni ahamiyat bermaydigan workload’lar uchun olib
 tashlaydi. Yangilanishlar eng katta tartib raqamidan pastga qarab boradi;
-`partition: 2` faqat `db-2` ni yangilaydi - keyin 0 ga tushiradigan bir Pod’lik
+`partition: 2` faqat `db-2`’ni yangilaydi - keyin 0 ga tushiradigan bir Pod’lik
 canary.
 
 ## Nima avtomatik emas
@@ -128,7 +128,7 @@ Tekshiring: `serviceName` mavjud headless Service’ga mos kelsin;
 
 1. Stateful workload’ga kerak bo’lgan, Deployment bermaydigan uchta narsani
    ayting.
-2. `kubectl delete pod db-1` dan keyin o’rniga kelgan Pod qaysi PVC’ni mount
+2. `kubectl delete pod db-1`’dan keyin o’rniga kelgan Pod qaysi PVC’ni mount
    qiladi va nega?
 3. StatefulSet’ni 5 dan 3 ga kamaytirganingizda nima qolib ketadi va nega bu
    to’g’ri sukut sozlamasi?

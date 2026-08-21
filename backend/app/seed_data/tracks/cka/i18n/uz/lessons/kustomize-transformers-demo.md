@@ -110,7 +110,7 @@ berilardi.
 :::tip
 Transformer’ga har qanday o’zgartirish kiritgach, tegib chiqqan maydoningizni
 `kubectl kustomize | grep` bilan qidiring. Bu butun natijani o’qishdan tez va
-`images` hamda `replicas`ning "hech narsaga mos kelmadi" sukutini ushlaydi.
+`images` hamda `replicas`’ning "hech narsaga mos kelmadi" sukutini ushlaydi.
 :::
 
 ## O’zingizni tekshiring

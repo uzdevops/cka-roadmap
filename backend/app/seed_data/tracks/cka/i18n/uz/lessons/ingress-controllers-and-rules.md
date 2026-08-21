@@ -92,7 +92,7 @@ kubectl describe ingress ingress-wear-watch -n app-space      # qoidalar jadval 
 Ball yo’qotadigan, to’g’ri qilinishi kerak bo’lgan ikki narsa:
 
 - Ingress **o’zi marshrutlaydigan Service’lar bilan bir xil namespace’da**
-  turadi. `default` dagi Ingress `app-space` dagi `wear-service` ga
+  turadi. `default`’dagi Ingress `app-space`’dagi `wear-service`’ga
   ko’rsata olmaydi.
 - `ingressClassName` (yoki eskiroq `kubernetes.io/ingress.class: nginx`
   annotatsiyasi) mavjud IngressClass’ni nomlashi kerak, aks holda kontroller
@@ -101,7 +101,7 @@ Ball yo’qotadigan, to’g’ri qilinishi kerak bo’lgan ikki narsa:
 :::exam-tip
 `kubectl create ingress` - tez yo’l va u `--rule`
 (`host/path=service:port`), `--class`, `--annotation` hamda
-`--default-backend` ni qo’llab-quvvatlaydi. Undan foydalaning, keyin `$do`
+`--default-backend`’ni qo’llab-quvvatlaydi. Undan foydalaning, keyin `$do`
 qiling va faqat `pathType: Exact` yoki TLS kerak bo’lsagina tahrirlang.
 :::
 

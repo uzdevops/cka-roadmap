@@ -65,7 +65,7 @@ Log sababni nomlaydi. To’rtta odatiy sabab:
 | `dial tcp 10.0.0.10:6553: connect: connection refused` / `Unable to register node` | **`/etc/kubernetes/kubelet.conf`** ichida noto’g’ri API server **manzili yoki porti** (`server: https://...:6443`) | server qatorini tuzating; kubelet’ni qayta ishga tushiring |
 | `part of the existing bootstrap client certificate is expired` / `x509: certificate has expired` | kubelet’ning **client sertifikati** muddati tugagan (`/var/lib/kubelet/pki/kubelet-client-current.pem`) | control plane’dagi `kubeadm certs renew` kubelet sertifikatlarini qamrab olmaydi; yangi token bilan qayta bootstrap qiling yoki rotatsiyani tuzating; soatni tekshiring |
 | `x509: certificate signed by unknown authority` | kubelet API server’ni imzolamagan CA’ga ishonadi | `kubelet.conf` ichidagi `certificate-authority-data` noto’g’ri - `/etc/kubernetes/pki/ca.crt` bilan solishtiring |
-| `Failed to start ContainerManager` / `failed to run Kubelet: ... cgroup` | cgroup driver mos kelmayapti (kubelet’da `systemd`, containerd’da `cgroupfs`) | config.yaml ichidagi `cgroupDriver` ni containerd konfiguratsiyasiga moslang |
+| `Failed to start ContainerManager` / `failed to run Kubelet: ... cgroup` | cgroup driver mos kelmayapti (kubelet’da `systemd`, containerd’da `cgroupfs`) | config.yaml ichidagi `cgroupDriver`’ni containerd konfiguratsiyasiga moslang |
 | `Unit kubelet.service is masked` / `not found` | service’ning o’zi | `systemctl unmask kubelet`; `systemctl enable --now kubelet`; `kubelet` binary’si PATH’damikan? |
 
 ```bash

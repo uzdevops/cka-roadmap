@@ -19,7 +19,7 @@ ls /etc/kubernetes/manifests
 
 :::exam-tip
 Yo’l har doim ham sukut bo’yicha bo’lavermaydi. Uni
-`/var/lib/kubelet/config.yaml` dan (`staticPodPath`), eskiroq sozlamalarda esa
+`/var/lib/kubelet/config.yaml`’dan (`staticPodPath`), eskiroq sozlamalarda esa
 kubelet’ning `--pod-manifest-path` flag’idan o’qing. Topshiriq uni g’ayrioddiy
 joyga qo’yib, sizdan topishni so’rashi mumkin.
 :::
@@ -71,7 +71,7 @@ rm /etc/kubernetes/manifests/static-greenbox.yaml
 :::warning
 Static Pod’lar har doim faqat **Pod** bo’ladi - manifest katalogidan
 Deployment, DaemonSet yoki Service ishlamaydi. U yerga tashlangan Service
-manifesti e’tiborsiz qoldiriladi (`journalctl -u kubelet` da bitta log qatori
+manifesti e’tiborsiz qoldiriladi (`journalctl -u kubelet`’da bitta log qatori
 bilan).
 :::
 

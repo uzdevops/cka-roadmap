@@ -91,7 +91,7 @@ fio --name=seqwrite --filename=/mnt/data/fio.tmp --size=1G --rw=write \
 ```
 
 `--direct=1` page cache’ni chetlab o’tadi - usiz siz RAM’ni o’lchaysiz.
-`oflag=direct` siz ishlatilgan `dd` xuddi shu sababdan bema’ni tez
+`oflag=direct`’siz ishlatilgan `dd` xuddi shu sababdan bema’ni tez
 raqamlarni qaytaradi.
 
 ## Navbatlar va scheduler’lar
@@ -160,14 +160,14 @@ sudo dmesg -T | tail -20                  # xatolar, reset'lar, OOM
 :::exam-tip
 Maqsad - "monitoring", shuning uchun ehtimoliy so’rov: vositani ishga
 tushirib, chiqishini saqlash: `iostat -xz 1 5 > /root/io.txt`, `df -h`,
-`du -sh`, `iotop -b -n 3`. `iostat` bo’lmasa, `sysstat` ni o’rnating.
+`du -sh`, `iotop -b -n 3`. `iostat` bo’lmasa, `sysstat`’ni o’rnating.
 `%util`, `await` va `wa` ustuni nimani anglatishini **qaysi** qurilma
 band va u to’yinganmi yoki yo’qmi - shuni ayta oladigan darajada biling.
 :::
 
 ## O’zingizni tekshiring
 
-1. `vmstat` ning qaysi ikkita ustuni "CPU storage’ni kutyapti" deydi?
+1. `vmstat`’ning qaysi ikkita ustuni "CPU storage’ni kutyapti" deydi?
 2. Nega NVMe’da `%util` chalg’itadi va uning o’rniga qaysi raqamlarni
    o’qish kerak?
 3. Diskni o’lchayotganda nega `dd` va `fio` direct I/O ishlatishi shart?

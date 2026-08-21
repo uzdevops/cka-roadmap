@@ -36,7 +36,7 @@ ls -a          # .git/ hammasini saqlaydi: objects, refs, config, HEAD
 ```
 
 Working tree - siz ko’rib turgan fayllar; `.git/` - ular yonidagi
-ma’lumotlar bazasi. `.git` ni o’chirsangiz, yana oddiy fayllar qoladi;
+ma’lumotlar bazasi. `.git`’ni o’chirsangiz, yana oddiy fayllar qoladi;
 directory’ni nusxalasangiz, butun tarixni ham u bilan birga nusxalaysiz.
 
 ## Birovnikidan repository
@@ -111,7 +111,7 @@ git blame -L 20,40 nginx.conf
 Konfiguratsiyadagi biror qator jumboqqa aylanganda eng foydali buyruq.
 
 :::tip
-O’zingiz boshqaradigan mashinada `/etc` ni Git ostiga qo’ying (`etckeeper`
+O’zingiz boshqaradigan mashinada `/etc`’ni Git ostiga qo’ying (`etckeeper`
 buni avtomatlashtiradi) - shunda har bir paket o’rnatilishi va har bir
 qo’lda tahrirning changelog’ini tekinga olasiz. Usiz ham: qo’lda
 tahrirlaydigan istalgan directory ishni boshlashdan oldin `git

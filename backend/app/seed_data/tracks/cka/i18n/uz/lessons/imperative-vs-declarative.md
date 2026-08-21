@@ -95,7 +95,7 @@ apply kechirimli.
 - `create` / `run` / `expose` - yangi obyekt yaratadi; mavjud bo’lsa xato.
 - `apply` - shunday bo’lsin; yaratadi yoki yangilaydi.
 - `replace` - butun obyektni almashtiradi; `--force` o’chirib qayta yaratadi.
-- `edit` - jonli obyektni `$EDITOR`da ochadi; chiqishda saqlaydi.
+- `edit` - jonli obyektni `$EDITOR`’da ochadi; chiqishda saqlaydi.
 - `patch` - bitta yo’lni o’zgartiradi:
   `kubectl patch deployment api -p '{"spec":{"replicas":2}}'`.
 - `set` - keng tarqalgan patch’lar uchun qisqartmalar: `set image`,
@@ -107,4 +107,4 @@ apply kechirimli.
    saqlanadi?
 2. Siz Deployment’ni `kubectl scale` bilan 5 ga o’zgartirdingiz, keyin uning
    3 deb yozilgan faylini `kubectl apply` qildingiz. Nima bo’ladi va nega?
-3. `--dry-run=server` qachon `--dry-run=client` dan yaxshiroq?
+3. `--dry-run=server` qachon `--dry-run=client`’dan yaxshiroq?

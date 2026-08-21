@@ -52,7 +52,7 @@ farqlarni esa ambassador olib yuradi.
 :::exam-tip
 Imtihon pattern nomlarini baholamaydi. U YAML’ni baholaydi: `containers`
 ostida ikkinchi element, umumiy `emptyDir`, ikkalasida ham to’g’ri
-`volumeMounts`, `logs`/`exec` da `-c`. "Bu sidecar topshirig’i" ekanini
+`volumeMounts`, `logs`/`exec`’da `-c`. "Bu sidecar topshirig’i" ekanini
 tanib olish sizga faqat qanday shakl kutilayotganini aytadi.
 :::
 

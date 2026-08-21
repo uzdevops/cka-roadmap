@@ -40,7 +40,7 @@ sertifikat imzosi ham aynan shu.
 ## Bo’shliq: bu kimning ochiq kaliti?
 
 Buzg’unchi *o’zining* ochiq kalitini e’lon qilib, o’zini bank deb atashi
-mumkin. Client ochiq kalit haqiqatan `bank.com`ga tegishli ekanini bilishi
+mumkin. Client ochiq kalit haqiqatan `bank.com`’ga tegishli ekanini bilishi
 kerak. **Sertifikat** - bu ochiq kalit, ustiga nom, ustiga **client allaqachon
 ishonadigan kimningdir imzosi** bo’lib, o’sha imzo "bu kalit shu nomga
 tegishli" deydi.

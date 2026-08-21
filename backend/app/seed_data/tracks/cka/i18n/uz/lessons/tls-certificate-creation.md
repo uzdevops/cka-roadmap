@@ -108,7 +108,7 @@ ishlashdan to’xtashi, SAN satri esa u amal qiladigan har bir nom. Keyingi dars
 buni odatga aylantiradi.
 
 :::exam-tip
-Imtihonda foydalanuvchi uchun siz `openssl x509 -CA ca.key` ni o’zingiz
+Imtihonda foydalanuvchi uchun siz `openssl x509 -CA ca.key`’ni o’zingiz
 **ishlatmaysiz** - sog’lom klasterda sizda `ca.key` yo’q. Siz openssl bilan
 kalit va CSR yaratasiz va CSR’ni imzolash uchun **Certificates API**’ga
 berasiz (ikki darsdan keyin). openssl qismi - 2-qadamning dastlabki ikkita

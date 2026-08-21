@@ -75,7 +75,7 @@ Flannel, Calico, Cilium yoki Weave kabi **klaster CNI**’si ularni ishlatadi
 yoki almashtiradi va reference plugin’larda yetishmaydigan qismni qo’shadi:
 *turli node’lardagi* Pod subnet’larini bir-biriga yetadigan qilish
 (marshrutlar, VXLAN, BGP, eBPF). Kubernetes o’zi **hech qanday** CNI
-bermaydi: `kubeadm init` dan keyin node’lar siz bittasini o’rnatmaguningizcha
+bermaydi: `kubeadm init`’dan keyin node’lar siz bittasini o’rnatmaguningizcha
 `NotReady` bo’lib turadi va bu ataylab shunday.
 
 ## Kubernetes nimaga javobgar emas
@@ -92,7 +92,7 @@ bermaydi: `kubeadm init` dan keyin node’lar siz bittasini o’rnatmaguningizch
 Node darajasida tez topiladigan ikki fakt: `ls /etc/cni/net.d` **qaysi** CNI
 sozlanganini aytadi (fayl nomining o’zi aytib turadi); `ls /opt/cni/bin` esa
 qaysi plugin binary’lar borligini aytadi. Birinchisi bo’sh bo’lgan node’da
-CNI yo’q - Pod’lar `ContainerCreating` da qotib qoladi va `describe pod` da
+CNI yo’q - Pod’lar `ContainerCreating`’da qotib qoladi va `describe pod`’da
 `failed to find plugin` yoki `no networks found` chiqadi. Yechim - bittasini
 o’rnatish, odatda CNI manifestini `kubectl apply -f` qilish.
 :::

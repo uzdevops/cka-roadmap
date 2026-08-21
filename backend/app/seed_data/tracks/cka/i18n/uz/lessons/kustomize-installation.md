@@ -48,7 +48,7 @@ ko’plab pipeline’lar versiyani ko’taradigan yo’ldir.
 | kustomization’ga o’zgartirishlarni avtomatlashtirish | `kustomize edit ...` |
 
 :::exam-tip
-`kubectl apply -k` ga **ichida `kustomization.yaml` bo’lgan** katalog kerak,
+`kubectl apply -k`’ga **ichida `kustomization.yaml` bo’lgan** katalog kerak,
 faylning o’zi emas. `kubectl apply -k overlays/prod/kustomization.yaml`
 ishlamaydi; `kubectl apply -k overlays/prod` ishlaydi. Va `-k` bu `-f` emas:
 kustomization.yaml faylini `-f` bilan bersangiz, kubectl uni Kubernetes

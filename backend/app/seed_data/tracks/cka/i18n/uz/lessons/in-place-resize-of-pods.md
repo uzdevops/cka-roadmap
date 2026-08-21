@@ -85,9 +85,9 @@ kubectl describe pod app | grep -iA2 resize
 :::exam-tip
 2025 yilgi o’quv dasturida bu "borligini va maydonlari nimaligini bilish"
 mavzusi. Agar topshiriq ishlab turgan Pod’ning CPU’sini uni qayta
-yaratmasdan o’zgartirishni so’rasa, shakli shunday: `resizePolicy`ni
+yaratmasdan o’zgartirishni so’rasa, shakli shunday: `resizePolicy`’ni
 tekshiring, `resize` subresource’iga patch qiling,
-`status.containerStatuses[].resources` da tasdiqlang. Agar klasterda bu
+`status.containerStatuses[].resources`’da tasdiqlang. Agar klasterda bu
 funksiya yoqilmagan bo’lsa, halol javob baribir - o’chirib qayta yaratish.
 :::
 

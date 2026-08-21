@@ -110,7 +110,7 @@ k get pods --sort-by=.metadata.creationTimestamp
 
 :::exam-tip
 `kubectl create/run/expose` bayroqlar orqali **qila olmaydigan** narsalar -
-`expose`da nodePort qo’yish, volume, probe, resources, toleration, ikkinchi
+`expose`’da nodePort qo’yish, volume, probe, resources, toleration, ikkinchi
 konteyner, init konteyner qo’shish. Bularning hammasi uchun: `$do` bilan
 generatsiya qiling, faylni tahrirlang, apply qiling. Topshiriq shu chiziqning
 qaysi tomonida ekanini bilish qaror qabul qilish vaqtini tejaydi.

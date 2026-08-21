@@ -125,7 +125,7 @@ sudo apt update 2>&1 | grep -i "NO_PUBKEY\|not signed\|Failed"
 |---|---|---|
 | `NO_PUBKEY 1234ABCD` | repository’ning kaliti o’rnatilmagan | kalitni `/etc/apt/keyrings` ichiga oling va `signed-by` bilan unga murojaat qiling |
 | `Repository ... is not signed` | kalit yo’q yoki kalit yo’li noto’g’ri | xuddi shunday |
-| `apt update` da `404 Not Found` | suite/codename noto’g’ri yoki repo sizning relizingizni tashlab yuborgan | source faylidagi codename’ni to’g’rilang |
+| `apt update`’da `404 Not Found` | suite/codename noto’g’ri yoki repo sizning relizingizni tashlab yuborgan | source faylidagi codename’ni to’g’rilang |
 | `Unable to locate package X` | uni beradigan komponent yoki repo yoqilmagan | `add-apt-repository universe`, keyin `apt update` |
 | `Conflicting values set for option Signed-By` | bir xil repo ikki marta, har xil kalitlar bilan ko’rsatilgan | ortiqcha `.list`/`.sources` faylini o’chiring |
 | dnf: `GPG check FAILED` | kalit yo’q yoki paket buzilgan | to’g’ri kalitni import qiling; buni "tuzatish" uchun hech qachon `gpgcheck=0` qilmang |

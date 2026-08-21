@@ -17,14 +17,14 @@ nomlang, keyin har bir hop’ni tekshiring.
 | # | Tekshiruv | Buyruq | Ishlamasa |
 |---|---|---|---|
 | 1 | server Pod Running va **Ready** | `kubectl get pod <p> -n <ns>` | ilova qatlami (status, probe’lar, loglar) |
-| 2 | jarayon portni **tinglayaptimi** | `kubectl exec <p> -- ss -lntp` yoki `netstat -lntp`, yoki ichkaridan `curl localhost:<port>` | noto’g’ri `containerPort`/ilova konfiguratsiyasi; ilova `0.0.0.0` o’rniga `127.0.0.1` ga bog’lanadi |
+| 2 | jarayon portni **tinglayaptimi** | `kubectl exec <p> -- ss -lntp` yoki `netstat -lntp`, yoki ichkaridan `curl localhost:<port>` | noto’g’ri `containerPort`/ilova konfiguratsiyasi; ilova `0.0.0.0` o’rniga `127.0.0.1`’ga bog’lanadi |
 | 3 | Pod IP’siga boshqa Pod’dan yetib bo’ladimi | `kubectl exec <client> -- curl -m3 <pod-ip>:<port>` | CNI yoki **NetworkPolicy** (`kubectl get netpol -n <ns>`; `describe`) |
 | 4 | Service’da **Endpoints** bormi | `kubectl get ep <svc> -n <ns>` | selector ≠ Pod label’lari, yoki Pod’lar Ready emas, yoki noto’g’ri namespace |
-| 5 | Service portlari mos kelyaptimi | `kubectl describe svc <svc>`: `Port` → `TargetPort` = konteynerning porti; nomlangan port mavjud | `targetPort` ni tuzating (raqam yoki konteyner portining **nomi**) |
+| 5 | Service portlari mos kelyaptimi | `kubectl describe svc <svc>`: `Port` → `TargetPort` = konteynerning porti; nomlangan port mavjud | `targetPort`’ni tuzating (raqam yoki konteyner portining **nomi**) |
 | 6 | ClusterIP’ga yetib bo’ladimi | Pod ichidan `curl -m3 <cluster-ip>:<port>` | kube-proxy (DaemonSet sog’lommi? config yo’li to’g’rimi?) |
 | 7 | nom resolve bo’lyaptimi | `nslookup <svc>.<ns>.svc.cluster.local` | CoreDNS, `kube-dns` endpoint’lari, Pod’ning `resolv.conf` fayli, udp/53 ustidagi NetworkPolicy |
 | 8 | namespace’lararo nom | faqat `<svc>` emas, `<svc>.<ns>` ishlatilyaptimi | DNS search domenlari faqat Pod’ning o’z namespace’ini qamraydi |
-| 9 | tashqaridan NodePort | `curl <node-ip>:<nodePort>`; `kubectl get svc` da TYPE NodePort | node’dagi firewall; noto’g’ri node IP’si; Service turi ClusterIP |
+| 9 | tashqaridan NodePort | `curl <node-ip>:<nodePort>`; `kubectl get svc`’da TYPE NodePort | node’dagi firewall; noto’g’ri node IP’si; Service turi ClusterIP |
 | 10 | Ingress | `kubectl describe ingress`; kontroller Pod’ining loglari; backend Service **nomi va porti** mos; IngressClass o’rnatilgan; host header | Ingress mavjud bo’lmagan Service/portga ishora qiladi; kontroller yo’q; `ingressClassName` yo’q |
 | 11 | NetworkPolicy | `kubectl get netpol -A`; ulardan biri server yoki client Pod’ini **tanlaydimi**? | allow’siz default-deny; client’da `policyTypes` ichida Egress bor; port/protokol mos emas; DNS egress qoidasi yo’q |
 
@@ -55,9 +55,9 @@ aytadi.
 | 6 | Pod **to’g’ri PVC nomiga** murojaat qilyaptimi | `kubectl get pod -o yaml \| grep -A3 persistentVolumeClaim` | `claimName` ichidagi xato → `persistentvolumeclaim "x" not found` |
 | 7 | `hostPath` **o’sha** node’da bormi | `ssh node; ls <path>`; `type: DirectoryOrCreate` | hostPath har bir node’ga xos - boshqa node’ga ko’chgan Pod u yerda hech narsa topmaydi |
 | 8 | local PV’dagi `nodeAffinity` | `kubectl describe pv` | Pod faqat nomi ko’rsatilgan node’da ishlay oladi; scheduler buni Events ichida aytadi |
-| 9 | ConfigMap/Secret volume | `kubectl get cm,secret -n <ns>`; `items` yoki `subPath` da nomlangan kalit | obyekt yo’q → `MountVolume.SetUp failed` bilan `ContainerCreating` |
+| 9 | ConfigMap/Secret volume | `kubectl get cm,secret -n <ns>`; `items` yoki `subPath`’da nomlangan kalit | obyekt yo’q → `MountVolume.SetUp failed` bilan `ContainerCreating` |
 | 10 | RWO volume allaqachon boshqa joyda ulangan | boshqa egasini topish uchun `kubectl get pod -A -o wide` | `Multi-Attach error`: oldingi Pod uni hali ushlab turibdi (node o’chiq, Terminating) |
-| 11 | ichkaridagi ruxsatlar | `kubectl exec <p> -- ls -ld /data; id` | `securityContext.fsGroup` ni belgilang, yoki image yoza olmaydigan uid ostida ishlayapti |
+| 11 | ichkaridagi ruxsatlar | `kubectl exec <p> -- ls -ld /data; id` | `securityContext.fsGroup`’ni belgilang, yoki image yoza olmaydigan uid ostida ishlayapti |
 
 ## Events’ni o’qish
 

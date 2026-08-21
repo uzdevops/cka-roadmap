@@ -49,7 +49,7 @@ ip route
 
 :::tip
 `ip route` yuqoridan pastga "eng aniq prefiks yutadi" qoidasi bilan
-o’qiladi: `/24` route `default`ni yengadi. Paket "hech qayerga bormasa",
+o’qiladi: `/24` route `default`’ni yengadi. Paket "hech qayerga bormasa",
 birinchi o’qiladigan narsa - shu jadval: o’sha manzil uchun route bormi va
 `via` lokal tarmoqda yetib boriladigan narsani ko’rsatyaptimi?
 :::
@@ -80,7 +80,7 @@ olmaydi.
 | `netstat -nltp` | `ss -nltp` | tinglanayotgan soketlar |
 | `brctl show` | `ip link show type bridge`, `bridge link` | bridge’lar |
 
-Imtihon node’larida zamonaviy to’plam aniq bor; eskisi - ehtimol. `ip`ni
+Imtihon node’larida zamonaviy to’plam aniq bor; eskisi - ehtimol. `ip`’ni
 o’rganing.
 
 ```bash

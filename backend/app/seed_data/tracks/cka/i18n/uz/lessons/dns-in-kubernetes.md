@@ -32,9 +32,9 @@ kubectl exec t -- cat /etc/resolv.conf
 ```
 
 `default` namespace’idan berilgan `nslookup web-service` avval
-`web-service.default.svc.cluster.local` ni (NXDOMAIN), keyin
-`web-service.svc.cluster.local` ni (NXDOMAIN), keyin
-`web-service.cluster.local` ni, oxirida esa yalang’och nomni sinaydi.
+`web-service.default.svc.cluster.local`’ni (NXDOMAIN), keyin
+`web-service.svc.cluster.local`’ni (NXDOMAIN), keyin
+`web-service.cluster.local`’ni, oxirida esa yalang’och nomni sinaydi.
 `web-service.payroll` ikkinchi suffiksda topiladi:
 `web-service.payroll.svc.cluster.local`. Shuning uchun "boshqa namespace’dagi
 Service" uchun namespace kerak bo’ladi, xolos.
@@ -74,7 +74,7 @@ Kubelet har bir Pod’ning `resolv.conf` faylini ikkita narsadan yozadi:
 | `None` | faqat `dnsConfig` aytgani |
 
 Service’larni aniqlay olmaydigan `hostNetwork` Pod’ida odatda `dnsPolicy`
-`ClusterFirst` holida qolib ketgan bo’ladi - uni `ClusterFirstWithHostNet` ga
+`ClusterFirst` holida qolib ketgan bo’ladi - uni `ClusterFirstWithHostNet`’ga
 o’zgartiring.
 
 :::exam-tip

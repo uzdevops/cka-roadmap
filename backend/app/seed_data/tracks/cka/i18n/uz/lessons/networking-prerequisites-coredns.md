@@ -1,6 +1,6 @@
 ## DNS serverni qo’lda ishga tushirish
 
-CoreDNS bilan `kube-system` dagi Deployment sifatida uchrashishdan oldin,
+CoreDNS bilan `kube-system`’dagi Deployment sifatida uchrashishdan oldin,
 uni bir marta oddiy binar sifatida ishga tushiring - shunda keyinroq
 tahrirlaydigan ConfigMap’ingiz "shunchaki Corefile" ekani ravshan bo’ladi.
 
@@ -34,8 +34,8 @@ dig @localhost example.com    # 8.8.8.8 ga uzatildi
 ```
 
 Server blokni pipeline sifatida o’qing: `.` zonasidagi (ya’ni hamma
-narsadagi) nom uchun so’rov `hosts` dan o’tadi, u javob bera olsa javob
-beradi, aks holda `forward` ga tushib ketadi. `log` va `errors` - kuzatuv
+narsadagi) nom uchun so’rov `hosts`’dan o’tadi, u javob bera olsa javob
+beradi, aks holda `forward`’ga tushib ketadi. `log` va `errors` - kuzatuv
 plugin’lari. Shu shakl - zona, plugin’lar zanjiri va ulardan biri javob
 beradi - butun modelning o’zi.
 
@@ -70,7 +70,7 @@ kubectl get configmap coredns -n kube-system -o yaml
 
 | Plugin | Nima qiladi |
 |---|---|
-| `kubernetes cluster.local ...` | **asosiy** plugin: API orqali Service va Pod’larni kuzatadi va `*.cluster.local` ga javob beradi |
+| `kubernetes cluster.local ...` | **asosiy** plugin: API orqali Service va Pod’larni kuzatadi va `*.cluster.local`’ga javob beradi |
 | `forward . /etc/resolv.conf` | `cluster.local` bo’lmagan hamma narsa node’ning upstream resolver’lariga ketadi |
 | `cache 30` | javoblarni 30 s keshlaydi |
 | `health`, `ready` | Deployment ishlatadigan probe’lar |
@@ -101,7 +101,7 @@ new.example.com` - ilovaga hostname qattiq yozib qo’yilgan bo’lsa, ba’zan
 eng tez yechim.
 
 :::exam-tip
-`forward . /etc/resolv.conf` qatori - Pod nega `google.com` ni aniqlay
+`forward . /etc/resolv.conf` qatori - Pod nega `google.com`’ni aniqlay
 olishining sababi: CoreDNS **node** nimadan foydalansa, o’shandan so’raydi.
 Pod’lardan tashqi nomlar ishlamay, klaster nomlari ishlasa, node’larning
 `/etc/resolv.conf` faylini tekshiring - va CoreDNS loglaridagi `loop`
@@ -112,7 +112,7 @@ aniq nomlab beradi.
 ## O’zingizni tekshiring
 
 1. Server blok nima va uning ichida `fallthrough` nima qiladi?
-2. `api.payroll.svc.cluster.local` ga qaysi plugin javob beradi, `example.com`
-   ga qaysi biri?
+2. `api.payroll.svc.cluster.local`’ga qaysi plugin javob beradi,
+   `example.com`’ga qaysi biri?
 3. coredns ConfigMap’idagi o’zgarish ishlayotgan CoreDNS Pod’lariga qanday
    yetib boradi?

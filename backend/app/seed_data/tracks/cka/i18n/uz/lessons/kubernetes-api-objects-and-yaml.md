@@ -16,7 +16,7 @@ status:                    # kuzatilgan holat - buni tizim yozadi
   readyReplicas: 3
 ```
 
-`status`ni siz hech qachon yozmaysiz. Uni manifestga qo’shsangiz, e’tiborga
+`status`’ni siz hech qachon yozmaysiz. Uni manifestga qo’shsangiz, e’tiborga
 olinmaydi.
 
 ## apiVersion: guruh va versiyani o’qish
@@ -81,10 +81,10 @@ Cluster-scoped obyektlar (namespace’siz): Node, PersistentVolume, Namespace,
 ClusterRole, ClusterRoleBinding, StorageClass, CustomResourceDefinition.
 
 :::warning
-Cluster-scoped obyektda `metadata.namespace`ni ko’rsatish - xato; namespaced
+Cluster-scoped obyektda `metadata.namespace`’ni ko’rsatish - xato; namespaced
 obyektda esa uni tushirib qoldirish jimgina joriy kontekstingizning
 namespace’ini ishlatadi - u savolda so’ralgani bo’lmasligi mumkin. Imtihonda
-kontekstga tayanmasdan, har doim `-n`ni aniq yozing.
+kontekstga tayanmasdan, har doim `-n`’ni aniq yozing.
 :::
 
 ## Ishonsa bo’ladigan YAML yozish
@@ -110,7 +110,7 @@ spec:
       image: busybox
 ```
 
-Tez-tez uchraydigan xato - `containerPort`ni ro’yxat o’rniga map sifatida
+Tez-tez uchraydigan xato - `containerPort`’ni ro’yxat o’rniga map sifatida
 yozish:
 
 ```yaml
@@ -211,5 +211,5 @@ qaytadan yaratishingiz kerak.
 
 1. Label va annotation orasidagi farq nima?
 2. `Ingress` namespaced’mi va qaysi API guruhida ekanini qaysi buyruq aytadi?
-3. Nega `spec.selector.matchLabels` `spec.template.metadata.labels`ga mos
+3. Nega `spec.selector.matchLabels` `spec.template.metadata.labels`’ga mos
    kelmaganda Deployment yaratilmaydi?

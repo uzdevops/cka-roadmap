@@ -111,7 +111,7 @@ Imtihon topshiriqlari aynan `find` sintaksisidek o’qiladi: "/var ostidagi
 /root/big.txt ga saqlang" →
 `find /var -type f -size +10M -user root > /root/big.txt 2>/dev/null`.
 root bo’lmaganingizda doim `2>/dev/null` (ruxsat shovqini), "fayllar"
-deyilganda `-type f`, `-delete`/`-exec` ni esa faqat `-print` ro’yxatini
+deyilganda `-type f`, `-delete`/`-exec`’ni esa faqat `-print` ro’yxatini
 bir marta ko’rganingizdan keyin ishlating.
 :::
 
@@ -120,4 +120,4 @@ bir marta ko’rganingizdan keyin ishlating.
 1. `-perm 644`, `-perm -644` va `-perm /644` orasidagi farq nima?
 2. `/var/log` ostidagi 7 kundan ko’p oldin o’zgargan `.log` fayllarni
    topib o’chiradigan buyruqni yozing.
-3. `-exec cmd {} +` qachon `-exec cmd {} \;` dan afzal?
+3. `-exec cmd {} +` qachon `-exec cmd {} \;`’dan afzal?

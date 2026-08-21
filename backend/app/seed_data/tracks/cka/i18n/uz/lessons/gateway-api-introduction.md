@@ -135,8 +135,8 @@ kubectl describe httproute web-route -n app-space | grep -A10 Status
 
 `Accepted: False` bo’lgan route’ni Gateway rad etgan - odatda Gateway’ning
 `allowedRoutes` i route’ning namespace’ini o’z ichiga olmaydi yoki
-`parentRefs` uni noto’g’ri nomlaydi. `ResolvedRefs: False` esa `backendRefs`
-dagi Service mavjud emasligini bildiradi (yoki u ReferenceGrant’siz boshqa
+`parentRefs` uni noto’g’ri nomlaydi. `ResolvedRefs: False` esa
+`backendRefs`’dagi Service mavjud emasligini bildiradi (yoki u ReferenceGrant’siz boshqa
 namespace’da).
 
 :::exam-tip

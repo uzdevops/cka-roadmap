@@ -122,10 +122,24 @@ def check(track: str, slug: str) -> list[str]:
     detached = re.compile(
         r"\b([A-Z][A-Za-z]+) (larni|laridagi|larga|larda|lardan|lar|dagi|ning|dan|ni|ga|da)\b"
     )
+    # ...and after an inline code span it attaches with U+2019: `man`’dan,
+    # never "`man` dan" and never "`man`dan".
+    SUF = r"(?:larning|lardan|larga|larda|larni|lar|dagi|ning|gacha|dan|siz|ni|ga|da)"
+    code_suffix = re.compile(r"(`[^`\n]+`) ?(?<!’)(" + SUF + r")\b")
+    inside = False
     for n, line in enumerate(uz.splitlines(), 1):
+        if line.startswith("```"):
+            inside = not inside
+            continue
+        if inside:
+            continue
         m = detached.search(line)
         if m:
             problems.append(f"detached suffix, line {n}: {m.group(0)}")
+            break
+        m = code_suffix.search(line)
+        if m and "`’" not in m.group(0):
+            problems.append(f"suffix not attached to code span, line {n}: {m.group(0)}")
             break
 
     if "## O’zingizni tekshiring" not in uz:

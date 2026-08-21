@@ -47,7 +47,7 @@ kubectl delete -k overlays/prod                            # overlay yaratgan ha
 ```
 
 Ikki qadamli shaklning odatdan tashqari foydasi ham bor: render qilingan
-faylni saqlab commit qilish, uni `-k`ni tushunmaydigan asbobga berish yoki
+faylni saqlab commit qilish, uni `-k`’ni tushunmaydigan asbobga berish yoki
 CI’da uni `grep` qilish.
 
 ```bash
@@ -76,8 +76,8 @@ Ular maydon va yo’lni aytib beradi. Shuning uchun tekshiruv asbobi -
 shundan keyin `apply -k`.
 
 :::exam-tip
-Topshiriqda har doim `kubectl apply -k <dir>`dan oldin
-`kubectl kustomize <dir>`ni ishga tushiring - bu bitta buyruq, uch soniya
+Topshiriqda har doim `kubectl apply -k <dir>`’dan oldin
+`kubectl kustomize <dir>`’ni ishga tushiring - bu bitta buyruq, uch soniya
 turadi va "apply nega bunday qildi" degan savolni "ha, patch hech nimani
 nishonga olmayapti"ga aylantiradi. Apply’dan keyin `kubectl get all -n <ns>`
 natija va’da qilgan nomlarni tasdiqlaydi.

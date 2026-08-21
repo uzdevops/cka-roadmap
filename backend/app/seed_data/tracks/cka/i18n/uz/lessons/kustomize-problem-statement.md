@@ -12,7 +12,7 @@ k8s/
 
 O’n ikkita fayl, ulardan to’qqiztasi deyarli bir xil nusxa. Readiness probe
 qo’shish: uchta faylni tahrirlash. Label’ni tuzatish: uchta fayl. Bir oy
-ichida `dev` da `prod` da yo’q probe paydo bo’ladi va qaysi farqlar ataylab
+ichida `dev`’da `prod`’da yo’q probe paydo bo’ladi va qaysi farqlar ataylab
 qilinganini hech kim bilmaydi.
 
 ## G’oya: baza va overlay’lar
@@ -72,7 +72,7 @@ qila oladi.
 :::exam-tip
 Imtihon topshirig’ining shakli shunday: "baza katalogi va overlay berilgan;
 `kubectl apply -k` X ni hosil qiladigan qilib overlay’ni tuzating yoki
-to’ldiring". Siz `kustomization.yaml` ni o’qiysiz, transformer yoki patch
+to’ldiring". Siz `kustomization.yaml`’ni o’qiysiz, transformer yoki patch
 qo’shasiz va apply qilasiz. Faylning bo’limlarini va `-k` bayrog’ini biling.
 :::
 

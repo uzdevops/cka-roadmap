@@ -48,7 +48,7 @@ ishlaydi, lekin faqat **leader** harakat qiladi; qolganlari kutadi.
 - --leader-elect-retry-period=2s
 ```
 
-Leader `kube-system` dagi **Lease** obyektini ushlab turadi va uni har 2
+Leader `kube-system`’dagi **Lease** obyektini ushlab turadi va uni har 2
 soniyada yangilaydi; agar u 15 soniya davomida yangilashni to’xtatsa, boshqa
 nusxa lease’ni oladi va leader bo’ladi.
 

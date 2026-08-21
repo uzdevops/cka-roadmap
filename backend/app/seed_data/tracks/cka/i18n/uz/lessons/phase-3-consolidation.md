@@ -1,6 +1,6 @@
 ## Bitta so’rov, barcha qatlamlar
 
-Brauzer `https://shop.example.com/watch/movies/1` ni so’raydi. Uni to
+Brauzer `https://shop.example.com/watch/movies/1`’ni so’raydi. Uni to
 konteynergacha va orqaga qaytguncha kuzatib boring, har bir qadamda
 komponentni nomlab. Buni yoddan so’zlab bera olsangiz, tarmoq bosqichi
 sizniki.
@@ -31,13 +31,13 @@ Secret’idagi sertifikat bilan **TLS**’ni tugatadi.
 
 Kontroller `Host: shop.example.com` va `/watch/movies/1` path’ini o’zining
 **HTTPRoute** (yoki Ingress) qoidalariga solishtiradi: `/watch` →
-`video-service:8080`, va URLRewrite/rewrite-target path’ni `/movies/1` ga
-aylantiradi. U `video-service:8080` ga ulanish ochadi.
+`video-service:8080`, va URLRewrite/rewrite-target path’ni `/movies/1`’ga
+aylantiradi. U `video-service:8080`’ga ulanish ochadi.
 
 ### 5. Service discovery
 
 `video-service` nomini **CoreDNS** yechadi - kontroller Pod’ining
-`/etc/resolv.conf` i `10.96.0.10` ga ishora qiladi; `kubernetes` plagini
+`/etc/resolv.conf` i `10.96.0.10`’ga ishora qiladi; `kubernetes` plagini
 Service’lar kuzatuvidan javob beradi: `video-service.app-space.svc.cluster.local →
 10.96.44.3`. (Ko’p kontrollerlar buni o’tkazib yuborib, to’g’ridan-to’g’ri
 EndpointSlice’larni kuzatadi va Pod IP’lariga boradi - lekin oddiy klient
@@ -45,9 +45,9 @@ nomni yechardi.)
 
 ### 6. Yana Service
 
-Kontroller Pod’idan `10.96.44.3:8080` ga ulanish kontroller node’idagi
+Kontroller Pod’idan `10.96.44.3:8080`’ga ulanish kontroller node’idagi
 **kube-proxy**’ning qoidalariga uriladi: `KUBE-SERVICES` → `KUBE-SVC-*` →
-tasodifiy tanlangan bitta `KUBE-SEP-*` → video Pod’iga, `10.244.2.7:8080` ga
+tasodifiy tanlangan bitta `KUBE-SEP-*` → video Pod’iga, `10.244.2.7:8080`’ga
 DNAT. Service umuman faqat o’sha qoida sifatida mavjud edi.
 
 ### 7. Pod’dan Pod’ga
@@ -67,8 +67,8 @@ shart.
 
 ### 9. Ilova
 
-Konteyner jarayoni `:8080` ni tinglaydi - bu `containerPort`, Service’ning
-`targetPort` i unga mos keladi. U `/movies/1` ni beradi. Agar u Ready
+Konteyner jarayoni `:8080`’ni tinglaydi - bu `containerPort`, Service’ning
+`targetPort` i unga mos keladi. U `/movies/1`’ni beradi. Agar u Ready
 bo’lmaganida, EndpointSlice’ga tushmasdi va 6-qadam uni hech qachon
 tanlamasdi.
 
@@ -76,7 +76,7 @@ tanlamasdi.
 
 Javob video Pod’idan `10.244.1.x` (kontroller Pod’i) tomon chiqadi; node02
 uni CNI orqali qaytaradi; kontroller node’ida **conntrack** manbani un-NAT
-qiladi, shuning uchun kontroller uni o’zi so’ragan Service - `10.96.44.3` dan
+qiladi, shuning uchun kontroller uni o’zi so’ragan Service - `10.96.44.3`’dan
 kelgandek ko’radi. Kontroller HTTP javobini TLS ulanishiga yozadi; node
 chiqishda NodePort DNAT’ini un-NAT qiladi; brauzer o’z sahifasini oladi.
 

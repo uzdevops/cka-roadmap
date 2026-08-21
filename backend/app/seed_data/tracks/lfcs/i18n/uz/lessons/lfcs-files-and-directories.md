@@ -33,8 +33,8 @@ cp -p file.txt /tmp/             # mode/egalik/timestamp'larni saqlaydi (bitta f
 ```
 
 `cp dir/ dst/` va `cp dir dst/`: `-r` bilan **maqsad** oxiridagi qiya chiziq
-"ichiga" degani; `dst` allaqachon mavjudmi-yo’qmi - `dst/dir` ni yoki `dir`
-nusxasi bo’lgan `dst` ni olishingizni shu hal qiladi. Shubhalansangiz, keyin
+"ichiga" degani; `dst` allaqachon mavjudmi-yo’qmi - `dst/dir`’ni yoki `dir`
+nusxasi bo’lgan `dst`’ni olishingizni shu hal qiladi. Shubhalansangiz, keyin
 `ls dst` qiling.
 
 ## Ko’chirish va nomini o’zgartirish
@@ -68,7 +68,7 @@ Bo’sh o’zgaruvchi bilan yoki o’zingiz mo’ljallagandan ko’prog’iga mo
 keladigan glob bilan `rm -rf` istalgan hujumchidan ko’ra ko’proq serverni
 yo’q qilgan. `rm -rf
 $DIR/*` dan oldin `echo rm -rf $DIR/*` - nima ochilishiga qarang. Va hech
-qachon `rm` ni `rm -i` ga alias qilib, unga tayanmang; bu odat keyingi
+qachon `rm`’ni `rm -i`’ga alias qilib, unga tayanmang; bu odat keyingi
 mashinaga o’tmaydi.
 :::
 
@@ -76,7 +76,7 @@ mashinaga o’tmaydi.
 
 | Pattern | Nimaga mos keladi |
 |---|---|
-| `*` | istalgan satr, bo’sh satr ham (boshidagi `.` dan tashqari) |
+| `*` | istalgan satr, bo’sh satr ham (boshidagi `.`’dan tashqari) |
 | `?` | roppa-rosa bitta belgi |
 | `[abc]`, `[a-z]`, `[0-9]` | to’plam/diapazondan bitta belgi |
 | `[!abc]` yoki `[^abc]` | to’plamda yo’q bitta belgi |
@@ -95,7 +95,7 @@ echo *                           # rm ichida ishlatishdan oldin glob nimaga ochi
 ```
 
 Globlarni buyruq ishga tushishidan oldin **shell** ochadi: `rm *.txt`
-`rm a.txt b.txt c.txt` ga aylanadi. Buyruq pattern’ning o’zini ko’rishi
+`rm a.txt b.txt c.txt`’ga aylanadi. Buyruq pattern’ning o’zini ko’rishi
 kerak bo’lsa, uni qo’shtirnoqqa oling (`'*.txt'`) - keyingi darsda
 `find -name '*.txt'`.
 
@@ -120,5 +120,5 @@ buyruqni emas, yakuniy holatni ko’radi.
 ## O’zingizni tekshiring
 
 1. `cp -r` va `cp -a` orasidagi farq nima?
-2. `proj/src`, `proj/test` va `proj/docs` ni yaratadigan bitta buyruq yozing.
-3. `rm -rf $DIR/*` dan oldin `echo rm -rf $DIR/*` nega yaxshi odat?
+2. `proj/src`, `proj/test` va `proj/docs`’ni yaratadigan bitta buyruq yozing.
+3. `rm -rf $DIR/*`’dan oldin `echo rm -rf $DIR/*` nega yaxshi odat?

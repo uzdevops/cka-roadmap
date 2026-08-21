@@ -25,7 +25,7 @@ grep -Ei '(jan|feb|mar) [0-9]+' log
 grep -E 'colou?r' file                  # ? backslashsiz
 ```
 
-Qavslar `|`ning qamrovini belgilaydi: `^root|admin:` - "root bilan
+Qavslar `|`’ning qamrovini belgilaydi: `^root|admin:` - "root bilan
 boshlanadi YOKI tarkibida admin: bor" degani; `^(root|admin):` esa -
 "root: yoki admin: bilan boshlanadi" degani.
 
@@ -90,13 +90,13 @@ grep -Eo 'inet [0-9.]+' <(ip a) | awk '{print $2}'                              
 Topshiriqda "X yoki Y bor qatorlar" deyilsa → `grep -E 'X|Y'`; "kamida
 uch xonali son" → `grep -E '[0-9]{3,}'`; "`$PATH` harfma-harf satriga mos
 qatorlar" → `grep -F '$PATH'`. Agar `+` yoki `|` bor pattern oddiy
-`grep`da hech narsaga mos kelmasa, siz `-E`ni unutgansiz - bu regexdagi
+`grep`’da hech narsaga mos kelmasa, siz `-E`’ni unutgansiz - bu regexdagi
 eng ko’p uchraydigan nosozlik.
 :::
 
 ## O’zingizni tekshiring
 
-1. `grep 'colou\?r\|gray'`ni ERE ko’rinishida qayta yozing.
+1. `grep 'colou\?r\|gray'`’ni ERE ko’rinishida qayta yozing.
 2. Faqat MAC manzildan (`aa:bb:cc:dd:ee:ff`) iborat qatorlarga mos
    keladigan ERE yozing.
 3. `grep -F` qachon to’g’ri vosita va nega?

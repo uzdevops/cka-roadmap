@@ -44,7 +44,7 @@ spec:
 
 Har bir replika **bir xil** claim’ni mount qiladi. RWO volume bilan bu har
 bir replika bitta node’ga tushishi kerakligini anglatadi - aks holda ikkinchi
-replika `Multi-Attach error` bilan `ContainerCreating`da qotib qoladi.
+replika `Multi-Attach error` bilan `ContainerCreating`’da qotib qoladi.
 Rolling update paytida ham yangi Pod eskisi volume’ni bo’shatmaguncha uni
 ulay olmasligi mumkin, shuning uchun ko’pincha halol sozlama -
 `strategy: Recreate`. PVC’li Deployment’lar **bitta replika** uchun yoki
@@ -97,9 +97,9 @@ kubectl get pvc
 # data-db-2   Bound   pvc-c91...   10Gi   RWO   fast
 ```
 
-`volumeClaimTemplates` `data-db-0`, `data-db-1`, `data-db-2` ni yaratadi -
+`volumeClaimTemplates` `data-db-0`, `data-db-1`, `data-db-2`’ni yaratadi -
 har bir tartib raqamiga bitta claim. `db-1` qayta rejalashtirilganda, qayerga
-tushishidan qat’i nazar, `data-db-1` ni qaytarib oladi. Masshtabni kamaytirish
+tushishidan qat’i nazar, `data-db-1`’ni qaytarib oladi. Masshtabni kamaytirish
 claim’larni **o’chirmaydi** (ma’lumot keyingi kengaytirish uchun saqlanadi);
 StatefulSet’ni o’chirish ham, agar
 `persistentVolumeClaimRetentionPolicy` boshqacha aytmasa, ularni

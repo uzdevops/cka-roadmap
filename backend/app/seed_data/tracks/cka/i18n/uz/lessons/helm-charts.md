@@ -80,7 +80,7 @@ resources: {}
 
 `{{ .Values.x }}` birlashtirilgan value’larni o’qiydi; `.Chart` Chart.yaml’ni
 o’qiydi; `.Release.Name`/`.Release.Namespace` - release’niki; `include`
-`_helpers.tpl`dan nomlangan shablonni chaqiradi; `default`, `toYaml`,
+`_helpers.tpl`’dan nomlangan shablonni chaqiradi; `default`, `toYaml`,
 `nindent`, `quote` - eng ko’p uchraydigan funksiyalar. `{{- ` o’zidan
 oldingi bo’sh joyni kesadi.
 

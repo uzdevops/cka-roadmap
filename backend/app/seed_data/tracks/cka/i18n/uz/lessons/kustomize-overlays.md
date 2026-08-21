@@ -66,12 +66,12 @@ diff <(kubectl kustomize k8s/overlays/dev) <(kubectl kustomize k8s/overlays/prod
 | | secret havolalari (Secret’ning o’zi odatda boshqa joydan keladi) |
 
 Agar bir xil patch’ni har bir overlay’da uchratsangiz, uning o’rni bazada.
-Agar biror joyda `if prod` ni uchratsangiz, sizda overlay yetishmayapti.
+Agar biror joyda `if prod`’ni uchratsangiz, sizda overlay yetishmayapti.
 
 ## Overlay ustidagi overlay’lar
 
 Overlay o’ziga baza sifatida boshqa overlay’ni olishi mumkin -
-`overlays/prod-eu` `../prod` ni qo’shadi va region label’i bilan
+`overlays/prod-eu` `../prod`’ni qo’shadi va region label’i bilan
 hostname’ni o’zgartiradi. Kustomize cheksiz birlashtiraveradi. Qiymat
 qayerdan kelganini topish uchun `kubectl kustomize` chiqishini o’qish sizga
 zavq bermasa, ikki daraja bilan cheklaning.

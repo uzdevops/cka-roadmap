@@ -49,8 +49,8 @@ narsa ham shu.
 
 Siz CSI driver’ini hech qachon o’zingiz chaqirmaysiz. Siz **StorageClass**ni
 nomlaydigan **PersistentVolumeClaim** yaratasiz; StorageClass driver nomi
-bo’lgan `provisioner`ni nomlaydi; external-provisioner sidecar’i claim’ni
-ko’radi va `CreateVolume` ni chaqiradi; claim’ingizga bog’langan
+bo’lgan `provisioner`’ni nomlaydi; external-provisioner sidecar’i claim’ni
+ko’radi va `CreateVolume`’ni chaqiradi; claim’ingizga bog’langan
 **PersistentVolume** paydo bo’ladi; claim’dan foydalanadigan Pod node’ga
 tushganda attacher va node plugin’i uni mount qiladi. Keyingi darslar bu
 obyektlarni birma-bir - volume’lar, PV’lar, PVC’lar, StorageClass’lar - ko’rib

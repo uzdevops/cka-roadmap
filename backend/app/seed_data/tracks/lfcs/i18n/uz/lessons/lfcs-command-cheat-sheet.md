@@ -116,7 +116,7 @@ borib, siz ellik marta ishlatgan satrlar - aynan imtihonning o’zi.
 
 1. Orqaga qaramasdan: home direktoriyasi, bash shell’i va tugash sanasi
    bilan user qo’shadigan buyruq.
-2. ext4 fayl tizimini UUID bo’yicha `/mnt/data` ga `noexec` bilan mount
+2. ext4 fayl tizimini UUID bo’yicha `/mnt/data`’ga `noexec` bilan mount
    qiladigan fstab satri.
 3. TCP 80 ni 8080 ga yo’naltiradigan va uni doimiy qiladigan firewalld
    buyrug’i.

@@ -1,7 +1,7 @@
 ## Ikkalasi ham hal qiladigan muammo
 
 Sizda bitta ilova uchun Deployment, Service, ConfigMap va Ingress bor. Ular
-sizga `dev`, `staging` va `prod` da kerak - har xil replika soni, image,
+sizga `dev`, `staging` va `prod`’da kerak - har xil replika soni, image,
 hostname va resurs limitlari bilan. To’rtta faylni uch marta nusxalash o’n
 ikkita fayl beradi va ular birinchi haftadayoq bir-biridan uzoqlashadi.
 
@@ -70,7 +70,7 @@ tilisiz **o’z manifestlaringizni muhitlar bo’ylab boshqarish**.
 2025-yilgi CKA ikkalasini ham dasturga qo’shdi: "klaster komponentlarini
 o’rnatish uchun Helm va Kustomize’dan foydalanish". `helm repo add / install / upgrade / rollback /
 uninstall` va resources, transformer hamda patch ishlatadigan kustomization
-bilan `kubectl apply -k` ni kuting. Keyingi darslar har birini alohida ko’rib
+bilan `kubectl apply -k`’ni kuting. Keyingi darslar har birini alohida ko’rib
 chiqadi, laboratoriyalar esa buni qo’lingizga o’rgatadi.
 :::
 

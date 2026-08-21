@@ -48,7 +48,7 @@ kubectl create clusterrolebinding michelle-storage-admin --clusterrole=storage-a
 ClusterRole namespace’li resurslarni ham nomlashi mumkin - `pods`,
 `deployments`. **ClusterRoleBinding** bilan bog’lansa, u bularni **har bir**
 namespace’da beradi; `dev` namespace’dagi **RoleBinding** bilan bog’lansa,
-faqat `dev`da beradi.
+faqat `dev`’da beradi.
 
 | Role turi | Binding turi | Amaldagi qamrov |
 |---|---|---|
@@ -97,7 +97,7 @@ lekin hech narsa bermaydigan binding chiqadi.
 
 `view`, `edit` va `admin` - **agregatsiyalangan**: controller manager ularni
 qo’shilishi kerakligi label bilan belgilangan har bir ClusterRole’dan yig’adi.
-CRD muallifi o’rnatilgan rolni tahrirlamasdan `view`ga o’zining yangi
+CRD muallifi o’rnatilgan rolni tahrirlamasdan `view`’ga o’zining yangi
 resursini ko’rsatishi aynan shu tarzda bo’ladi:
 
 ```yaml

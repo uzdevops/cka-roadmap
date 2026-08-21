@@ -71,7 +71,7 @@ systemd-analyze verify /etc/systemd/system/my.service    # sintaksisni tekshiris
 | `/run/systemd/system/` | runtime, vaqtinchalik | o’rtada |
 | `/etc/systemd/system/` | **sizniki** - lokal unit’lar va override’lar | **eng yuqori** |
 
-`/lib` dagi paket unit’ini hech qachon tahrirlamang - paket yangilanishi
+`/lib`’dagi paket unit’ini hech qachon tahrirlamang - paket yangilanishi
 uni qayta yozib yuboradi. Buning o’rniga override qiling:
 
 ```bash
@@ -85,7 +85,7 @@ sudo systemctl restart nginx
 systemctl cat nginx                  # endi nima kuchda ekanini tasdiqlang
 ```
 
-`systemctl edit` `daemon-reload` ni siz uchun bajaradi; faylni qo’lda
+`systemctl edit` `daemon-reload`’ni siz uchun bajaradi; faylni qo’lda
 tahrirlash esa bajarmaydi - va unutilgan `daemon-reload` systemd eski
 ta’rifni ishlatishda davom etadi degani, bu esa besh daqiqalik chalkashlik.
 
@@ -103,9 +103,9 @@ journalctl -xeu myapp                 # systemd tavsiya qiladigan kombinatsiya: 
 
 | status= | Odatda |
 |---|---|
-| `203/EXEC` | `ExecStart` dagi binary mavjud emas yoki bajariladigan emas |
+| `203/EXEC` | `ExecStart`’dagi binary mavjud emas yoki bajariladigan emas |
 | `200/CHDIR` | `WorkingDirectory` mavjud emas |
-| `217/USER` | `User=` da ko’rsatilgan user mavjud emas |
+| `217/USER` | `User=`’da ko’rsatilgan user mavjud emas |
 | `1` | dasturning o’zi ishlamadi - uning o’z log satrlarini o’qing |
 | `226/NAMESPACE` | sandbox direktivasi (`ProtectSystem`, `PrivateTmp`) nimanidir to’sib qo’ygan |
 | `timeout` | service tayyorligini bildirmadi - `Type=` noto’g’ri |

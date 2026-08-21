@@ -40,7 +40,7 @@ current-context: kubernetes-admin@kubernetes
 ```
 
 `-data` maydonlari fayl mazmunini base64 bilan kodlangan holda saqlaydi
-(`--embed-certs` shuni beradi); `-data`siz shakllar esa fayllarga ishora
+(`--embed-certs` shuni beradi); `-data`’siz shakllar esa fayllarga ishora
 qiladi. Context - bu (cluster, user, namespace) uchligi; `current-context`
 ulardan birini nomlaydi.
 
@@ -51,7 +51,7 @@ ulardan birini nomlaydi.
 3. `~/.kube/config`
 
 kubeadm control plane’ida admin fayli - `/etc/kubernetes/admin.conf`;
-`kubeadm init` sizga uni `~/.kube/config` ga nusxalashni aytadi.
+`kubeadm init` sizga uni `~/.kube/config`’ga nusxalashni aytadi.
 
 ## Uni kubectl config bilan boshqarish
 
@@ -89,7 +89,7 @@ kubectl --kubeconfig=my-kube-config get pods
 |---|---|
 | `unable to read client-cert /etc/kubernetes/pki/users/dev-user/developer-user.crt ... no such file` | `client-certificate` yo’li - xato yozilgan yoki fayl nomi noto’g’ri |
 | `x509: certificate signed by unknown authority` | `certificate-authority` klasterning CA’si emas (yoki klaster sertifikati o’zgargan) |
-| `dial tcp ... connection refused` / `i/o timeout` | `server:` da manzil yoki port (`6443`) noto’g’ri |
+| `dial tcp ... connection refused` / `i/o timeout` | `server:`’da manzil yoki port (`6443`) noto’g’ri |
 | `error: context "research" does not exist` | context nomi yoki u boshqa faylda |
 | `The connection to the server localhost:8080 was refused` | umuman kubeconfig topilmadi - `KUBECONFIG` o’rnatilmagan va `~/.kube/config` yo’q |
 | `error: You must be logged in to the server (Unauthorized)` | foydalanuvchining sertifikati/token’i qabul qilinmadi - muddati o’tgan, uni noto’g’ri CA imzolagan |

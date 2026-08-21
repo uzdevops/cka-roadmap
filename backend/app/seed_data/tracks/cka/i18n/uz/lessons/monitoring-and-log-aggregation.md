@@ -40,7 +40,7 @@ kubectl logs job/backup
 
 :::exam-tip
 `--previous` - "nega crash bo’ldi" degan savolga javob beradigan flag.
-`CrashLoopBackOff` dagi konteyner har bir necha soniyada qayta ishga tushadi;
+`CrashLoopBackOff`’dagi konteyner har bir necha soniyada qayta ishga tushadi;
 uning *joriy* logi - yangi startning birinchi qatorlari, uni o’ldirgan xato
 esa *oldingi* nusxaning logida. Har doim avval `kubectl logs <pod>
 --previous`.
@@ -90,15 +90,15 @@ probe failed, OOMKilled, evicted. Sukut bo’yicha ular bir soatdan keyin
 yo’qoladi, shuning uchun ular turganida o’qing.
 
 :::tip
-`kubectl logs` `--since` va `--tail` ni birga qabul qiladi; `--since=1h
+`kubectl logs` `--since` va `--tail`’ni birga qabul qiladi; `--since=1h
 --tail=100` "oxirgi soatdagi oxirgi yuz qator" degani, ko’p gapiradigan
 konteynerda sizga deyarli har doim aynan shu ko’rinish kerak.
 :::
 
 ## O’zingizni tekshiring
 
-1. Konteyner `CrashLoopBackOff` da. Uni o’ldirayotgan xatoni aynan qaysi
+1. Konteyner `CrashLoopBackOff`’da. Uni o’ldirayotgan xatoni aynan qaysi
    buyruq ko’rsatadi?
-2. Ilova o’z logini konteyner ichidagi `/var/log/app.log` ga yozadi.
+2. Ilova o’z logini konteyner ichidagi `/var/log/app.log`’ga yozadi.
    `kubectl logs` nima ko’rsatadi va sizda qanday ikkita variant bor?
 3. API server ishlamayapti. API server’ning o’z logini qanday o’qiysiz?

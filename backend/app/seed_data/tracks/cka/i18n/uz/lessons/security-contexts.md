@@ -36,7 +36,7 @@ spec:
 | `privileged`, `allowPrivilegeEscalation`, `readOnlyRootFilesystem` | **yo’q** | ha |
 
 Konteyner darajasidagi sozlamalar o’sha konteyner uchun Pod darajasidagilarni
-bekor qiladi. Imtihonda keng tarqalgan xato - `capabilities`ni Pod’ning
+bekor qiladi. Imtihonda keng tarqalgan xato - `capabilities`’ni Pod’ning
 `securityContext`i ostiga qo’yish; u yerda bunday maydon umuman mavjud emas
 va API server buni aytadi.
 
@@ -101,14 +101,14 @@ kubectl label namespace dev pod-security.kubernetes.io/warn=restricted
 | `restricted` | baseline va ustiga: non-root sifatida ishlashi, ALL capability’larni tashlashi, seccomp o’rnatilgani, imtiyoz oshirish yo’qligi shart |
 
 `enforce` rad etadi, `warn` ogohlantirish chiqaradi, `audit` logga yozadi.
-`restricted`dan o’tmagan Pod o’ziga kerak bo’lgan har bir maydonni sanab
+`restricted`’dan o’tmagan Pod o’ziga kerak bo’lgan har bir maydonni sanab
 o’tgan xabar bilan rad etiladi - `allowPrivilegeEscalation != false`,
 `unrestricted capabilities`, `runAsNonRoot
 != true` - bu esa moslashgan spec yozish uchun qulay tekshiruv ro’yxati ham.
 
 :::tip
 `restricted` ko’plab image’larni sindiradigan darajada qattiq (root talab
-qiladigan har qanday narsani). Namespace’da `warn=restricted` dan boshlang,
+qiladigan har qanday narsani). Namespace’da `warn=restricted`’dan boshlang,
 bir kun ogohlantirishlarni o’qing, keyin majburlang.
 :::
 
@@ -116,7 +116,7 @@ bir kun ogohlantirishlarni o’qing, keyin majburlang.
 
 1. `runAsUser` Pod va konteyner darajasida turli qiymatlar bilan berilgan -
    o’sha konteyner uchun qaysi biri ustun keladi?
-2. `capabilities`ni qayerda o’rnatish mumkin va uni boshqa darajaga qo’ysangiz
+2. `capabilities`’ni qayerda o’rnatish mumkin va uni boshqa darajaga qo’ysangiz
    qanday xato chiqadi?
 3. Namespace’ga `pod-security.kubernetes.io/enforce=restricted` label’ini
    qo’yish root sifatida ishlaydigan Pod’ga nima qiladi?

@@ -92,7 +92,7 @@ k rollout status deploy nginx-deploy
 ```
 
 Tuzoq: `--record` eskirgan/olib tashlangan; `rollout history` ko’rsatadigan
-narsa - `kubernetes.io/change-cause` annotatsiyasi. `set image`dagi
+narsa - `kubernetes.io/change-cause` annotatsiyasi. `set image`’dagi
 konteyner nomi `nginx` (image nomidan, `create
 deploy` uni shunday nomlaydi).
 
@@ -125,7 +125,7 @@ k auth can-i create pods -n default --as john           # no
 
 Tuzoqlar: `signerName` aynan `kubernetes.io/kube-apiserver-client` va
 `usages: [client auth]` bo’lsin (hujjat sahifasida bor); CSR’ning base64’i
-bitta qatorda bo’lishi shart; `create role`da verb’lar vergul bilan
+bitta qatorda bo’lishi shart; `create role`’da verb’lar vergul bilan
 ajratilgan ro’yxat.
 
 ### 7. DNS qidiruvlari fayllarga

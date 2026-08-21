@@ -82,7 +82,7 @@ User obyektisiz. Agar topshiriq sizga token bersa, kubeconfig tomoni -
 | `system:serviceaccounts` / `system:serviceaccounts:<ns>` | barcha ServiceAccount’lar / namespace’dagilari |
 | `system:nodes` | kubelet’lar (CN `system:node:<name>`) |
 
-Bular RBAC uchun muhim: ClusterRole’ni `system:authenticated`ga bog’lash uni
+Bular RBAC uchun muhim: ClusterRole’ni `system:authenticated`’ga bog’lash uni
 *yaroqli hisob ma’lumotiga ega har bir kishiga* beradi - bu kamdan-kam siz
 nazarda tutgan narsa bo’ladi.
 
@@ -92,4 +92,4 @@ nazarda tutgan narsa bo’ladi.
    anglatadi?
 2. Client sertifikatida qaysi maydonlar foydalanuvchi nomi va guruhlarga
    aylanadi?
-3. Nega Role’ni `system:authenticated`ga bog’lash xavfli?
+3. Nega Role’ni `system:authenticated`’ga bog’lash xavfli?

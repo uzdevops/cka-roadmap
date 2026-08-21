@@ -14,7 +14,7 @@ man -f passwd            # qaysi bo'limlarda passwd nomli sahifa bor (whatis bil
 man man                  # qo'llanma haqidagi qo'llanma
 ```
 
-Bo’limlar - `ls(1)`, `passwd(5)` dagi raqam:
+Bo’limlar - `ls(1)`, `passwd(5)`’dagi raqam:
 
 | # | Nima | Misol |
 |---|---|---|
@@ -28,7 +28,7 @@ Bo’limlar - `ls(1)`, `passwd(5)` dagi raqam:
 Nom bir necha bo’limda uchraganda (`passwd` 1 va 5 da; `crontab` 1 va 5
 da), `man name` eng kichigini ko’rsatadi; qolgani uchun raqamni bering.
 
-Sahifa ichida (u `less` da ochiladi): `/pattern` qidiradi, `n` keyingi
+Sahifa ichida (u `less`’da ochiladi): `/pattern` qidiradi, `n` keyingi
 moslik, `N` oldingi, `g`/`G` boshi/oxiri, `q` chiqadi, `h` yordam. Tuzilishi
 doim NAME, SYNOPSIS, DESCRIPTION, OPTIONS, keyin FILES, EXAMPLES, SEE ALSO -
 EXAMPLES’ga `/^EXAMPLES` bilan o’ting.
@@ -57,7 +57,7 @@ info ls
 ```
 
 Navigatsiya: `n`/`p` keyingi/oldingi node, `u` yuqoriga, link ustida
-`Enter`, `q`. `man` ga qaraganda kamroq ishlatiladi, lekin ba’zi GNU
+`Enter`, `q`. `man`’ga qaraganda kamroq ishlatiladi, lekin ba’zi GNU
 vositalari (coreutils, grep, sed, bash) eng to’liq hujjatlarini shu yerda
 saqlaydi.
 

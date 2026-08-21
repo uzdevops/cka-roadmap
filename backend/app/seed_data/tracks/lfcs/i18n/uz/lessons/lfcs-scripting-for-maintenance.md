@@ -181,7 +181,7 @@ tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
 
 :::warning
 Cron’da `PATH` minimal va `$HOME` boshqacha bo’lishi mumkin - buyruqlar va
-fayllar uchun absolut yo’llardan foydalaning yoki skript boshida `PATH` ni
+fayllar uchun absolut yo’llardan foydalaning yoki skript boshida `PATH`’ni
 o’rnating. Sizning shell’ingizda ishlaydigan, cron’da esa jimgina
 ishlamaydigan skript deyarli har doim aynan shu (6-hafta bunga qaytadi).
 :::
@@ -191,7 +191,7 @@ Skript topshirig’i kichik bo’ladi: "/usr/local/bin/x da skript yozing, u
 argument sifatida direktoriyani oladi va undagi fayllar sonini chiqaradi,
 direktoriya mavjud bo’lmasa 1 bilan chiqadi". Shebang, argument tekshiruvi,
 `[ -d "$1" ] || exit 1`, ishning o’zi, `chmod +x`. Uni yaxshi va yomon
-argument bilan sinab ko’ring va ikkala safar ham `echo $?` ni tekshiring.
+argument bilan sinab ko’ring va ikkala safar ham `echo $?`’ni tekshiring.
 :::
 
 ## O’zingizni tekshiring

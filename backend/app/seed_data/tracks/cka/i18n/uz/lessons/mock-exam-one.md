@@ -62,7 +62,7 @@ spec:
 sifatida oching: turi `NodePort`, ilova porti `8080`, node porti `30082`.
 
 **11.** (8) Har bir node’ning `osImage`ini olish uchun JSONPath’dan
-foydalaning va uni `/opt/outputs/nodes_os_x43kj56.txt`ga saqlang.
+foydalaning va uni `/opt/outputs/nodes_os_x43kj56.txt`’ga saqlang.
 
 **12.** (10) `pv-analytics` nomli PersistentVolume yarating: storage
 `100Mi`, kirish rejimi `ReadWriteMany`, host path `/pv/data-analytics`.

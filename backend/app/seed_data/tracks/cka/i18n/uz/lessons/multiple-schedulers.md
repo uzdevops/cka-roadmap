@@ -15,7 +15,7 @@ spec:
 Scheduler nomini ko’rsatgan Pod’ni qolgan barcha scheduler’lar e’tiborsiz
 qoldiradi. Ko’rsatilgani ishlamayotgan bo’lsa, Pod **event’siz Pending** bo’lib
 qoladi - bu ham klassik nosozlik topshirig’i: yechim yo o’sha scheduler’ni
-ishga tushirish, yo `schedulerName`ni olib tashlash, toki Pod’ni default
+ishga tushirish, yo `schedulerName`’ni olib tashlash, toki Pod’ni default
 scheduler olib ketsin.
 
 ## Ikkinchi scheduler’ni joylashtirish

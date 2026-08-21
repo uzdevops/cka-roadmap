@@ -4,7 +4,7 @@ Pod’lardan oldin node’larning o’zi gaplasha olishi kerak. Har bir node’g
 kerak:
 
 - kamida bitta IP’li interfeys, betakror hostname va betakror MAC - bir xil
-  MAC yoki `machine-id` ga ega klonlangan VM’lar klasterning klassik
+  MAC yoki `machine-id`’ga ega klonlangan VM’lar klasterning klassik
   nosozligi;
 - node’lar orasida kerakli portlarning ochiqligi;
 - CNI tayanadigan yadro sozlamalari.
@@ -95,7 +95,7 @@ qila olishingizga qiziqadi:
 - uni manifestidan **o’rnatish** va uning Pod CIDR’ini klasternikiga mos
   qilib qo’yish;
 - qaysi biri o’rnatilganini va u nima sifatida ishlashini topish (odatda
-  `kube-system` dagi yoki o’zining namespace’idagi DaemonSet);
+  `kube-system`’dagi yoki o’zining namespace’idagi DaemonSet);
 - NetworkPolicy uni majburlay oladigan CNI talab qilishini bilish.
 
 ```bash

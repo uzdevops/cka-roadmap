@@ -3,7 +3,7 @@
 etcd’ning ikkita klient API’si bo’lgan. Kubernetes **v3**dan foydalanadi va
 zamonaviy `etcdctl` binary’lari sukut bo’yicha v3’ni oladi - lekin eskilari
 sukut bo’yicha v2’ni olardi va ikkalasi bir-biriga mos emas. Shuning uchun har
-bir qo’llanmada har bir buyruq oldida `ETCDCTL_API=3` ni ko’rasiz: u sizga hech
+bir qo’llanmada har bir buyruq oldida `ETCDCTL_API=3`’ni ko’rasiz: u sizga hech
 narsaga tushmaydi va "nega bu ishlamayapti" degan butun bir muammolar sinfini
 yo’q qiladi.
 
@@ -99,7 +99,7 @@ qo’shib, daqiqalarni yo’qotadi.
 
 1. Nega har bir qo’llanma `ETCDCTL_API=3` bilan boshlanadi va uni qachon tashlab
    yuborish mumkin?
-2. `snapshot save` va `snapshot restore` dan qaysi biriga `--cacert`, `--cert`
+2. `snapshot save` va `snapshot restore`’dan qaysi biriga `--cacert`, `--cert`
    va `--key` flaglari kerak va nega?
 3. Secret’ni `etcdctl get` bilan o’qish Kubernetes sukut bo’yicha Secret’larni
    qanday saqlashi haqida nimani isbotlaydi?

@@ -3,7 +3,7 @@
 etcd 3.5 gacha `etcdctl` hamma ishni qilardi. 3.5 dan boshlab loyiha **fayllar**
 ustida ishlaydigan buyruqlarni - snapshot’ni tiklash, uni tekshirish,
 ma’lumotlar katalogini offline defragmentatsiya qilish - ikkinchi binary’ga,
-**`etcdutl`** ga ajratdi va `etcdctl` da **ishlab turgan server** bilan
+**`etcdutl`** ga ajratdi va `etcdctl`’da **ishlab turgan server** bilan
 gaplashadigan buyruqlarni qoldirdi. Sababi: tiklash hech qachon tasodifan
 jonli klasterga yo’naltirilmasligi kerak, tarmoq ulanishini ocha olmaydigan
 vosita esa buni qila olmaydi.
@@ -34,8 +34,8 @@ kubectl exec -n kube-system etcd-controlplane -- etcdutl version
 
 Snapshot uchun bu yetarli - ichiga exec qiling, ishga tushiring, fayl
 konteyner fayl tizimi ichiga tushadi; uni node’ga chiqarish uchun hostPath
-mount bo’lgan yo’lga yozing (`/var/lib/etcd` shundaylardan biri, yoki `/opt`
-ni qo’shing). Tiklash uchun esa binary **host’da** bo’lgani ma’qul, chunki siz
+mount bo’lgan yo’lga yozing (`/var/lib/etcd` shundaylardan biri, yoki
+`/opt`’ni qo’shing). Tiklash uchun esa binary **host’da** bo’lgani ma’qul, chunki siz
 host’da yangi katalog yozasiz va host faylini tahrirlaysiz:
 
 ```bash
@@ -58,7 +58,7 @@ etcdctl version
 ```
 
 3.5 server olgan snapshot 3.5 `etcdutl` bilan muammosiz tiklanadi. 3.4
-`etcdctl` ni 3.5 serverga qarshi aralashtirish `get`/`save` uchun asosan
+`etcdctl`’ni 3.5 serverga qarshi aralashtirish `get`/`save` uchun asosan
 ishlaydi, lekin xato xabarlari chalkash bo’lib qoladi; ularni moslashtirish
 bitta noma’lumni olib tashlaydi.
 
@@ -84,22 +84,22 @@ etcdutl defrag --data-dir /var/lib/etcd            # faqat etcd to'xtatilgan hol
 ```
 
 Muhit o’zgaruvchilariga e’tibor bering: `etcdctl` har bir flag uchun
-`ETCDCTL_*` ni o’qiydi, shuning uchun ularni har bir shell’da bir marta export
-qilsangiz, keyingi har bir buyruq qisqa bo’ladi. Ular `etcdutl` ga ta’sir
+`ETCDCTL_*`’ni o’qiydi, shuning uchun ularni har bir shell’da bir marta export
+qilsangiz, keyingi har bir buyruq qisqa bo’ladi. Ular `etcdutl`’ga ta’sir
 qilmaydi - unga bular kerak emas.
 
 :::exam-tip
 Agar topshiriqda "tiklash uchun etcdctl ishlating" deyilgan bo’lsa - shunday
 qiling, u ogohlantirish bilan ishlaydi. Agar hech narsa deyilmagan bo’lsa,
 `etcdutl` ishlating. Har ikki holatda ham tiklash **hech qanday** endpoint va
-**hech qanday** sertifikat flagini olmaydi; ularni qo’shish `etcdctl` da
-zararsiz, `etcdutl` da esa xato. Ikkita ustunni yodda tuting: tarmoq →
+**hech qanday** sertifikat flagini olmaydi; ularni qo’shish `etcdctl`’da
+zararsiz, `etcdutl`’da esa xato. Ikkita ustunni yodda tuting: tarmoq →
 etcdctl, fayl → etcdutl.
 :::
 
 ## O’zingizni tekshiring
 
-1. Nega etcd loyihasi `snapshot restore` ni `etcdctl` dan chiqarib yubordi?
+1. Nega etcd loyihasi `snapshot restore`’ni `etcdctl`’dan chiqarib yubordi?
 2. Siz `ETCDCTL_*` o’zgaruvchilarini export qildingiz. `etcdutl snapshot
    restore` ulardan foydalanadimi?
 3. Agar `etcdutl` host PATH’ida bo’lmasa, uni kubeadm control plane’da

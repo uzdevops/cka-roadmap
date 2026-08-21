@@ -69,7 +69,7 @@ topadi. Bundan tashqari u Pod’ga node fayl tizimini o’qish va yozish imkonin
 beradi - `baseline` Pod Security uni shuning uchun taqiqlaydi. O’rinli
 ishlatilishlari: node’ning o’ziga chindan muhtoj DaemonSet’lar (log
 jo’natuvchilar, monitoring agentlari, CSI node plugin’lari) va
-`/etc/kubernetes/pki` ni mount qiladigan control plane’ning static Pod’lari.
+`/etc/kubernetes/pki`’ni mount qiladigan control plane’ning static Pod’lari.
 
 :::warning
 "Pod boshqa node’ga qayta rejalashtirilganda ham ma’lumot saqlanib qolishi

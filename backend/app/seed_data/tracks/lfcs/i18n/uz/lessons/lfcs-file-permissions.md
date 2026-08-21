@@ -109,7 +109,7 @@ sudo -u alice cat /srv/project/data/file.txt    # user nomidan sinab ko'rish
 ```
 
 :::warning
-Directory’dan `x` ni olib tashlash uning ostidagi hamma narsaga hammaning
+Directory’dan `x`’ni olib tashlash uning ostidagi hamma narsaga hammaning
 yo’lini yopadi, fayllar qanchalik ochiq bo’lmasin - `namei -l` yo’ldagi
 eng zaif bo’g’inni ko’rsatadi. `chmod -R 777` esa hech qachon javob emas;
 umumiy directory aynan shu yo’l bilan har kim har kimning fayllarini
@@ -118,7 +118,7 @@ bit).
 :::
 
 :::exam-tip
-Topshiriqlar shunday yoziladi: "`/srv/data` ni `devs` guruhi uchun o’qish
+Topshiriqlar shunday yoziladi: "`/srv/data`’ni `devs` guruhi uchun o’qish
 va yozishga ochiq, boshqalar uchun yopiq qiling":
 `chgrp -R devs /srv/data; chmod -R 770 /srv/data` (yoki yangi fayllarda
 guruhni saqlash uchun `2770` - keyingi dars). `ls -ld` bilan va ichkarida

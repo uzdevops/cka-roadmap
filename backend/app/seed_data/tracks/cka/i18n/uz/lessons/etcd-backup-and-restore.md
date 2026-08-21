@@ -28,7 +28,7 @@ etcdutl snapshot status /opt/snapshot-pre-boot.db --write-out=table    # hash, r
 ```
 
 Har safar to’rtta flag: endpoint va uchta TLS fayli. Ularni
-`/etc/kubernetes/manifests/etcd.yaml` dan o’qib olasiz
+`/etc/kubernetes/manifests/etcd.yaml`’dan o’qib olasiz
 (`--listen-client-urls`, `--trusted-ca-file`, `--cert-file`, `--key-file`).
 Snapshot - bitta fayl; u butun klaster, Secret’lari bilan birga, shuning uchun
 unga shunday munosabatda bo’ling.
@@ -69,7 +69,7 @@ volumes:
 
 Konteynerning `--data-dir=/var/lib/etcd` flagi va uning mount yo’li o’z
 holicha qolishi mumkin: o’zgargani hostPath, shuning uchun konteyner ichidagi
-o’sha yo’l endi tiklangan ma’lumotlarga bog’lanadi. (`--data-dir` ni ham
+o’sha yo’l endi tiklangan ma’lumotlarga bog’lanadi. (`--data-dir`’ni ham
 o’zgartirsa bo’ladi, faqat volumeMount unga mos kelsin.)
 
 Faylni saqlang; kubelet etcd’ni yangi katalogdan qayta ishga tushiradi; ~30 s
@@ -100,7 +100,7 @@ cat /etc/systemd/system/etcd.service                     # flaglar va data dir s
 ```
 
 Snapshot buyrug’i o’sha-o’sha (o’sha host’ning endpoint va sertifikatlari
-bilan); tiklash uchun systemd unit’dagi `--data-dir` ni o’zgartiring (va yangi
+bilan); tiklash uchun systemd unit’dagi `--data-dir`’ni o’zgartiring (va yangi
 katalogga `chown etcd:etcd` qiling), so’ng `systemctl daemon-reload &&
 systemctl restart etcd`.
 
@@ -115,7 +115,7 @@ restore:  snapshot restore <file> --data-dir <new dir>
 
 ## O’zingizni tekshiring
 
-1. `snapshot save` va `snapshot restore` dan qaysi biriga TLS flaglari kerak
+1. `snapshot save` va `snapshot restore`’dan qaysi biriga TLS flaglari kerak
    va nega?
 2. Tiklashdan keyin qaysi bitta tahrir klasterni tiklangan ma’lumotlardan
    haqiqatan foydalanishga majbur qiladi va etcd’ni nima qayta ishga

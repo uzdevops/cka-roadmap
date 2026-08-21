@@ -4,7 +4,7 @@ Pod, Deployment, Service - o’rnatilgan kind’lar - har biri API server etcd�
 saqlaydigan va biror yo’l ostida beradigan resurs bo’lib, har birining ular
 ustida harakat qiladigan kontrolleri bor. **CustomResourceDefinition** API
 serverni o’zgartirmasdan xuddi shu tarzda yangi kind qo’shadi: siz sxemani
-tasvirlaysiz, API server `/apis/<your group>/<version>/...` ni bera boshlaydi
+tasvirlaysiz, API server `/apis/<your group>/<version>/...`’ni bera boshlaydi
 va `kubectl` uning obyektlarini boshqa har qanday obyekt kabi yarata, ola va
 o’chira oladi.
 
@@ -64,7 +64,7 @@ kubectl get flighttickets        # yoki: kubectl get ft
 kubectl describe ft my-flight-ticket
 ```
 
-Sxema majburiy: `number: 15` ni API server validatsiya xatosi bilan rad etadi,
+Sxema majburiy: `number: 15`’ni API server validatsiya xatosi bilan rad etadi,
 xuddi noto’g’ri Pod spec’ini rad etgani kabi.
 
 ## CRD nima qilmaydi

@@ -134,4 +134,4 @@ lekin o’sha topshiriq unga jimgina tayanishi mumkin.
    bilan ko’rsatadi va buni qaysi flaglar qiladi?
 2. Servis active, lekin boshqa hostdan unga yetib bo’lmayapti. Uchta
    mumkin bo’lgan sababni va ularni qanday ajratishni ayting.
-3. Nega `systemctl reload nginx` dan oldin `nginx -t` bajariladi?
+3. Nega `systemctl reload nginx`’dan oldin `nginx -t` bajariladi?

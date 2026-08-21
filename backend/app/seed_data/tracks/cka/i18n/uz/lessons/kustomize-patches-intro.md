@@ -75,7 +75,7 @@ patches:
       annotationSelector: ...
 ```
 
-`name`siz, `labelSelector` bilan berilgan nishon mos keladigan **har bir**
+`name`’siz, `labelSelector` bilan berilgan nishon mos keladigan **har bir**
 resursni patch qiladi - bitta patch `tier=web` label’i bo’lgan barcha
 Deployment’larga `nodeSelector` qo’shadi. `name` regex’ni
 qo’llab-quvvatlaydi (`name: "api-.*"`).
@@ -101,7 +101,7 @@ Fe’lga qarab tanlang. **Maydonni o’rnatish yoki qo’shish** → ikkala shak
 ham; strategic merge fayli xatoga kamroq olib keladi. Maydonni yoki ro’yxat
 elementini **o’chirish** → JSON 6902. **Ro’yxatga qo’shish** (konteyner, env
 o’zgaruvchi) → merge key bilan strategic merge eng tushunarli; JSON 6902’da
-`/.../-` ga `add` ham ishlaydi. Keyin maydonni `kubectl
+`/.../-`’ga `add` ham ishlaydi. Keyin maydonni `kubectl
 kustomize | grep` bilan qidiring. Nishoni hech narsaga mos kelmagan patch -
 bu xato; uni o’qing: u qidirgan kind va nomni aytadi.
 :::

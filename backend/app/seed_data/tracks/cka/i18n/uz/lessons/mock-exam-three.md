@@ -12,7 +12,7 @@ alias k=kubectl; export do="--dry-run=client -o yaml"
 ---
 
 **1.** (12) `pvviewer` ServiceAccount’ini, `persistentvolumes` ustida
-`list` ga ruxsat beruvchi `pvviewer-role` ClusterRole’ini va uni shu
+`list`’ga ruxsat beruvchi `pvviewer-role` ClusterRole’ini va uni shu
 ServiceAccount’ga beradigan `pvviewer-role-binding` ClusterRoleBinding’ini
 yarating. Keyin o’sha ServiceAccount’dan foydalanadigan `pvviewer` Pod’ini
 (image `redis`) yarating.
@@ -31,14 +31,14 @@ fayliga saqlang.
 **5.** (12) `default` namespace’ida `np-test-1` Pod’i (label
 `run=np-test-1`, image `nginx`) va `np-test-service` Service’i bor (ularni
 yarating). Shuningdek default-deny-ingress NetworkPolicy ham qo’llangan
-(uni ham yarating). `np-test-1` ga istalgan Pod’dan `80` portga **kiruvchi**
+(uni ham yarating). `np-test-1`’ga istalgan Pod’dan `80` portga **kiruvchi**
 trafikka ruxsat beradigan `ingress-to-nptest` NetworkPolicy’sini yarating.
 `busybox:1.28` Pod’i va `nc -z -v -w 2 np-test-service 80` bilan tekshiring.
 
 **6.** (10) `node01` worker’ini `env_type=production:NoSchedule` bilan taint
-qiling. `dev-redis` Pod’ini (image `redis:alpine`) yarating va u `node01` ga
+qiling. `dev-redis` Pod’ini (image `redis:alpine`) yarating va u `node01`’ga
 **joylashtirilmaganini** tasdiqlang. Taint’ga toleratsiya qiladigan
-`prod-redis` Pod’ini (image `redis:alpine`) yarating va u `node01` ga
+`prod-redis` Pod’ini (image `redis:alpine`) yarating va u `node01`’ga
 **joylashtirilganini** tasdiqlang.
 
 **7.** (6) `hr` namespace’ida `environment=production` va `tier=frontend`
@@ -46,11 +46,11 @@ label’lari bilan, `redis:alpine` image’idan `hr-pod` Pod’ini yarating.
 
 **8.** (12) `/root/CKA/super.kubeconfig` kubeconfig fayli yaratilgan, lekin
 ishlamaydi. Muammoni toping va tuzating. (Mock’dan oldin:
-`cp ~/.kube/config /root/CKA/super.kubeconfig` va server portini `9999` ga
+`cp ~/.kube/config /root/CKA/super.kubeconfig` va server portini `9999`’ga
 o’zgartiring.)
 
 **9.** (14) `nginx-deploy` Deployment’i (uni yarating: image `nginx`, 1
-replika) `3` ga masshtablangan, lekin yangi Pod’lar umuman paydo
+replika) `3`’ga masshtablangan, lekin yangi Pod’lar umuman paydo
 bo’lmayapti. Sababni toping va tuzating. (Mock’dan oldin, control-plane
 node’da: `sed -i 's/kube-controller-manager/kube-contro1ler-manager/' /etc/kubernetes/manifests/kube-controller-manager.yaml`
 - 1 raqamiga e’tibor bering - keyin

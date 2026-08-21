@@ -82,7 +82,7 @@ Imtihon ham, real hayot ham doim uriladigan boolean’lar:
 |---|---|
 | `httpd_can_network_connect` | web ilovaning tashqariga, ma’lumotlar bazasi yoki API’ga ulanishi |
 | `httpd_can_network_connect_db` | ... aynan ma’lumotlar bazasiga |
-| `httpd_enable_homedirs` | `/home/*/public_html` ni tarqatish |
+| `httpd_enable_homedirs` | `/home/*/public_html`’ni tarqatish |
 | `httpd_use_nfs` | NFS mount’idagi web kontent |
 | `ftpd_full_access`, `ftpd_anon_write` | FTP yozishlari |
 | `samba_enable_home_dirs` | Samba home share’lari |
@@ -105,7 +105,7 @@ sudo semodule -r myapp                                    # olib tashlaydi
 ```
 
 `audit2allow` aynan nima rad etilgan bo’lsa, o’shanga ruxsat beruvchi qoida
-yozadi. Yaratilgan `.te` ni avval o’qing: agar u keng qamrovli narsa bersa,
+yozadi. Yaratilgan `.te`’ni avval o’qing: agar u keng qamrovli narsa bersa,
 haqiqiy muammo - noto’g’ri label, yetishmayotgan qoida emas.
 
 ## To’liq ish oqimi, bir marta
@@ -143,13 +143,13 @@ va shu sessiyaning o’zida enforcing’ga qayting.
 Uchta buyruq ko’p SELinux topshirig’ini qoplaydi: `semanage fcontext -a -t <type>
 "<path>(/.*)?"` **va ketidan** `restorecon -Rv <path>`; `semanage port -a
 -t <type> -p tcp <port>`; hamda `setsebool -P <boolean> on`. Ballar `-P` va
-`restorecon` da yo’qoladi. `ls -Z`, `semanage port
+`restorecon`’da yo’qoladi. `ls -Z`, `semanage port
 -l | grep`, `getsebool` bilan tekshiring.
 :::
 
 ## O’zingizni tekshiring
 
 1. `chcon` bilan `semanage fcontext` + `restorecon` o’rtasidagi farq nima?
-2. `setsebool -P` dagi `-P` nima qiladi va usiz nima bo’ladi?
+2. `setsebool -P`’dagi `-P` nima qiladi va usiz nima bo’ladi?
 3. Service nostandart portga bog’lana olmayapti. Buni qaysi vosita tuzatadi
    va yana nima o’zgartirilishi kerak?

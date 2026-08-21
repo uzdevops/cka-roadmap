@@ -60,7 +60,7 @@ getfacl report.txt | grep -E "mask|effective"
 setfacl -m m:rwx report.txt    # mask'ni ko'tarish
 ```
 
-`getfacl` chiqishidagi `#effective:` ni "bu yozuv aslida nima beradi" deb
+`getfacl` chiqishidagi `#effective:`’ni "bu yozuv aslida nima beradi" deb
 o’qing.
 
 ## Default ACL’lar: meros
@@ -127,7 +127,7 @@ sudo lsattr /etc/resolv.conf
 ```
 
 `+i` - "nimadir bu faylni doim qayta yozyapti" muammosining javobi
-(masalan, `resolv.conf` ni qayta yozadigan DHCP klienti) - va root
+(masalan, `resolv.conf`’ni qayta yozadigan DHCP klienti) - va root
 sifatida boshni qotiradigan "Operation not permitted" ning sababi. Root
 faylni o’chira olmasa, birinchi tekshiriladigan narsa - `lsattr`.
 
@@ -168,7 +168,7 @@ egasi/guruhi/rejimi, keyin ACL va uning mask’i, keyin atributlar
 huquqini bering" → `setfacl -m u:X:rw F`, `getfacl F` bilan
 tekshiriladi. "...va keyinchalik D directory’sida yaratilgan hamma
 narsaga ham" → `setfacl -d -m u:X:rwx D`. Ruxsatlar to’g’ri ko’rinsa-yu,
-kirish rad etilsa, **mask**’ni (`#effective:`) va `lsattr` ni tekshiring.
+kirish rad etilsa, **mask**’ni (`#effective:`) va `lsattr`’ni tekshiring.
 :::
 
 ## O’zingizni tekshiring

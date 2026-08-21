@@ -95,7 +95,7 @@ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outfor
 
 Qo’shilayotgan node’da `join` preflight’ni bajaradi, CA’ni oladi, o’z
 kubelet’i uchun CSR yuboradi (token orqali avtomatik tasdiqlanadi),
-`kubelet.conf` ni yozadi va kubelet’ni ishga tushiradi. Control plane join’i
+`kubelet.conf`’ni yozadi va kubelet’ni ishga tushiradi. Control plane join’i
 (`--control-plane --certificate-key`) qo’shimcha ravishda umumiy
 sertifikatlarni tortib oladi va o’zining static Pod manifestlarini yozadi.
 
@@ -103,7 +103,7 @@ sertifikatlarni tortib oladi va o’zining static Pod manifestlarini yozadi.
 join paytidagi ikkita nosozlik takrorlanib turadi: token **muddati tugagan**
 (control plane’da `kubeadm token create --print-join-command`) va qo’shilayotgan
 node kubelet’ida oldingi urinishdan qolgan eski `/etc/kubernetes/kubelet.conf`
-turibdi (avval `kubeadm reset`). Va `init` dan keyin boshqa hamma narsadan
+turibdi (avval `kubeadm reset`). Va `init`’dan keyin boshqa hamma narsadan
 oldin **admin.conf nusxasini oling** - control plane’dagi `kubectl` shusiz
 ishlamaydi.
 :::

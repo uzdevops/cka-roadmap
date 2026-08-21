@@ -37,7 +37,7 @@ ln -s /opt/app/releases/v2 current     # absolyut
 ```
 
 Nisbiy linklar butun daraxt ko’chirilganda saqlanib qoladi
-(`mv /opt/app /srv/app` - `current` yonidagi `releases/v2` ni baribir
+(`mv /opt/app /srv/app` - `current` yonidagi `releases/v2`’ni baribir
 topadi); absolyut linklar esa link yolg’iz ko’chirilganda saqlanadi. Birga
 ko’chadigan daraxt ichidagi linklar uchun nisbiyni, qat’iy tizim joylariga
 ishoralar uchun absolyutni tanlang.
@@ -67,7 +67,7 @@ Directory’ga link ustida oxirida qiya chiziq bilan `rm current/` yoki
 current` - ikkalasi ham maqsadning ichiga yetib borishi mumkin. `rm current`
 (qiya chiziqsiz) faqat linkni o’chiradi. Va `current` allaqachon
 directory’ga link bo’lganda `ln -s new current` maqsadning *ichida*
-`current/new` yaratadi - `ln -sfn` dan foydalaning.
+`current/new` yaratadi - `ln -sfn`’dan foydalaning.
 :::
 
 ## Linklarni tabiiy muhitda ko’rish
@@ -79,11 +79,11 @@ ls -l /dev/disk/by-uuid/                 # disklarning barqaror nomlari - /dev/s
 ls -l /bin                               # merged-/usr tizimlarda /bin -> usr/bin
 ```
 
-Tizim konfiguratsiyasining yarmi - symlink’lar; `->` ni ravon o’qish -
+Tizim konfiguratsiyasining yarmi - symlink’lar; `->`’ni ravon o’qish -
 kundalik ko’nikma.
 
 :::exam-tip
-"`/opt/app/bin/app-2.1` ga ishora qiluvchi `/usr/local/bin/app` symbolic
+"`/opt/app/bin/app-2.1`’ga ishora qiluvchi `/usr/local/bin/app` symbolic
 link yarating": `ln -s /opt/app/bin/app-2.1 /usr/local/bin/app`.
 `ls -l /usr/local/bin/app` va `readlink -f` bilan tekshiring. Tartibni
 eslang: **avval maqsad, keyin link nomi** - xuddi `cp source dest` kabi.

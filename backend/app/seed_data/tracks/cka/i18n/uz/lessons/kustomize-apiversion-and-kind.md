@@ -80,4 +80,4 @@ ishlatadi.
    kerak?
 2. kustomization.yaml faylini `kubectl apply -f` bilan bersangiz nima
    bo’ladi va nega?
-3. Qayta ishlatiladigan ixtiyoriy qism qaysi `kind`ni ishlatadi?
+3. Qayta ishlatiladigan ixtiyoriy qism qaysi `kind`’ni ishlatadi?

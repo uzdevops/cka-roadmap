@@ -110,7 +110,7 @@ va har birini `ls -l` qilish → shubhali fayl ustida `openssl x509
 
 1. Sertifikatning subject, issuer va sanalarini chop etadigan bitta qatorli
    openssl buyrug’ini yozing.
-2. `apiserver-etcd-client.crt` ni qaysi CA imzolagan bo’lishi kerak va buni
+2. `apiserver-etcd-client.crt`’ni qaysi CA imzolagan bo’lishi kerak va buni
    qanday tekshirasiz?
 3. API server ishlamayapti. Node’dagi qaysi ikkita buyruq sizga sertifikat
    xatosi xabarini ko’rsatadi va qanday uch xil xatoni ko’rishni kutasiz?

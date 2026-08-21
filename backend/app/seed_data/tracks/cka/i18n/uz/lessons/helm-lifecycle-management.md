@@ -106,8 +106,8 @@ helm list -a                                    # tarixi saqlangan, uninstall qi
 Imtihon odatda kutadigan ketma-ketlik: nomi aytilgan chart versiyasiga
 `helm upgrade`, `helm list` / `helm history` bilan tasdiqlash, keyin `helm rollback
 <release> <revision>` va yana tasdiqlash. Ball yo’qotadigan ikkita tafsilot:
-`-n` ni unutish va **noto’g’ri reviziya raqamiga** rollback qilish - avval
-`helm history` ni o’qing, keyin CHART ustuni topshiriq aytganiga mos
+`-n`’ni unutish va **noto’g’ri reviziya raqamiga** rollback qilish - avval
+`helm history`’ni o’qing, keyin CHART ustuni topshiriq aytganiga mos
 keladigan reviziyaga rollback qiling.
 :::
 

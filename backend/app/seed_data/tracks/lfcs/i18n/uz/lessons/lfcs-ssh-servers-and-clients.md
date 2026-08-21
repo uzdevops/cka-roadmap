@@ -78,7 +78,7 @@ hech qachon `systemctl restart ssh` qilmang. Buning o’rniga: `sshd -t`,
 keyin `reload`, keyin **yangi terminalda ikkinchi sessiya oching** va
 birinchisini yopishdan oldin uning ishlashiga ishonch hosil qiling. Yangi
 sessiya ochilmasa, o’zgarishni orqaga qaytarish uchun eski sessiyangiz
-qoladi. Aks holda `Match` bloki yoki `AllowUsers`dagi bitta xato sizni
+qoladi. Aks holda `Match` bloki yoki `AllowUsers`’dagi bitta xato sizni
 butunlay tashqarida qoldiradi.
 :::
 
@@ -94,7 +94,7 @@ Match Address 192.168.1.0/24
     PasswordAuthentication yes
 ```
 
-`Match` bloklari faylning **oxirida** turishi kerak - `Match`dan keyingi
+`Match` bloklari faylning **oxirida** turishi kerak - `Match`’dan keyingi
 hamma narsa o’shanga tegishli bo’ladi.
 
 ## Client tomoni
@@ -174,7 +174,7 @@ sudo lastb | head                          # muvaffaqiyatsiz urinishlar
 
 | Alomat | Sababi |
 |---|---|
-| `Permission denied (publickey)` | kalit `authorized_keys`da yo’q, noto’g’ri kalit taklif qilinyapti, yoki `~`, `~/.ssh`, `authorized_keys` ruxsatlari noto’g’ri |
+| `Permission denied (publickey)` | kalit `authorized_keys`’da yo’q, noto’g’ri kalit taklif qilinyapti, yoki `~`, `~/.ssh`, `authorized_keys` ruxsatlari noto’g’ri |
 | `Connection refused` | sshd ishlamayapti, yoki port noto’g’ri |
 | `Connection timed out` | firewall yoki routing - sshd emas |
 | `Host key verification failed` | host key o’zgargan - uni tekshiring, keyin `ssh-keygen -R` |

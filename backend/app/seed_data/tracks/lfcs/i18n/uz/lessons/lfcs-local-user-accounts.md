@@ -77,7 +77,7 @@ sudo usermod -L -e 1 alice                     # qulflash VA muddatini tugatish 
 ```
 
 :::warning
-`-a` siz ishlatilgan `usermod -G` user’ni ro’yxatda ko’rsatilmagan har bir
+`-a`’siz ishlatilgan `usermod -G` user’ni ro’yxatda ko’rsatilmagan har bir
 guruhdan indamay olib tashlaydi - `sudo` ham shular ichida. Bu -
 administrator’ni o’z mashinasidan qulflab qo’yishning eng keng tarqalgan
 yo’li. Doim `usermod -aG` ishlating va keyin `groups alice` bilan
@@ -104,7 +104,7 @@ sudo chage -d 0 alice                # keyingi login'da almashtirishga majburlas
 `passwd -l` faqat **parolni** qulflaydi (kalit asosidagi SSH baribir
 ishlayveradi); `chage -E` yoki `usermod -e` esa **account** muddatini
 tugatadi (hech narsa ishlamaydi). "Bu user’ni butunlay o’chirish" uchun
-ikkalasini ham qiling va shell’ni `nologin` ga almashtiring.
+ikkalasini ham qiling va shell’ni `nologin`’ga almashtiring.
 
 ## O’chirish
 

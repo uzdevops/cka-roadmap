@@ -25,8 +25,8 @@ gzip -l archive.gz           # siqilgan/siqilmagan hajmlar va nisbat
 gzip -t archive.gz           # butunligini tekshiradi
 ```
 
-Boshlovchilar uchun kutilmagani: `gzip file` `file` ni **o’chiradi**. `-k`
-dan foydalaning, yoki nusxani siqing, yoki (yaxshirog’i) asl ma’lumotni
+Boshlovchilar uchun kutilmagani: `gzip file` `file`’ni **o’chiradi**.
+`-k`’dan foydalaning, yoki nusxani siqing, yoki (yaxshirog’i) asl ma’lumotni
 emas, arxivni siqing.
 
 ## bzip2 va xz
@@ -94,7 +94,7 @@ Topshiriqda "faylni asl nusxasini saqlagan holda siqing" deyilsa - bu `-k`.
 
 ## O’zingizni tekshiring
 
-1. `gzip report.txt` ni ishga tushirganingizda `report.txt` ga nima
+1. `gzip report.txt`’ni ishga tushirganingizda `report.txt`’ga nima
    bo’ladi va bundan qanday qochasiz?
 2. Uzoq muddatli arxiv uchun qaysi siquvchi, tungi log rotatsiyasi uchun
    qaysi biri va nega?

@@ -154,7 +154,7 @@ curl -I http://<public-ip>:8080
 Imtihonda odatda ikkitasidan biri so’raladi: "bu host A portini B portiga
 uzatsin" (`firewall-cmd --add-forward-port=...` yoki nft’ning `redirect`
 rule’i), yoki "ichki tarmoqdagi mashinalar internetga chiqa olsin"
-(`ip_forward`ni **doimiy** yoqish + tashqi interfeysda masquerade).
+(`ip_forward`’ni **doimiy** yoqish + tashqi interfeysda masquerade).
 Ikkala yarmini ham doimiy qiling va rule’larni ro’yxatlash bilan emas,
 haqiqiy ulanish bilan tekshiring.
 :::

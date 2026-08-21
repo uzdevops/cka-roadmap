@@ -63,13 +63,13 @@ ip netns exec red ping 192.168.15.2              # bridge orqali
 ping 192.168.15.1                                # host'dan, chunki host'da bridge ustida 192.168.15.5 bor
 ```
 
-Bu - bitta node’dagi Pod tarmog’i: `v-net-0` ni Docker `docker0` deb, CNI
+Bu - bitta node’dagi Pod tarmog’i: `v-net-0`’ni Docker `docker0` deb, CNI
 plugin esa `cni0` yoki `cbr0` deb ataydi; veth juftliklari - Pod’larning
 `eth0` lari.
 
 ## Tashqariga chiqish: route va NAT
 
-`red` dan `ping 192.168.1.3` (LAN’dagi host) ishlamaydi - red’ning
+`red`’dan `ping 192.168.1.3` (LAN’dagi host) ishlamaydi - red’ning
 marshrutlash jadvali uning qayerdaligini bilmaydi. Unga gateway bering:
 bridge orqali host.
 

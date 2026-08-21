@@ -70,7 +70,7 @@ helm install my-site ./             # lokal, o'zgartirilgan chart'dan o'rnating
 Bir martalik ish uchun yoki shablonga value’lar ruxsat bermaydigan o’zgarish
 kerak bo’lganda foydali. Narxi: endi sizda o’z fork’ingiz bor va keyingi
 upstream chart versiyasiga `helm upgrade` qilish tahrirlaringizni qaytadan
-qo’llash demakdir. Value mavjud bo’lgan har qanday holatda `-f` ni afzal
+qo’llash demakdir. Value mavjud bo’lgan har qanday holatda `-f`’ni afzal
 ko’ring.
 
 ## Ustuvorlik, yana bir bor
@@ -103,7 +103,7 @@ release standart qiymat bilan ko’tariladi; qo’rqish kerak bo’lgan nosozlik
 ## O’zingizni tekshiring
 
 1. `ingress.hosts[0].host=shop.example.com` uchun `--set` yozing.
-2. Ikkita `-f` fayl va bitta `--set` `replicaCount` ni belgilaydi. Qaysi biri
+2. Ikkita `-f` fayl va bitta `--set` `replicaCount`’ni belgilaydi. Qaysi biri
    yutadi?
 3. Nega pull qilingan chart’ning `values.yaml` faylini tahrirlash odatda `-f`
    uzatishdan yomonroq?

@@ -6,9 +6,9 @@ o’z tekshiruvi bor.
 
 | Alomat | Komponent | Qayerda turadi |
 |---|---|---|
-| Pod’lar `ContainerCreating` holatida qotgan, node `NetworkPluginNotReady` bilan NotReady, node’lar orasidagi Pod-Pod trafigi ishlamaydi | **CNI plugin** | `kube-system` dagi DaemonSet (+ har bir node’da `/etc/cni/net.d`, `/opt/cni/bin`) |
-| Pod IP’lariga yetib boriladi, lekin **Service ClusterIP**’lariga yo’q | **kube-proxy** | `kube-system` dagi `kube-proxy` DaemonSet’i |
-| IP’lar ishlaydi, **nomlar** yo’q (`nslookup` ishlamaydi, ilovalar "no such host" deydi) | **CoreDNS** | `kube-system` dagi `coredns` Deployment’i + `kube-dns` Service’i |
+| Pod’lar `ContainerCreating` holatida qotgan, node `NetworkPluginNotReady` bilan NotReady, node’lar orasidagi Pod-Pod trafigi ishlamaydi | **CNI plugin** | `kube-system`’dagi DaemonSet (+ har bir node’da `/etc/cni/net.d`, `/opt/cni/bin`) |
+| Pod IP’lariga yetib boriladi, lekin **Service ClusterIP**’lariga yo’q | **kube-proxy** | `kube-system`’dagi `kube-proxy` DaemonSet’i |
+| IP’lar ishlaydi, **nomlar** yo’q (`nslookup` ishlamaydi, ilovalar "no such host" deydi) | **CoreDNS** | `kube-system`’dagi `coredns` Deployment’i + `kube-dns` Service’i |
 
 ## 1. Tarmoq plugin’i
 
@@ -50,7 +50,7 @@ kubectl get cm kube-proxy -n kube-system -o yaml | head -40
 ```
 
 kube-proxy o’z konfigini `kube-proxy` ConfigMap’idan o’qiydi, u
-`/var/lib/kube-proxy/config.conf` ga mount qilingan. Odatdagi nosozlik -
+`/var/lib/kube-proxy/config.conf`’ga mount qilingan. Odatdagi nosozlik -
 DaemonSet buyrug’idagi noto’g’ri **yo’l**
 (`--config=/var/lib/kube-proxy/configuration.conf`, fayl esa `config.conf`) -
 Pod’lar CrashLoop qiladi va log `open ...: no such file or directory` deydi.
@@ -90,7 +90,7 @@ kubectl get cm coredns -n kube-system -o yaml                 # Corefile
 | CoreDNS alomati | Sababi | Yechimi |
 |---|---|---|
 | Pod’lar `Pending` | hali tarmoq plugin’i yo’q | CNI’ni o’rnating (1-bo’lim) |
-| `CrashLoopBackOff`, logda: `Loop ... detected` | node’ning `/etc/resolv.conf` fayli localhost’ga ko’rsatadi (systemd-resolved stub); CoreDNS o’zini o’ziga uzatadi | `forward` ni haqiqiy upstream’ga qarating yoki kubelet’da `resolvConf: /run/systemd/resolve/resolv.conf` ni belgilang |
+| `CrashLoopBackOff`, logda: `Loop ... detected` | node’ning `/etc/resolv.conf` fayli localhost’ga ko’rsatadi (systemd-resolved stub); CoreDNS o’zini o’ziga uzatadi | `forward`’ni haqiqiy upstream’ga qarating yoki kubelet’da `resolvConf: /run/systemd/resolve/resolv.conf`’ni belgilang |
 | Pod’lar Running, lekin Pod’dan `nslookup` kutish vaqti bilan tugaydi | `kube-dns` Service’ida **endpoint yo’q** yoki port noto’g’ri; kube-proxy buzuq; NetworkPolicy 53 ni to’sib turibdi | `kubectl get ep kube-dns -n kube-system`; `kube-dns` selector’i `k8s-app=kube-dns` va 53-portni tekshiring; CoreDNS Pod IP’sini to’g’ridan-to’g’ri sinang |
 | ba’zi nomlar aniqlanadi, ba’zilari yo’q | Corefile’dagi `kubernetes` zonasi tahrirlangan yoki nom boshqa namespace’da | `svc.ns.svc.cluster.local` ishlating; ConfigMap’ni tekshiring |
 | Pod’ning `/etc/resolv.conf` faylida noto’g’ri nameserver | kubelet’ning `clusterDNS` qiymati xato qo’yilgan | `/var/lib/kubelet/config.yaml` → `clusterDNS: [10.96.0.10]` |

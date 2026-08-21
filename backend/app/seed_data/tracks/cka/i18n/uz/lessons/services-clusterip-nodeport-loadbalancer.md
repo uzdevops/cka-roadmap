@@ -28,8 +28,8 @@ Ishni uchta maydon bajaradi:
   mos keluvchi Pod’larning IP va portlarini sanab beruvchi **EndpointSlice**ga
   aylantiradi.
 - **port** - klientlar Service’da nimaga ulanishi.
-- **targetPort** - Pod aslida nimani tinglashi. Tushirib qoldirilsa, u `port`
-  ga teng bo’ladi. U **nom** ham bo’lishi mumkin: nomlangan `containerPort` ga
+- **targetPort** - Pod aslida nimani tinglashi. Tushirib qoldirilsa, u
+  `port`’ga teng bo’ladi. U **nom** ham bo’lishi mumkin: nomlangan `containerPort`’ga
   mos keladi va bu Service’ga tegmasdan konteyner portini o’zgartirish
   imkonini beradi.
 
@@ -68,7 +68,7 @@ Bitta spec’da uchta port bor va nomlar hammani bir marta chalkashtiradi:
 klient ──▶ <any node IP>:30080 (nodePort) ──▶ 10.96.x.x:80 (port, ClusterIP) ──▶ 10.244.x.x:8080 (targetPort, Pod)
 ```
 
-**Yagona majburiysi - `port`**. `targetPort` sukut bo’yicha `port` ga teng
+**Yagona majburiysi - `port`**. `targetPort` sukut bo’yicha `port`’ga teng
 bo’ladi, `nodePort` esa yozilmasa ajratiladi.
 
 ```bash
@@ -86,7 +86,7 @@ o’zingizning yuk muvozanatlagichingiz ortida turish uchun, production
 ilovalarini bittalab ochish uchun emas.
 
 :::exam-tip
-`kubectl expose` `nodePort` ni belgilay olmaydi. Topshiriqda aniq node port
+`kubectl expose` `nodePort`’ni belgilay olmaydi. Topshiriqda aniq node port
 so’ralsa: `kubectl expose ... --type=NodePort --dry-run=client -o yaml > svc.yaml`,
 port yozuvi ostiga `nodePort: 30080` qo’shing, so’ng `kubectl apply -f svc.yaml`.
 :::
@@ -109,7 +109,7 @@ kubectl get pods -l app=web -o wide
 :::tip
 Readiness probe’dan o’tmagan Pod’lar endpoint’lardan chiqarib tashlanadi. Pod’lar
 sog’lom ko’rinib turib endpoint’lari bo’sh bo’lgan Service odatda "Ready emas"
-degani - selector’dan oldin `kubectl get pods` dagi READY ustunini tekshiring.
+degani - selector’dan oldin `kubectl get pods`’dagi READY ustunini tekshiring.
 :::
 
 ## O’zingizni tekshiring

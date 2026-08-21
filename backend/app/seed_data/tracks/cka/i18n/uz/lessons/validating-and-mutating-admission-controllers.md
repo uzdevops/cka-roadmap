@@ -71,7 +71,7 @@ webhooks:
 }
 ```
 
-   Mutating javob bunga `"patchType": "JSONPatch"` ni va `"patch"` ichida
+   Mutating javob bunga `"patchType": "JSONPatch"`’ni va `"patch"` ichida
    base64 bilan kodlangan JSON patch’ni qo’shadi.
 
 ## failurePolicy - eng xavfli maydon

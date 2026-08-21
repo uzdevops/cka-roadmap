@@ -48,7 +48,7 @@ scheduler/controller-manager ──(client: their .conf certs)──▶ apiserve
 Ikkita CA: **klaster CA’si** Kubernetes tomonidagi hamma narsani imzolaydi;
 **etcd CA’si** esa etcd tomonidagi hamma narsani. Shuning uchun API
 serverning etcd client sertifikatini etcd CA’si imzolagan (`--etcd-cafile`
-`etcd/ca.crt`ga ishora qiladi) va shuning uchun etcd’ni joyidan ko’chiradigan
+`etcd/ca.crt`’ga ishora qiladi) va shuning uchun etcd’ni joyidan ko’chiradigan
 tiklash topshirig’i o’sha fayllarni birga saqlashi shart.
 
 ## Ularni nomlab beradigan flaglar
@@ -83,7 +83,7 @@ Imtihonda "API server ko’tarilmayapti" deyilsa va siz `--etcd-cafile`
 ishora qilayotganini topsangiz, xato aynan shu: API server o’zining etcd
 client sertifikatini ko’rsatadi, etcd uni o’z CA’si bo’yicha tekshiradi - bu
 joyi joyida - lekin API server etcd’ning server sertifikatini *noto’g’ri* CA
-bo’yicha tekshiradi va rad etadi. Xulosa: har bir `*-cafile`ni *narigi*
+bo’yicha tekshiradi va rad etadi. Xulosa: har bir `*-cafile`’ni *narigi*
 tomonni imzolagan CA’ga moslang.
 :::
 

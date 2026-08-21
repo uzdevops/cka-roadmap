@@ -117,7 +117,7 @@ LFCS’dagi Git topshiriqlari kichik: repository yaratish, fayllarni
 qo’shish, berilgan xabar bilan commit qilish, log’ni ko’rsatish.
 `git init`, `git add .`, `git commit -m
 "..."`, `git log --oneline`. Yangi mashinada birinchi bo’lib
-`git config user.email` ni eslang - usiz commit bajarilmaydi va bu
+`git config user.email`’ni eslang - usiz commit bajarilmaydi va bu
 nosozlikni repository muammosi deb noto’g’ri tushunish oson.
 :::
 

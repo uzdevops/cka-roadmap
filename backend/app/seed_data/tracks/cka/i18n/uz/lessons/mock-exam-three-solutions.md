@@ -55,7 +55,7 @@ k apply -f p.yaml; k get pod multi-pod      # 2/2
 k exec multi-pod -c beta -- env | grep name
 ```
 
-Tuzoq: generatsiya qilingan konteyner nomini `multi-pod`dan `alpha`ga
+Tuzoq: generatsiya qilingan konteyner nomini `multi-pod`’dan `alpha`’ga
 o’zgartiring; `busybox` konteyneriga buyruq kerak, aks holda u darhol
 tugaydi.
 
@@ -181,7 +181,7 @@ k get deploy web                   # bir daqiqadan keyin 2/2
 ```
 
 Tuzoq: Deployment konteynerlarida CPU **request**’lari bo’lishi kerak, aks
-holda HPA foizni hisoblay olmaydi; metrics-server’siz ham HPA `min` gacha
+holda HPA foizni hisoblay olmaydi; metrics-server’siz ham HPA `min`’gacha
 masshtablaydi, lekin `<unknown>` ko’rsatadi.
 
 ## Baholash

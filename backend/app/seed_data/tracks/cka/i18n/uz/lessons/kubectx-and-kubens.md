@@ -46,11 +46,11 @@ bir jamoa boshidan bir marta o’tkazgan hodisa: staging uchun mo’ljallangan
 buzg’unchi buyruq productionda ishga tushdi, chunki shell hamon noto’g’ri
 kontekstda edi. Buning oldini ikki odat oladi:
 
-1. Kontekstni **ko’rinadigan** qiling - `kubectx -c` / `kubens -c` ni
+1. Kontekstni **ko’rinadigan** qiling - `kubectx -c` / `kubens -c`’ni
    ko’rsatadigan prompt (kube-ps1 shuni qiladi) yoki hech bo’lmaganda har
-   qanday buzg’unchi ishdan oldin `kubectx` ni ishga tushirish.
+   qanday buzg’unchi ishdan oldin `kubectx`’ni ishga tushirish.
 2. **Hisob ma’lumotlarini** boshqacha qiling - foydalanuvchisi sukut
-   bo’yicha `view` ga ega production konteksti va o’zgarishlar uchun alohida
+   bo’yicha `view`’ga ega production konteksti va o’zgarishlar uchun alohida
    kontekst. Shunda noto’g’ri oyna xavfsiz ishlamay qoladi.
 
 :::tip
@@ -72,7 +72,7 @@ kubectl config view --minify -o jsonpath='{..namespace}'     # joriy sukut bo'yi
 
 ## O’zingizni tekshiring
 
-1. `kubectx` va `kubens` ni ishga tushirganingizda ular aslida nimani
+1. `kubectx` va `kubens`’ni ishga tushirganingizda ular aslida nimani
    o’zgartiradi?
 2. Nega joriy kontekstingizni bilish xavfsizlik masalasi?
-3. `kubens payroll` ning kubectl’dagi ekvivalenti nima?
+3. `kubens payroll`’ning kubectl’dagi ekvivalenti nima?

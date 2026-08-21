@@ -68,12 +68,12 @@ kubectl auth can-i create pods --as dev-user              # no - noto'g'ri names
 ```
 
 `kubectl create role` bir nechta `--verb`/`--resource` juftligini qabul
-qiladi; har bir `--resource`dan oldin turgan verb’lar o’shanga tegishli
+qiladi; har bir `--resource`’dan oldin turgan verb’lar o’shanga tegishli
 bo’ladi. Shubhalansangiz, `$do` bilan yarating va u chiqargan YAML’ni o’qing.
 
 :::exam-tip
 Har qanday RBAC topshirig’ini tugatishdan oldin uchta tekshiruv: Role’da ham,
-RoleBinding’da ham **namespace** (`default`dagi Role `dev` uchun hech narsa
+RoleBinding’da ham **namespace** (`default`’dagi Role `dev` uchun hech narsa
 qilmaydi); **apiGroups** (`""` yoki `apps`); va `kubectl auth can-i <verb> <resource>
 --as <user> -n <ns>` buyrug’i `yes` qaytarishi. Agar topshiriqda "va
 foydalanuvchi kubectl logs ishlata olishi kerak" ham deyilgan bo’lsa,
@@ -115,7 +115,7 @@ yo’l, `can-i --list` esa tez yo’l.
 | Role noto’g’ri namespace’da | siz nazarda tutgan namespace’da forbidden |
 | `verbs: ["get"]`, lekin foydalanuvchi `kubectl get pods` ishlatadi | forbidden: bu `list` |
 | subyekt `kind: User` va `name: dev-user`, lekin sertifikat CN’i `developer` | forbidden: nom aynan mos kelishi kerak |
-| `namespace:`siz ServiceAccount subyekti | binding yaratiladi, lekin hech nimaga mos kelmaydi |
+| `namespace:`’siz ServiceAccount subyekti | binding yaratiladi, lekin hech nimaga mos kelmaydi |
 
 ## O’zingizni tekshiring
 

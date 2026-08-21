@@ -31,7 +31,7 @@ yetadi; MASQUERADE bilan tashqi dunyoga chiqadi.
 ## Ko’p node: yagona yangi muammo
 
 Node02’da `10.244.2.0/24` bor. Pod A (10.244.1.2) Pod C (10.244.2.4) ga
-jo’natadi. Paket `cni0` ga boradi, node o’zining marshrutlar jadvalidan
+jo’natadi. Paket `cni0`’ga boradi, node o’zining marshrutlar jadvalidan
 10.244.2.0/24 ni qidiradi va ... hech nima yo’q. Javoblarning ikki oilasi bor:
 
 **Marshrutlar.** Har bir node’ga qolgan har bir node’ning subnet’i
@@ -78,8 +78,8 @@ chaqiradi; plugin:
    maydoniga yozadi.
 
 Plugin’ning DaemonSet’i esa har bir node’da bir martadan klaster
-darajasidagi qismni bajargan: node’ning subnet’ini olgan (`node.spec.podCIDR`
-dan, uni esa controller manager `--cluster-cidr` dan tayinlaydi), bridge’ni
+darajasidagi qismni bajargan: node’ning subnet’ini olgan (
+`node.spec.podCIDR`’dan, uni esa controller manager `--cluster-cidr`’dan tayinlaydi), bridge’ni
 yaratgan va boshqa node’larga marshrutlarni yoki overlay’ni sozlagan.
 
 ```bash

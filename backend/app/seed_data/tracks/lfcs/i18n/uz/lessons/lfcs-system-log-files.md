@@ -1,7 +1,7 @@
 ## Yonma-yon ikkita log tizimi
 
 Zamonaviy Linux binary **journal** (systemd-journald) va, odatda, rsyslog
-yozadigan oddiy matnli fayllarni `/var/log` da saqlaydi. Ikkalasi ham bir
+yozadigan oddiy matnli fayllarni `/var/log`’da saqlaydi. Ikkalasi ham bir
 xil hodisalarni saqlaydi; journal’da struktura va filtrlar bor, fayllarni
 esa grep qilish mumkin va ular nusxalanganda ham omon qoladi.
 
@@ -79,7 +79,7 @@ journal was found" desa, journal RAM’da - bu sozlamani keyingi crash’dan
 | `/var/log/cron` / journal | cron job’lari |
 | `/var/log/apt/`, `/var/log/dnf.log` | paket operatsiyalari |
 | `/var/log/nginx/`, `/var/log/mysql/` | har bir service uchun alohida direktoriyalar |
-| `/var/log/wtmp`, `/var/log/btmp`, `/var/log/lastlog` | binary: `last`, `lastb`, `lastlog` dan foydalaning |
+| `/var/log/wtmp`, `/var/log/btmp`, `/var/log/lastlog` | binary: `last`, `lastb`, `lastlog`’dan foydalaning |
 
 ```bash
 sudo tail -f /var/log/syslog
@@ -174,5 +174,5 @@ restart. "/var/log/myapp uchun rotatsiyani sozlang" →
    oldingi boot, faqat xatolar, oxirgi bir soat?
 2. Journal reboot’dan omon qolishini qanday ta’minlaysiz va hozir
    shundayligini qanday bilasiz?
-3. Katta log faylni o’chirish nega `df` ni o’zgarishsiz qoldirishi
+3. Katta log faylni o’chirish nega `df`’ni o’zgarishsiz qoldirishi
    mumkin?

@@ -9,7 +9,7 @@ bittalab ko’rib chiqadi. Bu sahifa - xarita.
 |---|---|---|
 | **command / args** | qaysi jarayon, qanday argumentlar bilan ishga tushishini | `containers[].command`, `containers[].args` |
 | **muhit o’zgaruvchilari** | jarayonga ko’rinadigan key=value | `containers[].env`, `containers[].envFrom` |
-| **ConfigMap’lar** | maxfiy bo’lmagan konfiguratsiya: qiymatlar yoki butun fayllar | `env`/`envFrom` dan murojaat qilinadi yoki volume sifatida mount qilinadi |
+| **ConfigMap’lar** | maxfiy bo’lmagan konfiguratsiya: qiymatlar yoki butun fayllar | `env`/`envFrom`’dan murojaat qilinadi yoki volume sifatida mount qilinadi |
 | **Secret’lar** | xuddi shu, lekin login-parol va kalitlar uchun | ConfigMap bilan bir xil shakllar, boshqa kind va boshqa muomala |
 
 ```yaml
@@ -81,13 +81,13 @@ noto’g’risidan boshlash qayta yozishga olib keladi.
 3. `command` va `args` birlashtiriladi va bajariladi.
 
 Uchinchi qadam - keyingi ikki darsning mavzusi: Docker’ning `ENTRYPOINT` va
-`CMD` i `command` va `args` ga qanday moslashadi va nima nimani bekor qiladi.
+`CMD` i `command` va `args`’ga qanday moslashadi va nima nimani bekor qiladi.
 
 ## O’zingizni tekshiring
 
 1. Pod muhit o’zgaruvchisi sifatida ishlatayotgan ConfigMap’dagi qiymatni
    o’zgartirdingiz. Ishlab turgan Pod nimani ko’radi va siz buni qanday hal
    qilasiz?
-2. Dockerfile’dagi `CMD` ga Pod’ning qaysi maydoni mos keladi?
-3. Pod `CreateContainerConfigError` da qotib qolgan. Eng ehtimolli sabab
+2. Dockerfile’dagi `CMD`’ga Pod’ning qaysi maydoni mos keladi?
+3. Pod `CreateContainerConfigError`’da qotib qolgan. Eng ehtimolli sabab
    nima va muammoning aniq nomi qayerda chiqariladi?

@@ -83,13 +83,13 @@ olamanmi" emas. Bunisi - readiness’ning ishi.
 Ready bo’ladi va Service hali yuklanayotgan ilovaga trafik yuboradi - yoki
 rolling update paytida hali ishlamayotgan yangi Pod’larga, natijada rollout
 "muvaffaqiyatli" tugaydi, foydalanuvchilar esa xatolarni ko’radi.
-`maxUnavailable: 0` ga ma’no beradigan narsa - aynan readiness.
+`maxUnavailable: 0`’ga ma’no beradigan narsa - aynan readiness.
 
 :::exam-tip
 "Pod’lar Running, lekin Service xato qaytaryapti / endpoint’i yo’q" - READY
 ustuniga qarang: `Running` bilan birga turgan `0/1` readiness probe
 o’tmayotganini bildiradi va `kubectl describe pod` HTTP kodi yoki ulanish
-xatosi bilan `Readiness probe failed: ...` ni ko’rsatadi. Odatdagi sabab -
+xatosi bilan `Readiness probe failed: ...`’ni ko’rsatadi. Odatdagi sabab -
 probe’dagi noto’g’ri path yoki port.
 :::
 

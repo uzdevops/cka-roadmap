@@ -74,19 +74,19 @@ Yo’llar shu faylga nisbatan hisoblanadi.
 kubectl kustomize .          # xato bo'lsa, xabar aynan qaysi fayl va maydon ekanini aytadi
 ```
 
-Yangi faylni `resources`da sanashni unutish - o’sha klassik "hpa.yaml
+Yangi faylni `resources`’da sanashni unutish - o’sha klassik "hpa.yaml
 qo’shdim, hech narsa o’zgarmadi" holati; Kustomize faqat sanalgan narsani
 ko’radi.
 
 ## Amallar tartibi
 
-Kustomize avval `resources`ni (rekursiv) yuklaydi, keyin **generator**’larni
+Kustomize avval `resources`’ni (rekursiv) yuklaydi, keyin **generator**’larni
 qo’llaydi (yaratilgan ConfigMap/Secret’larni qo’shib), so’ng
 **transformer**’larni (namespace, prefiks, labels, images, replicas), keyin
 **patch**’larni, oxirida esa har bir havolani - Deployment’ning
 `configMapRef`ini, Service’ning selector’ini - yangi nomlarga
 o’zgartiradigan **name-reference tuzatish**ni bajaradi. Aynan shu oxirgi
-qadam `namePrefix`ni xavfsiz qiladi: havolalar orqasidan ergashadi.
+qadam `namePrefix`’ni xavfsiz qiladi: havolalar orqasidan ergashadi.
 
 ## U nima qilishini ko’rish
 
@@ -97,10 +97,10 @@ kubectl kustomize overlays/prod > /tmp/rendered.yaml && kubectl apply --dry-run=
 ```
 
 :::exam-tip
-Notanish `kustomization.yaml`ni yuqoridan pastga shu tartibda o’qing: u
+Notanish `kustomization.yaml`’ni yuqoridan pastga shu tartibda o’qing: u
 nimani qo’shadi (`resources`), hammasiga nima qiladi (namespace, prefiks,
-labels, images), aynan nimani o’zgartiradi (`patches`). Keyin `apply -k`dan
-oldin tasdiqlash uchun `kubectl kustomize`ni ishga tushiring. O’n besh
+labels, images), aynan nimani o’zgartiradi (`patches`). Keyin `apply -k`’dan
+oldin tasdiqlash uchun `kubectl kustomize`’ni ishga tushiring. O’n besh
 soniya, va natija sizni ajablantirmaydi.
 :::
 

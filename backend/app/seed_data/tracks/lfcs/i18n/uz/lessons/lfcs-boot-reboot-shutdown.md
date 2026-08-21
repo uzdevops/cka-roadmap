@@ -13,7 +13,7 @@ sudo systemctl suspend               # RAM'ga
 sudo systemctl hibernate             # diskka
 ```
 
-Eski buyruqlar ham ishlaydi (ular `systemctl` ga symlink):
+Eski buyruqlar ham ishlaydi (ular `systemctl`’ga symlink):
 
 ```bash
 sudo poweroff; sudo reboot; sudo halt
@@ -79,7 +79,7 @@ sudo shutdown -r +1 "Reboot for kernel update"
 Keyin uning qaytishini kuzating: `ping -c 100 host`, va qayta ulaning.
 
 :::warning
-`/etc/fstab` dagi noto’g’ri satr - klassik "u boshqa qaytmadi" holati: boot
+`/etc/fstab`’dagi noto’g’ri satr - klassik "u boshqa qaytmadi" holati: boot
 paytida systemd mavjud bo’lmagan qurilmani kutadi va emergency rejimiga
 tushadi - bunga esa SSH emas, konsolga kirish kerak. fstab’ni tahrirlagandan
 keyin va reboot qilishdan **oldin** doim `mount -a` (yoki
@@ -101,7 +101,7 @@ echo 1 | sudo tee /proc/sys/kernel/sysrq       # o'chirilgan bo'lsa, SysRq'ni yo
 :::exam-tip
 Ikkala lug’atni ham biling (`systemctl reboot` va `shutdown -r`), xabarli
 kechiktirilgan shaklni (`shutdown -r +10 "msg"`) va bekor qilish uchun
-`shutdown -c` ni. Oldingi boot uchun `journalctl -b -1` ni ham biling -
+`shutdown -c`’ni. Oldingi boot uchun `journalctl -b -1`’ni ham biling -
 "tizim nega qayta yuklanganini aniqlang" ehtimoli bor topshiriq va javob
 aynan o’sha yerda.
 :::

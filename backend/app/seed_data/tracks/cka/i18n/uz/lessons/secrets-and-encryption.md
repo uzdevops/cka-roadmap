@@ -97,7 +97,7 @@ containers:
 ```
 
 Mount qilingan Secret’lar node’da **tmpfs**da turadi - hech qachon diskka
-yozilmaydi - va ConfigMap’lar kabi joyida yangilanadi (`subPath`dan
+yozilmaydi - va ConfigMap’lar kabi joyida yangilanadi (`subPath`’dan
 tashqari). env o’zgaruvchilari esa faqat ishga tushishda o’qiladi va muhit
 o’zgaruvchilari oson sizib chiqadi (bola jarayonlar, crash dump’lar,
 `kubectl describe` uslubidagi vositalar); imkon bo’lsa, volume’ni tanlang.

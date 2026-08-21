@@ -85,7 +85,7 @@ helm upgrade web bitnami/nginx -f prod.yaml                             # --reus
 Ana o’sha oxirgi satr - kundalik tuzoq: `helm upgrade` chart standartlaridan
 va **shu safar** siz uzatgan narsalardan boshlaydi, o’tgan safar
 uzatganingizdan emas. Value’laringizni faylda saqlang va uni har doim
-uzating, yoki `--reuse-values`ni ataylab ishlating.
+uzating, yoki `--reuse-values`’ni ataylab ishlating.
 
 :::exam-tip
 Imtihonni to’rtta fe’l va bitta flag qoplaydi: `install`, `upgrade`,

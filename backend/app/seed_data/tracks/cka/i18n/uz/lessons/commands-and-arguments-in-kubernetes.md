@@ -27,9 +27,9 @@ spec:
 ```
 
 :::warning
-Agar `command`ni belgilab, `args`ni **belgilamasangiz**, image’ning CMD’si
+Agar `command`’ni belgilab, `args`’ni **belgilamasangiz**, image’ning CMD’si
 saqlanmaydi, balki **tashlab yuboriladi**. Yolg’iz `command: ["sleep2.0"]`
-`sleep2.0`ni hech qanday argumentsiz ishga tushiradi. To’rt holat:
+`sleep2.0`’ni hech qanday argumentsiz ishga tushiradi. To’rt holat:
 
 | `command` | `args` | nima ishga tushadi |
 |---|---|---|
@@ -51,7 +51,7 @@ command:
   - "5000"
 ```
 
-`"5000"` atrofidagi qo’shtirnoqlar muhim: aks holda YAML `5000`ni son deb
+`"5000"` atrofidagi qo’shtirnoqlar muhim: aks holda YAML `5000`’ni son deb
 o’qiydi, maydon esa satr talab qiladi. Flow ro’yxati ichida chiziqcha bilan
 boshlanadigan `"--color=green"` kabi flaglar uchun ham shunday - baribir
 qo’shtirnoqqa oling va bu haqda o’ylashni bas qiling.
@@ -64,7 +64,7 @@ kubectl run webapp-green --image=kodekloud/webapp-color -- --color=green $do
 #   -> args: [--color=green]       (--command flagisiz bu args bo'ladi)
 ```
 
-O’sha `--command` flagi - butun farq shu: u bilan `--` dan keyingi narsa
+O’sha `--command` flagi - butun farq shu: u bilan `--`’dan keyingi narsa
 `command` bo’ladi; usiz esa `args`.
 
 ## Ishlab turgan Pod’ga nima berilganini o’qish
@@ -97,14 +97,14 @@ command: ["/bin/sh", "-c"]
 args: ["echo starting; exec myapp --port 8080"]
 ```
 
-Oxiridagi `exec` `myapp`ni PID 1 sifatida shell o’rniga qo’yadi, shunda
-signallar unga yetib boradi. `exec`siz SIGTERM `sh`ga boradi, u esa uni
+Oxiridagi `exec` `myapp`’ni PID 1 sifatida shell o’rniga qo’yadi, shunda
+signallar unga yetib boradi. `exec`’siz SIGTERM `sh`’ga boradi, u esa uni
 uzatmaydi va konteyner o’ldirilishini kutib turadi.
 
 ## O’zingizni tekshiring
 
-1. Qaysi Pod maydoni Dockerfile’dagi `ENTRYPOINT`ni almashtiradi va qaysisi
-   `CMD`ni?
+1. Qaysi Pod maydoni Dockerfile’dagi `ENTRYPOINT`’ni almashtiradi va qaysisi
+   `CMD`’ni?
 2. Image sukut bo’yicha `sleep 5` ishga tushiradi. Siz faqat
    `command: ["sleep"]` deb qo’ydingiz. Nima ishga tushadi?
 3. `busybox` image’idan `sleep 3600` ishlatadigan Pod yaratadigan `kubectl

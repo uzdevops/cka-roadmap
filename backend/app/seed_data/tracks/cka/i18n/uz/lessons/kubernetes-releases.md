@@ -64,7 +64,7 @@ apt-cache madison kubeadm | head -5       # sozlangan repo qaysi versiyalarni ta
 ```
 
 O’sha "har bir minor uchun bitta repo" nuqtasi muhim: 1.30 dan 1.31 ga
-yangilash uchun avval paket repozitoriysini `/v1.31/` ga yo’naltirasiz, keyin
+yangilash uchun avval paket repozitoriysini `/v1.31/`’ga yo’naltirasiz, keyin
 `apt-get update` qilasiz va faqat shundan keyin `kubeadm=1.31.x` o’rnatsa
 bo’ladigan holga keladi. Repo almashtirishni unutish - "yangi versiya mavjud
 emas" degan holatning eng keng tarqalgan sababi.

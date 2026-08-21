@@ -2,7 +2,7 @@
 
 NFS **fayl tizimini** ulashadi: u serverga tegishli, ko’p klient bir xil
 fayllarni ko’radi. NBD (Network Block Device) esa **xom blok qurilmani**
-ulashadi: klient `/dev/nbd0` ni xuddi disk ulangandek ko’radi, uni
+ulashadi: klient `/dev/nbd0`’ni xuddi disk ulangandek ko’radi, uni
 partition’laydi, formatlaydi va fayl tizimiga to’liq egalik qiladi.
 
 | | NFS | NBD |
@@ -152,9 +152,9 @@ lsblk; sudo blkid /dev/nbd0
 | Belgi | Sababi |
 |---|---|
 | `Error: Read failed` / negotiation ishlamaydi | export nomi (`-N`) noto’g’ri, server ishlamayapti, firewall |
-| `/dev/nbd0: No such device` | `modprobe nbd` qilinmagan; `/etc/modules-load.d/` ga `nbd` ni qo’shing |
+| `/dev/nbd0: No such device` | `modprobe nbd` qilinmagan; `/etc/modules-load.d/`’ga `nbd`’ni qo’shing |
 | ikkinchi klient mount qilgandan keyin fayl tizimi buzilgan | bitta yozuvchi qoidasi buzilgan |
-| qurilma yo’qoladi, I/O xatolari | `-persist` siz tarmoq uzilishi |
+| qurilma yo’qoladi, I/O xatolari | `-persist`’siz tarmoq uzilishi |
 | boot osilib qoladi | fstab’da `_netdev`/`nofail` yo’q |
 
 :::warning
@@ -168,7 +168,7 @@ ochmang.
 :::exam-tip
 Ehtimoliy topshiriq: nbd-server bilan fayl yoki qurilmani export qilish,
 uni klientdan `nbd-client host port /dev/nbd0 -N name` bilan ulash,
-formatlash va mount qilish. Klientda `modprobe nbd` ni, uzish tartibini
+formatlash va mount qilish. Klientda `modprobe nbd`’ni, uzish tartibini
 (umount, keyin `nbd-client -d`) va fayl tizimi **klientga** tegishli
 ekanini eslang - demak `mkfs` o’sha yerda ishlaydi, serverda emas.
 :::

@@ -1,6 +1,6 @@
 ## Nega eski qo’llanmalarda Tiller tilga olinadi
 
-Helm 2 versiyasining server yarmi bor edi: **Tiller** - `kube-system`dagi
+Helm 2 versiyasining server yarmi bor edi: **Tiller** - `kube-system`’dagi
 Deployment; Helm klienti u bilan gaplashardi va manifestlarni aslida o’sha
 apply qilardi. Tiller siz bergan ruxsatlar bilan ishlardi - odatda
 cluster-admin, chunki u hamma uchun hamma narsani o’rnatardi - va o’sha
@@ -12,7 +12,7 @@ bitta service account klaster hajmidagi xavfsizlik teshigi edi. Helm 3
 |---|---|---|
 | server komponenti | klasterdagi Tiller | yo’q - CLI API server bilan o’zi gaplashadi |
 | ruxsatlar | Tiller’ning service account’i | **sizniki** - sizning kubeconfig va RBAC’ingiz |
-| release’ni saqlash | `kube-system`dagi ConfigMap’lar | **release namespace’idagi** Secret’lar |
+| release’ni saqlash | `kube-system`’dagi ConfigMap’lar | **release namespace’idagi** Secret’lar |
 | release nomlari | klaster bo’ylab yagona | **har bir namespace uchun** yagona |
 | `helm init` | majburiy | mavjud emas |
 | yangilashlar | 2 tomonlama merge | **3 tomonlama strategic merge** |
@@ -33,7 +33,7 @@ chart chiqishi va **jonli obyekt**. Helm’dan tashqarida qilingan qo’lda
 o’zgarish sezib olinadi va upgrade paytida, agar chart o’sha maydonga
 tegmagan bo’lsa, saqlanadi, teggan bo’lsa - ustidan yoziladi; rollback
 paytida ham jonli holat hisobga olinadi. Bu aynan core-concepts
-bosqichidagi `kubectl apply`ning uch tomonlama merge’i ortidagi mantiq.
+bosqichidagi `kubectl apply`’ning uch tomonlama merge’i ortidagi mantiq.
 
 ```bash
 kubectl scale deployment my-site-wordpress --replicas=3     # Helm'dan tashqarida

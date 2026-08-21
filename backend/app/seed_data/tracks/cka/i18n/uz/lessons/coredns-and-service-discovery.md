@@ -36,7 +36,7 @@ olishi uchun.
 
 | Qator | Ta’siri |
 |---|---|
-| `kubernetes cluster.local ...` | `*.cluster.local` ga (va teskari so’rovlarga) API’dan javob beradi: Service’lar → ClusterIP, headless → Pod IP’lari |
+| `kubernetes cluster.local ...` | `*.cluster.local`’ga (va teskari so’rovlarga) API’dan javob beradi: Service’lar → ClusterIP, headless → Pod IP’lari |
 | `pods insecure` | `<dashed-ip>.<ns>.pod.cluster.local` nomlariga ruxsat beradi |
 | `forward . /etc/resolv.conf` | qolgan hamma narsa **CoreDNS Pod’ining** resolv.conf faylidagi resolver’larga ketadi - Deployment’da `dnsPolicy: Default` bo’lgani uchun bu **node’ning** resolv.conf fayli |
 | `cache 30` | 30 s keshlaydi - Service o’zgarishi nega 30 s gacha kechikib ko’rinadi, sababi shu |
@@ -68,9 +68,9 @@ kubectl logs -n kube-system -l k8s-app=kube-dns
 
 | Alomat | Sababi | Yechimi |
 |---|---|---|
-| hech narsa aniqlanmaydi, CoreDNS Pod’lari Pending/CrashLoopBackOff | CNI yo’q / loop aniqlangan / noto’g’ri Corefile | CNI’ni tuzating; node’ning resolv.conf faylini tuzating (Ubuntu’dagi `127.0.0.53` → `/run/systemd/resolve/resolv.conf` dan foydalaning); ConfigMap’ni tuzating |
+| hech narsa aniqlanmaydi, CoreDNS Pod’lari Pending/CrashLoopBackOff | CNI yo’q / loop aniqlangan / noto’g’ri Corefile | CNI’ni tuzating; node’ning resolv.conf faylini tuzating (Ubuntu’dagi `127.0.0.53` → `/run/systemd/resolve/resolv.conf`’dan foydalaning); ConfigMap’ni tuzating |
 | klaster nomlari ishlamaydi, tashqi nomlar ishlaydi | `kubernetes` plugin’i xato beradi | `kubectl logs` - RBAC yoki `clusterDomain` mos emas |
-| tashqi nomlar ishlamaydi, klaster nomlari ishlaydi | `forward` nishoniga yetib bo’lmaydi | node’larning resolver’lari, `kube-system` dan 53-portga egress uchun NetworkPolicy, firewall |
+| tashqi nomlar ishlamaydi, klaster nomlari ishlaydi | `forward` nishoniga yetib bo’lmaydi | node’larning resolver’lari, `kube-system`’dan 53-portga egress uchun NetworkPolicy, firewall |
 | bitta Pod aniqlay olmaydi | uning `resolv.conf` fayli / `dnsPolicy` | `kubectl exec <pod> -- cat /etc/resolv.conf` |
 | Service noto’g’ri IP’ga aylanadi / eskirgan | kesh | 30 s kuting; sabringiz chidamasa `kubectl rollout restart deployment coredns -n kube-system` |
 
@@ -92,7 +92,7 @@ kubectl edit configmap coredns -n kube-system
 kubectl rollout restart deployment coredns -n kube-system     # faqat `reload` ni kuta olmasangiz
 ```
 
-`forward` ni ommaviy resolver’ga o’zgartirish - o’z resolv.conf fayli systemd
+`forward`’ni ommaviy resolver’ga o’zgartirish - o’z resolv.conf fayli systemd
 stub’i bo’lgan lab node’i uchun tezkor yechim; productionda esa node’ning
 o’zini tuzatasiz.
 

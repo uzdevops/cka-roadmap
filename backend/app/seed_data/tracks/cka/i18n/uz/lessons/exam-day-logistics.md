@@ -64,7 +64,7 @@ tasniflang:
 |---|---|---|
 | buyruq / maydonni bilmadim | **bilim** bo’shlig’i | o’sha darsni qayta o’qing; labini qaytadan bajaring |
 | bilardim, lekin hujjatlardan yetarlicha tez topa olmadim | **navigatsiya** bo’shlig’i | hujjat sahifasi qayerdaligini yodlang; qidiruv so’zini mashq qiling |
-| bilardim, xato terdim, sezmadim | **tekshirish** bo’shlig’i | tekshiruvni odatga aylantiring: har bir `create`dan keyin `get` |
+| bilardim, xato terdim, sezmadim | **tekshirish** bo’shlig’i | tekshiruvni odatga aylantiring: har bir `create`’dan keyin `get` |
 | vaqt yetmadi | **tezlik** bo’shlig’i | tezlik mashqlari darsi; imperativ buyruqlar; oldinroq o’tkazib yuboring |
 | topshiriqni noto’g’ri o’qidim | **o’qish** bo’shlig’i | vazifalarni ikki marta o’qing; nomlar, namespace’lar, raqamlarni belgilang |
 

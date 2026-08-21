@@ -14,7 +14,7 @@ kubectl get rs -l app=web
 ```
 
 Har bir rollout eski ReplicaSet’ni nol replika bilan ortda qoldiradi
-(`revisionHistoryLimit` gacha, sukut bo’yicha 10). Bular - sizning rollback
+(`revisionHistoryLimit`’gacha, sukut bo’yicha 10). Bular - sizning rollback
 nishonlaringiz.
 
 ## Ikkita strategiya
@@ -78,7 +78,7 @@ Hech qachon tugamaydigan rollout - `rollout status` "1 of 3 updated replicas
 are available" da osilib qolgani - yangi Pod’lar Ready bo’lmayotganini
 anglatadi: noto’g’ri image tegi (ImagePullBackOff), crash bo’layotgan
 konteyner, o’tmayotgan readiness probe. Eski Pod’lar hali ham xizmat
-qilyapti, ya’ni ilova ishlamay qolgani yo’q. `kubectl get pods` ni o’qing,
+qilyapti, ya’ni ilova ishlamay qolgani yo’q. `kubectl get pods`’ni o’qing,
 shablonni tuzating yoki `rollout undo` qiling - shunda u tugaydi.
 :::
 
@@ -110,7 +110,7 @@ bilan.
 
 1. Image’ni o’zgartirganingizda Deployment kontrolleri qanday obyekt yaratadi
    va eskisiga nima bo’ladi?
-2. `maxSurge: 1, maxUnavailable: 0` ni bir jumlada tushuntiring va uning
-   o’rniga `Recreate` ni tanlaydigan holatni ayting.
+2. `maxSurge: 1, maxUnavailable: 0`’ni bir jumlada tushuntiring va uning
+   o’rniga `Recreate`’ni tanlaydigan holatni ayting.
 3. `rollout status` besh daqiqadan beri qotib turibdi. Ilova ishlamay
    qoldimi? Nimaga qaraysiz va tez chiqish yo’li qanday?

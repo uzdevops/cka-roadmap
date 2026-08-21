@@ -143,7 +143,7 @@ Bitta fayl, ko’plab instance’lar - `getty@tty1` va `sshd@` shunday ishlaydi.
 
 :::warning
 `ExecStart=` shell buyruq satri **emas**: `ExecStart=/usr/bin/foo > /var/log/foo.log`
-yo’naltirmaydi, u `>` ni argument sifatida uzatadi.
+yo’naltirmaydi, u `>`’ni argument sifatida uzatadi.
 `StandardOutput=append:/var/log/foo.log` yoki
 `ExecStart=/bin/bash -c '/usr/bin/foo > /var/log/foo.log'` ishlating. Xuddi
 shu narsa `&&`, `|`, `*` va systemd’ning o’z `${VAR}` idan tashqaridagi

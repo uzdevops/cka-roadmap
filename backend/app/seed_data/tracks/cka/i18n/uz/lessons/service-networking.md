@@ -69,10 +69,10 @@ kubectl get cm kube-proxy -n kube-system -o yaml | grep -A1 "mode:"
 
 ## Paketni kuzatib borish
 
-1. Pod A (10.244.1.2) `db:3306` ga ulanadi; CoreDNS `db` = 10.96.12.7 deydi.
+1. Pod A (10.244.1.2) `db:3306`’ga ulanadi; CoreDNS `db` = 10.96.12.7 deydi.
 2. Paket A’ning namespace’idan node’ning bridge’iga 10.96.12.7 manzili bilan
    chiqadi.
-3. Node’da `nat` PREROUTING hook’i `KUBE-SERVICES` ni ishga tushiradi; manzil
+3. Node’da `nat` PREROUTING hook’i `KUBE-SERVICES`’ni ishga tushiradi; manzil
    10.244.2.5:3306 ga qayta yoziladi.
 4. Node 10.244.2.5 ni boshqa har qanday Pod paketi kabi node02 tomon
    yo’naltiradi (marshrutlar yoki overlay - bu CNI ishi).

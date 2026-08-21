@@ -37,7 +37,7 @@ Uch qism:
   rad etadi.
 
 Eskiroq `ReplicationController` xuddi shu ishni faqat tenglikka asoslangan
-selector bilan va `matchExpressions`siz bajargan. Uni eski manifestlarda hali
+selector bilan va `matchExpressions`’siz bajargan. Uni eski manifestlarda hali
 ham ko’rasiz; o’zingiz ReplicaSet yozing.
 
 ## Butun gap selector’da
@@ -60,7 +60,7 @@ Egalik label orqali aniqlangani uchun undan ikki narsa kelib chiqadi:
 
 :::exam-tip
 "ReplicaSet yaratmayapti" degani deyarli har doim
-`spec.selector.matchLabels`ning `spec.template.metadata.labels` bilan mos
+`spec.selector.matchLabels`’ning `spec.template.metadata.labels` bilan mos
 kelmasligi. Xato aynan shuni aytadi - uni o’qing. Ikkinchi o’rindagi sabab:
 noto’g’ri `apiVersion` (`v1` emas, `apps/v1`).
 :::
