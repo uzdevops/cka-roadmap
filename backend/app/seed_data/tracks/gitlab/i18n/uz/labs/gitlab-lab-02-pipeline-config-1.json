@@ -1,3 +1,5 @@
 {
-  "title": "Lab 2 - Pipeline konfiguratsiyasini o’rganish, 1-qism"
+  "title": "Lab 2 - Pipeline konfiguratsiyasini o’rganish, 1-qism",
+  "description": "To’rt job’li pipeline’da before_script, artifacts, dependencies va needs.",
+  "scenario": "KodeKloud’ning 'Exploring Pipeline Configuration Part-1' lab’i: to’rt job’ni stage’lar bilan bog’lang, artifact’lar bilan faylni oldinga uzating, keyin needs bilan DAG job’larni erta boshlasin."
 }

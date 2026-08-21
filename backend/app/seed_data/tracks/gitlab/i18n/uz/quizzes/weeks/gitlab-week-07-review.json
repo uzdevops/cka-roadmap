@@ -1,4 +1,182 @@
 {
   "title": "GitLab 7-hafta takrorlash - tezroq, modulli, xavfsizroq",
-  "description": "Samaradorlik, child pipeline’lar, component’lar, skanerlar va himoyalar bo’yicha sakkiz savol."
+  "description": "Samaradorlik, child pipeline’lar, component’lar, skanerlar va himoyalar bo’yicha sakkiz savol.",
+  "questions": {
+    "w7-01": {
+      "prompt": "Job’lar boshlanishidan oldin uzoq kutadi. Qaysi yechim to’g’ri?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qisqaroq skriptlar"
+        },
+        {
+          "id": "b",
+          "text": "Ko’proq runner / sig’im - navbat vaqti YAML muammosi emas"
+        },
+        {
+          "id": "c",
+          "text": "Kattaroq image’lar"
+        },
+        {
+          "id": "d",
+          "text": "Ko’proq stage’lar"
+        }
+      ],
+      "explanation": "Navbat vaqtini davomiylikdan alohida o’qing."
+    },
+    "w7-02": {
+      "prompt": "Deploy job’lar nega interruptible: false bo’lishi kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qayta urinish mumkin bo’lsin deb"
+        },
+        {
+          "id": "b",
+          "text": "Yangiroq pipeline yarim tugagan deploy’ni bekor qilmasligi kerak"
+        },
+        {
+          "id": "c",
+          "text": "Ular har doim manual"
+        },
+        {
+          "id": "d",
+          "text": "Log’larini saqlash uchun"
+        }
+      ],
+      "explanation": "Auto-cancel redundant pipelines testlar uchun a’lo, deploy’lar uchun xavfli."
+    },
+    "w7-03": {
+      "prompt": "Trigger job’ga strategy: depend qo’shganda nima o’zgaradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Child tezroq ishlaydi"
+        },
+        {
+          "id": "b",
+          "text": "Parent’ning trigger job’i child’ni kutadi va uning holatini oladi"
+        },
+        {
+          "id": "c",
+          "text": "Child parent artifact’larini oladi"
+        },
+        {
+          "id": "d",
+          "text": "Hech narsa"
+        }
+      ],
+      "explanation": "Usiz trigger job child boshlangan zahoti yashil."
+    },
+    "w7-04": {
+      "prompt": "CI/CD component’dagi $[[ inputs.x ]] qachon almashtiriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Job ish vaqtida shell’da"
+        },
+        {
+          "id": "b",
+          "text": "Pipeline yaratilganda, biror job ishlashidan oldin - noma’lum input’lar yaratishni yiqitadi"
+        },
+        {
+          "id": "c",
+          "text": "Runner image tortganda"
+        },
+        {
+          "id": "d",
+          "text": "Hech qachon - ular izoh"
+        }
+      ],
+      "explanation": "Input’lar tuzilmani shakllantiradi; variable’lar ish vaqti qiymatlarini tashiydi."
+    },
+    "w7-05": {
+      "prompt": "Skaner template default bo’yicha nima qo’shadi va merge’ga ta’siri nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloklovchi job"
+        },
+        {
+          "id": "b",
+          "text": "test stage’ida allow_failure: true bilan topilmalarni hisobot qiladigan skan job’lar - o’zlaricha bloklamaydi"
+        },
+        {
+          "id": "c",
+          "text": "Talab qilinadigan approval"
+        },
+        {
+          "id": "d",
+          "text": "security nomli yangi stage"
+        }
+      ],
+      "explanation": "Ularni qoidaga aylantirish uchun approval va scan-execution policy’lar ishlating."
+    },
+    "w7-06": {
+      "prompt": "Kimdir include qatorini o’chirsa ham skaner ishlashini qaysi mexanizm kafolatlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qilmaslikni so’ragan izoh"
+        },
+        {
+          "id": "b",
+          "text": "Guruh darajasidagi scan execution policy"
+        },
+        {
+          "id": "c",
+          "text": "allow_failure: false"
+        },
+        {
+          "id": "d",
+          "text": "CODEOWNERS"
+        }
+      ],
+      "explanation": "Policy’lar loyiha YAML’idan tashqarida majburlanadi."
+    },
+    "w7-07": {
+      "prompt": "Feature branch job’i himoyalangan variable’ni echo qiladi. U nimani chiqaradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qiymatni"
+        },
+        {
+          "id": "b",
+          "text": "Bo’sh satr - himoyalangan variable’lar faqat himoyalangan ref’larga yetadi"
+        },
+        {
+          "id": "c",
+          "text": "[MASKED]"
+        },
+        {
+          "id": "d",
+          "text": "Xato"
+        }
+      ],
+      "explanation": "Himoya ochilishni hal qiladi; masking faqat log’larni filtrlaydi."
+    },
+    "w7-08": {
+      "prompt": ".gitlab-ci.yml’dagi CODEOWNERS qoidasi nega xavfsizlik nazorati?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Review’ni tezlashtiradi"
+        },
+        {
+          "id": "b",
+          "text": "Pipeline’ning o’zidagi o’zgarishlar platforma jamoasi approval’ini talab qiladi - pipeline loyiha sirlari bilan ishlaydi"
+        },
+        {
+          "id": "c",
+          "text": "Fork’larni bloklaydi"
+        },
+        {
+          "id": "d",
+          "text": "Nazorat emas"
+        }
+      ],
+      "explanation": "Pipeline - production kod; kim o’zgartirishini qo’riqlang."
+    }
+  }
 }

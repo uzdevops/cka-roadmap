@@ -1,4 +1,182 @@
 {
   "title": "GitLab 4-hafta takrorlash - XYZ ilovasini testlash",
-  "description": "Haqiqiy ilova uchun CI: o’rnatish, testlar, hisobotlar, coverage va maslahat xarakteridagi job’lar - sakkiz savol."
+  "description": "Haqiqiy ilova uchun CI: o’rnatish, testlar, hisobotlar, coverage va maslahat xarakteridagi job’lar - sakkiz savol.",
+  "questions": {
+    "w4-01": {
+      "prompt": "npm ci yiqiladi: package.json va package-lock.json mos emas. Bu kimning muammosi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Runner’ning"
+        },
+        {
+          "id": "b",
+          "text": "Ilovaning - lock yangilanmagan; CI ushladi"
+        },
+        {
+          "id": "c",
+          "text": "GitLab cache’ining"
+        },
+        {
+          "id": "d",
+          "text": "Image’ning"
+        }
+      ],
+      "explanation": "Takrorlanadigan o’rnatish review’dan oldin haqiqiy xatoni ochdi."
+    },
+    "w4-02": {
+      "prompt": "Qaysi artifacts kaliti test natijalarini merge request vidjetiga aylantiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "artifacts:paths"
+        },
+        {
+          "id": "b",
+          "text": "artifacts:reports:junit"
+        },
+        {
+          "id": "c",
+          "text": "artifacts:expose_as"
+        },
+        {
+          "id": "d",
+          "text": "coverage:"
+        }
+      ],
+      "explanation": "reports:junit Test summary va Tests tab’iga parse qilinadi."
+    },
+    "w4-03": {
+      "prompt": "Test hisoboti artifact’i nega when: always ishlatishi shart?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Abadiy saqlash uchun"
+        },
+        {
+          "id": "b",
+          "text": "Chunki hisobot testlar yiqilganda eng muhim, on_success esa uni tashlab yuborardi"
+        },
+        {
+          "id": "c",
+          "text": "Chunki junit talab qiladi"
+        },
+        {
+          "id": "d",
+          "text": "Job tezroq bo’lsin deb"
+        }
+      ],
+      "explanation": "Default on_success aynan yiqilgan ijroning hisobotini tashlab yuboradi."
+    },
+    "w4-04": {
+      "prompt": "coverage: regex va coverage_report artifact’i orasidagi farq nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yo’q"
+        },
+        {
+          "id": "b",
+          "text": "Regex log’dan bitta foiz beradi; coverage_report MR diff’ida qator darajasidagi coverage beradi"
+        },
+        {
+          "id": "c",
+          "text": "Regex qator bo’yicha, hisobot job bo’yicha"
+        },
+        {
+          "id": "d",
+          "text": "Regex eskirgan"
+        }
+      ],
+      "explanation": "Ikkalasini ishlating: badge va vidjet uchun raqam, diff uchun Cobertura."
+    },
+    "w4-05": {
+      "prompt": "allow_failure: true’li job yiqiladi. Pipeline qanday rangda va keyingi stage’lar ishlaydimi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qizil; yo’q"
+        },
+        {
+          "id": "b",
+          "text": "Ogohlantirish bilan o’tgan; ha"
+        },
+        {
+          "id": "c",
+          "text": "Pending; yo’q"
+        },
+        {
+          "id": "d",
+          "text": "Yashil; faqat manual job’lar ishlaydi"
+        }
+      ],
+      "explanation": "Maslahat job’lar bloklamasdan hisobot beradi."
+    },
+    "w4-06": {
+      "prompt": "Linter topilmalari maslahat bo’lsin, lekin linter’ning o’zi buzilganda yiqilsin - qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "allow_failure: true"
+        },
+        {
+          "id": "b",
+          "text": "allow_failure: exit_codes: [1]"
+        },
+        {
+          "id": "c",
+          "text": "retry: 2"
+        },
+        {
+          "id": "d",
+          "text": "when: manual"
+        }
+      ],
+      "explanation": "ESLint muammolar uchun 1, xatolar uchun 2+ bilan chiqadi; faqat birinchisiga ruxsat bering."
+    },
+    "w4-07": {
+      "prompt": "Skriptning oxirgi qatori sifatida 'npm test; echo done'da nima noto’g’ri?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hech narsa"
+        },
+        {
+          "id": "b",
+          "text": "echo’ning exit kodi job’niki bo’ladi va test yiqilishini yashiradi"
+        },
+        {
+          "id": "c",
+          "text": "Ikki marta ishlaydi"
+        },
+        {
+          "id": "d",
+          "text": "alpine’da echo yo’q"
+        }
+      ],
+      "explanation": "Oxirgi buyruq job holatini hal qiladi."
+    },
+    "w4-08": {
+      "prompt": "Integratsion testlar nega unit testlardan alohida job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ularga service kerak va uzoqroq davom etadi; alohida job’lar parallel ishlaydi va unit testlarni tez saqlaydi"
+        },
+        {
+          "id": "b",
+          "text": "Jest ikkalasini ishlata olmaydi"
+        },
+        {
+          "id": "c",
+          "text": "GitLab faqat bitta test job’ga ruxsat beradi"
+        },
+        {
+          "id": "d",
+          "text": "Boshqa runner ishlatish uchun"
+        }
+      ],
+      "explanation": "Bir stage, parallel, har biri mustaqil yiqiladi."
+    }
+  }
 }

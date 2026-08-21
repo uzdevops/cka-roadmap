@@ -1,4 +1,182 @@
 {
   "title": "GitLab 5-hafta takrorlash - build, publish va tuzilma",
-  "description": "Image’lar, registry, cache, template’lar va merge request pipeline’lari bo’yicha sakkiz savol."
+  "description": "Image’lar, registry, cache, template’lar va merge request pipeline’lari bo’yicha sakkiz savol.",
+  "questions": {
+    "w5-01": {
+      "prompt": "docker-executor job’iga docker build uchun nega docker:dind service kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tezlik uchun"
+        },
+        {
+          "id": "b",
+          "text": "Job’ning o’zi daemon’siz container; dind uni yonida beradi"
+        },
+        {
+          "id": "c",
+          "text": "Image’larni tezroq tortish uchun"
+        },
+        {
+          "id": "d",
+          "text": "Kerak emas - docker build usiz ishlaydi"
+        }
+      ],
+      "explanation": "Muqobillar: kaniko (daemon’siz) yoki shell runner’ning host daemon’i."
+    },
+    "w5-02": {
+      "prompt": "Qaysi hisob ma’lumotlari job’ni loyiha registry’siga login qiladi va parol qancha vaqt yaroqli?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Personal token; abadiy"
+        },
+        {
+          "id": "b",
+          "text": "CI_REGISTRY_USER / CI_REGISTRY_PASSWORD (job token); faqat job ishlayotganda"
+        },
+        {
+          "id": "c",
+          "text": "Deploy kalit; 24 soat"
+        },
+        {
+          "id": "d",
+          "text": "root / root"
+        }
+      ],
+      "explanation": "Job token har job uchun zarb qilinadi va u bilan o’ladi."
+    },
+    "w5-03": {
+      "prompt": "Nega :latest emas, image SHA bo’yicha deploy?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SHA tag’lar qisqaroq"
+        },
+        {
+          "id": "b",
+          "text": "O’zgarmas tag commit’gacha kuzatiladi va rollback’ni takrorlanadigan qiladi; :latest harakatlanadi"
+        },
+        {
+          "id": "c",
+          "text": "GitLab :latest’ni taqiqlaydi"
+        },
+        {
+          "id": "d",
+          "text": "SHA image’lar kichikroq"
+        }
+      ],
+      "explanation": "Bir marta yig’ing, o’sha artifact’ni SHA bo’yicha ko’taring."
+    },
+    "w5-04": {
+      "prompt": "npm ci bilan nega node_modules/ emas, .npm/ cache’lanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "node_modules juda katta"
+        },
+        {
+          "id": "b",
+          "text": "npm ci o’rnatishdan oldin node_modules’ni o’chiradi; npm yuklab olish cache’ini cache’lash uni tezlashtiradi"
+        },
+        {
+          "id": "c",
+          "text": "npm node_modules cache’lashni taqiqlaydi"
+        },
+        {
+          "id": "d",
+          "text": "Ikkalasi bir xil"
+        }
+      ],
+      "explanation": "Yuklab olish cache’ini cache’lang, lock fayl key bilan."
+    },
+    "w5-05": {
+      "prompt": "Kerakli fayl cache’da va cache bo’sh bo’lganda job yiqiladi. Dizayn xatosi nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Key noto’g’ri"
+        },
+        {
+          "id": "b",
+          "text": "Artifact cache qiyofasida - cache imkon qadar, artifact’lar kafolatlangan"
+        },
+        {
+          "id": "c",
+          "text": "Runner eski"
+        },
+        {
+          "id": "d",
+          "text": "Hech narsa, bu kutilgan"
+        }
+      ],
+      "explanation": "Cache tezlashtiradi; u hech qachon to’g’rilik uchun talab qilinmasligi kerak."
+    },
+    "w5-06": {
+      "prompt": "Ikki job .node’ni extend qiladi; biri o’z before_script’ini o’rnatadi. Template’ning before_script’i ham ishlaydimi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ha, ikkalasi ishlaydi"
+        },
+        {
+          "id": "b",
+          "text": "Yo’q - extends map’larni merge qiladi va job kaliti template’nikini almashtiradi"
+        },
+        {
+          "id": "c",
+          "text": "Faqat birinchi ro’yxatlangan bo’lsa"
+        },
+        {
+          "id": "d",
+          "text": "Faqat !reference bilan"
+        }
+      ],
+      "explanation": "Uni ochiq qo’shish uchun !reference [.node, before_script] ishlating."
+    },
+    "w5-07": {
+      "prompt": "Pipeline editor’dagi Full configuration tab’i nimani ko’rsatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Xom faylni"
+        },
+        {
+          "id": "b",
+          "text": "include, template va extends kengaytirilgandan keyingi YAML’ni"
+        },
+        {
+          "id": "c",
+          "text": "Oxirgi pipeline log’ini"
+        },
+        {
+          "id": "d",
+          "text": "Runner config’ini"
+        }
+      ],
+      "explanation": "'Bu job qayerdan keladi'ni shu yerda debug qilasiz."
+    },
+    "w5-08": {
+      "prompt": "Merged results pipeline oddiy MR pipeline testlamaydigan nimani testlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Faqat target branch’ni"
+        },
+        {
+          "id": "b",
+          "text": "Source’ni target’ga merge qilish natijasini"
+        },
+        {
+          "id": "c",
+          "text": "Default branch’ni"
+        },
+        {
+          "id": "d",
+          "text": "Oxirgi tag’ni"
+        }
+      ],
+      "explanation": "Source branch yashil bo’lib, baribir main’ni buzishi mumkin; merged results buni ushlaydi."
+    }
+  }
 }

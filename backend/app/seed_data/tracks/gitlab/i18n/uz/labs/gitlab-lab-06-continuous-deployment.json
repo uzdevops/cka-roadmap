@@ -1,3 +1,5 @@
 {
-  "title": "Lab 6 - dev, staging va production’ga deploy"
+  "title": "Lab 6 - dev, staging va production’ga deploy",
+  "description": "Environment’lar, File variable’li SSH deploy, manual gate’lar, himoya va rollback.",
+  "scenario": "Publish qilingan image’ni SSH orqali Docker host’ga kuzatiladigan environment’lar sifatida deploy qiling, staging va production’ni gate’lang, production’ni himoya qiling va bir marta rollback qiling."
 }

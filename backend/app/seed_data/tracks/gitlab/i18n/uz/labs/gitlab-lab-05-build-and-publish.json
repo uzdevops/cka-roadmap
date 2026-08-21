@@ -1,3 +1,5 @@
 {
-  "title": "Lab 5 - Image build va publish, cache va template’lar"
+  "title": "Lab 5 - Image build va publish, cache va template’lar",
+  "description": "Docker-in-Docker, Container Registry, lock-fayl key’li cache va .node template.",
+  "scenario": "Testlangan ilovani SHA bo’yicha publish qilingan image’ga aylantiring, cache bilan o’rnatish vaqtini qisqartiring va takrorni template’larga joylang."
 }

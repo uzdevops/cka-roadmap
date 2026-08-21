@@ -1,3 +1,5 @@
 {
-  "title": "Lab 3 - Pipeline konfiguratsiyasini o’rganish, 2-qism"
+  "title": "Lab 3 - Pipeline konfiguratsiyasini o’rganish, 2-qism",
+  "description": "Variable’lar, rules, workflow, schedule’lar, resource group’lar va matrix.",
+  "scenario": "KodeKloud’ning 'Exploring Pipeline Configuration Part-2' lab’i: 3-haftadagi har qaror kalit so’zi bitta pipeline’da, push’dan, merge request’dan va schedule’dan ishga tushirilgan."
 }

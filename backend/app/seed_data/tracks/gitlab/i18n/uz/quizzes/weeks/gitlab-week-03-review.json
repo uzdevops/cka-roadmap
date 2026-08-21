@@ -1,4 +1,182 @@
 {
   "title": "GitLab 3-hafta takrorlash - o’zgaruvchilar, rules va job boshqaruvi",
-  "description": "Ustuvorlik, predefined o’zgaruvchilar, rules, workflow va job’ni chegaralovchi kalit so’zlar bo’yicha sakkiz savol."
+  "description": "Ustuvorlik, predefined o’zgaruvchilar, rules, workflow va job’ni chegaralovchi kalit so’zlar bo’yicha sakkiz savol.",
+  "questions": {
+    "w3-01": {
+      "prompt": "Job darajasidagi variables: yozuvi va project (UI) variable bir xil nomga ega. script qaysi qiymatni ko’radi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Project’niki - UI har doim g’olib"
+        },
+        {
+          "id": "b",
+          "text": "Job darajasidagi - YAML project’dan aniqroq"
+        },
+        {
+          "id": "c",
+          "text": "Qaysi biri oldin yaratilgan bo’lsa"
+        },
+        {
+          "id": "d",
+          "text": "Ikkalasi, birlashtirilgan"
+        }
+      ],
+      "explanation": "Ustuvorlik: job darajasidagi YAML global YAML’dan, u esa project/group/instance’dan ustun; faqat pipeline-run qiymatlari fayldan ustun."
+    },
+    "w3-02": {
+      "prompt": "File turidagi variable $VAR ga nimani qo’yadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fayl mazmunini"
+        },
+        {
+          "id": "b",
+          "text": "Qiymatni saqlovchi vaqtinchalik fayl yo’lini"
+        },
+        {
+          "id": "c",
+          "text": "base64 satr"
+        },
+        {
+          "id": "d",
+          "text": "Hech narsa - u faqat artifact’lar uchun"
+        }
+      ],
+      "explanation": "File variable’lar kubeconfig, SSH kalit va shu kabilar uchun to’g’ri shakl."
+    },
+    "w3-03": {
+      "prompt": "Qaysi predefined variable job schedule tomonidan boshlanganini aytadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CI_COMMIT_TAG"
+        },
+        {
+          "id": "b",
+          "text": "CI_PIPELINE_SOURCE == \"schedule\""
+        },
+        {
+          "id": "c",
+          "text": "CI_JOB_STATUS"
+        },
+        {
+          "id": "d",
+          "text": "CI_OPEN_MERGE_REQUESTS"
+        }
+      ],
+      "explanation": "CI_PIPELINE_SOURCE trigger’ni tashiydi: push, merge_request_event, schedule, web, api, trigger."
+    },
+    "w3-04": {
+      "prompt": "Job’da ikkita rule: if: A keyin if: B. Pipeline ikkalasiga mos. Qaysi biri qo’llanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ikkalasi birlashtiriladi"
+        },
+        {
+          "id": "b",
+          "text": "Oxirgisi"
+        },
+        {
+          "id": "c",
+          "text": "Birinchi mos rule"
+        },
+        {
+          "id": "d",
+          "text": "Hech qaysi - bu xato"
+        }
+      ],
+      "explanation": "Rule’lar yuqoridan pastga baholanadi; birinchi moslik hal qiladi."
+    },
+    "w3-05": {
+      "prompt": "allow_failure: false’siz manual job - keyingi stage’ga nima bo’ladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bosishni kutadi"
+        },
+        {
+          "id": "b",
+          "text": "Kutmasdan ishlaydi, chunki manual job’larga default yiqilishga ruxsat"
+        },
+        {
+          "id": "c",
+          "text": "O’tkazib yuboriladi"
+        },
+        {
+          "id": "d",
+          "text": "Yiqiladi"
+        }
+      ],
+      "explanation": "Manual job’ni bloklovchi gate’ga aylantirish uchun allow_failure: false qo’shing."
+    },
+    "w3-06": {
+      "prompt": "Ochiq MR’li branch push’i ikkinchi (branch) pipeline yaratishini qaysi mexanizm to’xtatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Har job’dagi rules:"
+        },
+        {
+          "id": "b",
+          "text": "Ochiq merge request’li branch’lar uchun when: never’li workflow:rules"
+        },
+        {
+          "id": "c",
+          "text": "Pipeline schedule’lar"
+        },
+        {
+          "id": "d",
+          "text": "resource_group"
+        }
+      ],
+      "explanation": "workflow:rules pipeline umuman mavjud bo’lishini hal qiladi."
+    },
+    "w3-07": {
+      "prompt": "Ikki pipeline bir daqiqa ichida deploy-staging ishlatadi. Deploy’lar ustma-ust tushmasligini nima kafolatlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "timeout:"
+        },
+        {
+          "id": "b",
+          "text": "resource_group: staging"
+        },
+        {
+          "id": "c",
+          "text": "parallel: 1"
+        },
+        {
+          "id": "d",
+          "text": "needs:"
+        }
+      ],
+      "explanation": "Resource group - pipeline’lar bo’ylab nomlangan mutex."
+    },
+    "w3-08": {
+      "prompt": "Test job’iga Redis kerak. U qanday oladi va unga yetadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "image: redis"
+        },
+        {
+          "id": "b",
+          "text": "services: [redis:7] - hostname bo’yicha yetiladi (alias yoki image nomi)"
+        },
+        {
+          "id": "c",
+          "text": "REDIS=true project variable"
+        },
+        {
+          "id": "d",
+          "text": "before_script: apt install redis"
+        }
+      ],
+      "explanation": "services: umumiy tarmoqda job yonida container’lar ishga tushiradi."
+    }
+  }
 }

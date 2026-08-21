@@ -1,4 +1,182 @@
 {
   "title": "GitLab 2-hafta takrorlash - runner’lar, stage’lar, artifact’lar, needs",
-  "description": "Job’ni kim bajaradi, u qanday izolyatsiya qilinadi va fayllar job’lar orasida qanday o’tadi - sakkiz savol."
+  "description": "Job’ni kim bajaradi, u qanday izolyatsiya qilinadi va fayllar job’lar orasida qanday o’tadi - sakkiz savol.",
+  "questions": {
+    "w2-01": {
+      "prompt": "Runner guruh darajasida ro’yxatdan o’tkazilgan. Qaysi loyihalar job’larini ola oladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Faqat yaratilgan loyiha"
+        },
+        {
+          "id": "b",
+          "text": "Guruh va uning subgroup’laridagi har loyiha"
+        },
+        {
+          "id": "c",
+          "text": "Instance’dagi har loyiha"
+        },
+        {
+          "id": "d",
+          "text": "Tag’languncha hech qaysi"
+        }
+      ],
+      "explanation": "Group runner’lar guruh loyihalariga xizmat qiladi; instance runner’lar hammaga; project runner’lar bitta loyihaga."
+    },
+    "w2-02": {
+      "prompt": "image: shell executor’da nega hech narsani o’zgartirmaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Shell executor job’larni container’da emas, to’g’ridan-to’g’ri host’da ishlatadi"
+        },
+        {
+          "id": "b",
+          "text": "image: faqat Kubernetes o’qiydi"
+        },
+        {
+          "id": "c",
+          "text": "Shell executor image’larni kech tortadi"
+        },
+        {
+          "id": "d",
+          "text": "O’zgartiradi - shell’ni o’zgartiradi"
+        }
+      ],
+      "explanation": "Faqat container asosidagi executor’lar (docker, kubernetes) image: ishlatadi."
+    },
+    "w2-03": {
+      "prompt": "before_script’da export qilingan variable - script va after_script’da ko’rinadimi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ikkalasida"
+        },
+        {
+          "id": "b",
+          "text": "Hech birida"
+        },
+        {
+          "id": "c",
+          "text": "script’da (bir shell) ha, after_script’da (alohida shell) yo’q"
+        },
+        {
+          "id": "d",
+          "text": "Faqat after_script’da"
+        }
+      ],
+      "explanation": "before_script va script bitta shell’ni bo’lishadi; after_script yangisi."
+    },
+    "w2-04": {
+      "prompt": "Pipeline’da nega npm install emas, npm ci?",
+      "options": [
+        {
+          "id": "a",
+          "text": "npm ci laptopda tezroq"
+        },
+        {
+          "id": "b",
+          "text": "npm ci aynan lock faylni o’rnatadi va package.json bilan lock mos kelmasa yiqiladi"
+        },
+        {
+          "id": "c",
+          "text": "npm install container’larda ishlamaydi"
+        },
+        {
+          "id": "d",
+          "text": "Ular bir xil"
+        }
+      ],
+      "explanation": "Takrorlanadigan o’rnatish - CI’ning mohiyati."
+    },
+    "w2-05": {
+      "prompt": "stage va stages - qaysi bayon to’g’ri?",
+      "options": [
+        {
+          "id": "a",
+          "text": "stages: job’ni joylashtiradi; stage: tartibni e’lon qiladi"
+        },
+        {
+          "id": "b",
+          "text": "stage: job’ni stages: e’lon qilgan stage’lardan biriga joylashtiradi"
+        },
+        {
+          "id": "c",
+          "text": "Ular almashtirib ishlatiladi"
+        },
+        {
+          "id": "d",
+          "text": "stage: eskirgan"
+        }
+      ],
+      "explanation": "stages: (yuqori daraja) - tartiblangan ro’yxat; stage: (job’da) bittasini tanlaydi."
+    },
+    "w2-06": {
+      "prompt": "Testlar yiqilganda test hisobotlaringiz hech qachon chiqmaydi. Qaysi artifacts kaliti tuzatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "expire_in: never"
+        },
+        {
+          "id": "b",
+          "text": "paths: reports/"
+        },
+        {
+          "id": "c",
+          "text": "when: always"
+        },
+        {
+          "id": "d",
+          "text": "dependencies: []"
+        }
+      ],
+      "explanation": "Artifact’lar default on_success; when: always ularni yiqilishda ham saqlaydi."
+    },
+    "w2-07": {
+      "prompt": "Job’da needs: [build-api] bor. U hali ham build stage’i tugashini kutadimi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ha, stage’lar har doim qo’llanadi"
+        },
+        {
+          "id": "b",
+          "text": "Yo’q - build-api tugashi bilan boshlanadi, stage’dan qat’i nazar"
+        },
+        {
+          "id": "c",
+          "text": "Faqat build-api bir stage’da bo’lsa"
+        },
+        {
+          "id": "d",
+          "text": "Faqat strategy: depend bilan"
+        }
+      ],
+      "explanation": "needs: pipeline’ni DAG’ga aylantiradi; stage chegarasi endi bloklamaydi."
+    },
+    "w2-08": {
+      "prompt": "needs:li job default bo’yicha qaysi job’lar artifact’larini yuklab oladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Oldingi stage’lardagi barcha job’lar"
+        },
+        {
+          "id": "b",
+          "text": "Faqat o’zi muhtoj job’lar"
+        },
+        {
+          "id": "c",
+          "text": "Hech qaysi"
+        },
+        {
+          "id": "d",
+          "text": "Faqat bir stage’dagi job’lar"
+        }
+      ],
+      "explanation": "needs: artifact yuklab olishlarni ro’yxatlangan job’larga toraytiradi (artifacts: false bittasini o’chiradi)."
+    }
+  }
 }

@@ -1,3 +1,5 @@
 {
-  "title": "Lab 1 - Birinchi pipeline’ingiz"
+  "title": "Lab 1 - Birinchi pipeline’ingiz",
+  "description": "Loyiha yarating, uch job’li pipeline yozing, uni buzing, log’larni o’qing.",
+  "scenario": "Yo’nalish uchun qoralama loyihani sozlang va birinchi pipeline’ingizni ishga tushiring. Bitta job’ni ataylab buzing va job log’ini har qatorini tushuntira olguningizcha o’qing."
 }

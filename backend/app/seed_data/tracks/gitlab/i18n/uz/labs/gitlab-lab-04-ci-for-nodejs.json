@@ -1,3 +1,5 @@
 {
-  "title": "Lab 4 - XYZ Node.js ilovasi uchun CI"
+  "title": "Lab 4 - XYZ Node.js ilovasi uchun CI",
+  "description": "Unit testlar, JUnit va coverage hisobotlari, maslahat lint job’i - merge request’da ko’rinadigan.",
+  "scenario": "nodejs-app’ni import qiling, uning test stage’ini yozing va merge request log ochmasdan yiqilgan testlar va coverage’ni ko’rsatsin."
 }

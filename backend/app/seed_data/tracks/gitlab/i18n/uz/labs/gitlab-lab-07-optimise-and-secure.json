@@ -1,3 +1,5 @@
 {
-  "title": "Lab 7 - Tezroq, modulli, xavfsizroq"
+  "title": "Lab 7 - Tezroq, modulli, xavfsizroq",
+  "description": "needs/interruptible, child pipeline, input’li CI/CD component, skanerlar va himoyalar.",
+  "scenario": "XYZ pipeline’ining critical path’ini qisqartiring, uni bo’ling, component publish qiling, skanerlar qo’shing va pipeline fayli atrofidagi teshiklarni yoping."
 }

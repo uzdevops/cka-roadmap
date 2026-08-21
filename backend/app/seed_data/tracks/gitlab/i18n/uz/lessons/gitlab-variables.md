@@ -1,0 +1,89 @@
+## Har darajadagi variable’lar
+
+CI/CD variable - runner `script`ingiz ishlashidan oldin o’rnatadigan muhit
+o’zgaruvchisi. Bir xil nom bir nechta joyda ta’riflanishi mumkin; eng
+aniq (specific)i g’olib.
+
+```text
+instance  ─► group ─► project ─► pipeline (run pipeline formasi / API / schedule)
+                                   ─► .gitlab-ci.yml  variables:  (global)
+                                        ─► job darajasidagi variables:
+                                             ─► script ichida export qilingan
+   eng kam aniq ─────────────────────────────────────────────► eng aniq
+```
+
+```yaml
+variables:                       # global - har job buni ko’radi
+  NODE_ENV: test
+  DEPLOY_REGION: eu-central-1
+
+build:
+  variables:
+    NODE_ENV: production         # job darajasi bu job uchun global’ni bekor qiladi
+  script:
+    - echo "$NODE_ENV in $DEPLOY_REGION"
+    - export BUILD_ID="$CI_PIPELINE_IID-$CI_COMMIT_SHORT_SHA"
+    - echo "$BUILD_ID"
+```
+
+Project, group va instance variable’lari UI’da (*Settings → CI/CD →
+Variables*) o’rnatiladi va **repozitoriyda hech qachon ko’rinmaydi** - butun
+maqsad shu: YAML `$DB_PASSWORD` deydi, qiymat GitLab’da yashaydi va o’sha
+fayl uchta mijozga uchta turli project variable bilan deploy qiladi.
+
+## UI’dagi variable sozlamalari
+
+Har bir UI variable’da muhim to’rtta tugma bor:
+
+| Sozlama | Ta’siri |
+|---|---|
+| **Type: Variable / File** | *File* qiymatni vaqtinchalik faylga yozadi va uning **yo’li**ni variable’ga qo’yadi - kubeconfig, SSH kalit, `.npmrc` uchun to’g’ri shakl |
+| **Protect variable** | faqat **himoyalangan** branch/tag’lardagi pipeline’larga ochiladi - production siri hech qachon feature-branch job’iga yetmaydi |
+| **Mask variable** | qiymat job log’larida `[MASKED]` bilan almashtiriladi (keyingi bo’lim) |
+| **Expand variable reference** | qiymat ichidagi `$OTHER_VAR` ochilishi-ochilmasligi |
+| **Environment scope** | `*`, `production`, `review/*` - har environment uchun turli qiymatli bir xil nom (6-hafta) |
+
+```yaml
+deploy:
+  script:
+    - ssh -i "$SSH_PRIVATE_KEY" deploy@server 'echo hi'   # File turidagi variable: yo’l
+    - kubectl --kubeconfig="$KUBECONFIG_FILE" get nodes
+```
+
+## Masking - va uning chegaralari
+
+Masking - **log filtri**, shifrlash emas: runner qator oqizilishidan oldin
+qiymatning har bir uchrashini `[MASKED]` bilan almashtiradi. Ishlashi uchun
+qiymat bir qatorli, 8+ belgili va cheklangan belgilar to’plamidan bo’lishi
+kerak - UI boshqa narsani mask qilishdan bosh tortadi.
+
+Masking job’ning sirni bo’laklab `echo` qilishini, base64 qilishini yoki
+artifact sifatida yuklashini to’xtatmaydi. Uni xavfsizlik kamari deb
+biling: har doim taqilgan, hech qachon sizni asraydigan narsa emas. Sirni
+noto’g’ri pipeline’dan avvaldan saqlaydigan narsa - himoya va scope.
+
+## Ustuvorlik chaqadi
+
+```yaml
+variables:
+  TARGET: staging
+
+deploy-prod:
+  variables:
+    TARGET: production
+  script: echo "$TARGET"        # production
+```
+
+Endi kimdir UI’da **project** variable `TARGET=dev` o’rnatadi. Job
+darajasidagi YAML hali ham project darajasidagi UI’dan ustun - *YAML fayl*
+project’dan aniqroq. Lekin **Run pipeline** formasiga terilgan yoki API
+yuborgan qiymat fayldagi hamma narsadan ustun. Zinapoyani eslang; variable
+"noto’g’ri qiymatga ega" bo’lganda uni bosib o’ting.
+
+## O’z-o’zini tekshirish
+
+- Sir `main` deploy’lariga mavjud, feature-branch job’lariga emas bo’lishi
+  kerak. Qaysi tugma?
+- *File* turidagi variable `$VAR`ga aslida nimani qo’yadi?
+- Job darajasidagi `variables:` yozuvi va project variable bir xil nomga
+  ega. `script` qaysi qiymatni ko’radi?

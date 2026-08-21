@@ -1,4 +1,182 @@
 {
   "title": "GitLab 8-hafta takrorlash - runner’lar va Auto DevOps",
-  "description": "O’z runner’laringiz, config.toml, executor’lar va Auto DevOps bo’yicha sakkiz savol."
+  "description": "O’z runner’laringiz, config.toml, executor’lar va Auto DevOps bo’yicha sakkiz savol.",
+  "questions": {
+    "w8-01": {
+      "prompt": "Runner scope’i va tag’lari orasidagi farq nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yo’q"
+        },
+        {
+          "id": "b",
+          "text": "Scope qaysi loyihalar ishlata olishini aytadi; tag’lar qaysi job’larni olishini"
+        },
+        {
+          "id": "c",
+          "text": "Tag’lar faqat Kubernetes uchun"
+        },
+        {
+          "id": "d",
+          "text": "Scope - tag"
+        }
+      ],
+      "explanation": "deploy tag’li group runner guruh loyihalaridan faqat deploy tag’li job’larni oladi."
+    },
+    "w8-02": {
+      "prompt": "Xususiy runner nega tag’siz job’larni qabul qilmasligi kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qila olmaydi"
+        },
+        {
+          "id": "b",
+          "text": "Aks holda loyihadagi har job unga tushadi, faqat muhtojlar emas"
+        },
+        {
+          "id": "c",
+          "text": "Tag’siz job’lar xavfsiz emas"
+        },
+        {
+          "id": "d",
+          "text": "GitLab taqiqlaydi"
+        }
+      ],
+      "explanation": "Runner’ni va unga muhtoj job’larni tag’lang."
+    },
+    "w8-03": {
+      "prompt": "concurrent = 4 va limit = 1’li bitta [[runners]] yozuvi. Uning job’laridan bir vaqtda nechtasi ishlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "4"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "0"
+        },
+        {
+          "id": "d",
+          "text": "Cheksiz"
+        }
+      ],
+      "explanation": "limit bitta yozuvni chegaralaydi; concurrent yozuvlar bo’ylab host’ni."
+    },
+    "w8-04": {
+      "prompt": "docker:dind va /var/run/docker.sock mount qilish orasidagi murosa nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yo’q"
+        },
+        {
+          "id": "b",
+          "text": "dind har job uchun daemon izolyatsiya qiladi lekin sekinroq va privileged kerak; socket host daemon’ini bo’lishadi (tez layer cache) lekin job’lar bir-birining container’larini ko’radi"
+        },
+        {
+          "id": "c",
+          "text": "Socket’ga privileged kerak, dind’ga emas"
+        },
+        {
+          "id": "d",
+          "text": "dind faqat Kubernetes’da ishlaydi"
+        }
+      ],
+      "explanation": "Izolyatsiya yoki tezlikni bilib tanlang."
+    },
+    "w8-05": {
+      "prompt": "Auto DevOps loyihaga qachon qo’llanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Har doim"
+        },
+        {
+          "id": "b",
+          "text": "Yoqilganda va loyihada o’z .gitlab-ci.yml’i bo’lmaganda"
+        },
+        {
+          "id": "c",
+          "text": "Faqat Dockerfile bilan"
+        },
+        {
+          "id": "d",
+          "text": "Faqat gitlab.com’da"
+        }
+      ],
+      "explanation": "O’z faylingiz g’olib; aralashtirish uchun template’ni include qiling."
+    },
+    "w8-06": {
+      "prompt": "Auto DevOps deploy stage’lari ishlashidan oldin qaysi ikki narsa mavjud bo’lishi kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dockerfile va README"
+        },
+        {
+          "id": "b",
+          "text": "Ulangan Kubernetes klaster (agent) va wildcard DNS’li KUBE_INGRESS_BASE_DOMAIN"
+        },
+        {
+          "id": "c",
+          "text": "Pullik tarif va token"
+        },
+        {
+          "id": "d",
+          "text": "Repo’da Helm va kubectl"
+        }
+      ],
+      "explanation": "Ularsiz build va test baribir ishlaydi; deploy’lar o’tkazib yuboriladi."
+    },
+    "w8-07": {
+      "prompt": "YAML’ga tegmasdan Auto DevOps deploy qilgan ilovaga maxfiy muhit o’zgaruvchisini qanday berasiz?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dockerfile’ga qo’yib"
+        },
+        {
+          "id": "b",
+          "text": "K8S_SECRET_<NAME> nomli CI/CD variable"
+        },
+        {
+          "id": "c",
+          "text": "Artifact"
+        },
+        {
+          "id": "d",
+          "text": "Commit xabari"
+        }
+      ],
+      "explanation": "K8S_SECRET_* pod’larga ochiladigan Kubernetes Secret bo’ladi."
+    },
+    "w8-08": {
+      "prompt": ".gitlab-ci.yml’ingiz Auto DevOps template job’i bilan bir xil nomli job ta’riflaydi. Nima bo’ladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Xato - takroriy job"
+        },
+        {
+          "id": "b",
+          "text": "Kalitlaringiz template’nikining ustiga merge bo’ladi, qolgani saqlanadi"
+        },
+        {
+          "id": "c",
+          "text": "Template g’olib"
+        },
+        {
+          "id": "d",
+          "text": "Ikkalasi ishlaydi"
+        }
+      ],
+      "explanation": "Bir xil nomli job’lar extends kabi merge bo’ladi; *_DISABLED variable’lar yoki rules: when: never bittasini olib tashlaydi."
+    }
+  }
 }

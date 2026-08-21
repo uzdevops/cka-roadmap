@@ -1,4 +1,182 @@
 {
   "title": "GitLab 1-hafta takrorlash - CI/CD va birinchi pipeline",
-  "description": "Pipeline nima, u qayerda yashaydi va job log’ida nimani ko’rganingiz haqida sakkiz savol."
+  "description": "Pipeline nima, u qayerda yashaydi va job log’ida nimani ko’rganingiz haqida sakkiz savol.",
+  "questions": {
+    "w1-01": {
+      "prompt": "Continuous delivery va continuous deployment orasidagi farq nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Delivery testlarni ishlatadi; deployment ishlatmaydi"
+        },
+        {
+          "id": "b",
+          "text": "Delivery har o’zgarishni deploy qilsa bo’ladigan holda saqlaydi, production’ni inson hal qiladi; deployment o’sha oxirgi inson qadamini olib tashlaydi"
+        },
+        {
+          "id": "c",
+          "text": "Deployment staging uchun, delivery production uchun"
+        },
+        {
+          "id": "d",
+          "text": "Farqi yo’q"
+        }
+      ],
+      "explanation": "Continuous delivery 'deploy qilsa bo’ladi'da to’xtaydi; continuous deployment main’dagi har yashil pipeline’ni avtomatik yetkazadi."
+    },
+    "w1-02": {
+      "prompt": "GitLab pipeline ta’rifi qayerda yashaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Settings → CI/CD’da forma maydonlari sifatida"
+        },
+        {
+          "id": "b",
+          "text": "Repozitoriy ildizidagi .gitlab-ci.yml faylida"
+        },
+        {
+          "id": "c",
+          "text": "Runner’ning config.toml’ida"
+        },
+        {
+          "id": "d",
+          "text": "Alohida pipelines repozitoriysida"
+        }
+      ],
+      "explanation": "Pipeline - repozitoriydagi YAML, kod kabi versiyalanadi va review qilinadi."
+    },
+    "w1-03": {
+      "prompt": "Ikki job bir stage’da. Ular qanday ishlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ketma-ket, fayl tartibida"
+        },
+        {
+          "id": "b",
+          "text": "Runner’lar bo’lsa parallel"
+        },
+        {
+          "id": "c",
+          "text": "Faqat bittasi ishlaydi"
+        },
+        {
+          "id": "d",
+          "text": "Alifbo tartibida"
+        }
+      ],
+      "explanation": "Bir stage’dagi job’lar birga ishlaydi; keyingi stage hammasini kutadi."
+    },
+    "w1-04": {
+      "prompt": "Job /tmp ga fayl yozadi. Keyingi stage’dagi job uni o’qiy oladimi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ha, stage’lar fayl tizimini bo’lishadi"
+        },
+        {
+          "id": "b",
+          "text": "Ha, fayl loyiha katalogi ostida bo’lsa"
+        },
+        {
+          "id": "c",
+          "text": "Yo’q - har job toza klondan boshlanadi; faqat artifact’lar oldinga uzatiladi"
+        },
+        {
+          "id": "d",
+          "text": "Faqat shell executor’da"
+        }
+      ],
+      "explanation": "Job’lar orasida artifact’lardan (va imkon qadar cache’dan) boshqa hech narsa saqlanmaydi."
+    },
+    "w1-05": {
+      "prompt": "O’z stages: ro’yxatingizni e’lon qilganda ham qaysi ikki stage har doim mavjud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "build va deploy"
+        },
+        {
+          "id": "b",
+          "text": ".pre va .post"
+        },
+        {
+          "id": "c",
+          "text": "test va deploy"
+        },
+        {
+          "id": "d",
+          "text": "prepare va finish"
+        }
+      ],
+      "explanation": ".pre va .post har pipeline’ni qamrab turadi; stages e’lon qilish o’rtadagi default’larni almashtiradi."
+    },
+    "w1-06": {
+      "prompt": "Job script’i yiqiladi, lekin after_script muvaffaqiyatli. Job holati qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Success"
+        },
+        {
+          "id": "b",
+          "text": "Failed - holatni faqat script hal qiladi"
+        },
+        {
+          "id": "c",
+          "text": "Warning"
+        },
+        {
+          "id": "d",
+          "text": "Pending"
+        }
+      ],
+      "explanation": "after_script alohida shell’da ishlaydi va job holatini hech qachon o’zgartirmaydi."
+    },
+    "w1-07": {
+      "prompt": ".gitlab-ci.yml’dagi sintaksis xatosini tuzatib, yiqilgan job’da Retry bosasiz. Nega u hali ham yiqiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retry’ga yangi runner kerak"
+        },
+        {
+          "id": "b",
+          "text": "Retry o’sha job’ni o’sha commit bilan qayta ishlatadi; yangi faylni o’qish uchun yangi pipeline kerak"
+        },
+        {
+          "id": "c",
+          "text": "Chunki job bekor qilingan"
+        },
+        {
+          "id": "d",
+          "text": "Retry faqat manual job’larda ishlaydi"
+        }
+      ],
+      "explanation": "Retry job’ni bo’lganidek qaytaradi; yangi pipeline olish uchun tuzatishni push qiling."
+    },
+    "w1-08": {
+      "prompt": "gitlab.com shared runner’larida job’dagi image: nima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "VM turi"
+        },
+        {
+          "id": "b",
+          "text": "Job shell’i ishlaydigan Docker container"
+        },
+        {
+          "id": "c",
+          "text": "Git branch"
+        },
+        {
+          "id": "d",
+          "text": "Cache key"
+        }
+      ],
+      "explanation": "Docker executor bilan image: - script’ingiz ishlaydigan container."
+    }
+  }
 }

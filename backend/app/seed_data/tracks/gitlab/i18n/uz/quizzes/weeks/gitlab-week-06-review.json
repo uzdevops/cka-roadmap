@@ -1,4 +1,182 @@
 {
   "title": "GitLab 6-hafta takrorlash - muhitlarga deploy",
-  "description": "Environment’lar, SSH deploy, gate’lar, review app’lar va Kubernetes bo’yicha sakkiz savol."
+  "description": "Environment’lar, SSH deploy, gate’lar, review app’lar va Kubernetes bo’yicha sakkiz savol.",
+  "questions": {
+    "w6-01": {
+      "prompt": "Deploy job’ga environment: qo’shib nimaga erishasiz?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tezroq job’lar"
+        },
+        {
+          "id": "b",
+          "text": "Deploy kuzatuvi, URL tugmasi, tarix, rollback va environment scope’li variable’lar"
+        },
+        {
+          "id": "c",
+          "text": "Bepul runner’lar"
+        },
+        {
+          "id": "d",
+          "text": "Ko’rinadigan hech narsa"
+        }
+      ],
+      "explanation": "environment:siz deploy platformaga ko’rinmaydi."
+    },
+    "w6-02": {
+      "prompt": "Variable staging va production’da bir nom ostida turli qiymatga ega bo’lishi kerak. Qaysi mexanizm?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ikki variable nomi"
+        },
+        {
+          "id": "b",
+          "text": "Variable’da environment scope"
+        },
+        {
+          "id": "c",
+          "text": "Har job uchun job darajasidagi variables:"
+        },
+        {
+          "id": "d",
+          "text": "Masking"
+        }
+      ],
+      "explanation": "Bir nomni har environment’ga scope’lang (review/* kabi wildcard’lar ishlaydi)."
+    },
+    "w6-03": {
+      "prompt": "Deploy job’da SSH_KNOWN_HOSTS nimadan himoya qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sekin login’lardan"
+        },
+        {
+          "id": "b",
+          "text": "Soxta host ko’rsatadigan man-in-the-middle’dan - StrictHostKeyChecking=no uni qabul qilardi"
+        },
+        {
+          "id": "c",
+          "text": "Muddati o’tgan kalitlardan"
+        },
+        {
+          "id": "d",
+          "text": "Hech narsadan, bu bezak"
+        }
+      ],
+      "explanation": "Host key’ni tekshiring; pipeline’da tekshiruvni hech qachon o’chirmang."
+    },
+    "w6-04": {
+      "prompt": "Qaysi ikki kalit deploy job’ni bloklovchi manual gate’ga aylantiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "when: delayed va start_in"
+        },
+        {
+          "id": "b",
+          "text": "when: manual va allow_failure: false"
+        },
+        {
+          "id": "c",
+          "text": "rules va needs"
+        },
+        {
+          "id": "d",
+          "text": "resource_group va timeout"
+        }
+      ],
+      "explanation": "allow_failure: false’siz pipeline manual job’dan o’tib ketadi."
+    },
+    "w6-05": {
+      "prompt": "YAML’ida shunday job bo’lsa ham feature-branch pipeline’i production’ga deploy qilishini nima to’xtatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Omad"
+        },
+        {
+          "id": "b",
+          "text": "Himoyalangan environment’lar (faqat himoyalangan ref’lardan, ruxsat berilgan foydalanuvchilar) plus himoyalangan branch’lar"
+        },
+        {
+          "id": "c",
+          "text": "allow_failure: true"
+        },
+        {
+          "id": "d",
+          "text": "GIT_STRATEGY: none"
+        }
+      ],
+      "explanation": "Himoya - YAML kelishuvi emas, platforma qoidasi."
+    },
+    "w6-06": {
+      "prompt": "stop-review job’da nega GIT_STRATEGY: none o’rnatilgan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tarmoqni tejash uchun"
+        },
+        {
+          "id": "b",
+          "text": "U ishlaganda branch o’chirilgan bo’lishi mumkin; checkout’ga muhtoj bo’lmasligi kerak"
+        },
+        {
+          "id": "c",
+          "text": "on_stop talab qiladi"
+        },
+        {
+          "id": "d",
+          "text": "Artifact’larni o’tkazib yuborish uchun"
+        }
+      ],
+      "explanation": "Stop job’lar merge/yopishda, ehtimol branch yo’qolgandan keyin ishlaydi."
+    },
+    "w6-07": {
+      "prompt": "Kubeconfig variable’ga nisbatan Kubernetes uchun GitLab agent pipeline’dan nimani olib tashlaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text": "kubectl ehtiyojini"
+        },
+        {
+          "id": "b",
+          "text": "Variable’dagi uzoq umrli klaster hisob ma’lumotini va kiruvchi firewall teshigini"
+        },
+        {
+          "id": "c",
+          "text": "environment: blokini"
+        },
+        {
+          "id": "d",
+          "text": "Helm’ni"
+        }
+      ],
+      "explanation": "Agent chiquvchi ulanadi va GitLab ruxsat berilgan loyihalar uchun scope’langan KUBECONFIG kiritadi."
+    },
+    "w6-08": {
+      "prompt": "Nega shunchaki apply emas, helm --wait / kubectl rollout status?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ular tezroq"
+        },
+        {
+          "id": "b",
+          "text": "Job exit kodi 'manifest qabul qilindi' emas, 'yangi pod’lar tayyor' degani bo’lsin"
+        },
+        {
+          "id": "c",
+          "text": "apply eskirgan"
+        },
+        {
+          "id": "d",
+          "text": "Ko’proq log chiqarish uchun"
+        }
+      ],
+      "explanation": "Servis javob bermaguncha deploy tugamagan."
+    }
+  }
 }

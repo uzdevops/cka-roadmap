@@ -1,3 +1,5 @@
 {
-  "title": "Lab 8 - O’z runner’ingiz va Auto DevOps"
+  "title": "Lab 8 - O’z runner’ingiz va Auto DevOps",
+  "description": "Tag’li docker runner o’rnating va ro’yxatdan o’tkazing, config.toml’ni sozlang, keyin Auto DevOps loyihani yig’ib testlasin.",
+  "scenario": "XYZ pipeline’ini o’zingizniki bo’lgan runner’da ishlating, deploy runner’ni mustahkamlang va pipeline’ingizni Auto DevOps generatsiya qiladigani bilan solishtiring."
 }
