@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-04-review",
+  "phase_slug": "gitlab-continuous-integration",
+  "week_number": 4,
+  "title": "GitLab week 4 review - testing the XYZ application",
+  "description": "Eight questions on CI for a real app: install, tests, reports, coverage and advisory jobs.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 4,
+  "questions": [
+    {
+      "key": "w4-01",
+      "type": "single_choice",
+      "prompt": "npm ci fails: package.json and package-lock.json are out of sync. Whose problem is it?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The runner's"
+        },
+        {
+          "id": "b",
+          "text": "The application's - the lock was not updated; CI caught it"
+        },
+        {
+          "id": "c",
+          "text": "GitLab's cache"
+        },
+        {
+          "id": "d",
+          "text": "The image's"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A reproducible install exposed a real mistake before review.",
+      "points": 1
+    },
+    {
+      "key": "w4-02",
+      "type": "single_choice",
+      "prompt": "Which artifacts key turns test results into a merge request widget?",
+      "options": [
+        {
+          "id": "a",
+          "text": "artifacts:paths"
+        },
+        {
+          "id": "b",
+          "text": "artifacts:reports:junit"
+        },
+        {
+          "id": "c",
+          "text": "artifacts:expose_as"
+        },
+        {
+          "id": "d",
+          "text": "coverage:"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "reports:junit is parsed into the Test summary and the Tests tab.",
+      "points": 1
+    },
+    {
+      "key": "w4-03",
+      "type": "single_choice",
+      "prompt": "Why must the test report artifact use when: always?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To keep it forever"
+        },
+        {
+          "id": "b",
+          "text": "Because the report matters most when tests fail, and on_success would drop it"
+        },
+        {
+          "id": "c",
+          "text": "Because junit requires it"
+        },
+        {
+          "id": "d",
+          "text": "To make the job faster"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Default on_success throws away exactly the failing run's report.",
+      "points": 1
+    },
+    {
+      "key": "w4-04",
+      "type": "single_choice",
+      "prompt": "What is the difference between the coverage: regex and a coverage_report artifact?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "The regex gives a single percentage from the log; coverage_report gives line-level coverage in the MR diff"
+        },
+        {
+          "id": "c",
+          "text": "The regex is per line, the report is per job"
+        },
+        {
+          "id": "d",
+          "text": "The regex is deprecated"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Use both: a number for the badge and widget, Cobertura for the diff.",
+      "points": 1
+    },
+    {
+      "key": "w4-05",
+      "type": "single_choice",
+      "prompt": "A job with allow_failure: true fails. What colour is the pipeline and do later stages run?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Red; no"
+        },
+        {
+          "id": "b",
+          "text": "Passed with warnings; yes"
+        },
+        {
+          "id": "c",
+          "text": "Pending; no"
+        },
+        {
+          "id": "d",
+          "text": "Green; only manual jobs run"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Advisory jobs report without blocking.",
+      "points": 1
+    },
+    {
+      "key": "w4-06",
+      "type": "single_choice",
+      "prompt": "How do you let a linter's findings be advisory but still fail when the linter itself crashes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "allow_failure: true"
+        },
+        {
+          "id": "b",
+          "text": "allow_failure: exit_codes: [1]"
+        },
+        {
+          "id": "c",
+          "text": "retry: 2"
+        },
+        {
+          "id": "d",
+          "text": "when: manual"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "ESLint exits 1 for problems and 2+ for errors; allow only the former.",
+      "points": 1
+    },
+    {
+      "key": "w4-07",
+      "type": "single_choice",
+      "prompt": "What is wrong with 'npm test; echo done' as the last line of a script?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing"
+        },
+        {
+          "id": "b",
+          "text": "The echo's exit code becomes the job's, hiding a test failure"
+        },
+        {
+          "id": "c",
+          "text": "It runs twice"
+        },
+        {
+          "id": "d",
+          "text": "echo is not available in alpine"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The last command decides the job status.",
+      "points": 1
+    },
+    {
+      "key": "w4-08",
+      "type": "single_choice",
+      "prompt": "Why are integration tests a separate job from unit tests?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They need a service and take longer; separate jobs run in parallel and keep unit tests fast"
+        },
+        {
+          "id": "b",
+          "text": "Jest cannot run both"
+        },
+        {
+          "id": "c",
+          "text": "GitLab allows only one test job"
+        },
+        {
+          "id": "d",
+          "text": "To use a different runner"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Same stage, parallel, each failing independently.",
+      "points": 1
+    }
+  ]
+}

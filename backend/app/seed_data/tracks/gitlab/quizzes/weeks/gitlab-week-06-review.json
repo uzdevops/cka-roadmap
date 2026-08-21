@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-06-review",
+  "phase_slug": "gitlab-continuous-deployment",
+  "week_number": 6,
+  "title": "GitLab week 6 review - deploying to environments",
+  "description": "Eight questions on environments, SSH deploys, gates, review apps and Kubernetes.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 6,
+  "questions": [
+    {
+      "key": "w6-01",
+      "type": "single_choice",
+      "prompt": "What do you gain by adding environment: to a deploy job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Faster jobs"
+        },
+        {
+          "id": "b",
+          "text": "Deployment tracking, a URL button, history, rollback and environment-scoped variables"
+        },
+        {
+          "id": "c",
+          "text": "Free runners"
+        },
+        {
+          "id": "d",
+          "text": "Nothing visible"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A deploy without environment: is invisible to the platform.",
+      "points": 1
+    },
+    {
+      "key": "w6-02",
+      "type": "single_choice",
+      "prompt": "A variable must have different values in staging and production under one name. Which mechanism?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Two variable names"
+        },
+        {
+          "id": "b",
+          "text": "Environment scope on the variable"
+        },
+        {
+          "id": "c",
+          "text": "A job-level variables: per job"
+        },
+        {
+          "id": "d",
+          "text": "Masking"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Scope the same name to each environment (wildcards like review/* work).",
+      "points": 1
+    },
+    {
+      "key": "w6-03",
+      "type": "single_choice",
+      "prompt": "What does SSH_KNOWN_HOSTS protect against in a deploy job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Slow logins"
+        },
+        {
+          "id": "b",
+          "text": "A man-in-the-middle presenting a fake host - StrictHostKeyChecking=no would accept it"
+        },
+        {
+          "id": "c",
+          "text": "Expired keys"
+        },
+        {
+          "id": "d",
+          "text": "Nothing, it is cosmetic"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Verify the host key; never disable checking in a pipeline.",
+      "points": 1
+    },
+    {
+      "key": "w6-04",
+      "type": "single_choice",
+      "prompt": "Which two keys turn a deploy job into a blocking manual gate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "when: delayed and start_in"
+        },
+        {
+          "id": "b",
+          "text": "when: manual and allow_failure: false"
+        },
+        {
+          "id": "c",
+          "text": "rules and needs"
+        },
+        {
+          "id": "d",
+          "text": "resource_group and timeout"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Without allow_failure: false the pipeline continues past a manual job.",
+      "points": 1
+    },
+    {
+      "key": "w6-05",
+      "type": "single_choice",
+      "prompt": "What stops a feature-branch pipeline from deploying to production even if its YAML has such a job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Luck"
+        },
+        {
+          "id": "b",
+          "text": "Protected environments (deploy only from protected refs, by allowed users) plus protected branches"
+        },
+        {
+          "id": "c",
+          "text": "allow_failure: true"
+        },
+        {
+          "id": "d",
+          "text": "GIT_STRATEGY: none"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Protection is a platform rule, not a YAML convention.",
+      "points": 1
+    },
+    {
+      "key": "w6-06",
+      "type": "single_choice",
+      "prompt": "Why is GIT_STRATEGY: none set on the stop-review job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To save bandwidth"
+        },
+        {
+          "id": "b",
+          "text": "The branch may be deleted by the time it runs; it must not need a checkout"
+        },
+        {
+          "id": "c",
+          "text": "It is required by on_stop"
+        },
+        {
+          "id": "d",
+          "text": "To skip artifacts"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Stop jobs run on merge/close, possibly after the branch is gone.",
+      "points": 1
+    },
+    {
+      "key": "w6-07",
+      "type": "single_choice",
+      "prompt": "What does the GitLab agent for Kubernetes remove from the pipeline compared with a kubeconfig variable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The need for kubectl"
+        },
+        {
+          "id": "b",
+          "text": "A long-lived cluster credential in a variable and an inbound firewall hole"
+        },
+        {
+          "id": "c",
+          "text": "The environment: block"
+        },
+        {
+          "id": "d",
+          "text": "Helm"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The agent connects outbound and GitLab injects a scoped KUBECONFIG for allowed projects.",
+      "points": 1
+    },
+    {
+      "key": "w6-08",
+      "type": "single_choice",
+      "prompt": "Why helm --wait / kubectl rollout status rather than just apply?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They are faster"
+        },
+        {
+          "id": "b",
+          "text": "So the job's exit code means 'the new pods are ready', not 'the manifest was accepted'"
+        },
+        {
+          "id": "c",
+          "text": "apply is deprecated"
+        },
+        {
+          "id": "d",
+          "text": "To print more logs"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A deploy is not done until the service answers.",
+      "points": 1
+    }
+  ]
+}

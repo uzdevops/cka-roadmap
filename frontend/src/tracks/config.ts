@@ -34,6 +34,7 @@ export const TRACKS = [
   'monitoring',
   'dbms',
   'terraform',
+  'gitlab',
 ] as const;
 
 export type TrackSlug = (typeof TRACKS)[number];

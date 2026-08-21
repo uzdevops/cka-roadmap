@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-06-continuous-deployment",
+  "phase_slug": "gitlab-continuous-deployment",
+  "week_number": 6,
+  "title": "Lab 6 - Deploy to dev, staging and production",
+  "description": "Environments, an SSH deploy with a File variable, manual gates, protection and rollback.",
+  "difficulty": "advanced",
+  "estimated_minutes": 90,
+  "order_index": 6,
+  "scenario": "Deploy the published image to a Docker host over SSH as tracked environments, gate staging and production, protect production, and roll back once.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Dev environment",
+      "instructions": "Store SSH_PRIVATE_KEY (File, protected) and SSH_KNOWN_HOSTS (File). Add deploy-dev with environment name dev + url, pulling the SHA image on the server and restarting the container; end with a health check.",
+      "solution": "ssh -i \"$SSH_PRIVATE_KEY\" deploy@host \"docker pull $IMAGE && docker rm -f app || true && docker run -d --name app -p 3000:3000 $IMAGE\"\nwget -qO- \"$CI_ENVIRONMENT_URL/healthz\"",
+      "verification": "Operate → Environments lists dev with a deployment and an Open button that answers."
+    },
+    {
+      "title": "Task 2 - Manual staging",
+      "instructions": "Add deploy-staging (when: manual, allow_failure: false) with resource_group: staging and an environment-scoped DEPLOY_HOST.",
+      "solution": "rules:\n  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH\n    when: manual\n    allow_failure: false",
+      "verification": "The pipeline blocks at deploy-staging until played; two quick plays queue, not overlap."
+    },
+    {
+      "title": "Task 3 - Protected production",
+      "instructions": "Create deploy-prod on tags only, protect branch main and tags v*, protect environment production with required approval from you, tag v0.1.0.",
+      "solution": "rules: [{if: $CI_COMMIT_TAG, when: manual, allow_failure: false}]",
+      "verification": "A feature-branch pipeline cannot deploy to production; the tag pipeline's deploy-prod asks for approval before it can be played."
+    },
+    {
+      "title": "Task 4 - Rollback",
+      "instructions": "Tag v0.1.1 with a visible change, deploy, then use Rollback on the v0.1.0 row in the production environment.",
+      "solution": "Operate → Environments → production → Rollback",
+      "verification": "The old deployment's job re-runs and the health endpoint serves v0.1.0's response."
+    }
+  ]
+}

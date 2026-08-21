@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-03-review",
+  "phase_slug": "gitlab-pipeline-configuration",
+  "week_number": 3,
+  "title": "GitLab week 3 review - variables, rules and job controls",
+  "description": "Eight questions on precedence, predefined variables, rules, workflow and the keywords that bound a job.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 3,
+  "questions": [
+    {
+      "key": "w3-01",
+      "type": "single_choice",
+      "prompt": "A job-level variables: entry and a project (UI) variable share a name. Which value does script see?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The project one - the UI always wins"
+        },
+        {
+          "id": "b",
+          "text": "The job-level one - the YAML is more specific than the project"
+        },
+        {
+          "id": "c",
+          "text": "Whichever was created first"
+        },
+        {
+          "id": "d",
+          "text": "Both, concatenated"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Precedence: job-level YAML beats global YAML beats project/group/instance; only pipeline-run values beat the file.",
+      "points": 1
+    },
+    {
+      "key": "w3-02",
+      "type": "single_choice",
+      "prompt": "What does a File-type variable put in $VAR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The file contents"
+        },
+        {
+          "id": "b",
+          "text": "The path to a temporary file holding the value"
+        },
+        {
+          "id": "c",
+          "text": "A base64 string"
+        },
+        {
+          "id": "d",
+          "text": "Nothing - it is only for artifacts"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "File variables are the right shape for kubeconfigs, SSH keys and the like.",
+      "points": 1
+    },
+    {
+      "key": "w3-03",
+      "type": "single_choice",
+      "prompt": "Which predefined variable tells a job it was started by a schedule?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CI_COMMIT_TAG"
+        },
+        {
+          "id": "b",
+          "text": "CI_PIPELINE_SOURCE == \"schedule\""
+        },
+        {
+          "id": "c",
+          "text": "CI_JOB_STATUS"
+        },
+        {
+          "id": "d",
+          "text": "CI_OPEN_MERGE_REQUESTS"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "CI_PIPELINE_SOURCE carries the trigger: push, merge_request_event, schedule, web, api, trigger.",
+      "points": 1
+    },
+    {
+      "key": "w3-04",
+      "type": "single_choice",
+      "prompt": "Two rules in a job: if: A then if: B. The pipeline matches both. Which applies?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Both are merged"
+        },
+        {
+          "id": "b",
+          "text": "The last one"
+        },
+        {
+          "id": "c",
+          "text": "The first matching rule"
+        },
+        {
+          "id": "d",
+          "text": "Neither - it is an error"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "Rules are evaluated top to bottom; the first match decides.",
+      "points": 1
+    },
+    {
+      "key": "w3-05",
+      "type": "single_choice",
+      "prompt": "A manual job without allow_failure: false - what happens to the next stage?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It waits for the click"
+        },
+        {
+          "id": "b",
+          "text": "It runs without waiting, because manual jobs are allowed to fail by default"
+        },
+        {
+          "id": "c",
+          "text": "It is skipped"
+        },
+        {
+          "id": "d",
+          "text": "It fails"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Add allow_failure: false to turn a manual job into a blocking gate.",
+      "points": 1
+    },
+    {
+      "key": "w3-06",
+      "type": "single_choice",
+      "prompt": "Which mechanism stops a branch push that has an open MR from creating a second (branch) pipeline?",
+      "options": [
+        {
+          "id": "a",
+          "text": "rules: on every job"
+        },
+        {
+          "id": "b",
+          "text": "workflow:rules with a when: never for branches that have open merge requests"
+        },
+        {
+          "id": "c",
+          "text": "Pipeline schedules"
+        },
+        {
+          "id": "d",
+          "text": "resource_group"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "workflow:rules decides whether the pipeline exists at all.",
+      "points": 1
+    },
+    {
+      "key": "w3-07",
+      "type": "single_choice",
+      "prompt": "Two pipelines run deploy-staging within a minute. What guarantees the deployments do not overlap?",
+      "options": [
+        {
+          "id": "a",
+          "text": "timeout:"
+        },
+        {
+          "id": "b",
+          "text": "resource_group: staging"
+        },
+        {
+          "id": "c",
+          "text": "parallel: 1"
+        },
+        {
+          "id": "d",
+          "text": "needs:"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A resource group is a named mutex across pipelines.",
+      "points": 1
+    },
+    {
+      "key": "w3-08",
+      "type": "single_choice",
+      "prompt": "A test job needs Redis. How does it get one and reach it?",
+      "options": [
+        {
+          "id": "a",
+          "text": "image: redis"
+        },
+        {
+          "id": "b",
+          "text": "services: [redis:7] - reachable by hostname (alias or image name)"
+        },
+        {
+          "id": "c",
+          "text": "A project variable REDIS=true"
+        },
+        {
+          "id": "d",
+          "text": "before_script: apt install redis"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "services: start containers alongside the job on a shared network.",
+      "points": 1
+    }
+  ]
+}

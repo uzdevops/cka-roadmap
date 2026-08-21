@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-04-ci-for-nodejs",
+  "phase_slug": "gitlab-continuous-integration",
+  "week_number": 4,
+  "title": "Lab 4 - CI for the XYZ Node.js app",
+  "description": "Unit tests, JUnit and coverage reports, an advisory lint job - visible in the merge request.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 75,
+  "order_index": 4,
+  "scenario": "Import the nodejs-app, write its test stage, and make the merge request show failing tests and coverage without opening a log.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Import and unit-tests",
+      "instructions": "Import nodejs-app under xyz-team; add the workflow from week 3 and a unit-tests job (node:20-alpine, npm ci, npm test). Open an MR with a deliberately failing test.",
+      "solution": "unit-tests:\n  stage: test\n  image: node:20-alpine\n  script: [\"npm ci\", \"npm test\"]",
+      "verification": "MR shows 'Pipeline failed' and the Merge button is disabled when 'Pipelines must succeed' is on."
+    },
+    {
+      "title": "Task 2 - JUnit report",
+      "instructions": "Add jest-junit, write reports/junit.xml, publish it with artifacts:reports:junit and when: always.",
+      "solution": "artifacts:\n  when: always\n  reports: {junit: reports/junit.xml}",
+      "verification": "The MR's Test summary names the failing test; the pipeline has a Tests tab."
+    },
+    {
+      "title": "Task 3 - Coverage",
+      "instructions": "Add the coverage: regex for Jest's 'All files' line and a Cobertura coverage_report.",
+      "solution": "coverage: '/All files[^|]*\\|[^|]*\\s+([\\d\\.]+)/'\nartifacts:\n  reports:\n    coverage_report: {coverage_format: cobertura, path: coverage/cobertura-coverage.xml}",
+      "verification": "The job shows a coverage %, the MR shows the delta, changed lines are highlighted in the diff."
+    },
+    {
+      "title": "Task 4 - Advisory lint",
+      "instructions": "Add a lint job with eslint-formatter-gitlab, a codequality report, and allow_failure on exit code 1 only.",
+      "solution": "lint:\n  script: [\"npm ci\", \"npx eslint . --format gitlab --output-file gl-codequality.json\"]\n  artifacts: {when: always, reports: {codequality: gl-codequality.json}}\n  allow_failure: {exit_codes: [1]}",
+      "verification": "Lint findings appear in the MR widget; pipeline 'passed with warnings'."
+    }
+  ]
+}

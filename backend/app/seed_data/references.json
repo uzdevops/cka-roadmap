@@ -610,5 +610,215 @@
       "title": "Important exam tips",
       "url": "http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD"
     }
+  ],
+  "gitlab-cicd-basics": [
+    {
+      "title": "Get started with GitLab CI/CD",
+      "url": "https://docs.gitlab.com/ee/ci/"
+    },
+    {
+      "title": "CI/CD pipelines",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/"
+    }
+  ],
+  "gitlab-core-components": [
+    {
+      "title": "CI/CD YAML syntax reference",
+      "url": "https://docs.gitlab.com/ee/ci/yaml/"
+    },
+    {
+      "title": "Jobs",
+      "url": "https://docs.gitlab.com/ee/ci/jobs/"
+    }
+  ],
+  "gitlab-runners-and-executors": [
+    {
+      "title": "Runners",
+      "url": "https://docs.gitlab.com/ee/ci/runners/"
+    },
+    {
+      "title": "Executors",
+      "url": "https://docs.gitlab.com/runner/executors/"
+    }
+  ],
+  "gitlab-artifacts": [
+    {
+      "title": "Job artifacts",
+      "url": "https://docs.gitlab.com/ee/ci/jobs/job_artifacts.html"
+    }
+  ],
+  "gitlab-needs-dag": [
+    {
+      "title": "Directed acyclic graph pipelines (needs)",
+      "url": "https://docs.gitlab.com/ee/ci/yaml/needs.html"
+    }
+  ],
+  "gitlab-variables": [
+    {
+      "title": "CI/CD variables",
+      "url": "https://docs.gitlab.com/ee/ci/variables/"
+    }
+  ],
+  "gitlab-predefined-variables": [
+    {
+      "title": "Predefined CI/CD variables",
+      "url": "https://docs.gitlab.com/ee/ci/variables/predefined_variables.html"
+    }
+  ],
+  "gitlab-merge-requests-and-rules": [
+    {
+      "title": "Choose when to run jobs (rules)",
+      "url": "https://docs.gitlab.com/ee/ci/jobs/job_rules.html"
+    }
+  ],
+  "gitlab-workflow-rules-and-schedules": [
+    {
+      "title": "workflow keyword",
+      "url": "https://docs.gitlab.com/ee/ci/yaml/workflow.html"
+    },
+    {
+      "title": "Scheduled pipelines",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/schedules.html"
+    }
+  ],
+  "gitlab-job-controls": [
+    {
+      "title": "Resource groups",
+      "url": "https://docs.gitlab.com/ee/ci/resource_groups/"
+    },
+    {
+      "title": "Services",
+      "url": "https://docs.gitlab.com/ee/ci/services/"
+    }
+  ],
+  "gitlab-test-reports-and-coverage": [
+    {
+      "title": "Unit test reports",
+      "url": "https://docs.gitlab.com/ee/ci/testing/unit_test_reports.html"
+    },
+    {
+      "title": "Test coverage visualization",
+      "url": "https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization/"
+    }
+  ],
+  "gitlab-docker-build-in-ci": [
+    {
+      "title": "Use Docker to build Docker images",
+      "url": "https://docs.gitlab.com/ee/ci/docker/using_docker_build.html"
+    }
+  ],
+  "gitlab-container-registry": [
+    {
+      "title": "Container registry",
+      "url": "https://docs.gitlab.com/ee/user/packages/container_registry/"
+    }
+  ],
+  "gitlab-cache-vs-artifacts": [
+    {
+      "title": "Caching in GitLab CI/CD",
+      "url": "https://docs.gitlab.com/ee/ci/caching/"
+    }
+  ],
+  "gitlab-templates-extends-include": [
+    {
+      "title": "Use CI/CD configuration from other files (include)",
+      "url": "https://docs.gitlab.com/ee/ci/yaml/includes.html"
+    }
+  ],
+  "gitlab-merge-request-pipelines": [
+    {
+      "title": "Merge request pipelines",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/merge_request_pipelines.html"
+    },
+    {
+      "title": "Merge trains",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/merge_trains.html"
+    }
+  ],
+  "gitlab-environments": [
+    {
+      "title": "Environments and deployments",
+      "url": "https://docs.gitlab.com/ee/ci/environments/"
+    }
+  ],
+  "gitlab-staging-production": [
+    {
+      "title": "Protected environments",
+      "url": "https://docs.gitlab.com/ee/ci/environments/protected_environments.html"
+    }
+  ],
+  "gitlab-review-apps": [
+    {
+      "title": "Review apps",
+      "url": "https://docs.gitlab.com/ee/ci/review_apps/"
+    }
+  ],
+  "gitlab-deploy-to-kubernetes": [
+    {
+      "title": "GitLab agent for Kubernetes",
+      "url": "https://docs.gitlab.com/ee/user/clusters/agent/"
+    }
+  ],
+  "gitlab-pipeline-efficiency": [
+    {
+      "title": "Pipeline efficiency",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/pipeline_efficiency.html"
+    }
+  ],
+  "gitlab-parent-child-pipelines": [
+    {
+      "title": "Downstream pipelines",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/downstream_pipelines.html"
+    }
+  ],
+  "gitlab-cicd-components-and-catalog": [
+    {
+      "title": "CI/CD components",
+      "url": "https://docs.gitlab.com/ee/ci/components/"
+    }
+  ],
+  "gitlab-security-scanning": [
+    {
+      "title": "Application security",
+      "url": "https://docs.gitlab.com/ee/user/application_security/"
+    }
+  ],
+  "gitlab-protecting-the-pipeline": [
+    {
+      "title": "Pipeline security",
+      "url": "https://docs.gitlab.com/ee/ci/pipelines/pipeline_security.html"
+    },
+    {
+      "title": "CI/CD job token",
+      "url": "https://docs.gitlab.com/ee/ci/jobs/ci_job_token.html"
+    }
+  ],
+  "gitlab-self-managed-runner-install": [
+    {
+      "title": "Install GitLab Runner",
+      "url": "https://docs.gitlab.com/runner/install/"
+    },
+    {
+      "title": "Register a runner",
+      "url": "https://docs.gitlab.com/runner/register/"
+    }
+  ],
+  "gitlab-runner-executors-config": [
+    {
+      "title": "Advanced configuration (config.toml)",
+      "url": "https://docs.gitlab.com/runner/configuration/advanced-configuration.html"
+    }
+  ],
+  "gitlab-auto-devops-overview": [
+    {
+      "title": "Auto DevOps",
+      "url": "https://docs.gitlab.com/ee/topics/autodevops/"
+    }
+  ],
+  "gitlab-auto-devops-customize": [
+    {
+      "title": "Customize Auto DevOps",
+      "url": "https://docs.gitlab.com/ee/topics/autodevops/customize.html"
+    }
   ]
 }

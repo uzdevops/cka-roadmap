@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-02-pipeline-config-1",
+  "phase_slug": "gitlab-foundations",
+  "week_number": 2,
+  "title": "Lab 2 - Exploring pipeline configuration, part 1",
+  "description": "before_script, artifacts, dependencies and needs on a four-job pipeline.",
+  "difficulty": "beginner",
+  "estimated_minutes": 60,
+  "order_index": 2,
+  "scenario": "The KodeKloud 'Exploring Pipeline Configuration Part-1' lab: wire four jobs together with stages, hand a file forward with artifacts, then let the DAG start jobs early with needs.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - before_script",
+      "instructions": "Give every job a default before_script that prints the job name and the runner hostname, and a job-level one on a single job that replaces it.",
+      "solution": "default:\n  before_script: [\"echo $CI_JOB_NAME on $(hostname)\"]\nspecial:\n  before_script: [\"echo replaced\"]\n  script: [\"true\"]",
+      "verification": "The special job's log shows 'replaced' and NOT the default line."
+    },
+    {
+      "title": "Task 2 - Artifacts",
+      "instructions": "compile (stage build) writes out/app; test-binary (stage test) checks it exists. Make it pass, then remove artifacts: and watch it fail.",
+      "solution": "compile:\n  stage: build\n  script: [\"mkdir -p out && echo binary > out/app\"]\n  artifacts: {paths: [out/], expire_in: 1 hour}\ntest-binary:\n  stage: test\n  script: [\"test -f out/app\"]",
+      "verification": "Passes with artifacts; 'No such file' without them."
+    },
+    {
+      "title": "Task 3 - dependencies",
+      "instructions": "Add a third stage job package that should download ONLY compile's artifacts, not test-binary's.",
+      "solution": "package:\n  stage: package\n  dependencies: [compile]\n  script: [\"ls out/\"]",
+      "verification": "Log's 'Downloading artifacts' lines name only compile."
+    },
+    {
+      "title": "Task 4 - needs",
+      "instructions": "Add build-web (sleep 60) in stage build and test-web needing it; give test-binary needs: [compile]. Confirm test-binary starts before build-web finishes.",
+      "solution": "test-binary:\n  needs: [compile]",
+      "verification": "In the pipeline's Needs view test-binary completes while build-web is still running."
+    }
+  ]
+}

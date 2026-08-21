@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-07-optimise-and-secure",
+  "phase_slug": "gitlab-optimisation-security",
+  "week_number": 7,
+  "title": "Lab 7 - Faster, modular, safer",
+  "description": "needs/interruptible, a child pipeline, a CI/CD component with inputs, scanners and protections.",
+  "difficulty": "advanced",
+  "estimated_minutes": 90,
+  "order_index": 7,
+  "scenario": "Cut the XYZ pipeline's critical path, split it, publish a component, add scanners, and close the holes around the pipeline file.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Measure and cut",
+      "instructions": "Record the pipeline duration. Set default interruptible: true (deploys false), GIT_DEPTH: 1, and needs: so build starts when unit-tests finish rather than after the whole test stage.",
+      "solution": "default: {interruptible: true}\nbuild-image: {needs: [unit-tests]}",
+      "verification": "Duration drops; the Needs view shows build starting before lint/integration end."
+    },
+    {
+      "title": "Task 2 - Child pipeline",
+      "instructions": "Move the docs build into docs/.gitlab-ci.yml and trigger it from the parent with strategy: depend and rules: changes on docs/**.",
+      "solution": "docs:\n  trigger: {include: docs/.gitlab-ci.yml, strategy: depend}\n  rules: [{changes: [\"docs/**/*\"]}]",
+      "verification": "A docs-only MR shows a downstream pipeline; a code-only MR does not create it."
+    },
+    {
+      "title": "Task 3 - Component",
+      "instructions": "Create project ci-components with templates/node-test/template.yml using spec:inputs (node_version, stage); tag 1.0.0; include it from nodejs-app with @1.0.0.",
+      "solution": "include:\n  - component: gitlab.com/xyz-team/ci-components/node-test@1.0.0\n    inputs: {node_version: \"20\"}",
+      "verification": "Passing an unknown input fails pipeline creation with a message naming it."
+    },
+    {
+      "title": "Task 4 - Scanners and protections",
+      "instructions": "Include Secret-Detection, Dependency-Scanning and Container-Scanning templates (CS_IMAGE = your SHA image); add CODEOWNERS for .gitlab-ci.yml; create a group scan execution policy.",
+      "solution": "include:\n  - template: Jobs/Secret-Detection.gitlab-ci.yml\n  - template: Jobs/Dependency-Scanning.gitlab-ci.yml\n  - template: Jobs/Container-Scanning.gitlab-ci.yml",
+      "verification": "MR shows the Security scanning widget; an MR touching .gitlab-ci.yml requires the code owner's approval."
+    }
+  ]
+}

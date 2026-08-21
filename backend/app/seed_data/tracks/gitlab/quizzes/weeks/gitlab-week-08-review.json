@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-08-review",
+  "phase_slug": "gitlab-runners-auto-devops",
+  "week_number": 8,
+  "title": "GitLab week 8 review - runners and Auto DevOps",
+  "description": "Eight questions on self-managed runners, config.toml, executors and Auto DevOps.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 8,
+  "questions": [
+    {
+      "key": "w8-01",
+      "type": "single_choice",
+      "prompt": "What is the difference between a runner's scope and its tags?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "Scope says which projects may use it; tags say which jobs it will take"
+        },
+        {
+          "id": "c",
+          "text": "Tags are for Kubernetes only"
+        },
+        {
+          "id": "d",
+          "text": "Scope is a tag"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A group runner with tag deploy takes only deploy-tagged jobs from the group's projects.",
+      "points": 1
+    },
+    {
+      "key": "w8-02",
+      "type": "single_choice",
+      "prompt": "Why should a private runner not accept untagged jobs?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It cannot"
+        },
+        {
+          "id": "b",
+          "text": "Otherwise every job in the project lands on it, not just the ones that need it"
+        },
+        {
+          "id": "c",
+          "text": "Untagged jobs are insecure"
+        },
+        {
+          "id": "d",
+          "text": "GitLab forbids it"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Tag the runner and the jobs that need it.",
+      "points": 1
+    },
+    {
+      "key": "w8-03",
+      "type": "single_choice",
+      "prompt": "concurrent = 4 and one [[runners]] entry with limit = 1. How many of its jobs run at once?",
+      "options": [
+        {
+          "id": "a",
+          "text": "4"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "0"
+        },
+        {
+          "id": "d",
+          "text": "Unlimited"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "limit caps one entry; concurrent caps the host across entries.",
+      "points": 1
+    },
+    {
+      "key": "w8-04",
+      "type": "single_choice",
+      "prompt": "What is the trade-off between docker:dind and mounting /var/run/docker.sock?",
+      "options": [
+        {
+          "id": "a",
+          "text": "None"
+        },
+        {
+          "id": "b",
+          "text": "dind isolates a daemon per job but is slower and needs privileged; the socket shares the host daemon (fast layer cache) but jobs can see each other's containers"
+        },
+        {
+          "id": "c",
+          "text": "The socket needs privileged, dind does not"
+        },
+        {
+          "id": "d",
+          "text": "dind only works on Kubernetes"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Pick isolation or speed knowingly.",
+      "points": 1
+    },
+    {
+      "key": "w8-05",
+      "type": "single_choice",
+      "prompt": "When does Auto DevOps apply to a project?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Always"
+        },
+        {
+          "id": "b",
+          "text": "When it is enabled and the project has no .gitlab-ci.yml of its own"
+        },
+        {
+          "id": "c",
+          "text": "Only with a Dockerfile"
+        },
+        {
+          "id": "d",
+          "text": "Only on gitlab.com"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Your own file wins; include the template to mix.",
+      "points": 1
+    },
+    {
+      "key": "w8-06",
+      "type": "single_choice",
+      "prompt": "Which two things must exist before Auto DevOps' deploy stages run?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Dockerfile and a README"
+        },
+        {
+          "id": "b",
+          "text": "A connected Kubernetes cluster (agent) and KUBE_INGRESS_BASE_DOMAIN with wildcard DNS"
+        },
+        {
+          "id": "c",
+          "text": "A paid plan and a token"
+        },
+        {
+          "id": "d",
+          "text": "Helm and kubectl in the repo"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Without them build and test still run; deploys are skipped.",
+      "points": 1
+    },
+    {
+      "key": "w8-07",
+      "type": "single_choice",
+      "prompt": "How do you give the Auto DevOps-deployed app a secret environment variable without touching YAML?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Put it in the Dockerfile"
+        },
+        {
+          "id": "b",
+          "text": "A CI/CD variable named K8S_SECRET_<NAME>"
+        },
+        {
+          "id": "c",
+          "text": "An artifact"
+        },
+        {
+          "id": "d",
+          "text": "A commit message"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "K8S_SECRET_* becomes a Kubernetes Secret exposed to the pods.",
+      "points": 1
+    },
+    {
+      "key": "w8-08",
+      "type": "single_choice",
+      "prompt": "Your .gitlab-ci.yml defines a job with the same name as an Auto DevOps template job. What happens?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Error - duplicate job"
+        },
+        {
+          "id": "b",
+          "text": "Your keys merge over the template's, the rest is kept"
+        },
+        {
+          "id": "c",
+          "text": "The template wins"
+        },
+        {
+          "id": "d",
+          "text": "Both run"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Same-name jobs merge like extends; *_DISABLED variables or rules: when: never remove one.",
+      "points": 1
+    }
+  ]
+}

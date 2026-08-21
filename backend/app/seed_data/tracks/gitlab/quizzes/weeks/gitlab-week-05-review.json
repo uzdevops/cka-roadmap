@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-05-review",
+  "phase_slug": "gitlab-continuous-integration",
+  "week_number": 5,
+  "title": "GitLab week 5 review - building, publishing and structuring",
+  "description": "Eight questions on images, the registry, cache, templates and merge request pipelines.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 5,
+  "questions": [
+    {
+      "key": "w5-01",
+      "type": "single_choice",
+      "prompt": "Why does a docker-executor job need a docker:dind service to run docker build?",
+      "options": [
+        {
+          "id": "a",
+          "text": "For speed"
+        },
+        {
+          "id": "b",
+          "text": "The job is itself a container with no daemon; dind provides one next to it"
+        },
+        {
+          "id": "c",
+          "text": "To pull images faster"
+        },
+        {
+          "id": "d",
+          "text": "It does not - docker build works without it"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Alternatives: kaniko (no daemon) or a shell runner's host daemon.",
+      "points": 1
+    },
+    {
+      "key": "w5-02",
+      "type": "single_choice",
+      "prompt": "Which credentials log a job into the project's registry, and how long is the password valid?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A personal token; forever"
+        },
+        {
+          "id": "b",
+          "text": "CI_REGISTRY_USER / CI_REGISTRY_PASSWORD (the job token); only while the job runs"
+        },
+        {
+          "id": "c",
+          "text": "The deploy key; 24 hours"
+        },
+        {
+          "id": "d",
+          "text": "root / root"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The job token is minted per job and dies with it.",
+      "points": 1
+    },
+    {
+      "key": "w5-03",
+      "type": "single_choice",
+      "prompt": "Why deploy by image SHA rather than :latest?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SHA tags are shorter"
+        },
+        {
+          "id": "b",
+          "text": "An immutable tag is traceable to a commit and makes rollback reproducible; :latest moves"
+        },
+        {
+          "id": "c",
+          "text": "GitLab forbids :latest"
+        },
+        {
+          "id": "d",
+          "text": "SHA images are smaller"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Build once, promote the same artifact by SHA.",
+      "points": 1
+    },
+    {
+      "key": "w5-04",
+      "type": "single_choice",
+      "prompt": "With npm ci, why cache .npm/ instead of node_modules/?",
+      "options": [
+        {
+          "id": "a",
+          "text": "node_modules is too big"
+        },
+        {
+          "id": "b",
+          "text": "npm ci deletes node_modules before installing; caching npm's download cache is what speeds it up"
+        },
+        {
+          "id": "c",
+          "text": "npm forbids caching node_modules"
+        },
+        {
+          "id": "d",
+          "text": "Both are identical"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Cache the download cache, keyed on the lock file.",
+      "points": 1
+    },
+    {
+      "key": "w5-05",
+      "type": "single_choice",
+      "prompt": "A required file is in cache and the job fails when the cache is empty. What is the design error?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The key is wrong"
+        },
+        {
+          "id": "b",
+          "text": "An artifact is pretending to be a cache - cache is best effort, artifacts are guaranteed"
+        },
+        {
+          "id": "c",
+          "text": "The runner is old"
+        },
+        {
+          "id": "d",
+          "text": "Nothing, that is expected"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Cache speeds things up; it must never be required for correctness.",
+      "points": 1
+    },
+    {
+      "key": "w5-06",
+      "type": "single_choice",
+      "prompt": "Two jobs extend .node; one sets its own before_script. Does the template's before_script run too?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yes, both run"
+        },
+        {
+          "id": "b",
+          "text": "No - extends merges maps and the job's key replaces the template's"
+        },
+        {
+          "id": "c",
+          "text": "Only if listed first"
+        },
+        {
+          "id": "d",
+          "text": "Only with !reference"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Use !reference [.node, before_script] to splice it in explicitly.",
+      "points": 1
+    },
+    {
+      "key": "w5-07",
+      "type": "single_choice",
+      "prompt": "What does the Full configuration tab in the pipeline editor show?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The raw file"
+        },
+        {
+          "id": "b",
+          "text": "The YAML after includes, templates and extends are expanded"
+        },
+        {
+          "id": "c",
+          "text": "The last pipeline's log"
+        },
+        {
+          "id": "d",
+          "text": "The runner config"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "It is where you debug 'where does this job come from'.",
+      "points": 1
+    },
+    {
+      "key": "w5-08",
+      "type": "single_choice",
+      "prompt": "What does a merged results pipeline test that a plain MR pipeline does not?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The target branch alone"
+        },
+        {
+          "id": "b",
+          "text": "The result of merging source into target"
+        },
+        {
+          "id": "c",
+          "text": "The default branch"
+        },
+        {
+          "id": "d",
+          "text": "The last tag"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A source branch can be green and still break main; merged results catch that.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-05-build-and-publish",
+  "phase_slug": "gitlab-continuous-integration",
+  "week_number": 5,
+  "title": "Lab 5 - Build and publish the image, cache and templates",
+  "description": "Docker-in-Docker, the Container Registry, a lock-file-keyed cache and a .node template.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 75,
+  "order_index": 5,
+  "scenario": "Turn the tested app into an image published by SHA, cut install time with a cache, and fold the repetition into templates.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Build with dind",
+      "instructions": "Add a build stage job using docker:27 + docker:27-dind with the three TLS variables; docker build the Dockerfile tagged $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA.",
+      "solution": "variables: {DOCKER_HOST: tcp://docker:2376, DOCKER_TLS_CERTDIR: /certs, DOCKER_TLS_VERIFY: 1, DOCKER_CERT_PATH: /certs/client}",
+      "verification": "docker info succeeds in the log; the build completes."
+    },
+    {
+      "title": "Task 2 - Publish",
+      "instructions": "Log in with CI_REGISTRY_USER/CI_REGISTRY_PASSWORD, push the SHA tag, and :latest only on the default branch. Restrict with rules to main and tags.",
+      "solution": "echo \"$CI_REGISTRY_PASSWORD\" | docker login -u \"$CI_REGISTRY_USER\" --password-stdin \"$CI_REGISTRY\"\ndocker push \"$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA\"",
+      "verification": "Deploy → Container Registry lists the SHA tag (and latest after a main push)."
+    },
+    {
+      "title": "Task 3 - Cache",
+      "instructions": "Set npm_config_cache to $CI_PROJECT_DIR/.npm; cache .npm/ keyed on package-lock.json; use npm ci --prefer-offline. Compare install time across two pipelines.",
+      "solution": "cache:\n  key: {files: [package-lock.json]}\n  paths: [.npm/]",
+      "verification": "Second pipeline's log shows 'Restoring cache' and a faster npm ci."
+    },
+    {
+      "title": "Task 4 - Template",
+      "instructions": "Create a hidden .node job with image, cache and before_script; make lint and unit-tests extend it. Check the Full configuration tab.",
+      "solution": "\".node\":\n  image: node:20-alpine\n  before_script: [\"npm ci --prefer-offline\"]\nunit-tests: {extends: .node, script: [\"npm test\"]}",
+      "verification": "Full configuration shows both jobs expanded with the template's keys; pipeline still green."
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-01-review",
+  "phase_slug": "gitlab-foundations",
+  "week_number": 1,
+  "title": "GitLab week 1 review - CI/CD and your first pipeline",
+  "description": "Eight questions on what a pipeline is, where it lives, and what you saw in the job log.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 1,
+  "questions": [
+    {
+      "key": "w1-01",
+      "type": "single_choice",
+      "prompt": "What is the difference between continuous delivery and continuous deployment?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Delivery runs tests; deployment does not"
+        },
+        {
+          "id": "b",
+          "text": "Delivery keeps every change deployable with a human deciding on production; deployment removes that last human step"
+        },
+        {
+          "id": "c",
+          "text": "Deployment is for staging, delivery is for production"
+        },
+        {
+          "id": "d",
+          "text": "There is no difference"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Continuous delivery stops at 'deployable'; continuous deployment ships every green pipeline on main automatically.",
+      "points": 1
+    },
+    {
+      "key": "w1-02",
+      "type": "single_choice",
+      "prompt": "Where does a GitLab pipeline definition live?",
+      "options": [
+        {
+          "id": "a",
+          "text": "In Settings → CI/CD as form fields"
+        },
+        {
+          "id": "b",
+          "text": "In a .gitlab-ci.yml file at the root of the repository"
+        },
+        {
+          "id": "c",
+          "text": "In the runner's config.toml"
+        },
+        {
+          "id": "d",
+          "text": "In a separate pipelines repository"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The pipeline is YAML in the repository, versioned and reviewed like code.",
+      "points": 1
+    },
+    {
+      "key": "w1-03",
+      "type": "single_choice",
+      "prompt": "Two jobs are in the same stage. How do they run?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One after the other, in file order"
+        },
+        {
+          "id": "b",
+          "text": "In parallel, if runners are available"
+        },
+        {
+          "id": "c",
+          "text": "Only one of them runs"
+        },
+        {
+          "id": "d",
+          "text": "In alphabetical order"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Jobs in one stage run together; the next stage waits for all of them.",
+      "points": 1
+    },
+    {
+      "key": "w1-04",
+      "type": "single_choice",
+      "prompt": "A job writes a file to /tmp. Can a job in the next stage read it?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yes, stages share a filesystem"
+        },
+        {
+          "id": "b",
+          "text": "Yes, if the file is under the project directory"
+        },
+        {
+          "id": "c",
+          "text": "No - every job starts from a clean clone; only artifacts are handed forward"
+        },
+        {
+          "id": "d",
+          "text": "Only on the shell executor"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "Nothing survives between jobs except artifacts (and cache, best effort).",
+      "points": 1
+    },
+    {
+      "key": "w1-05",
+      "type": "single_choice",
+      "prompt": "Which two stages always exist even when you declare your own stages: list?",
+      "options": [
+        {
+          "id": "a",
+          "text": "build and deploy"
+        },
+        {
+          "id": "b",
+          "text": ".pre and .post"
+        },
+        {
+          "id": "c",
+          "text": "test and deploy"
+        },
+        {
+          "id": "d",
+          "text": "prepare and finish"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": ".pre and .post bracket every pipeline; declaring stages replaces the middle defaults.",
+      "points": 1
+    },
+    {
+      "key": "w1-06",
+      "type": "single_choice",
+      "prompt": "A job's script fails but its after_script succeeds. What is the job's status?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Success"
+        },
+        {
+          "id": "b",
+          "text": "Failed - only script decides the status"
+        },
+        {
+          "id": "c",
+          "text": "Warning"
+        },
+        {
+          "id": "d",
+          "text": "Pending"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "after_script runs in a separate shell and never changes the job status.",
+      "points": 1
+    },
+    {
+      "key": "w1-07",
+      "type": "single_choice",
+      "prompt": "You fix a syntax error in .gitlab-ci.yml and press Retry on the failed job. Why does it still fail?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retry needs a new runner"
+        },
+        {
+          "id": "b",
+          "text": "Retry re-runs the same job with the same commit; a new pipeline is needed to read the new file"
+        },
+        {
+          "id": "c",
+          "text": "Because the job was cancelled"
+        },
+        {
+          "id": "d",
+          "text": "Retry only works on manual jobs"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Retry replays the job as it was; push the fix to get a new pipeline.",
+      "points": 1
+    },
+    {
+      "key": "w1-08",
+      "type": "single_choice",
+      "prompt": "On gitlab.com shared runners, what is image: in a job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The VM type"
+        },
+        {
+          "id": "b",
+          "text": "The Docker container the job's shell runs in"
+        },
+        {
+          "id": "c",
+          "text": "The git branch"
+        },
+        {
+          "id": "d",
+          "text": "A cache key"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "With the docker executor, image: is the container your script runs in.",
+      "points": 1
+    }
+  ]
+}

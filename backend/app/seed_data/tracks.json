@@ -393,6 +393,42 @@
           "url": "https://developer.hashicorp.com/terraform/language"
         }
       ]
+    },
+    {
+      "slug": "gitlab",
+      "title": "GitLab CI/CD",
+      "short_title": "GitLab CI",
+      "summary": "Architecting, deploying and optimising pipelines on GitLab: runners, stages, artifacts and rules; CI for a Node.js application; deployment to environments, Kubernetes and review apps; caching, components, security scanning, self-managed runners and Auto DevOps.",
+      "provider": "GitLab",
+      "is_topic": true,
+      "is_certificate": false,
+      "exam_code": null,
+      "exam_minutes": null,
+      "order_index": 15,
+      "mark": "GL",
+      "accent": "amber",
+      "references": [
+        {
+          "title": "GitLab CI/CD documentation",
+          "url": "https://docs.gitlab.com/ee/ci/"
+        },
+        {
+          "title": ".gitlab-ci.yml keyword reference",
+          "url": "https://docs.gitlab.com/ee/ci/yaml/"
+        },
+        {
+          "title": "Predefined CI/CD variables",
+          "url": "https://docs.gitlab.com/ee/ci/variables/predefined_variables.html"
+        },
+        {
+          "title": "GitLab Runner documentation",
+          "url": "https://docs.gitlab.com/runner/"
+        },
+        {
+          "title": "Auto DevOps",
+          "url": "https://docs.gitlab.com/ee/topics/autodevops/"
+        }
+      ]
     }
   ]
 }

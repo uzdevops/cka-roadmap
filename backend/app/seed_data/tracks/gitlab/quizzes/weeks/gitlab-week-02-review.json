@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-02-review",
+  "phase_slug": "gitlab-foundations",
+  "week_number": 2,
+  "title": "GitLab week 2 review - runners, stages, artifacts, needs",
+  "description": "Eight questions on who runs a job, how it is isolated, and how files move between jobs.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 2,
+  "questions": [
+    {
+      "key": "w2-01",
+      "type": "single_choice",
+      "prompt": "A runner is registered at the group level. Which projects' jobs can it take?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only the project it was created from"
+        },
+        {
+          "id": "b",
+          "text": "Every project in the group and its subgroups"
+        },
+        {
+          "id": "c",
+          "text": "Every project on the instance"
+        },
+        {
+          "id": "d",
+          "text": "None until tagged"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Group runners serve the group's projects; instance runners serve everyone; project runners one project.",
+      "points": 1
+    },
+    {
+      "key": "w2-02",
+      "type": "single_choice",
+      "prompt": "Why does image: change nothing on a shell executor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The shell executor runs jobs directly on the host, not in a container"
+        },
+        {
+          "id": "b",
+          "text": "image: is only read by Kubernetes"
+        },
+        {
+          "id": "c",
+          "text": "The shell executor pulls images lazily"
+        },
+        {
+          "id": "d",
+          "text": "It does - it changes the shell"
+        }
+      ],
+      "correct_options": [
+        "a"
+      ],
+      "accepted_answers": [],
+      "explanation": "Only container-based executors (docker, kubernetes) use image:.",
+      "points": 1
+    },
+    {
+      "key": "w2-03",
+      "type": "single_choice",
+      "prompt": "A variable exported in before_script - is it visible in script and in after_script?",
+      "options": [
+        {
+          "id": "a",
+          "text": "In both"
+        },
+        {
+          "id": "b",
+          "text": "In neither"
+        },
+        {
+          "id": "c",
+          "text": "In script (same shell) but not in after_script (separate shell)"
+        },
+        {
+          "id": "d",
+          "text": "Only in after_script"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "before_script and script share one shell; after_script is a new one.",
+      "points": 1
+    },
+    {
+      "key": "w2-04",
+      "type": "single_choice",
+      "prompt": "Why npm ci rather than npm install in a pipeline?",
+      "options": [
+        {
+          "id": "a",
+          "text": "npm ci is faster on laptops"
+        },
+        {
+          "id": "b",
+          "text": "npm ci installs exactly the lock file and fails if package.json and the lock disagree"
+        },
+        {
+          "id": "c",
+          "text": "npm install does not work in containers"
+        },
+        {
+          "id": "d",
+          "text": "They are identical"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "A reproducible install is the point of CI.",
+      "points": 1
+    },
+    {
+      "key": "w2-05",
+      "type": "single_choice",
+      "prompt": "stage vs stages - which statement is correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "stages: places a job; stage: declares the order"
+        },
+        {
+          "id": "b",
+          "text": "stage: places a job in one of the stages declared by stages:"
+        },
+        {
+          "id": "c",
+          "text": "They are interchangeable"
+        },
+        {
+          "id": "d",
+          "text": "stage: is deprecated"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "stages: (top level) is the ordered list; stage: (in a job) picks one.",
+      "points": 1
+    },
+    {
+      "key": "w2-06",
+      "type": "single_choice",
+      "prompt": "Your test reports never appear when tests fail. Which artifacts key fixes it?",
+      "options": [
+        {
+          "id": "a",
+          "text": "expire_in: never"
+        },
+        {
+          "id": "b",
+          "text": "paths: reports/"
+        },
+        {
+          "id": "c",
+          "text": "when: always"
+        },
+        {
+          "id": "d",
+          "text": "dependencies: []"
+        }
+      ],
+      "correct_options": [
+        "c"
+      ],
+      "accepted_answers": [],
+      "explanation": "Artifacts default to on_success; when: always keeps them on failure too.",
+      "points": 1
+    },
+    {
+      "key": "w2-07",
+      "type": "single_choice",
+      "prompt": "A job has needs: [build-api]. Does it still wait for the build stage to finish?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Yes, stages always apply"
+        },
+        {
+          "id": "b",
+          "text": "No - it starts as soon as build-api finishes, whatever the stage"
+        },
+        {
+          "id": "c",
+          "text": "Only if build-api is in the same stage"
+        },
+        {
+          "id": "d",
+          "text": "Only with strategy: depend"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "needs: turns the pipeline into a DAG; the stage boundary no longer blocks it.",
+      "points": 1
+    },
+    {
+      "key": "w2-08",
+      "type": "single_choice",
+      "prompt": "A job with needs: downloads artifacts from which jobs by default?",
+      "options": [
+        {
+          "id": "a",
+          "text": "All jobs in earlier stages"
+        },
+        {
+          "id": "b",
+          "text": "Only the jobs it needs"
+        },
+        {
+          "id": "c",
+          "text": "None"
+        },
+        {
+          "id": "d",
+          "text": "Only jobs in the same stage"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "needs: narrows artifact downloads to the listed jobs (artifacts: false turns one off).",
+      "points": 1
+    }
+  ]
+}

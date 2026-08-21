@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-01-first-pipeline",
+  "phase_slug": "gitlab-foundations",
+  "week_number": 1,
+  "title": "Lab 1 - Your first pipeline",
+  "description": "Create a project, write a three-job pipeline, break it, read the logs.",
+  "difficulty": "beginner",
+  "estimated_minutes": 45,
+  "order_index": 1,
+  "scenario": "Set up the scratch project for the track and run your first pipeline. Break one job on purpose and read the job log until you can explain every line of it.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Project and file",
+      "instructions": "Create group xyz-team and project pipeline-basics with a README. In the Pipeline editor add a build stage with build-job and a test stage with unit-test-job and lint-test-job, each echoing a message. Commit to main.",
+      "solution": "stages: [build, test]\nbuild-job: {stage: build, script: [\"echo build\"]}\nunit-test-job: {stage: test, script: [\"echo unit\"]}\nlint-test-job: {stage: test, script: [\"echo lint\"]}",
+      "verification": "Build → Pipelines shows a passed pipeline; the two test jobs ran in parallel after build-job."
+    },
+    {
+      "title": "Task 2 - Break it",
+      "instructions": "Make lint-test-job exit 1. Push. Then press Retry on the failed job, then fix the file and push again.",
+      "solution": "lint-test-job:\n  stage: test\n  script: [\"echo lint\", \"exit 1\"]",
+      "verification": "Pipeline red with unit-test-job green; Retry fails identically; the fix creates a NEW pipeline that passes."
+    },
+    {
+      "title": "Task 3 - Read the log",
+      "instructions": "Add an explore job (image alpine:3.20) running pwd, ls -la, git log -1 --oneline, env | grep ^CI_ | sort, cat /etc/os-release. Open its log.",
+      "solution": "explore:\n  image: alpine:3.20\n  script: [pwd, \"ls -la\", \"git log -1 --oneline\", \"env | grep ^CI_ | sort\", \"cat /etc/os-release\"]",
+      "verification": "You can point at: the runner name, the image pulled, the clone, and the commit SHA in the log."
+    },
+    {
+      "title": "Task 4 - Default image",
+      "instructions": "Set default: image: alpine:3.20 and remove per-job images. Re-run and confirm the log no longer pulls ruby:3.1.",
+      "solution": "default:\n  image: alpine:3.20",
+      "verification": "Job log shows 'Using docker image … alpine:3.20' for every job."
+    }
+  ]
+}

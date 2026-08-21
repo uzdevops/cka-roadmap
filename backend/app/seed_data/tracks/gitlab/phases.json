@@ -1,0 +1,418 @@
+{
+  "phases": [
+    {
+      "slug": "gitlab-foundations",
+      "title": "Phase 1 - Foundations",
+      "description": "What CI/CD is, how GitLab does it, and the five components every pipeline is made of: the file, pipelines, stages, jobs, runners. By the end you read a job log like a native and write a multi-job pipeline with artifacts and needs.",
+      "order_index": 1,
+      "exam_domain": "Architecture & core concepts",
+      "exam_weight": 20,
+      "week_start": 1,
+      "week_end": 2,
+      "color": "sky",
+      "weeks": [
+        {
+          "number": 1,
+          "title": "Week 1 - CI/CD, GitLab and your first pipeline",
+          "description": "The XYZ team's problem, the vocabulary, an account and a project, and a pipeline you break on purpose.",
+          "lessons": [
+            {
+              "slug": "gitlab-course-introduction",
+              "title": "Course introduction and the XYZ problem",
+              "summary": "Why the XYZ team needs a pipeline, what CI, continuous delivery and continuous deployment mean, and how the eight weeks are laid out.",
+              "estimated_minutes": 20,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-cicd-basics",
+              "title": "CI/CD basics and the anatomy of a pipeline",
+              "summary": "Stages, jobs, runners and triggers - the shape every pipeline shares, and what a job really is.",
+              "estimated_minutes": 25,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-account-and-project",
+              "title": "GitLab account, group, project and the pipeline editor",
+              "summary": "Set up gitlab.com, import the course resources and learn where pipelines and job logs live.",
+              "estimated_minutes": 25,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-core-components",
+              "title": "GitLab CI/CD core components",
+              "summary": ".gitlab-ci.yml, pipelines, stages, jobs, runners and executors - and a job log read through all five.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-first-pipeline",
+              "title": "Create and run a basic pipeline",
+              "summary": "A three-job pipeline, a deliberate failure, Retry versus a new pipeline, and the five commands to run in any job.",
+              "estimated_minutes": 30,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Week 2 - Runners, stages, artifacts and needs",
+          "description": "Who runs a job and how it is isolated; ordering work; passing files forward; and the DAG that frees jobs from the stage lock-step.",
+          "lessons": [
+            {
+              "slug": "gitlab-runners-and-executors",
+              "title": "Types of runners and executors",
+              "summary": "Instance, group and project runners; shell, docker and kubernetes executors; how the SaaS fleet works end to end.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-shared-runners-and-scripts",
+              "title": "Shared runners, before_script and scripts in files",
+              "summary": "Run on shared runners, install tools honestly, and move long scripts into the repository.",
+              "estimated_minutes": 30,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-stages-and-dependencies",
+              "title": "Stages, stage vs stages, and dependent jobs",
+              "summary": "Ordering with stages, what 'dependent' really means, and why stages are not free.",
+              "estimated_minutes": 25,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-artifacts",
+              "title": "Artifacts - storing job data",
+              "summary": "Hand files to later jobs and humans: paths, expire_in, dependencies, when:always - and why cache is a different thing.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-needs-dag",
+              "title": "The needs keyword and DAG pipelines",
+              "summary": "Start jobs as soon as their dependencies finish; needs and artifacts; optional needs; when not to use it.",
+              "estimated_minutes": 25,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gitlab-pipeline-configuration",
+      "title": "Phase 2 - Pipeline configuration",
+      "description": "Controlling when and how jobs run: variables at every level, the predefined ones, rules at job and workflow level, schedules, resource groups, timeouts, images, services and parallel matrices.",
+      "order_index": 2,
+      "exam_domain": "Variables, rules and job controls",
+      "exam_weight": 15,
+      "week_start": 3,
+      "week_end": 3,
+      "color": "violet",
+      "weeks": [
+        {
+          "number": 3,
+          "title": "Week 3 - Variables, rules, schedules and job controls",
+          "description": "The week the pipeline learns to make decisions - and the two labs that explore every keyword so far.",
+          "lessons": [
+            {
+              "slug": "gitlab-variables",
+              "title": "Variables at every level, masking and protection",
+              "summary": "Precedence from instance to job, File-type variables, what masking does and does not do, protected and scoped secrets.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-predefined-variables",
+              "title": "Predefined CI/CD variables",
+              "summary": "The variables every job starts with, and the patterns built on them.",
+              "estimated_minutes": 25,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-merge-requests-and-rules",
+              "title": "Merge requests and rules at job level",
+              "summary": "if, changes, exists, when and allow_failure - deciding whether a job exists, and with what.",
+              "estimated_minutes": 35,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-workflow-rules-and-schedules",
+              "title": "workflow:rules, pipeline schedules and skipping pipelines",
+              "summary": "Decide when a pipeline exists at all, run things at night, and skip a pipeline on purpose.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-job-controls",
+              "title": "Resource groups, timeouts, images, services and parallel matrix",
+              "summary": "One deploy at a time, bounded jobs, a database next to the tests, and N jobs from one definition.",
+              "estimated_minutes": 35,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gitlab-continuous-integration",
+      "title": "Phase 3 - Continuous integration",
+      "description": "A real application - the XYZ team's Node.js service - tested, reported on, built into an image, published to the registry and structured with templates, caches and merge request pipelines.",
+      "order_index": 3,
+      "exam_domain": "CI for a real application",
+      "exam_weight": 25,
+      "week_start": 4,
+      "week_end": 5,
+      "color": "emerald",
+      "weeks": [
+        {
+          "number": 4,
+          "title": "Week 4 - Testing the XYZ application",
+          "description": "From a local npm test to a merge request that shows failing tests and coverage without anyone opening a log.",
+          "lessons": [
+            {
+              "slug": "gitlab-nodejs-app-overview",
+              "title": "The XYZ Node.js application",
+              "summary": "Run and test the app locally, and check the three things that make an app pipeline-able.",
+              "estimated_minutes": 25,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-designing-the-ci-pipeline",
+              "title": "Designing the XYZ pipeline",
+              "summary": "The stages, the decision behind every rule, the import and the skeleton you will fill in.",
+              "estimated_minutes": 25,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-unit-testing-in-ci",
+              "title": "Unit testing in the pipeline",
+              "summary": "npm ci, pinning the toolchain, a service for integration tests, and exit codes as the contract.",
+              "estimated_minutes": 30,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-test-reports-and-coverage",
+              "title": "Test reports and coverage in the merge request",
+              "summary": "JUnit, the coverage regex and Cobertura - failures and coverage where reviewers actually look.",
+              "estimated_minutes": 35,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-allow-failure-and-lint",
+              "title": "Ignoring job failure and linting",
+              "summary": "allow_failure and exit-code granularity, code quality reports, and the manual-gate trap.",
+              "estimated_minutes": 25,
+              "day_of_week": 5
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Week 5 - Building, publishing and structuring",
+          "description": "Images built in CI and published by SHA; caches that speed things up without breaking anything; templates, includes and merge request pipelines.",
+          "lessons": [
+            {
+              "slug": "gitlab-docker-build-in-ci",
+              "title": "Building Docker images in the pipeline",
+              "summary": "Docker-in-Docker, kaniko and the shell daemon; a reproducible, cached Dockerfile.",
+              "estimated_minutes": 35,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-container-registry",
+              "title": "Publishing to the GitLab Container Registry",
+              "summary": "Job-token login, a tagging strategy, build once and promote, cleanup policies.",
+              "estimated_minutes": 30,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-cache-vs-artifacts",
+              "title": "Cache - and how it differs from artifacts",
+              "summary": "Key on the lock file, policies, fallback keys, and why a missing cache must never break a job.",
+              "estimated_minutes": 30,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-templates-extends-include",
+              "title": "Templates: hidden jobs, extends, default and include",
+              "summary": "Remove repetition and split the pipeline into files you can version and share.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-merge-request-pipelines",
+              "title": "Merge request pipelines, merged results and trains",
+              "summary": "One pipeline per MR, testing the merge result, and the MR widget assembled.",
+              "estimated_minutes": 25,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gitlab-continuous-deployment",
+      "title": "Phase 4 - Continuous deployment",
+      "description": "Environments GitLab can see, deployment over SSH with manual gates, the staging-to-production promotion path with protection and rollback, review apps per merge request, and deploying to Kubernetes.",
+      "order_index": 4,
+      "exam_domain": "Environments and deployment",
+      "exam_weight": 20,
+      "week_start": 6,
+      "week_end": 6,
+      "color": "amber",
+      "weeks": [
+        {
+          "number": 6,
+          "title": "Week 6 - Deploying to environments",
+          "description": "The same image promoted through dev, staging and production - automatically, on a button, and behind a guard.",
+          "lessons": [
+            {
+              "slug": "gitlab-environments",
+              "title": "Environments and deployments",
+              "summary": "environment:name/url/tier, environment-scoped variables, and the complete shape of a deploy job.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-deploy-to-a-server",
+              "title": "Deploying to a server over SSH with manual gates",
+              "summary": "An SSH key as a File variable, verified host keys, job-token registry login on the server, and a blocking manual job.",
+              "estimated_minutes": 35,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-staging-production",
+              "title": "Staging, production, protection and rollback",
+              "summary": "The promotion path, protected environments and approvals, rollback versus revert, delayed jobs.",
+              "estimated_minutes": 30,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-review-apps",
+              "title": "Review apps - an environment per merge request",
+              "summary": "Dynamic environments, on_stop, auto_stop_in and the View app button.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-deploy-to-kubernetes",
+              "title": "Deploying to Kubernetes",
+              "summary": "A kubeconfig variable versus the GitLab agent, kubectl and helm, and pulling from the registry.",
+              "estimated_minutes": 35,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gitlab-optimisation-security",
+      "title": "Phase 5 - Optimisation and security",
+      "description": "Pipelines that are fast, modular and safe: measuring the critical path, parent-child and multi-project pipelines, CI/CD components, the built-in security scanners, and the protections around the pipeline itself.",
+      "order_index": 5,
+      "exam_domain": "Pipeline efficiency, modularity and security",
+      "exam_weight": 10,
+      "week_start": 7,
+      "week_end": 7,
+      "color": "rose",
+      "weeks": [
+        {
+          "number": 7,
+          "title": "Week 7 - Faster, modular, safer pipelines",
+          "description": "Less waiting, less duplication, fewer surprises - and the controls that make the pipeline itself hard to abuse.",
+          "lessons": [
+            {
+              "slug": "gitlab-pipeline-efficiency",
+              "title": "Pipeline efficiency",
+              "summary": "Measure the critical path; run less, start sooner, do less per job, split what is slow, fail fast.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-parent-child-pipelines",
+              "title": "Parent-child and multi-project pipelines",
+              "summary": "trigger:include, strategy:depend, dynamic children generated by a job, and handing off to another project.",
+              "estimated_minutes": 30,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-cicd-components-and-catalog",
+              "title": "CI/CD components and the catalog",
+              "summary": "Templates with typed inputs, versioned by tag and discoverable - include with a contract.",
+              "estimated_minutes": 30,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-security-scanning",
+              "title": "Security scanning in the pipeline",
+              "summary": "SAST, secret detection, dependency and container scanning as includes, and how reports become gates.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-protecting-the-pipeline",
+              "title": "Protecting the pipeline",
+              "summary": "Protected refs, variables and environments, least-privilege tokens, CODEOWNERS on the pipeline, and fork safety.",
+              "estimated_minutes": 30,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gitlab-runners-auto-devops",
+      "title": "Phase 6 - Self-managed runners and Auto DevOps",
+      "description": "Running your own runners - install, register, tags, config.toml, executors, a hardened deploy runner - and Auto DevOps: the pipeline GitLab generates, how to customise it, and when to own your own.",
+      "order_index": 6,
+      "exam_domain": "Runners and Auto DevOps",
+      "exam_weight": 10,
+      "week_start": 8,
+      "week_end": 8,
+      "color": "sky",
+      "weeks": [
+        {
+          "number": 8,
+          "title": "Week 8 - Your own runners and Auto DevOps",
+          "description": "The YAML does not change; where it runs does. Then the whole track, generated - and the capstone.",
+          "lessons": [
+            {
+              "slug": "gitlab-self-managed-runner-install",
+              "title": "Installing and registering a self-managed runner",
+              "summary": "gitlab-runner on Linux, authentication tokens, tags and scope.",
+              "estimated_minutes": 30,
+              "day_of_week": 1
+            },
+            {
+              "slug": "gitlab-runner-executors-config",
+              "title": "Runner executors and config.toml",
+              "summary": "concurrent and limit, privileged, volumes, pull policy, shared cache, and a hardened deploy runner.",
+              "estimated_minutes": 35,
+              "day_of_week": 2
+            },
+            {
+              "slug": "gitlab-auto-devops-overview",
+              "title": "Auto DevOps - the pipeline you did not write",
+              "summary": "What Auto DevOps generates, what it needs, and when it pays.",
+              "estimated_minutes": 25,
+              "day_of_week": 3
+            },
+            {
+              "slug": "gitlab-auto-devops-customize",
+              "title": "Customising Auto DevOps",
+              "summary": "Variables, including the template and overriding jobs, your own chart, and the line where it stops paying.",
+              "estimated_minutes": 30,
+              "day_of_week": 4
+            },
+            {
+              "slug": "gitlab-capstone-and-next-steps",
+              "title": "Capstone - the XYZ pipeline assembled, and what is next",
+              "summary": "The final pipeline read back as a checklist of the eight weeks, and where to go from here.",
+              "estimated_minutes": 30,
+              "day_of_week": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

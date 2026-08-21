@@ -1,0 +1,244 @@
+{
+  "slug": "gitlab-week-07-review",
+  "phase_slug": "gitlab-optimisation-security",
+  "week_number": 7,
+  "title": "GitLab week 7 review - faster, modular, safer",
+  "description": "Eight questions on efficiency, child pipelines, components, scanners and protections.",
+  "pass_score": 70,
+  "time_limit_minutes": 15,
+  "order_index": 7,
+  "questions": [
+    {
+      "key": "w7-01",
+      "type": "single_choice",
+      "prompt": "Jobs wait a long time before starting. Which fix is right?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Shorter scripts"
+        },
+        {
+          "id": "b",
+          "text": "More runners / capacity - queued time is not a YAML problem"
+        },
+        {
+          "id": "c",
+          "text": "Bigger images"
+        },
+        {
+          "id": "d",
+          "text": "More stages"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Read queued time separately from duration.",
+      "points": 1
+    },
+    {
+      "key": "w7-02",
+      "type": "single_choice",
+      "prompt": "Why should deploy jobs be interruptible: false?",
+      "options": [
+        {
+          "id": "a",
+          "text": "So they can be retried"
+        },
+        {
+          "id": "b",
+          "text": "A newer pipeline must not cancel a half-finished deployment"
+        },
+        {
+          "id": "c",
+          "text": "They are always manual"
+        },
+        {
+          "id": "d",
+          "text": "To keep their logs"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Auto-cancel redundant pipelines is great for tests, dangerous for deploys.",
+      "points": 1
+    },
+    {
+      "key": "w7-03",
+      "type": "single_choice",
+      "prompt": "What changes when you add strategy: depend to a trigger job?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The child runs faster"
+        },
+        {
+          "id": "b",
+          "text": "The parent's trigger job waits for the child and takes its status"
+        },
+        {
+          "id": "c",
+          "text": "The child gets the parent's artifacts"
+        },
+        {
+          "id": "d",
+          "text": "Nothing"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Without it the trigger job is green as soon as the child starts.",
+      "points": 1
+    },
+    {
+      "key": "w7-04",
+      "type": "single_choice",
+      "prompt": "When are $[[ inputs.x ]] in a CI/CD component substituted?",
+      "options": [
+        {
+          "id": "a",
+          "text": "At job runtime in the shell"
+        },
+        {
+          "id": "b",
+          "text": "When the pipeline is created, before any job runs - unknown inputs fail creation"
+        },
+        {
+          "id": "c",
+          "text": "When the runner pulls the image"
+        },
+        {
+          "id": "d",
+          "text": "Never - they are comments"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Inputs shape structure; variables carry runtime values.",
+      "points": 1
+    },
+    {
+      "key": "w7-05",
+      "type": "single_choice",
+      "prompt": "What does a scanner template add by default, and what is its effect on merging?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A blocking job"
+        },
+        {
+          "id": "b",
+          "text": "Scan jobs in the test stage that report findings with allow_failure: true - they do not block by themselves"
+        },
+        {
+          "id": "c",
+          "text": "A required approval"
+        },
+        {
+          "id": "d",
+          "text": "A new stage called security"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Use approval and scan-execution policies to make them rules.",
+      "points": 1
+    },
+    {
+      "key": "w7-06",
+      "type": "single_choice",
+      "prompt": "Which mechanism guarantees a scanner runs even if someone deletes the include line?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A comment asking them not to"
+        },
+        {
+          "id": "b",
+          "text": "A scan execution policy at group level"
+        },
+        {
+          "id": "c",
+          "text": "allow_failure: false"
+        },
+        {
+          "id": "d",
+          "text": "CODEOWNERS"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Policies are enforced outside the project's YAML.",
+      "points": 1
+    },
+    {
+      "key": "w7-07",
+      "type": "single_choice",
+      "prompt": "A feature-branch job echoes a protected variable. What does it print?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The value"
+        },
+        {
+          "id": "b",
+          "text": "An empty string - protected variables reach only protected refs"
+        },
+        {
+          "id": "c",
+          "text": "[MASKED]"
+        },
+        {
+          "id": "d",
+          "text": "An error"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "Protection decides exposure; masking only filters logs.",
+      "points": 1
+    },
+    {
+      "key": "w7-08",
+      "type": "single_choice",
+      "prompt": "Why is a CODEOWNERS rule on .gitlab-ci.yml a security control?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It speeds up review"
+        },
+        {
+          "id": "b",
+          "text": "Changes to the pipeline itself need the platform team's approval - the pipeline runs with the project's secrets"
+        },
+        {
+          "id": "c",
+          "text": "It blocks forks"
+        },
+        {
+          "id": "d",
+          "text": "It is not"
+        }
+      ],
+      "correct_options": [
+        "b"
+      ],
+      "accepted_answers": [],
+      "explanation": "The pipeline is production code; guard who changes it.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-03-pipeline-config-2",
+  "phase_slug": "gitlab-pipeline-configuration",
+  "week_number": 3,
+  "title": "Lab 3 - Exploring pipeline configuration, part 2",
+  "description": "Variables, rules, workflow, schedules, resource groups and a matrix.",
+  "difficulty": "intermediate",
+  "estimated_minutes": 60,
+  "order_index": 3,
+  "scenario": "The KodeKloud 'Exploring Pipeline Configuration Part-2' lab: every decision keyword from week 3 on one pipeline, run from a push, a merge request and a schedule.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Variables and precedence",
+      "instructions": "Define TARGET globally, override it in one job, add a project variable TARGET in the UI, and print it from two jobs. Predict each value before running.",
+      "solution": "variables: {TARGET: staging}\nshow-global: {script: [\"echo $TARGET\"]}\nshow-job: {variables: {TARGET: production}, script: [\"echo $TARGET\"]}",
+      "verification": "show-global prints staging (YAML beats project), show-job prints production."
+    },
+    {
+      "title": "Task 2 - File variable and masking",
+      "instructions": "Create a masked variable API_TOKEN and a File variable KUBE_CFG; echo both and cat the file path.",
+      "solution": "script: [\"echo $API_TOKEN\", \"echo $KUBE_CFG\", \"cat $KUBE_CFG\"]",
+      "verification": "Log shows [MASKED] for the token and a /builds/…tmp path for the file variable."
+    },
+    {
+      "title": "Task 3 - workflow and rules",
+      "instructions": "Add workflow:rules for MR / main / tags (no branch pipeline when an MR is open); make unit-tests run on MRs and main, deploy only on tags with when: manual + allow_failure: false. Open an MR and push again.",
+      "solution": "workflow:\n  rules:\n    - if: $CI_PIPELINE_SOURCE == \"merge_request_event\"\n    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS\n      when: never\n    - if: $CI_COMMIT_BRANCH\n    - if: $CI_COMMIT_TAG",
+      "verification": "Exactly one pipeline per push on the MR; a tag pipeline stops at the manual deploy."
+    },
+    {
+      "title": "Task 4 - Schedule, resource group, matrix",
+      "instructions": "Create a nightly schedule; add a job that runs only from it; give deploy resource_group: staging; add a build matrix OS × ARCH.",
+      "solution": "nightly: {script: [\"echo night\"], rules: [{if: $CI_PIPELINE_SOURCE == \"schedule\"}]}\nbuild: {script: [\"echo $OS-$ARCH\"], parallel: {matrix: [{OS: [linux, darwin], ARCH: [amd64, arm64]}]}}",
+      "verification": "Play the schedule: only nightly runs; the matrix creates 4 jobs named build: [linux, amd64] etc."
+    }
+  ]
+}

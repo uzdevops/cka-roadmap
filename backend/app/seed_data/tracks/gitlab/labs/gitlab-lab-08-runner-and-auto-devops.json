@@ -1,0 +1,39 @@
+{
+  "slug": "gitlab-lab-08-runner-and-auto-devops",
+  "phase_slug": "gitlab-runners-auto-devops",
+  "week_number": 8,
+  "title": "Lab 8 - Your own runner and Auto DevOps",
+  "description": "Install and register a docker runner with tags, tune config.toml, then let Auto DevOps build and test a project.",
+  "difficulty": "advanced",
+  "estimated_minutes": 90,
+  "order_index": 8,
+  "scenario": "Run the XYZ pipeline on a runner you own, harden a deploy runner, and compare your pipeline with the one Auto DevOps generates.",
+  "environment_setup": "# A gitlab.com account (free tier is enough) with shared runners enabled on the project,\n# git on your machine, and a terminal. Keep Build → Pipelines open in a second tab.\ngit --version\ngit remote -v",
+  "cleanup": "# Nothing to clean: pipelines and jobs are history. Delete the scratch project when the track is over.",
+  "tasks": [
+    {
+      "title": "Task 1 - Install and register",
+      "instructions": "On a Linux VM install gitlab-runner and Docker; create a project runner in the UI with tag docker-lab, untagged off; register with the authentication token, executor docker, default image alpine:3.20.",
+      "solution": "sudo gitlab-runner register --non-interactive --url https://gitlab.com --token glrt-… --executor docker --docker-image alpine:3.20",
+      "verification": "Runner shows online; a job with tags: [docker-lab] runs on it (log names your runner)."
+    },
+    {
+      "title": "Task 2 - config.toml",
+      "instructions": "Set concurrent = 2, privileged = true, pull_policy = [\"if-not-present\",\"always\"], and a /cache volume; restart; run the dind build job on your runner.",
+      "solution": "sudo sed -i 's/^concurrent = .*/concurrent = 2/' /etc/gitlab-runner/config.toml\nsudo gitlab-runner restart",
+      "verification": "The dind build passes on your runner; the second run pulls fewer layers."
+    },
+    {
+      "title": "Task 3 - Deploy runner",
+      "instructions": "Add a second [[runners]] entry: shell executor, limit = 1, tag deploy, protected (protected refs only); give deploy jobs tags: [deploy].",
+      "solution": "gitlab-runner register … --executor shell --tag-list deploy",
+      "verification": "A feature-branch job with tags: [deploy] stays pending (runner takes protected refs only); a main deploy runs."
+    },
+    {
+      "title": "Task 4 - Auto DevOps",
+      "instructions": "Create a new empty project from the nodejs-app code WITHOUT .gitlab-ci.yml; enable Auto DevOps; run a pipeline; then add a .gitlab-ci.yml that includes Auto-DevOps.gitlab-ci.yml and overrides the test job.",
+      "solution": "include:\n  - template: Auto-DevOps.gitlab-ci.yml\ntest:\n  image: node:20-alpine\n  script: [\"npm ci\", \"npm test\"]",
+      "verification": "First pipeline: build + test + scanners run, deploy skipped (no cluster); second: your test job replaces the generated one."
+    }
+  ]
+}

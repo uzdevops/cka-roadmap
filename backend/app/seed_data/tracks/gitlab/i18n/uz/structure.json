@@ -1,0 +1,231 @@
+{
+  "locale": "uz",
+  "phases": {
+    "gitlab-foundations": {
+      "title": "1-bosqich - Asoslar",
+      "description": "CI/CD nima, GitLab buni qanday qiladi va har bir pipeline tuzilgan beshta komponent: fayl, pipeline’lar, stage’lar, job’lar, runner’lar. Oxirida job log’ini o’z tilidek o’qiysiz va artifact’lar hamda needs bilan ko’p job’li pipeline yozasiz.",
+      "exam_domain": "Arxitektura va asosiy tushunchalar"
+    },
+    "gitlab-pipeline-configuration": {
+      "title": "2-bosqich - Pipeline konfiguratsiyasi",
+      "description": "Job’lar qachon va qanday ishlashini boshqarish: har darajadagi o’zgaruvchilar, predefined o’zgaruvchilar, job va workflow darajasidagi rules, schedule’lar, resource group’lar, timeout’lar, image’lar, service’lar va parallel matrix.",
+      "exam_domain": "O’zgaruvchilar, rules va job boshqaruvi"
+    },
+    "gitlab-continuous-integration": {
+      "title": "3-bosqich - Continuous integration",
+      "description": "Haqiqiy ilova - XYZ jamoasining Node.js servisi - testlanadi, hisobot beriladi, image’ga yig’iladi, registry’ga publish qilinadi va template’lar, cache hamda merge request pipeline’lari bilan tuzilmaga keltiriladi.",
+      "exam_domain": "Haqiqiy ilova uchun CI"
+    },
+    "gitlab-continuous-deployment": {
+      "title": "4-bosqich - Continuous deployment",
+      "description": "GitLab ko’radigan environment’lar, manual gate’lar bilan SSH orqali deploy, himoya va rollback bilan staging’dan production’ga ko’tarish yo’li, har merge request uchun review app’lar va Kubernetes’ga deploy.",
+      "exam_domain": "Environment’lar va deploy"
+    },
+    "gitlab-optimisation-security": {
+      "title": "5-bosqich - Optimallashtirish va xavfsizlik",
+      "description": "Tez, modulli va xavfsiz pipeline’lar: critical path’ni o’lchash, parent-child va multi-project pipeline’lar, CI/CD component’lar, o’rnatilgan xavfsizlik skanerlari va pipeline’ning o’zini himoya qilish.",
+      "exam_domain": "Pipeline samaradorligi, modullilik va xavfsizlik"
+    },
+    "gitlab-runners-auto-devops": {
+      "title": "6-bosqich - Self-managed runner’lar va Auto DevOps",
+      "description": "O’z runner’laringizni ishga tushirish - o’rnatish, ro’yxatdan o’tkazish, tag’lar, config.toml, executor’lar, mustahkamlangan deploy runner - va Auto DevOps: GitLab yaratadigan pipeline, uni sozlash va qachon o’zingiznikiga o’tish kerakligi.",
+      "exam_domain": "Runner’lar va Auto DevOps"
+    }
+  },
+  "weeks": {
+    "1": {
+      "title": "1-hafta - CI/CD, GitLab va birinchi pipeline’ingiz",
+      "description": "XYZ jamoasining muammosi, atamalar, akkaunt va loyiha, hamda ataylab buzadigan pipeline."
+    },
+    "2": {
+      "title": "2-hafta - Runner’lar, stage’lar, artifact’lar va needs",
+      "description": "Job’ni kim bajaradi va u qanday izolyatsiya qilinadi; ishni tartiblash; fayllarni oldinga uzatish; va job’larni stage qulfidan ozod qiladigan DAG."
+    },
+    "3": {
+      "title": "3-hafta - O’zgaruvchilar, rules, schedule’lar va job boshqaruvi",
+      "description": "Pipeline qaror qabul qilishni o’rganadigan hafta - va shu paytgacha o’tilgan har bir kalit so’zni sinaydigan ikkita lab."
+    },
+    "4": {
+      "title": "4-hafta - XYZ ilovasini testlash",
+      "description": "Lokal npm test’dan to hech kim log ochmasdan yiqilgan testlar va coverage’ni ko’rsatadigan merge request’gacha."
+    },
+    "5": {
+      "title": "5-hafta - Build, publish va tuzilma",
+      "description": "CI’da build qilingan va SHA bilan publish qilingan image’lar; hech narsani buzmay tezlashtiradigan cache’lar; template’lar, include’lar va merge request pipeline’lari."
+    },
+    "6": {
+      "title": "6-hafta - Environment’larga deploy",
+      "description": "Bitta image dev, staging va production orqali ko’tariladi - avtomatik, tugma bilan va qo’riqchi ortida."
+    },
+    "7": {
+      "title": "7-hafta - Tezroq, modulli, xavfsizroq pipeline’lar",
+      "description": "Kamroq kutish, kamroq takror, kamroq kutilmagan hol - va pipeline’ning o’zini suiiste’mol qilishni qiyinlashtiradigan nazoratlar."
+    },
+    "8": {
+      "title": "8-hafta - O’z runner’laringiz va Auto DevOps",
+      "description": "YAML o’zgarmaydi; u qayerda ishlashi o’zgaradi. So’ng butun yo’nalish - generatsiya qilingan holda - va yakuniy loyiha."
+    }
+  },
+  "lessons": {
+    "gitlab-course-introduction": {
+      "title": "Kursga kirish va XYZ muammosi",
+      "summary": "XYZ jamoasiga nega pipeline kerak, CI, continuous delivery va continuous deployment nimani anglatadi va sakkiz hafta qanday tuzilgan."
+    },
+    "gitlab-cicd-basics": {
+      "title": "CI/CD asoslari va pipeline anatomiyasi",
+      "summary": "Stage’lar, job’lar, runner’lar va trigger’lar - har bir pipeline’ning umumiy shakli va job aslida nima."
+    },
+    "gitlab-account-and-project": {
+      "title": "GitLab akkaunt, guruh, loyiha va pipeline editor",
+      "summary": "gitlab.com’ni sozlang, kurs resurslarini import qiling va pipeline’lar hamda job log’lari qayerda yashashini o’rganing."
+    },
+    "gitlab-core-components": {
+      "title": "GitLab CI/CD asosiy komponentlari",
+      "summary": ".gitlab-ci.yml, pipeline’lar, stage’lar, job’lar, runner’lar va executor’lar - va beshtasi orqali o’qilgan job log’i."
+    },
+    "gitlab-first-pipeline": {
+      "title": "Oddiy pipeline yaratish va ishga tushirish",
+      "summary": "Uchta job’li pipeline, ataylab buzish, Retry va yangi pipeline farqi, va istalgan job’da ishga tushiradigan beshta buyruq."
+    },
+    "gitlab-runners-and-executors": {
+      "title": "Runner va executor turlari",
+      "summary": "Instance, group va project runner’lar; shell, docker va kubernetes executor’lar; SaaS parki boshidan oxirigacha qanday ishlaydi."
+    },
+    "gitlab-shared-runners-and-scripts": {
+      "title": "Shared runner’lar, before_script va fayldagi skriptlar",
+      "summary": "Shared runner’larda ishlating, vositalarni halol o’rnating va uzun skriptlarni repozitoriyga ko’chiring."
+    },
+    "gitlab-stages-and-dependencies": {
+      "title": "Stage’lar, stage va stages farqi, bog’liq job’lar",
+      "summary": "Stage’lar bilan tartiblash, 'bog’liq' aslida nima degani va stage’lar nega bepul emas."
+    },
+    "gitlab-artifacts": {
+      "title": "Artifact’lar - job ma’lumotlarini saqlash",
+      "summary": "Fayllarni keyingi job’lar va odamlarga uzating: paths, expire_in, dependencies, when:always - va cache nega boshqa narsa."
+    },
+    "gitlab-needs-dag": {
+      "title": "needs kalit so’zi va DAG pipeline’lar",
+      "summary": "Bog’liqliklar tugashi bilan job’larni boshlang; needs va artifact’lar; optional needs; qachon ishlatmaslik kerak."
+    },
+    "gitlab-variables": {
+      "title": "Har darajadagi o’zgaruvchilar, masking va himoya",
+      "summary": "Instance’dan job’gacha ustuvorlik, File turidagi o’zgaruvchilar, masking nima qiladi va nima qilmaydi, himoyalangan va scope’langan sirlar."
+    },
+    "gitlab-predefined-variables": {
+      "title": "Predefined CI/CD o’zgaruvchilari",
+      "summary": "Har bir job boshlanadigan o’zgaruvchilar va ular asosida qurilgan namunalar."
+    },
+    "gitlab-merge-requests-and-rules": {
+      "title": "Merge request’lar va job darajasidagi rules",
+      "summary": "if, changes, exists, when va allow_failure - job mavjud bo’lish-bo’lmasligini va qanday bo’lishini hal qilish."
+    },
+    "gitlab-workflow-rules-and-schedules": {
+      "title": "workflow:rules, pipeline schedule’lar va pipeline’ni o’tkazib yuborish",
+      "summary": "Pipeline umuman mavjud bo’lishini hal qiling, tunda ishlarni bajaring va pipeline’ni ataylab o’tkazib yuboring."
+    },
+    "gitlab-job-controls": {
+      "title": "Resource group, timeout, image, service va parallel matrix",
+      "summary": "Bir vaqtda bitta deploy, chegaralangan job’lar, testlar yonida ma’lumotlar bazasi va bitta ta’rifdan N ta job."
+    },
+    "gitlab-nodejs-app-overview": {
+      "title": "XYZ Node.js ilovasi",
+      "summary": "Ilovani lokal ishga tushiring va testlang, uni pipeline’ga tayyor qiladigan uchta narsani tekshiring."
+    },
+    "gitlab-designing-the-ci-pipeline": {
+      "title": "XYZ pipeline’ini loyihalash",
+      "summary": "Stage’lar, har bir rule ortidagi qaror, import va siz to’ldiradigan skelet."
+    },
+    "gitlab-unit-testing-in-ci": {
+      "title": "Pipeline’da unit testlash",
+      "summary": "npm ci, toolchain’ni qotirish, integratsion testlar uchun service va shartnoma sifatida exit kodlar."
+    },
+    "gitlab-test-reports-and-coverage": {
+      "title": "Merge request’da test hisobotlari va coverage",
+      "summary": "JUnit, coverage regex va Cobertura - yiqilishlar va coverage reviewer’lar aslida qaraydigan joyda."
+    },
+    "gitlab-allow-failure-and-lint": {
+      "title": "Job yiqilishini e’tiborsiz qoldirish va linting",
+      "summary": "allow_failure va exit kod aniqligi, code quality hisobotlari va manual gate tuzog’i."
+    },
+    "gitlab-docker-build-in-ci": {
+      "title": "Pipeline’da Docker image build qilish",
+      "summary": "Docker-in-Docker, kaniko va shell daemon; takrorlanadigan, cache’langan Dockerfile."
+    },
+    "gitlab-container-registry": {
+      "title": "GitLab Container Registry’ga publish",
+      "summary": "Job-token bilan login, tag strategiyasi, bir marta build qilib ko’tarish, cleanup policy’lar."
+    },
+    "gitlab-cache-vs-artifacts": {
+      "title": "Cache - va u artifact’lardan qanday farq qiladi",
+      "summary": "Lock fayl bo’yicha key, policy’lar, fallback key’lar va yo’q cache nega hech qachon job’ni buzmasligi kerak."
+    },
+    "gitlab-templates-extends-include": {
+      "title": "Template’lar: yashirin job’lar, extends, default va include",
+      "summary": "Takrorni yo’q qiling va pipeline’ni versiyalab, ulashib bo’ladigan fayllarga bo’ling."
+    },
+    "gitlab-merge-request-pipelines": {
+      "title": "Merge request pipeline’lar, merged results va train’lar",
+      "summary": "Har MR uchun bitta pipeline, merge natijasini testlash va yig’ilgan MR vidjeti."
+    },
+    "gitlab-environments": {
+      "title": "Environment’lar va deploy’lar",
+      "summary": "environment:name/url/tier, environment scope’li o’zgaruvchilar va deploy job’ining to’liq shakli."
+    },
+    "gitlab-deploy-to-a-server": {
+      "title": "Manual gate’lar bilan SSH orqali serverga deploy",
+      "summary": "File o’zgaruvchi sifatida SSH kalit, tekshirilgan host key’lar, serverda job-token bilan registry login va bloklovchi manual job."
+    },
+    "gitlab-staging-production": {
+      "title": "Staging, production, himoya va rollback",
+      "summary": "Ko’tarish yo’li, himoyalangan environment’lar va approval’lar, rollback va revert, delayed job’lar."
+    },
+    "gitlab-review-apps": {
+      "title": "Review app’lar - har merge request uchun environment",
+      "summary": "Dinamik environment’lar, on_stop, auto_stop_in va View app tugmasi."
+    },
+    "gitlab-deploy-to-kubernetes": {
+      "title": "Kubernetes’ga deploy",
+      "summary": "kubeconfig o’zgaruvchisi va GitLab agent farqi, kubectl va helm, registry’dan pull qilish."
+    },
+    "gitlab-pipeline-efficiency": {
+      "title": "Pipeline samaradorligi",
+      "summary": "Critical path’ni o’lchang; kamroq ishga tushiring, tezroq boshlang, har job’da kamroq qiling, sekinni bo’ling, tez yiqiling."
+    },
+    "gitlab-parent-child-pipelines": {
+      "title": "Parent-child va multi-project pipeline’lar",
+      "summary": "trigger:include, strategy:depend, job tomonidan generatsiya qilingan dinamik child’lar va boshqa loyihaga uzatish."
+    },
+    "gitlab-cicd-components-and-catalog": {
+      "title": "CI/CD component’lar va katalog",
+      "summary": "Tipli input’larga ega, tag bilan versiyalangan va topiladigan template’lar - shartnomali include."
+    },
+    "gitlab-security-scanning": {
+      "title": "Pipeline’da xavfsizlik skanerlash",
+      "summary": "Include sifatida SAST, secret detection, dependency va container scanning va hisobotlar qanday gate’ga aylanadi."
+    },
+    "gitlab-protecting-the-pipeline": {
+      "title": "Pipeline’ni himoya qilish",
+      "summary": "Himoyalangan ref’lar, o’zgaruvchilar va environment’lar, minimal huquqli token’lar, pipeline’da CODEOWNERS va fork xavfsizligi."
+    },
+    "gitlab-self-managed-runner-install": {
+      "title": "Self-managed runner o’rnatish va ro’yxatdan o’tkazish",
+      "summary": "Linux’da gitlab-runner, authentication token’lar, tag’lar va scope."
+    },
+    "gitlab-runner-executors-config": {
+      "title": "Runner executor’lari va config.toml",
+      "summary": "concurrent va limit, privileged, volume’lar, pull policy, umumiy cache va mustahkamlangan deploy runner."
+    },
+    "gitlab-auto-devops-overview": {
+      "title": "Auto DevOps - siz yozmagan pipeline",
+      "summary": "Auto DevOps nimani generatsiya qiladi, unga nima kerak va qachon o’zini oqlaydi."
+    },
+    "gitlab-auto-devops-customize": {
+      "title": "Auto DevOps’ni sozlash",
+      "summary": "O’zgaruvchilar, template’ni include qilib job’larni override qilish, o’z chart’ingiz va u o’zini oqlamay qo’yadigan chegara."
+    },
+    "gitlab-capstone-and-next-steps": {
+      "title": "Yakuniy loyiha - yig’ilgan XYZ pipeline va keyingi qadamlar",
+      "summary": "Sakkiz haftaning tekshiruv ro’yxati sifatida o’qilgan yakuniy pipeline va bundan keyin qayerga borish."
+    }
+  }
+}
