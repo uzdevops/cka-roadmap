@@ -1,14 +1,14 @@
 ## Ming marta yozadigan buyruq
 
-`kubectl` izchil grammatikaga amal qiladi. Buyruqlar ro'yxatini emas,
-grammatikani o'rganing.
+`kubectl` izchil grammatikaga amal qiladi. Buyruqlar ro’yxatini emas,
+grammatikani o’rganing.
 
 ```text
-kubectl <fe'l> <resurs-turi> <nom> [bayroqlar]
+kubectl <verb> <resource-type> <name> [flags]
         get     pods           web    -n prod -o wide
 ```
 
-## Holatni o'qish
+## Holatni o’qish
 
 ```bash
 kubectl get pods                          # joriy namespace
@@ -35,16 +35,16 @@ kubectl get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.po
 ```
 
 :::exam-tip
-Savollarda ko'pincha "natijani `/opt/answer.txt` faylga yozing" deyiladi.
+Savollarda ko’pincha "natijani `/opt/answer.txt` faylga yozing" deyiladi.
 Buyruqni tuzing, chiqishni ekranda tekshiring, **keyin** `> /opt/answer.txt`
-qo'shing. Ballar noto'g'ri buyruqdan ko'ra ko'proq xato xabari yozilgan
-fayllar tufayli yo'qoladi.
+qo’shing. Ballar noto’g’ri buyruqdan ko’ra ko’proq xato xabari yozilgan
+fayllar tufayli yo’qoladi.
 :::
 
 ## Describe: nosozlik aniqlashning birinchi qadami
 
-`kubectl get` sizga maydonlarni ko'rsatadi. `kubectl describe` maydonlarni
-**va hodisalarni** ko'rsatadi - nosozlik sababi aynan o'sha yerda yashaydi.
+`kubectl get` sizga maydonlarni ko’rsatadi. `kubectl describe` maydonlarni
+**va hodisalarni** ko’rsatadi - nosozlik sababi aynan o’sha yerda yashaydi.
 
 ```bash
 kubectl describe pod web-5d4f8b6c9-abcde
@@ -76,8 +76,8 @@ kubectl logs --since=10m web-5d4f8b6c9-abcde
 ```
 
 :::tip
-`--previous` - CrashLoopBackOff'ni hal qiladigan bayroq. Joriy konteyner
-endigina ishga tushgan va foydali chiqish bermagan; *oldingisi* esa o'lgan va
+`--previous` - CrashLoopBackOff’ni hal qiladigan bayroq. Joriy konteyner
+endigina ishga tushgan va foydali chiqish bermagan; *oldingisi* esa o’lgan va
 xato izini chop etgan.
 :::
 
@@ -92,7 +92,7 @@ kubectl port-forward svc/web 8080:80
 kubectl port-forward pod/web-5d4f8b6c9-abcde 8080:80
 ```
 
-Shell'i yo'q image'lar uchun (distroless, scratch) vaqtinchalik debug
+Shell’i yo’q image’lar uchun (distroless, scratch) vaqtinchalik debug
 konteyneridan foydalaning:
 
 ```bash
@@ -101,7 +101,7 @@ kubectl debug -it web-5d4f8b6c9-abcde --image=busybox --target=web
 
 ## Yaratish: avval imperativ
 
-Imtihonda `--dry-run=client -o yaml` bilan imperativ buyruqlar YAML'ni yoddan
+Imtihonda `--dry-run=client -o yaml` bilan imperativ buyruqlar YAML’ni yoddan
 yozishdan sezilarli darajada tezroq.
 
 ```bash
@@ -125,7 +125,7 @@ vim web.yaml          # generator chiqara olmaydigan maydonlarni qo'shing
 kubectl apply -f web.yaml
 ```
 
-## O'zgartirish
+## O’zgartirish
 
 ```bash
 kubectl apply -f manifest.yaml            # deklarativ, idempotent, afzal
@@ -133,13 +133,13 @@ kubectl edit deployment web               # $EDITOR ochadi, saqlaganda qo'llaydi
 kubectl scale deployment web --replicas=5
 kubectl set image deployment/web nginx=nginx:1.28
 kubectl label pod web env=prod
-kubectl annotate deployment web kubernetes.io/change-cause="1.28 ga o'tish"
+kubectl annotate deployment web kubernetes.io/change-cause="bump to 1.28"
 kubectl patch deployment web -p '{"spec":{"replicas":4}}'
 kubectl rollout status deployment/web
 kubectl rollout undo deployment/web
 ```
 
-## O'chirish
+## O’chirish
 
 ```bash
 kubectl delete pod web-5d4f8b6c9-abcde
@@ -149,15 +149,15 @@ kubectl delete pod web --force --grace-period=0     # faqat haqiqatan qotib qolg
 ```
 
 :::warning
-Deployment'ga tegishli Pod'ni o'chirish uni yo'q qilmaydi - ReplicaSet
-kontrolleri bir necha soniyada o'rniga yangisini yaratadi. Workload'ni haqiqatan
-olib tashlash uchun Deployment'ni o'chiring. Bu doim adashtiradigan joy.
+Deployment’ga tegishli Pod’ni o’chirish uni yo’q qilmaydi - ReplicaSet
+kontrolleri bir necha soniyada o’rniga yangisini yaratadi. Workload’ni haqiqatan
+olib tashlash uchun Deployment’ni o’chiring. Bu doim adashtiradigan joy.
 :::
 
 ## kubectl explain: imtihon ichidagi hujjatingiz
 
 Imtihon paytida rasmiy hujjatlardan foydalanish mumkin, lekin `explain` sayt
-bo'ylab qidirishdan tezroq.
+bo’ylab qidirishdan tezroq.
 
 ```bash
 kubectl explain pod.spec
@@ -168,14 +168,14 @@ kubectl api-versions
 ```
 
 :::exam-tip
-`kubectl explain <tur> --recursive` butun maydon daraxtini chop etadi.
+`kubectl explain <type> --recursive` butun maydon daraxtini chop etadi.
 `securityContext.runAsUser` mi yoki `securityContext.runAsUserName` mi degan
 savolga terminalni tark etmasdan ikki soniyada javob beradi.
 :::
 
 ## Foydali qisqartmalar
 
-| To'liq | Qisqa |
+| To’liq | Qisqa |
 | --- | --- |
 | pods | po |
 | deployments | deploy |
@@ -188,8 +188,8 @@ savolga terminalni tark etmasdan ikki soniyada javob beradi.
 | replicasets | rs |
 | serviceaccounts | sa |
 
-## O'zingizni tekshiring
+## O’zingizni tekshiring
 
-1. Pod nega rejalashtirilmaganini qaysi buyruq ko'rsatadi?
-2. Allaqachon qulab qayta ishga tushgan konteynerning loglarini qanday o'qiysiz?
-3. 3 replikali nginx Deployment YAML'ini uni yaratmasdan generatsiya qiling.
+1. Pod nega rejalashtirilmaganini qaysi buyruq ko’rsatadi?
+2. Allaqachon qulab qayta ishga tushgan konteynerning loglarini qanday o’qiysiz?
+3. 3 replikali nginx Deployment YAML’ini uni yaratmasdan generatsiya qiling.
