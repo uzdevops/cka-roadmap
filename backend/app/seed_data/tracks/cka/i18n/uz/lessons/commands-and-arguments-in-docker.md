@@ -15,7 +15,7 @@ CMD sleep 5
 ```bash
 docker build -t ubuntu-sleeper .
 docker run ubuntu-sleeper            # 5 soniya uxlaydi va chiqadi
-docker run ubuntu-sleeper sleep 10   # argument CMD ni butunlay ALMASHTIRADI
+docker run ubuntu-sleeper sleep 10   # argument CMD'ni butunlay ALMASHTIRADI
 ```
 
 ## CMD va ENTRYPOINT
@@ -38,7 +38,7 @@ CMD ["5"]
 ```bash
 docker run ubuntu-sleeper         # sleep 5
 docker run ubuntu-sleeper 10      # sleep 10
-docker run --entrypoint sleep2.0 ubuntu-sleeper 10    # sleep2.0 10 - ENTRYPOINT ning o'zini bekor qilish
+docker run --entrypoint sleep2.0 ubuntu-sleeper 10    # sleep2.0 10 - ENTRYPOINT'ning o'zini bekor qilish
 ```
 
 O’sha andaza - `ENTRYPOINT` dastur, `CMD` esa uning sukut bo’yicha

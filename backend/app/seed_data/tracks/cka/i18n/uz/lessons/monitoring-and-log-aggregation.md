@@ -34,7 +34,7 @@ kubectl logs web --timestamps
 kubectl logs web --previous               # OLDINGI nusxa, crash/restart dan keyin
 kubectl logs -l app=web                   # label li har bir Pod (--prefix bo'lmasa bittalab)
 kubectl logs -l app=web --prefix --tail=20
-kubectl logs deployment/web               # Deployment ning bir Pod i (bittasini tanlaydi)
+kubectl logs deployment/web               # Deployment'ning bir Pod'i (bittasini tanlaydi)
 kubectl logs job/backup
 ```
 

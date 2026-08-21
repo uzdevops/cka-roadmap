@@ -24,12 +24,12 @@ spec:
           value: production                     # literal qiymat
         - name: DB_HOST
           valueFrom:
-            configMapKeyRef:                    # ConfigMap dan bitta kalit
+            configMapKeyRef:                    # ConfigMap'dan bitta kalit
               name: app-config
               key: db_host
         - name: DB_PASSWORD
           valueFrom:
-            secretKeyRef:                       # Secret dan bitta kalit
+            secretKeyRef:                       # Secret'dan bitta kalit
               name: db-secret
               key: password
       envFrom:
