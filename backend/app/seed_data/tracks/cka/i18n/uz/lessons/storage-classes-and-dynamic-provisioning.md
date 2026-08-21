@@ -3,7 +3,7 @@
 Statik provisioning - admin PV yozadi, foydalanuvchi PVC yozadi, ular
 bog’lanadi - kimdir oldin diskni yaratib qo’yishini talab qiladi.
 **StorageClass** buni teskarisiga aylantiradi: class provisioner’ni (CSI
-drayverni) va uning parametrlarini nomlaydi; claim class’ni nomlaydi; claim
+driver’ni) va uning parametrlarini nomlaydi; claim class’ni nomlaydi; claim
 paydo bo’lganda provisioner diskni va unga mos PV’ni **yaratadi**. Hech kim
 PV yozmaydi.
 
@@ -43,7 +43,7 @@ spec:
 ```bash
 kubectl apply -f pvc.yaml
 kubectl get pvc          # Pending (WaitForFirstConsumer) yoki pvc-<uuid> ga Bound (Immediate)
-kubectl get pv           # drayver yaratgan pvc-<uuid> nomli PV paydo bo'ldi, reclaim Delete
+kubectl get pv           # driver yaratgan pvc-<uuid> nomli PV paydo bo'ldi, reclaim Delete
 ```
 
 ## volumeBindingMode
@@ -64,7 +64,7 @@ xato emas. Pod’ni yarating.
 :::exam-tip
 "PVC Pending, StorageClass esa WaitForFirstConsumer" → u Pod’ni kutyapti;
 nosozlik emas. "PVC Pending, StorageClass esa Immediate" → provisioner yo’q
-yoki ishlamayapti: `kubectl describe pvc` drayver nomini aytadi,
+yoki ishlamayapti: `kubectl describe pvc` driver nomini aytadi,
 `kubectl get pods -n kube-system | grep csi` uning ishlab turgan-turmaganini
 ko’rsatadi.
 :::

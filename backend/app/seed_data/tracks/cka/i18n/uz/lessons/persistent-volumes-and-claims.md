@@ -104,7 +104,7 @@ Bilish kerak bo’lgan ikkita himoya:
 
 Agar StorageClass ruxsat bersa (`allowVolumeExpansion: true`), claim’ning
 `resources.requests.storage` qiymatini oshiring va volume kattalashadi (fayl
-tizimi o’lchami drayverga qarab keyingi mount’da yoki online o’zgaradi).
+tizimi o’lchami driver’ga qarab keyingi mount’da yoki online o’zgaradi).
 Kichraytirish qo’llab-quvvatlanmaydi.
 
 ```bash

@@ -2,7 +2,7 @@
 
 Ba’zi narsalar har bir node’da ishlashi shart, ko’p ham emas, kam ham emas:
 CNI plugin, kube-proxy, log yig’uvchi, metrikalar uchun node-exporter, storage
-drayveri. Deployment buni va’da qila olmaydi - u *son*ni va’da qiladi.
+driver’i. Deployment buni va’da qila olmaydi - u *son*ni va’da qiladi.
 **DaemonSet** esa *har node’ga bitta Pod*ni va’da qiladi va klasterga yangi
 node qo’shilganda yana bittasini avtomatik qo’shadi.
 
