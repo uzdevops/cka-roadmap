@@ -1,39 +1,39 @@
 {
-  "title": "2-lab - kubectl, Pod va Deployment'lar bosim ostida",
-  "description": "Imtihonda vaqt tejaydigan imperativ buyruq usullarini mashq qiling, so'ng Pod va Deployment'larni ataylab sindirib, har bir nosozlikni faqat alomatlari asosida aniqlang.",
-  "scenario": "Bu lab ikki qismdan iborat. Birinchisida imperativ buyruqlar va dry-run yordamida narsalarni tez quriladi - imtihonda aynan shu usuldan foydalanasiz, chunki YAML'ni yoddan yozish juda sekin. Ikkinchisida esa narsalarni ataylab sindirasiz: rejalashtirib bo'lmaydigan Pod, mavjud bo'lmagan image, xotirasi tugagan konteyner, hech qachon tugamaydigan rollout. Har biri uchun yechimga qaramasdan oldin sababni alomatdan aniqlaysiz.\n\nSekundomer bilan ishlang. Birinchi qismni yigirma daqiqada tugatishga harakat qiling.",
+  "title": "2-lab - kubectl, Pod va Deployment’lar bosim ostida",
+  "description": "Imtihonda vaqt tejaydigan imperativ buyruq usullarini mashq qiling, so’ng Pod va Deployment’larni ataylab sindirib, har bir nosozlikni faqat alomatlari asosida aniqlang.",
+  "scenario": "Bu lab ikki qismdan iborat. Birinchisida imperativ buyruqlar va dry-run yordamida narsalarni tez quriladi - imtihonda aynan shu usuldan foydalanasiz, chunki YAML’ni yoddan yozish juda sekin. Ikkinchisida esa narsalarni ataylab sindirasiz: rejalashtirib bo’lmaydigan Pod, mavjud bo’lmagan image, xotirasi tugagan konteyner, hech qachon tugamaydigan rollout. Har biri uchun yechimga qaramasdan oldin sababni alomatdan aniqlaysiz.\n\nSekundomer bilan ishlang. Birinchi qismni yigirma daqiqada tugatishga harakat qiling.",
   "tasks": [
     {
       "title": "1-vazifa - Pod manifestini yaratmasdan tayyorlang",
-      "instructions": "nginx:1.27 image'i va 80-portli 'web' nomli Pod uchun YAML generatsiya qiling, uni hech narsa yaratmasdan web-pod.yaml faylga yozing, so'ng 64Mi xotira so'rovi va 128Mi limit qo'shib apply qiling."
+      "instructions": "nginx:1.27 image’i va 80-portli 'web' nomli Pod uchun YAML generatsiya qiling, uni hech narsa yaratmasdan web-pod.yaml faylga yozing, so’ng 64Mi xotira so’rovi va 128Mi limit qo’shib apply qiling."
     },
     {
       "title": "2-vazifa - Imperativ Deployment, Service va ConfigMap",
-      "instructions": "Qo'lda YAML yozmasdan: nginx:1.27 ning 3 replikasi bilan 'api' Deployment yarating, uni 'api-svc' nomli ClusterIP Service sifatida 80-portda oching va LOG_LEVEL=debug hamda TIMEOUT=30 bilan 'api-config' ConfigMap yarating."
+      "instructions": "Qo’lda YAML yozmasdan: nginx:1.27 ning 3 replikasi bilan 'api' Deployment yarating, uni 'api-svc' nomli ClusterIP Service sifatida 80-portda oching va LOG_LEVEL=debug hamda TIMEOUT=30 bilan 'api-config' ConfigMap yarating."
     },
     {
       "title": "3-vazifa - Rollout, tarix va orqaga qaytarish",
-      "instructions": "api Deployment'ini change-cause annotatsiyasi bilan nginx:1.28 ga yangilang. Rollout tugaganini tasdiqlang, tarixni ko'rib chiqing, so'ng oldingi versiyaga qayting va image qaytganini tasdiqlang."
+      "instructions": "api Deployment’ini change-cause annotatsiyasi bilan nginx:1.28 ga yangilang. Rollout tugaganini tasdiqlang, tarixni ko’rib chiqing, so’ng oldingi versiyaga qayting va image qaytganini tasdiqlang."
     },
     {
       "title": "4-vazifa - Aniqlang: rejalashtirilmayotgan Pod",
-      "instructions": "Quyidagi manifestni apply qiling. Pod Pending holatida qoladi. Yechimni o'qishdan oldin faqat kubectl yordamida sababni aniqlang, so'ng Pod ishga tushadigan qilib tuzating."
+      "instructions": "Quyidagi manifestni apply qiling. Pod Pending holatida qoladi. Yechimni o’qishdan oldin faqat kubectl yordamida sababni aniqlang, so’ng Pod ishga tushadigan qilib tuzating."
     },
     {
       "title": "5-vazifa - Aniqlang: ImagePullBackOff",
-      "instructions": "Mavjud bo'lmagan image tegiga murojaat qiladigan Deployment yarating. Nosozlikni hodisalardan aniqlang, so'ng Deployment'ni o'chirmasdan image'ni tuzatib tiklanishni tasdiqlang."
+      "instructions": "Mavjud bo’lmagan image tegiga murojaat qiladigan Deployment yarating. Nosozlikni hodisalardan aniqlang, so’ng Deployment’ni o’chirmasdan image’ni tuzatib tiklanishni tasdiqlang."
     },
     {
       "title": "6-vazifa - Aniqlang: CrashLoopBackOff va OOMKilled",
-      "instructions": "Ikkita nosoz Pod yarating: biri buyrug'i darhol xato bilan tugaydigan, ikkinchisi limitidan ko'proq xotira ajratadigan. Har biri uchun nima sodir bo'lganining aniq dalilini toping - e'tibor bering, dalil har biri uchun boshqa joyda."
+      "instructions": "Ikkita nosoz Pod yarating: biri buyrug’i darhol xato bilan tugaydigan, ikkinchisi limitidan ko’proq xotira ajratadigan. Har biri uchun nima sodir bo’lganining aniq dalilini toping - e’tibor bering, dalil har biri uchun boshqa joyda."
     },
     {
       "title": "7-vazifa - Aniqlang: hech qachon tugamaydigan rollout",
-      "instructions": "Readiness probe'si hech qachon o'ta olmaydigan Deployment yarating. Rollout barcha Pod'larni almashtirish o'rniga to'xtab qolishini kuzating, eski versiya nega hali ham xizmat qilayotganini tushuntiring va orqaga qayting."
+      "instructions": "Readiness probe’si hech qachon o’ta olmaydigan Deployment yarating. Rollout barcha Pod’larni almashtirish o’rniga to’xtab qolishini kuzating, eski versiya nega hali ham xizmat qilayotganini tushuntiring va orqaga qayting."
     },
     {
       "title": "8-vazifa - Tezlik mashqi",
-      "instructions": "Vaqtni o'lchang. Besh daqiqadan kam vaqtda va hech qanday hujjatga qaramasdan: 'drill' namespace yarating; unda redis:7-alpine ning 2 replikasi bilan 'cache' Deployment yarating; uni 6379-portda oching; 4 ga masshtablang; barcha Pod'lariga tier=data label qo'ying; va Pod nomlari hamda ular tushgan node'lar ro'yxatini /tmp/drill.txt faylga yozing."
+      "instructions": "Vaqtni o’lchang. Besh daqiqadan kam vaqtda va hech qanday hujjatga qaramasdan: 'drill' namespace yarating; unda redis:7-alpine ning 2 replikasi bilan 'cache' Deployment yarating; uni 6379-portda oching; 4 ga masshtablang; barcha Pod’lariga tier=data label qo’ying; va Pod nomlari hamda ular tushgan node’lar ro’yxatini /tmp/drill.txt faylga yozing."
     }
   ]
 }

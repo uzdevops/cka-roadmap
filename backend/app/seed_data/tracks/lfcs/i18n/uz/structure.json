@@ -3,47 +3,47 @@
   "phases": {
     "essential-commands": {
       "title": "1-bosqich - Asosiy buyruqlar",
-      "description": "Shell vosita sifatida: konsollar va hujjatlar, fayllar va link'lar, ruxsatlar, qidiruv, matn bilan ishlash va regular expression'lar, arxivlar, redirection, SSL sertifikatlar va Git.",
+      "description": "Shell vosita sifatida: konsollar va hujjatlar, fayllar va link’lar, ruxsatlar, qidiruv, matn bilan ishlash va regular expression’lar, arxivlar, redirection, SSL sertifikatlar va Git.",
       "exam_domain": "Asosiy buyruqlar"
     },
     "operations-deployment": {
       "title": "2-bosqich - Operatsiyalar va joylashtirish",
-      "description": "Tizimni yuritish: boot va target'lar, scripting, systemd servislar, jarayonlar va loglar, rejalashtirish, paketlar, kernel parametrlari, SELinux, konteynerlar va virtual mashinalar.",
+      "description": "Tizimni yuritish: boot va target’lar, scripting, systemd servislar, jarayonlar va loglar, rejalashtirish, paketlar, kernel parametrlari, SELinux, konteynerlar va virtual mashinalar.",
       "exam_domain": "Operatsiyalar va joylashtirish"
     },
     "users-groups": {
       "title": "3-bosqich - Foydalanuvchilar va guruhlar",
-      "description": "Hisoblar, guruhlar, environment profillari, resurs limitlari, imtiyozlar, root'ga kirish va LDAP.",
+      "description": "Hisoblar, guruhlar, environment profillari, resurs limitlari, imtiyozlar, root’ga kirish va LDAP.",
       "exam_domain": "Foydalanuvchilar va guruhlar"
     },
     "networking": {
       "title": "4-bosqich - Tarmoq",
-      "description": "IPv4 va IPv6, hostname yechish, tarmoq servislari, bridge va bond'lar, firewall, NAT, reverse proxy, vaqt sinxronizatsiyasi va SSH.",
+      "description": "IPv4 va IPv6, hostname yechish, tarmoq servislari, bridge va bond’lar, firewall, NAT, reverse proxy, vaqt sinxronizatsiyasi va SSH.",
       "exam_domain": "Tarmoq"
     },
     "storage": {
       "title": "5-bosqich - Saqlash",
-      "description": "Bo'limlar, swap, fayl tizimlari va mount opsiyalari, NFS va NBD, LVM, saqlash unumdorligi va kengaytirilgan ruxsatlar.",
+      "description": "Bo’limlar, swap, fayl tizimlari va mount opsiyalari, NFS va NBD, LVM, saqlash unumdorligi va kengaytirilgan ruxsatlar.",
       "exam_domain": "Saqlash"
     },
     "exam-prep": {
       "title": "6-bosqich - Mock imtihonlar",
-      "description": "Vaqt bosimi ostida to'rtta mock imtihon va kurs xulosasi.",
+      "description": "Vaqt bosimi ostida to’rtta mock imtihon va kurs xulosasi.",
       "exam_domain": "Imtihon simulyatsiyasi"
     }
   },
   "weeks": {
     "1": {
-      "title": "1-hafta - Konsollar, hujjatlar, fayllar va link'lar",
-      "description": "Kirish, yordam topish va fayllarni ko'chirish - birinchi hafta shell'da o'zingizni uyda his qilish haqida."
+      "title": "1-hafta - Konsollar, hujjatlar, fayllar va link’lar",
+      "description": "Kirish, yordam topish va fayllarni ko’chirish - birinchi hafta shell’da o’zingizni uyda his qilish haqida."
     },
     "2": {
       "title": "2-hafta - Ruxsatlar, qidiruv va matn",
-      "description": "Faylga kim nima qila oladi, fayllarni qanday topish va ularning mazmunini qanday o'qish va qayta shakllantirish."
+      "description": "Faylga kim nima qila oladi, fayllarni qanday topish va ularning mazmunini qanday o’qish va qayta shakllantirish."
     },
     "3": {
       "title": "3-hafta - Arxivlar, zaxiralar va redirection",
-      "description": "Fayllarni yig'ish, boshqa joyga ko'chirish va buyruqlarni bir-biriga ulash."
+      "description": "Fayllarni yig’ish, boshqa joyga ko’chirish va buyruqlarni bir-biriga ulash."
     },
     "4": {
       "title": "4-hafta - SSL sertifikatlar va Git",
@@ -51,49 +51,49 @@
     },
     "5": {
       "title": "5-hafta - Boot, servislar, jarayonlar va loglar",
-      "description": "Tizim qanday ko'tariladi, servislar qanday ta'riflanadi, nima ishlayotganini va nima deyayotganini qanday ko'rish."
+      "description": "Tizim qanday ko’tariladi, servislar qanday ta’riflanadi, nima ishlayotganini va nima deyayotganini qanday ko’rish."
     },
     "6": {
       "title": "6-hafta - Rejalashtirish, paketlar va yaxlitlik",
-      "description": "Narsalarni jadval bo'yicha yuritish, dasturni uch xil usulda o'rnatish va tizim butunligini tekshirish."
+      "description": "Narsalarni jadval bo’yicha yuritish, dasturni uch xil usulda o’rnatish va tizim butunligini tekshirish."
     },
     "7": {
-      "title": "7-hafta - Kernel, SELinux, konteynerlar va VM'lar",
-      "description": "Kernel'ni sozlash, majburiy kirish nazoratini qo'llash, konteyner va virtual mashinalarni yuritish."
+      "title": "7-hafta - Kernel, SELinux, konteynerlar va VM’lar",
+      "description": "Kernel’ni sozlash, majburiy kirish nazoratini qo’llash, konteyner va virtual mashinalarni yuritish."
     },
     "8": {
       "title": "8-hafta - Foydalanuvchilar va guruhlar",
       "description": "Hisoblar, guruhlar, environment, limitlar, imtiyozlar va markaziy kataloglar."
     },
     "9": {
-      "title": "9-hafta - Manzillar, servislar, bridge va bond'lar",
+      "title": "9-hafta - Manzillar, servislar, bridge va bond’lar",
       "description": "Interfeyslar va nom yechishni sozlash, tarmoq servislarini boshqarish va interfeyslarni birlashtirish."
     },
     "10": {
       "title": "10-hafta - Firewall, NAT, proxy, vaqt va SSH",
-      "description": "Trafikni filtrlash va tarjima qilish, servislar oldida turish, vaqtni saqlash va eng ko'p ishlatadigan eshikni mustahkamlash."
+      "description": "Trafikni filtrlash va tarjima qilish, servislar oldida turish, vaqtni saqlash va eng ko’p ishlatadigan eshikni mustahkamlash."
     },
     "11": {
-      "title": "11-hafta - Bo'limlar, fayl tizimlari va mount'lar",
+      "title": "11-hafta - Bo’limlar, fayl tizimlari va mount’lar",
       "description": "Xom diskdan qayta yuklashdan keyin qaytib keladigan mount qilingan fayl tizimigacha."
     },
     "12": {
       "title": "12-hafta - Tarmoq saqlash, LVM va kengaytirilgan ruxsatlar",
-      "description": "Lokal bo'lmagan saqlash, o'sa oladigan saqlash va rwx'dan tashqari ruxsatlar."
+      "description": "Lokal bo’lmagan saqlash, o’sa oladigan saqlash va rwx’dan tashqari ruxsatlar."
     },
     "13": {
       "title": "13-hafta - Mock imtihonlar va xulosa",
-      "description": "To'rtta vaqtli mock imtihon, keyin kurs xulosasi."
+      "description": "To’rtta vaqtli mock imtihon, keyin kurs xulosasi."
     }
   },
   "lessons": {
     "lfcs-course-introduction": {
       "title": "Kursga kirish",
-      "summary": "LFCS nimani qamrab oladi va bu yo'nalish uni qanday bosib o'tadi."
+      "summary": "LFCS nimani qamrab oladi va bu yo’nalish uni qanday bosib o’tadi."
     },
     "lfcs-course-structure": {
       "title": "Kurs tuzilmasi",
-      "summary": "Beshta soha va ularning og'irliklari, modulma-modul."
+      "summary": "Beshta soha va ularning og’irliklari, modulma-modul."
     },
     "lfcs-exam-objectives": {
       "title": "Talablar, imtihon maqsadlari va tafsilotlar",
@@ -101,46 +101,46 @@
     },
     "lfcs-command-cheat-sheet": {
       "title": "LFCS buyruqlar shpargalkasi",
-      "summary": "Butun yo'nalish davomida ochiq turadigan ma'lumotnoma."
+      "summary": "Butun yo’nalish davomida ochiq turadigan ma’lumotnoma."
     },
     "lfcs-login-consoles": {
       "title": "Lokal va masofaviy grafik va matn rejimidagi konsollarga kirish",
-      "summary": "TTY'lar, display manager va SSH - tizimga uch eshik."
+      "summary": "TTY’lar, display manager va SSH - tizimga uch eshik."
     },
     "lfcs-login-consoles-2": {
       "title": "Konsollarga kirish - 2-qism",
-      "summary": "TTY'larni almashtirish, xavfsiz chiqish va sessiya aslida nima."
+      "summary": "TTY’larni almashtirish, xavfsiz chiqish va sessiya aslida nima."
     },
     "lfcs-system-documentation": {
-      "title": "Tizim hujjatlarini o'qish va ishlatish",
-      "summary": "man, info, --help, apropos va /usr/share/doc - o'z savollaringizga o'zingiz javob berish."
+      "title": "Tizim hujjatlarini o’qish va ishlatish",
+      "summary": "man, info, --help, apropos va /usr/share/doc - o’z savollaringizga o’zingiz javob berish."
     },
     "lfcs-files-and-directories": {
-      "title": "Fayl va kataloglarni yaratish, o'chirish, nusxalash va ko'chirish",
-      "summary": "touch, mkdir -p, cp -r, mv, rm -r va ularni tezlashtiradigan glob'lar."
+      "title": "Fayl va kataloglarni yaratish, o’chirish, nusxalash va ko’chirish",
+      "summary": "touch, mkdir -p, cp -r, mv, rm -r va ularni tezlashtiradigan glob’lar."
     },
     "lfcs-hard-links": {
-      "title": "Hard link'lar yaratish va boshqarish",
-      "summary": "Inode'lar, link soni va nega hard link boshqa nomdagi o'sha faylning o'zi."
+      "title": "Hard link’lar yaratish va boshqarish",
+      "summary": "Inode’lar, link soni va nega hard link boshqa nomdagi o’sha faylning o’zi."
     },
     "lfcs-soft-links": {
-      "title": "Soft link'lar yaratish va boshqarish",
-      "summary": "Simvolik link'lar, nisbiy va mutlaq nishonlar, osilib qolgan link'lar."
+      "title": "Soft link’lar yaratish va boshqarish",
+      "summary": "Simvolik link’lar, nisbiy va mutlaq nishonlar, osilib qolgan link’lar."
     },
     "lfcs-file-permissions": {
-      "title": "Standart fayl ruxsatlarini ko'rish, o'rnatish va o'zgartirish",
+      "title": "Standart fayl ruxsatlarini ko’rish, o’rnatish va o’zgartirish",
       "summary": "user, group va other uchun rwx; simvolik va sakkizlik chmod; chown va chgrp."
     },
     "lfcs-suid-sgid-sticky": {
       "title": "SUID, SGID va sticky bit",
-      "summary": "Uchta maxsus bit, har biri fayl va kataloglarda nima qiladi va ularni ls'da qanday ko'rish."
+      "summary": "Uchta maxsus bit, har biri fayl va kataloglarda nima qiladi va ularni ls’da qanday ko’rish."
     },
     "lfcs-search-for-files": {
       "title": "Fayllarni qidirish",
-      "summary": "find nom, o'lcham, ruxsat, egasi, mtime bo'yicha - va natijalar ustida -exec."
+      "summary": "find nom, o’lcham, ruxsat, egasi, mtime bo’yicha - va natijalar ustida -exec."
     },
     "lfcs-compare-and-manipulate-file-content": {
-      "title": "Fayl mazmunini solishtirish va o'zgartirish",
+      "title": "Fayl mazmunini solishtirish va o’zgartirish",
       "summary": "cat, head, tail, diff, sort, uniq, cut, sed va tr - matn qutisi."
     },
     "lfcs-pagers-and-vi": {
@@ -152,60 +152,60 @@
       "summary": "grep, -i, -r, -v, -n, -c va boshqalar."
     },
     "lfcs-basic-regular-expressions": {
-      "title": "Asosiy regular expression'lar bilan matn tahlili",
-      "summary": "Anchor'lar, belgi sinflari, takrorlash - grep gapiradigan asosiy regex grammatikasi."
+      "title": "Asosiy regular expression’lar bilan matn tahlili",
+      "summary": "Anchor’lar, belgi sinflari, takrorlash - grep gapiradigan asosiy regex grammatikasi."
     },
     "lfcs-extended-regular-expressions": {
-      "title": "Kengaytirilgan regular expression'lar",
+      "title": "Kengaytirilgan regular expression’lar",
       "summary": "grep -E: alternation, guruhlash, {n,m} va qisqartmalar."
     },
     "lfcs-archive-backup-compress": {
       "title": "Fayllarni arxivlash, zaxiralash, siqish, ochish",
-      "summary": "Arxivlovchi sifatida tar va u o'raydigan siquvchilar."
+      "summary": "Arxivlovchi sifatida tar va u o’raydigan siquvchilar."
     },
     "lfcs-compress-and-uncompress": {
       "title": "Fayllarni siqish va ochish",
-      "summary": "gzip, bzip2, xz va zip - va tar har biri uchun qaysi flag'larni xohlaydi."
+      "summary": "gzip, bzip2, xz va zip - va tar har biri uchun qaysi flag’larni xohlaydi."
     },
     "lfcs-backup-to-remote": {
       "title": "Fayllarni masofaviy tizimga zaxiralash",
-      "summary": "rsync va scp, nega rsync -a o'rganishga arziydigan odat."
+      "summary": "rsync va scp, nega rsync -a o’rganishga arziydigan odat."
     },
     "lfcs-io-redirection": {
-      "title": "Kirish-chiqish redirection'i",
-      "summary": ">, >>, 2>, 2>&1, <, pipe'lar va tee - ma'lumot qayerga oqishini boshqarish."
+      "title": "Kirish-chiqish redirection’i",
+      "summary": ">, >>, 2>, 2>&1, <, pipe’lar va tee - ma’lumot qayerga oqishini boshqarish."
     },
     "lfcs-ssl-certificates": {
       "title": "SSL sertifikatlar bilan ishlash",
-      "summary": "Kalitlar, CSR'lar, self-signed sertifikatlar va openssl bilan sertifikatni o'qish."
+      "summary": "Kalitlar, CSR’lar, self-signed sertifikatlar va openssl bilan sertifikatni o’qish."
     },
     "lfcs-git-basic-operations": {
       "title": "Git - asosiy operatsiyalar",
-      "summary": "init, clone, status, log - yo'qdan repozitoriy."
+      "summary": "init, clone, status, log - yo’qdan repozitoriy."
     },
     "lfcs-git-staging-and-committing": {
-      "title": "Git - o'zgarishlarni staging va commit qilish",
+      "title": "Git - o’zgarishlarni staging va commit qilish",
       "summary": "add, commit, diff, restore - staging area tushuntirilgan."
     },
     "lfcs-git-branches-and-remotes": {
-      "title": "Git - branch'lar va masofaviy repozitoriylar",
+      "title": "Git - branch’lar va masofaviy repozitoriylar",
       "summary": "branch, checkout, merge, push, pull - boshqalar bilan ishlash."
     },
     "lfcs-boot-reboot-shutdown": {
-      "title": "Tizimni xavfsiz yuklash, qayta yuklash va o'chirish",
+      "title": "Tizimni xavfsiz yuklash, qayta yuklash va o’chirish",
       "summary": "systemctl reboot/poweroff, kechiktirilgan shutdown va kirgan foydalanuvchilarni ogohlantirish."
     },
     "lfcs-operating-modes": {
-      "title": "Tizimni turli ish rejimlariga yuklash yoki o'tkazish",
-      "summary": "systemd target'lar: multi-user, graphical, rescue, emergency - va default'ni o'rnatish."
+      "title": "Tizimni turli ish rejimlariga yuklash yoki o’tkazish",
+      "summary": "systemd target’lar: multi-user, graphical, rescue, emergency - va default’ni o’rnatish."
     },
     "lfcs-scripting-for-maintenance": {
       "title": "Tizim xizmat vazifalarini script bilan avtomatlashtirish",
-      "summary": "Shell script'lar: shebang, o'zgaruvchilar, shartlar, sikllar, exit kodlari."
+      "summary": "Shell script’lar: shebang, o’zgaruvchilar, shartlar, sikllar, exit kodlari."
     },
     "lfcs-startup-process-and-services": {
       "title": "Ishga tushirish jarayoni va servislarni boshqarish",
-      "summary": "systemctl start/stop/enable/disable/mask, status va unit bog'liqliklarini o'qish."
+      "summary": "systemctl start/stop/enable/disable/mask, status va unit bog’liqliklarini o’qish."
     },
     "lfcs-create-systemd-services": {
       "title": "systemd servislar yaratish",
@@ -221,7 +221,7 @@
     },
     "lfcs-schedule-tasks": {
       "title": "Vazifalarni belgilangan vaqtda ishga tushirish",
-      "summary": "cron va crontab sintaksisi, anacron, at va systemd timer'lar."
+      "summary": "cron va crontab sintaksisi, anacron, at va systemd timer’lar."
     },
     "lfcs-package-manager": {
       "title": "Paket menejeri bilan dasturlarni boshqarish",
@@ -229,31 +229,31 @@
     },
     "lfcs-package-repositories": {
       "title": "Paket menejeri repozitoriylarini sozlash",
-      "summary": "sources.list va .repo fayllari, uchinchi tomon repozitoriysi va uning kalitini qo'shish."
+      "summary": "sources.list va .repo fayllari, uchinchi tomon repozitoriysi va uning kalitini qo’shish."
     },
     "lfcs-compile-from-source": {
-      "title": "Manbadan kompilyatsiya qilib dastur o'rnatish",
-      "summary": "Build bog'liqliklari, ./configure, make, make install - va nega buni qilmasligingiz mumkin."
+      "title": "Manbadan kompilyatsiya qilib dastur o’rnatish",
+      "summary": "Build bog’liqliklari, ./configure, make, make install - va nega buni qilmasligingiz mumkin."
     },
     "lfcs-verify-integrity-and-availability": {
       "title": "Resurs va jarayonlarning yaxlitligi va mavjudligini tekshirish",
       "summary": "df, du, free, uptime, vmstat, servislarni tekshirish va fayl tizimlari uchun fsck."
     },
     "lfcs-kernel-runtime-parameters": {
-      "title": "Kernel runtime parametrlarini o'zgartirish",
+      "title": "Kernel runtime parametrlarini o’zgartirish",
       "summary": "sysctl, /proc/sys va /etc/sysctl.d - hozir va qayta yuklashdan keyin."
     },
     "lfcs-selinux-contexts": {
-      "title": "SELinux fayl va jarayon kontekstlarini ko'rish",
-      "summary": "ls -Z, ps -Z, user:role:type:level to'rtligi va getenforce."
+      "title": "SELinux fayl va jarayon kontekstlarini ko’rish",
+      "summary": "ls -Z, ps -Z, user:role:type:level to’rtligi va getenforce."
     },
     "lfcs-selinux-mac": {
-      "title": "SELinux bilan MAC yaratish va qo'llash",
-      "summary": "Rejimlar, boolean'lar, restorecon, semanage fcontext va port label'lari - rad etishlarni to'g'ri tuzatish."
+      "title": "SELinux bilan MAC yaratish va qo’llash",
+      "summary": "Rejimlar, boolean’lar, restorecon, semanage fcontext va port label’lari - rad etishlarni to’g’ri tuzatish."
     },
     "lfcs-containers": {
       "title": "Konteynerlar yaratish va boshqarish",
-      "summary": "docker/podman bilan image'lar, konteynerlar, volume'lar, portlar va loglar."
+      "summary": "docker/podman bilan image’lar, konteynerlar, volume’lar, portlar va loglar."
     },
     "lfcs-virtual-machines": {
       "title": "Virtual mashinalarni boshqarish va sozlash",
@@ -261,26 +261,26 @@
     },
     "lfcs-create-and-boot-a-vm": {
       "title": "Virtual mashina yaratish va yuklash",
-      "summary": "virt-install va cloud image'lar, keyin VM'ni boshlash, to'xtatish va konsolga kirish."
+      "summary": "virt-install va cloud image’lar, keyin VM’ni boshlash, to’xtatish va konsolga kirish."
     },
     "lfcs-install-os-on-a-vm": {
-      "title": "Virtual mashinaga operatsion tizim o'rnatish",
-      "summary": "ISO'ni ulash va VM ichida o'rnatuvchini bosib o'tish."
+      "title": "Virtual mashinaga operatsion tizim o’rnatish",
+      "summary": "ISO’ni ulash va VM ichida o’rnatuvchini bosib o’tish."
     },
     "lfcs-local-user-accounts": {
-      "title": "Lokal foydalanuvchi hisoblarini yaratish, o'chirish va o'zgartirish",
+      "title": "Lokal foydalanuvchi hisoblarini yaratish, o’chirish va o’zgartirish",
       "summary": "useradd, usermod, userdel, passwd, chage va ularning ortidagi fayllar."
     },
     "lfcs-local-groups": {
-      "title": "Lokal guruhlar va a'zoliklarni boshqarish",
-      "summary": "groupadd, gpasswd, usermod -aG, asosiy va qo'shimcha guruhlar."
+      "title": "Lokal guruhlar va a’zoliklarni boshqarish",
+      "summary": "groupadd, gpasswd, usermod -aG, asosiy va qo’shimcha guruhlar."
     },
     "lfcs-environment-profiles": {
-      "title": "Tizim bo'ylab environment profillarini boshqarish",
-      "summary": "/etc/profile, /etc/profile.d, /etc/environment va login/non-login shell'lar."
+      "title": "Tizim bo’ylab environment profillarini boshqarish",
+      "summary": "/etc/profile, /etc/profile.d, /etc/environment va login/non-login shell’lar."
     },
     "lfcs-template-user-environment": {
-      "title": "Shablon foydalanuvchi environment'i",
+      "title": "Shablon foydalanuvchi environment’i",
       "summary": "/etc/skel - har bir yangi home katalog nimadan boshlanadi."
     },
     "lfcs-user-resource-limits": {
@@ -293,23 +293,23 @@
     },
     "lfcs-root-access": {
       "title": "Root hisobiga kirishni boshqarish",
-      "summary": "su, sudo -i, root'ni qulflash va nega to'g'ridan-to'g'ri root login odatda o'chiq."
+      "summary": "su, sudo -i, root’ni qulflash va nega to’g’ridan-to’g’ri root login odatda o’chiq."
     },
     "lfcs-ldap-accounts": {
       "title": "Tizimni LDAP foydalanuvchi va guruhlariga sozlash",
-      "summary": "LDAP katalogiga qarshi sssd va PAM: ko'p host bo'ylab bitta identitet."
+      "summary": "LDAP katalogiga qarshi sssd va PAM: ko’p host bo’ylab bitta identitet."
     },
     "lfcs-ipv4-ipv6-theory": {
       "title": "IPv4 va IPv6 tarmoq va hostname yechish - nazariya",
-      "summary": "Manzillar, prefikslar, gateway'lar, DNS - host gaplasha olishi uchun nima to'g'ri bo'lishi kerak."
+      "summary": "Manzillar, prefikslar, gateway’lar, DNS - host gaplasha olishi uchun nima to’g’ri bo’lishi kerak."
     },
     "lfcs-ipv4-ipv6-demo": {
       "title": "IPv4 va IPv6 tarmoq va hostname yechish - demo",
       "summary": "nmcli va netplan, statik va DHCP, /etc/hosts va resolv.conf, hostnamectl."
     },
     "lfcs-network-services": {
-      "title": "Tarmoq servislarini boshlash, to'xtatish va tekshirish",
-      "summary": "Tarmoq daemon'lari uchun systemctl, kim tinglayotganini ko'rish uchun ss -tulpn."
+      "title": "Tarmoq servislarini boshlash, to’xtatish va tekshirish",
+      "summary": "Tarmoq daemon’lari uchun systemctl, kim tinglayotganini ko’rish uchun ss -tulpn."
     },
     "lfcs-bridge-and-bonding-theory": {
       "title": "Bridge va bonding qurilmalari - nazariya",
@@ -324,11 +324,11 @@
       "summary": "firewalld zonalari va servislari, ufw va ostidagi nftables."
     },
     "lfcs-port-redirection-and-nat": {
-      "title": "Port yo'naltirish va NAT",
+      "title": "Port yo’naltirish va NAT",
       "summary": "firewalld va nftables bilan masquerading, DNAT va port forwarding."
     },
     "lfcs-reverse-proxies-and-load-balancers": {
-      "title": "Reverse proxy va load balancer'larni joriy etish",
+      "title": "Reverse proxy va load balancer’larni joriy etish",
       "summary": "nginx reverse proxy sifatida va bir nechta backend ustida load balancer sifatida."
     },
     "lfcs-time-servers": {
@@ -340,20 +340,20 @@
       "summary": "sshd_config mustahkamlash, kalitli autentifikatsiya, ssh-copy-id, mijoz konfiguratsiyasi va port forwarding."
     },
     "lfcs-storage-partitions": {
-      "title": "Fizik saqlash bo'limlarini boshqarish",
-      "summary": "lsblk, fdisk va parted, GPT va MBR, bo'lim turlari."
+      "title": "Fizik saqlash bo’limlarini boshqarish",
+      "summary": "lsblk, fdisk va parted, GPT va MBR, bo’lim turlari."
     },
     "lfcs-swap-space": {
       "title": "Swap maydonini sozlash va boshqarish",
-      "summary": "mkswap, swapon, swap fayl va bo'lim, fstab yozuvlari."
+      "summary": "mkswap, swapon, swap fayl va bo’lim, fstab yozuvlari."
     },
     "lfcs-create-file-systems": {
       "title": "Fayl tizimlarini yaratish va sozlash",
-      "summary": "ext4 va xfs uchun mkfs, label va UUID'lar, tune2fs va xfs_admin."
+      "summary": "ext4 va xfs uchun mkfs, label va UUID’lar, tune2fs va xfs_admin."
     },
     "lfcs-mount-at-boot": {
       "title": "Fayl tizimlarini yuklashda mount qilish",
-      "summary": "/etc/fstab maydonlari, mount -a va systemd mount unit'lar."
+      "summary": "/etc/fstab maydonlari, mount -a va systemd mount unit’lar."
     },
     "lfcs-filesystem-and-mount-options": {
       "title": "Fayl tizimi va mount opsiyalari",
@@ -361,39 +361,39 @@
     },
     "lfcs-nfs": {
       "title": "Masofaviy fayl tizimlari - NFS",
-      "summary": "/etc/exports bilan eksport, exportfs, NFS share'ni mount qilish va fstab."
+      "summary": "/etc/exports bilan eksport, exportfs, NFS share’ni mount qilish va fstab."
     },
     "lfcs-nbd": {
       "title": "Tarmoq blok qurilmalari - NBD",
-      "summary": "nbd-server va nbd-client: tarmoq orqali blok qurilma va bu qachon NFS'dan yaxshi."
+      "summary": "nbd-server va nbd-client: tarmoq orqali blok qurilma va bu qachon NFS’dan yaxshi."
     },
     "lfcs-lvm": {
       "title": "LVM saqlashni boshqarish va sozlash",
-      "summary": "PV, VG, LV; yaratish, kengaytirish va qisqartirish; fayl tizimini u bilan birga o'lchamlash."
+      "summary": "PV, VG, LV; yaratish, kengaytirish va qisqartirish; fayl tizimini u bilan birga o’lchamlash."
     },
     "lfcs-storage-performance": {
       "title": "Saqlash unumdorligini monitoring qilish",
-      "summary": "iostat, iotop, vmstat va raqamlar nimani anglatishini o'qish."
+      "summary": "iostat, iotop, vmstat va raqamlar nimani anglatishini o’qish."
     },
     "lfcs-advanced-permissions": {
       "title": "Kengaytirilgan fayl tizimi ruxsatlari",
-      "summary": "getfacl va setfacl bilan ACL'lar, default ACL'lar va chattr bilan fayl atributlari."
+      "summary": "getfacl va setfacl bilan ACL’lar, default ACL’lar va chattr bilan fayl atributlari."
     },
     "lfcs-mock-exams-introduction": {
       "title": "Mock imtihonlar - ulardan qanday foydalanish",
-      "summary": "Vaqtni o'lchang, halol baholang va har bir xato javobni lab'ga aylantiring."
+      "summary": "Vaqtni o’lchang, halol baholang va har bir xato javobni lab’ga aylantiring."
     },
     "lfcs-mock-exam-1": {
       "title": "LFCS mock imtihon 1",
-      "summary": "Beshta soha bo'yicha to'liq vaqtli mock."
+      "summary": "Beshta soha bo’yicha to’liq vaqtli mock."
     },
     "lfcs-mock-exam-2": {
       "title": "LFCS mock imtihon 2",
-      "summary": "Ikkinchi to'liq vaqtli mock."
+      "summary": "Ikkinchi to’liq vaqtli mock."
     },
     "lfcs-mock-exam-3": {
       "title": "LFCS mock imtihon 3",
-      "summary": "Uchinchi to'liq vaqtli mock."
+      "summary": "Uchinchi to’liq vaqtli mock."
     },
     "lfcs-mock-exam-4": {
       "title": "LFCS mock imtihon 4",

@@ -1,39 +1,39 @@
 {
-  "title": "1-lab - Haqiqiy klaster arxitekturasini o'rganish",
-  "description": "Uch node'li klaster quring va har bir control plane komponentini ichidan tekshiring: static Pod manifestlari, etcd holati, scheduler qarorlari va node holatlari.",
-  "scenario": "Siz Kubernetes ishlatadigan jamoaga endi qo'shildingiz va hech kim sizga klaster aslida qanday tuzilganini ayta olmaydi. Sxemani o'qish o'rniga klasterni ochib, har bir komponentni o'zingiz tasdiqlaysiz: control plane manifestlari qayerda joylashgan, ularni qaysi jarayon nazorat qiladi, scheduler o'z qarorini qanday tushuntiradi va node o'z sog'lig'i haqida nima xabar beradi.\n\nOxirida siz tushib qolgan har qanday klaster uchun 'nima qayerda ishlayapti va uni kim ishga tushirgan' degan savolga javob bera olishingiz kerak.",
+  "title": "1-lab - Haqiqiy klaster arxitekturasini o’rganish",
+  "description": "Uch node’li klaster quring va har bir control plane komponentini ichidan tekshiring: static Pod manifestlari, etcd holati, scheduler qarorlari va node holatlari.",
+  "scenario": "Siz Kubernetes ishlatadigan jamoaga endi qo’shildingiz va hech kim sizga klaster aslida qanday tuzilganini ayta olmaydi. Sxemani o’qish o’rniga klasterni ochib, har bir komponentni o’zingiz tasdiqlaysiz: control plane manifestlari qayerda joylashgan, ularni qaysi jarayon nazorat qiladi, scheduler o’z qarorini qanday tushuntiradi va node o’z sog’lig’i haqida nima xabar beradi.\n\nOxirida siz tushib qolgan har qanday klaster uchun 'nima qayerda ishlayapti va uni kim ishga tushirgan' degan savolga javob bera olishingiz kerak.",
   "tasks": [
     {
       "title": "1-vazifa - Har bir control plane komponentini aniqlang",
-      "instructions": "kube-system namespace'ida ishlayotgan Pod'lar ro'yxatini oling va qaysilari control plane'ga, qaysilari tarmoq komponentlariga, qaysilari qo'shimchalarga tegishli ekanini aniqlang. Har biri qaysi node'da ishlayotganini qayd eting."
+      "instructions": "kube-system namespace’ida ishlayotgan Pod’lar ro’yxatini oling va qaysilari control plane’ga, qaysilari tarmoq komponentlariga, qaysilari qo’shimchalarga tegishli ekanini aniqlang. Har biri qaysi node’da ishlayotganini qayd eting."
     },
     {
       "title": "2-vazifa - Static Pod manifestlarini toping",
-      "instructions": "Control plane Pod'lari hech qanday kontroller tomonidan yaratilmagan. Control plane node'da shell oching, ularning manifestlari joylashgan katalogni toping va o'sha katalogni qaysi jarayon kuzatayotganini aniqlang."
+      "instructions": "Control plane Pod’lari hech qanday kontroller tomonidan yaratilmagan. Control plane node’da shell oching, ularning manifestlari joylashgan katalogni toping va o’sha katalogni qaysi jarayon kuzatayotganini aniqlang."
     },
     {
-      "title": "3-vazifa - API server konfiguratsiyasini o'qing",
-      "instructions": "kube-apiserver buyruq qatori bayroqlarini ajratib oling. Ishlatilayotgan avtorizatsiya rejimlarini, u ulanadigan etcd endpoint'larini va klient CA sertifikati yo'lini toping."
+      "title": "3-vazifa - API server konfiguratsiyasini o’qing",
+      "instructions": "kube-apiserver buyruq qatori bayroqlarini ajratib oling. Ishlatilayotgan avtorizatsiya rejimlarini, u ulanadigan etcd endpoint’larini va klient CA sertifikati yo’lini toping."
     },
     {
       "title": "4-vazifa - etcdctl bilan etcd holatini tekshiring",
-      "instructions": "etcd static Pod manifestida ko'rsatilgan sertifikatlardan foydalanib endpoint health tekshiruvini bajaring va klaster a'zolarini ro'yxatlang. Buni etcd konteyneri ichidan qiling."
+      "instructions": "etcd static Pod manifestida ko’rsatilgan sertifikatlardan foydalanib endpoint health tekshiruvini bajaring va klaster a’zolarini ro’yxatlang. Buni etcd konteyneri ichidan qiling."
     },
     {
       "title": "5-vazifa - Scheduler qaror qabul qilishini kuzating",
-      "instructions": "Pod yarating va hodisalar orqali uning rejalashtirilganini hamda qaysi node'ga tushganini kuzating. So'ng rejalashtirib bo'lmaydigan Pod yarating va scheduler tushuntirishini o'qing."
+      "instructions": "Pod yarating va hodisalar orqali uning rejalashtirilganini hamda qaysi node’ga tushganini kuzating. So’ng rejalashtirib bo’lmaydigan Pod yarating va scheduler tushuntirishini o’qing."
     },
     {
-      "title": "6-vazifa - Node holatlari va sig'imini o'qing",
-      "instructions": "Bitta worker node uchun uning holatlarini, ajratiladigan CPU va xotirasini hamda undagi Pod'lar so'ragan umumiy resurslarni aniqlang."
+      "title": "6-vazifa - Node holatlari va sig’imini o’qing",
+      "instructions": "Bitta worker node uchun uning holatlarini, ajratiladigan CPU va xotirasini hamda undagi Pod’lar so’ragan umumiy resurslarni aniqlang."
     },
     {
-      "title": "7-vazifa - Scheduler'ni sindiring va natijani kuzating",
-      "instructions": "Static Pod manifestini chetga ko'chirib, scheduler'ni vaqtincha to'xtating. Pod yarating va nima bo'lishini tasdiqlang. So'ng manifestni tiklang va tiklanishni tasdiqlang. Bu labdagi eng ta'limiy mashq."
+      "title": "7-vazifa - Scheduler’ni sindiring va natijani kuzating",
+      "instructions": "Static Pod manifestini chetga ko’chirib, scheduler’ni vaqtincha to’xtating. Pod yarating va nima bo’lishini tasdiqlang. So’ng manifestni tiklang va tiklanishni tasdiqlang. Bu labdagi eng ta’limiy mashq."
     },
     {
-      "title": "8-vazifa - So'rovni boshdan-oxir kuzating",
-      "instructions": "Deployment yarating va faqat hodisalar hamda obyektlarni tekshirish orqali Pod'dan Deployment'gacha bo'lgan egalik zanjirini, shuningdek har bir Pod tushgan node'ni yozib oling."
+      "title": "8-vazifa - So’rovni boshdan-oxir kuzating",
+      "instructions": "Deployment yarating va faqat hodisalar hamda obyektlarni tekshirish orqali Pod’dan Deployment’gacha bo’lgan egalik zanjirini, shuningdek har bir Pod tushgan node’ni yozib oling."
     }
   ]
 }

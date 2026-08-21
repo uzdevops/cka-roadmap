@@ -3,48 +3,48 @@
   "phases": {
     "core-concepts": {
       "title": "1-bosqich - Asosiy tushunchalar",
-      "description": "Klaster nimadan tuzilgan va u bilan qanday gaplashiladi: control plane qismlari, konteynerlar va runtime'lar, Pod, ReplicaSet, Deployment, Service, Namespace va imtihonni tezlashtiradigan kubectl odatlari.",
-      "exam_domain": "Klaster arxitekturasi, o'rnatish va sozlash"
+      "description": "Klaster nimadan tuzilgan va u bilan qanday gaplashiladi: control plane qismlari, konteynerlar va runtime’lar, Pod, ReplicaSet, Deployment, Service, Namespace va imtihonni tezlashtiradigan kubectl odatlari.",
+      "exam_domain": "Klaster arxitekturasi, o’rnatish va sozlash"
     },
     "scheduling": {
       "title": "2-bosqich - Rejalashtirish",
-      "description": "Scheduler Pod qayerda ishlashini qanday hal qiladi va uni qanday boshqarasiz: label, taint, affinity, resurs so'rovlari, DaemonSet, static Pod, priority, bir nechta scheduler va kiruvchi obyektlarni tekshiruvchi admission controller'lar.",
-      "exam_domain": "Workload'lar va rejalashtirish"
+      "description": "Scheduler Pod qayerda ishlashini qanday hal qiladi va uni qanday boshqarasiz: label, taint, affinity, resurs so’rovlari, DaemonSet, static Pod, priority, bir nechta scheduler va kiruvchi obyektlarni tekshiruvchi admission controller’lar.",
+      "exam_domain": "Workload’lar va rejalashtirish"
     },
     "lifecycle-observability": {
       "title": "3-bosqich - Ilova hayot sikli va kuzatuv",
-      "description": "Ilovalarni to'g'ri yuritish: rollout va rollback, buyruq va environment, ConfigMap va Secret, ko'p konteynerli pattern'lar, init container, probe'lar va autoscaling oilasi - hamda ularni kuzatadigan log va metrikalar.",
-      "exam_domain": "Workload'lar va rejalashtirish"
+      "description": "Ilovalarni to’g’ri yuritish: rollout va rollback, buyruq va environment, ConfigMap va Secret, ko’p konteynerli pattern’lar, init container, probe’lar va autoscaling oilasi - hamda ularni kuzatadigan log va metrikalar.",
+      "exam_domain": "Workload’lar va rejalashtirish"
     },
     "cluster-maintenance": {
-      "title": "4-bosqich - Klasterga xizmat ko'rsatish",
-      "description": "Klasterni vaqt o'tishi bilan tirik saqlash: OS ishlari uchun node'larni bo'shatish, relizlarni tushunish, kubeadm bilan yangilash, etcd'ni zaxiralash va tiklash.",
-      "exam_domain": "Klaster arxitekturasi, o'rnatish va sozlash"
+      "title": "4-bosqich - Klasterga xizmat ko’rsatish",
+      "description": "Klasterni vaqt o’tishi bilan tirik saqlash: OS ishlari uchun node’larni bo’shatish, relizlarni tushunish, kubeadm bilan yangilash, etcd’ni zaxiralash va tiklash.",
+      "exam_domain": "Klaster arxitekturasi, o’rnatish va sozlash"
     },
     "security": {
       "title": "5-bosqich - Xavfsizlik",
       "description": "Kim nima qila oladi va klaster buni qanday isbotlaydi: TLS va sertifikatlar, kubeconfig, autentifikatsiya va avtorizatsiya, RBAC, service account, image xavfsizligi, security context, network policy, CRD va operator modeli.",
-      "exam_domain": "Klaster arxitekturasi, o'rnatish va sozlash"
+      "exam_domain": "Klaster arxitekturasi, o’rnatish va sozlash"
     },
     "storage": {
       "title": "6-bosqich - Saqlash",
-      "description": "Docker storage driver'laridan CSI'gacha: volume'lar, PersistentVolume va claim'lar, StorageClass va dinamik provisioning, stateful workload'ga aslida nima kerakligi.",
+      "description": "Docker storage driver’laridan CSI’gacha: volume’lar, PersistentVolume va claim’lar, StorageClass va dinamik provisioning, stateful workload’ga aslida nima kerakligi.",
       "exam_domain": "Saqlash"
     },
     "networking": {
       "title": "7-bosqich - Tarmoq",
-      "description": "Avval asoslar - switching, routing, DNS, namespace'lar, CNI - keyin Pod va Service tarmog'i, CoreDNS, Ingress va Gateway API.",
-      "exam_domain": "Service'lar va tarmoq"
+      "description": "Avval asoslar - switching, routing, DNS, namespace’lar, CNI - keyin Pod va Service tarmog’i, CoreDNS, Ingress va Gateway API.",
+      "exam_domain": "Service’lar va tarmoq"
     },
     "cluster-install": {
-      "title": "8-bosqich - Klasterni loyihalash va o'rnatish",
-      "description": "O'lchamlash va infratuzilma tanlash, yuqori mavjudlik va etcd topologiyalari, yalang'och VM'lardan kubeadm bilan klaster ko'tarish.",
-      "exam_domain": "Klaster arxitekturasi, o'rnatish va sozlash"
+      "title": "8-bosqich - Klasterni loyihalash va o’rnatish",
+      "description": "O’lchamlash va infratuzilma tanlash, yuqori mavjudlik va etcd topologiyalari, yalang’och VM’lardan kubeadm bilan klaster ko’tarish.",
+      "exam_domain": "Klaster arxitekturasi, o’rnatish va sozlash"
     },
     "helm-kustomize": {
       "title": "9-bosqich - Helm va Kustomize",
-      "description": "Deploy qilinadigan narsani paketlash va moslashtirish: Helm chart, value va hayot sikli, keyin Kustomize base, transformer, patch, overlay va component'lar.",
-      "exam_domain": "Klaster arxitekturasi, o'rnatish va sozlash"
+      "description": "Deploy qilinadigan narsani paketlash va moslashtirish: Helm chart, value va hayot sikli, keyin Kustomize base, transformer, patch, overlay va component’lar.",
+      "exam_domain": "Klaster arxitekturasi, o’rnatish va sozlash"
     },
     "troubleshooting": {
       "title": "10-bosqich - Nosozliklarni bartaraf etish",
@@ -53,78 +53,78 @@
     },
     "exam-prep": {
       "title": "11-bosqich - Lightning lab va mock imtihonlar",
-      "description": "Imtihon sharoiti: yechimlari bilan uchta vaqtli mock imtihon, lightning lab, tezlik mashqlari va eng zaif sohangizni oxirgi marta ko'rib chiqish.",
+      "description": "Imtihon sharoiti: yechimlari bilan uchta vaqtli mock imtihon, lightning lab, tezlik mashqlari va eng zaif sohangizni oxirgi marta ko’rib chiqish.",
       "exam_domain": "Imtihon simulyatsiyasi"
     }
   },
   "weeks": {
     "1": {
-      "title": "1-hafta - Klaster va uning control plane'i",
+      "title": "1-hafta - Klaster va uning control plane’i",
       "description": "Imtihon nima, klaster nimadan tuzilgan va har bir control plane komponenti alohida."
     },
     "2": {
       "title": "2-hafta - Pod, ReplicaSet va Deployment",
-      "description": "Obyekt modeli asosdan, kubectl'ni odatga aylantiradigan lablar bilan."
+      "description": "Obyekt modeli asosdan, kubectl’ni odatga aylantiradigan lablar bilan."
     },
     "3": {
       "title": "3-hafta - Service, Namespace va kubectl uslubi",
-      "description": "Pod'larni ochish, jamoalarni ajratish va imtihonda daqiqalarni tejaydigan imperativ buyruqlar."
+      "description": "Pod’larni ochish, jamoalarni ajratish va imtihonda daqiqalarni tejaydigan imperativ buyruqlar."
     },
     "4": {
-      "title": "4-hafta - Pod'lar qayerga tushadi",
-      "description": "Qo'lda joylashtirish, label'lar, taint va toleration, affinity va resurs so'rovlari."
+      "title": "4-hafta - Pod’lar qayerga tushadi",
+      "description": "Qo’lda joylashtirish, label’lar, taint va toleration, affinity va resurs so’rovlari."
     },
     "5": {
       "title": "5-hafta - DaemonSet, static Pod, priority va admission",
-      "description": "Rejalashtirish qutisining qolgani va obyekt umuman qabul qilinishini hal qiluvchi controller'lar."
+      "description": "Rejalashtirish qutisining qolgani va obyekt umuman qabul qilinishini hal qiluvchi controller’lar."
     },
     "6": {
       "title": "6-hafta - Kuzatuv va konfiguratsiya",
-      "description": "Metrikalar va loglar, rolling update va ilova o'z buyruqlari, environment va secret'larini qanday oladi."
+      "description": "Metrikalar va loglar, rolling update va ilova o’z buyruqlari, environment va secret’larini qanday oladi."
     },
     "7": {
-      "title": "7-hafta - Bir ishdan ko'pini qiladigan Pod'lar",
-      "description": "Tinch holatda shifrlash, ko'p konteynerli pattern'lar, init container, o'z-o'zini tiklash va batch ishlar."
+      "title": "7-hafta - Bir ishdan ko’pini qiladigan Pod’lar",
+      "description": "Tinch holatda shifrlash, ko’p konteynerli pattern’lar, init container, o’z-o’zini tiklash va batch ishlar."
     },
     "8": {
       "title": "8-hafta - Autoscaling",
-      "description": "Qo'lda masshtablash, keyin HPA, in-place resize va VPA."
+      "description": "Qo’lda masshtablash, keyin HPA, in-place resize va VPA."
     },
     "9": {
       "title": "9-hafta - Yangilash, zaxira va tiklash",
-      "description": "Node'ga xizmat ko'rsatish, Kubernetes relizlari, kubeadm bilan yangilash, etcd zaxira va tiklash."
+      "description": "Node’ga xizmat ko’rsatish, Kubernetes relizlari, kubeadm bilan yangilash, etcd zaxira va tiklash."
     },
     "10": {
       "title": "10-hafta - TLS va sertifikatlar",
-      "description": "Sertifikat nima ekanidan Certificates API'gacha: har bir komponent tayanadigan ishonch."
+      "description": "Sertifikat nima ekanidan Certificates API’gacha: har bir komponent tayanadigan ishonch."
     },
     "11": {
       "title": "11-hafta - Avtorizatsiya va hisoblar",
-      "description": "kubeconfig, API guruhlari, RBAC, cluster role'lar, service account va image tortish xavfsizligi."
+      "description": "kubeconfig, API guruhlari, RBAC, cluster role’lar, service account va image tortish xavfsizligi."
     },
     "12": {
       "title": "12-hafta - Pod xavfsizligi, network policy va kengaytmalar",
-      "description": "Security context, NetworkPolicy'lar va CRD, maxsus controller, operator modeli."
+      "description": "Security context, NetworkPolicy’lar va CRD, maxsus controller, operator modeli."
     },
     "13": {
       "title": "13-hafta - Saqlash",
-      "description": "Docker saqlash, CSI, volume'lar, PV va PVC, StorageClass va stateful workload'lar."
+      "description": "Docker saqlash, CSI, volume’lar, PV va PVC, StorageClass va stateful workload’lar."
     },
     "14": {
       "title": "14-hafta - Tarmoq asoslari",
-      "description": "Switching, routing, DNS, tarmoq namespace'lari, Docker tarmog'i va CNI - Kubernetes tarmog'idan oldin."
+      "description": "Switching, routing, DNS, tarmoq namespace’lari, Docker tarmog’i va CNI - Kubernetes tarmog’idan oldin."
     },
     "15": {
-      "title": "15-hafta - Pod, Service va DNS tarmog'i",
-      "description": "Pod'lar manzil qanday oladi, Service'lar qanday yo'naltiriladi va klaster ichida nomlar qanday yechiladi."
+      "title": "15-hafta - Pod, Service va DNS tarmog’i",
+      "description": "Pod’lar manzil qanday oladi, Service’lar qanday yo’naltiriladi va klaster ichida nomlar qanday yechiladi."
     },
     "16": {
       "title": "16-hafta - Ingress va Gateway API",
-      "description": "HTTP'ni klaster ichiga yo'naltirish: Ingress controller va qoidalar, keyin Gateway API."
+      "description": "HTTP’ni klaster ichiga yo’naltirish: Ingress controller va qoidalar, keyin Gateway API."
     },
     "17": {
-      "title": "17-hafta - Klasterni loyihalash va o'rnatish",
-      "description": "O'lchamlash, infratuzilma, HA va etcd topologiyasi, keyin yalang'och VM'lardan kubeadm."
+      "title": "17-hafta - Klasterni loyihalash va o’rnatish",
+      "description": "O’lchamlash, infratuzilma, HA va etcd topologiyasi, keyin yalang’och VM’lardan kubeadm."
     },
     "18": {
       "title": "18-hafta - Helm va Kustomize",
@@ -146,11 +146,11 @@
     },
     "certification-and-exam-format": {
       "title": "CKA sertifikati",
-      "summary": "Imtihon nima: format, davomiylik, sohalar va ularning og'irliklari, baholash tartibi."
+      "summary": "Imtihon nima: format, davomiylik, sohalar va ularning og’irliklari, baholash tartibi."
     },
     "kubernetes-architecture-overview": {
-      "title": "Klaster arxitekturasi: control plane va node'lar",
-      "summary": "Control plane va worker node'lar mas'uliyatni qanday bo'lishadi hamda so'rov kubectl'dan ishlayotgan konteynergacha qanday yo'l bosadi."
+      "title": "Klaster arxitekturasi: control plane va node’lar",
+      "summary": "Control plane va worker node’lar mas’uliyatni qanday bo’lishadi hamda so’rov kubectl’dan ishlayotgan konteynergacha qanday yo’l bosadi."
     },
     "control-plane-components": {
       "title": "Control plane komponentlari batafsil",
@@ -158,47 +158,47 @@
     },
     "build-your-lab-environment": {
       "title": "kind va minikube bilan mashq klasterini qurish",
-      "summary": "Lokal ko'p node'li klaster o'rnating, kubeconfig'ni tushuning va imtihonda daqiqalarni tejaydigan shell alias'larini sozlang."
+      "summary": "Lokal ko’p node’li klaster o’rnating, kubeconfig’ni tushuning va imtihonda daqiqalarni tejaydigan shell alias’larini sozlang."
     },
     "docker-vs-containerd": {
       "title": "Docker va containerd",
-      "summary": "Docker qayerda tugab containerd qayerda boshlanadi: CRI, runtime'lar, ctr, nerdctl va crictl vositalari."
+      "summary": "Docker qayerda tugab containerd qayerda boshlanadi: CRI, runtime’lar, ctr, nerdctl va crictl vositalari."
     },
     "docker-deprecation-note": {
-      "title": "Docker'ning eskirishi haqida",
-      "summary": "Dockershim nega olib tashlandi, bu image va workload'lar uchun nimani o'zgartirdi va nimani o'zgartirmadi."
+      "title": "Docker’ning eskirishi haqida",
+      "summary": "Dockershim nega olib tashlandi, bu image va workload’lar uchun nimani o’zgartirdi va nimani o’zgartirmadi."
     },
     "etcd-for-beginners": {
       "title": "Boshlovchilar uchun etcd",
-      "summary": "Key-value store boshidan: nimani saqlaydi, o'qish va yozish qanday ishlaydi, etcdctl asoslari."
+      "summary": "Key-value store boshidan: nimani saqlaydi, o’qish va yozish qanday ishlaydi, etcdctl asoslari."
     },
     "etcd-in-kubernetes": {
-      "title": "Kubernetes'da etcd",
-      "summary": "Klaster holati qayerda yashaydi, kubeadm etcd'ni qanday joylashtiradi va API server unga qanday ulanadi."
+      "title": "Kubernetes’da etcd",
+      "summary": "Klaster holati qayerda yashaydi, kubeadm etcd’ni qanday joylashtiradi va API server unga qanday ulanadi."
     },
     "etcd-commands": {
       "title": "etcd buyruqlari",
-      "summary": "etcdctl API versiyalari va kerak bo'ladigan bir nechta buyruq: put, get, snapshot, endpoint health."
+      "summary": "etcdctl API versiyalari va kerak bo’ladigan bir nechta buyruq: put, get, snapshot, endpoint health."
     },
     "kube-api-server": {
       "title": "kube-apiserver",
-      "summary": "Klasterning kirish eshigi: autentifikatsiya, validatsiya, etcd'ga yozish va uni sozlaydigan flag'lar."
+      "summary": "Klasterning kirish eshigi: autentifikatsiya, validatsiya, etcd’ga yozish va uni sozlaydigan flag’lar."
     },
     "kube-controller-manager": {
       "title": "kube-controller-manager",
-      "summary": "Bitta jarayonga yig'ilgan reconciliation loop'lar - node, replication va boshqalar - va ularni sozlash."
+      "summary": "Bitta jarayonga yig’ilgan reconciliation loop’lar - node, replication va boshqalar - va ularni sozlash."
     },
     "kube-scheduler": {
       "title": "kube-scheduler",
-      "summary": "Pod uchun node'larni filtrlash va baholash, scheduler'ning o'zi qayerda ishlashi."
+      "summary": "Pod uchun node’larni filtrlash va baholash, scheduler’ning o’zi qayerda ishlashi."
     },
     "kubelet": {
       "title": "kubelet",
-      "summary": "Node agenti: node'ni ro'yxatdan o'tkazish, image'larni tortish, Pod'larni yuritish va hisobot berish."
+      "summary": "Node agenti: node’ni ro’yxatdan o’tkazish, image’larni tortish, Pod’larni yuritish va hisobot berish."
     },
     "kube-proxy": {
       "title": "kube-proxy",
-      "summary": "Service IP'lari har bir node'da haqiqiy trafikka qanday aylanadi: iptables va IPVS rejimlari."
+      "summary": "Service IP’lari har bir node’da haqiqiy trafikka qanday aylanadi: iptables va IPVS rejimlari."
     },
     "kubectl-fundamentals": {
       "title": "kubectl asoslari",
@@ -206,31 +206,31 @@
     },
     "kubernetes-api-objects-and-yaml": {
       "title": "API obyekt modeli va YAML yozish",
-      "summary": "apiVersion, kind, metadata, spec va status; har qanday maydonni yodlash o'rniga kubectl explain bilan topish."
+      "summary": "apiVersion, kind, metadata, spec va status; har qanday maydonni yodlash o’rniga kubectl explain bilan topish."
     },
     "pods-deep-dive": {
-      "title": "Pod'lar chuqur tahlili",
-      "summary": "Ko'p konteynerli shablonlar, init konteynerlar, probe'lar, resurslar va Pod'ning to'liq hayot sikli - u qotib qolishining barcha sabablari bilan."
+      "title": "Pod’lar chuqur tahlili",
+      "summary": "Ko’p konteynerli shablonlar, init konteynerlar, probe’lar, resurslar va Pod’ning to’liq hayot sikli - u qotib qolishining barcha sabablari bilan."
     },
     "pods-with-yaml": {
       "title": "YAML bilan Pod",
-      "summary": "Har bir manifestning to'rt yuqori maydoni va Pod spec'ini qo'lda yozish."
+      "summary": "Har bir manifestning to’rt yuqori maydoni va Pod spec’ini qo’lda yozish."
     },
     "demo-pods-with-yaml": {
       "title": "Demo - YAML bilan Pod",
       "summary": "Manifestdan Pod yaratish, tekshirish va tuzatish, boshidan oxirigacha."
     },
     "replicasets": {
-      "title": "ReplicaSet'lar",
-      "summary": "Replication controller va ReplicaSet: selector'lar, masshtablash va Pod o'lganda nima bo'lishi."
+      "title": "ReplicaSet’lar",
+      "summary": "Replication controller va ReplicaSet: selector’lar, masshtablash va Pod o’lganda nima bo’lishi."
     },
     "deployments-and-replicasets": {
-      "title": "Deployment va ReplicaSet'lar",
-      "summary": "Deklarativ rollout, orqaga qaytarish, masshtablash va Deployment, uning ReplicaSet'lari hamda Pod'lari orasidagi aniq munosabat."
+      "title": "Deployment va ReplicaSet’lar",
+      "summary": "Deklarativ rollout, orqaga qaytarish, masshtablash va Deployment, uning ReplicaSet’lari hamda Pod’lari orasidagi aniq munosabat."
     },
     "services-clusterip-nodeport-loadbalancer": {
-      "title": "Service'lar",
-      "summary": "Pod'larga nega barqaror manzil kerak va NodePort Service bosqichma-bosqich."
+      "title": "Service’lar",
+      "summary": "Pod’larga nega barqaror manzil kerak va NodePort Service bosqichma-bosqich."
     },
     "services-cluster-ip": {
       "title": "Service - ClusterIP",
@@ -238,11 +238,11 @@
     },
     "services-loadbalancer": {
       "title": "Service - LoadBalancer",
-      "summary": "Service'ni bulut load balancer orqali ochish va u bo'lmasa nima bo'lishi."
+      "summary": "Service’ni bulut load balancer orqali ochish va u bo’lmasa nima bo’lishi."
     },
     "namespaces-and-context": {
       "title": "Namespace, context va resurs kvotalari",
-      "summary": "Obyektlarni ajratish, vaqt yo'qotmasdan context almashtirish va namespace'ni cheklaydigan quota/limit-range obyektlari."
+      "summary": "Obyektlarni ajratish, vaqt yo’qotmasdan context almashtirish va namespace’ni cheklaydigan quota/limit-range obyektlari."
     },
     "imperative-vs-declarative": {
       "title": "Imperativ va deklarativ",
@@ -250,31 +250,31 @@
     },
     "imperative-commands-with-kubectl": {
       "title": "Imtihon uchun imperativ buyruqlar",
-      "summary": "Shpargalka: --dry-run=client -o yaml, run, create, expose, scale va muhim flag'lar."
+      "summary": "Shpargalka: --dry-run=client -o yaml, run, create, expose, scale va muhim flag’lar."
     },
     "kubectl-explain": {
       "title": "kubectl explain",
-      "summary": "Terminaldan chiqmasdan API sxemasini o'qish."
+      "summary": "Terminaldan chiqmasdan API sxemasini o’qish."
     },
     "kubectl-apply": {
       "title": "kubectl apply",
-      "summary": "apply fayl, jonli obyekt va last-applied-configuration'ni qanday birlashtiradi."
+      "summary": "apply fayl, jonli obyekt va last-applied-configuration’ni qanday birlashtiradi."
     },
     "manual-scheduling": {
-      "title": "Qo'lda rejalashtirish",
-      "summary": "nodeName va Binding obyekti: scheduler bo'lmaganda nima qilasiz."
+      "title": "Qo’lda rejalashtirish",
+      "summary": "nodeName va Binding obyekti: scheduler bo’lmaganda nima qilasiz."
     },
     "labels-selectors-annotations": {
-      "title": "Label, selector va annotation'lar",
-      "summary": "Service, Deployment va node joylashtirishi ortidagi bo'sh bog'lanish mexanizmi - va imtihon kutadigan selector sintaksisi."
+      "title": "Label, selector va annotation’lar",
+      "summary": "Service, Deployment va node joylashtirishi ortidagi bo’sh bog’lanish mexanizmi - va imtihon kutadigan selector sintaksisi."
     },
     "taints-and-tolerations": {
       "title": "Taint va toleration",
-      "summary": "Pod'larni toleration'siz node'lardan uzoq tutish: NoSchedule, PreferNoSchedule, NoExecute."
+      "summary": "Pod’larni toleration’siz node’lardan uzoq tutish: NoSchedule, PreferNoSchedule, NoExecute."
     },
     "node-selectors": {
-      "title": "Node selector'lar",
-      "summary": "Node'larni label'lash va nodeSelector bilan Pod'ni bog'lash - va bu qayerda yetmay qoladi."
+      "title": "Node selector’lar",
+      "summary": "Node’larni label’lash va nodeSelector bilan Pod’ni bog’lash - va bu qayerda yetmay qoladi."
     },
     "node-selectors-and-affinity": {
       "title": "Node affinity",
@@ -289,36 +289,36 @@
       "summary": "Request, limit, LimitRange va ResourceQuota - OOMKilled va Pending sizga nima deyapti."
     },
     "editing-pods-and-deployments": {
-      "title": "Pod va Deployment'ni tahrirlash haqida",
-      "summary": "Pod'ning qaysi maydonlari o'zgartiriladi va o'zgarmaydiganlarda o'chirib-qayta yaratish tartibi."
+      "title": "Pod va Deployment’ni tahrirlash haqida",
+      "summary": "Pod’ning qaysi maydonlari o’zgartiriladi va o’zgarmaydiganlarda o’chirib-qayta yaratish tartibi."
     },
     "daemonsets-and-statefulsets": {
-      "title": "DaemonSet'lar",
-      "summary": "Har node'da bitta Pod: log agentlari, CNI plugin'lar, kube-proxy - va scheduler ularni qanday boshqaradi."
+      "title": "DaemonSet’lar",
+      "summary": "Har node’da bitta Pod: log agentlari, CNI plugin’lar, kube-proxy - va scheduler ularni qanday boshqaradi."
     },
     "static-pods-and-manifests": {
-      "title": "Static Pod'lar",
-      "summary": "Kubelet API server'siz katalogdan yuritadigan Pod'lar - control plane'ning o'zi shunday boshlanadi."
+      "title": "Static Pod’lar",
+      "summary": "Kubelet API server’siz katalogdan yuritadigan Pod’lar - control plane’ning o’zi shunday boshlanadi."
     },
     "topology-spread-and-priority": {
-      "title": "Priority class'lar",
-      "summary": "PriorityClass, preemption va yuqori ustuvor Pod joy topolmaganda nima bo'lishi."
+      "title": "Priority class’lar",
+      "summary": "PriorityClass, preemption va yuqori ustuvor Pod joy topolmaganda nima bo’lishi."
     },
     "multiple-schedulers": {
       "title": "Bir nechta scheduler",
-      "summary": "Ikkinchi scheduler'ni joylashtirish va Pod'ga schedulerName bilan uni ishlatishni aytish."
+      "summary": "Ikkinchi scheduler’ni joylashtirish va Pod’ga schedulerName bilan uni ishlatishni aytish."
     },
     "scheduler-profiles": {
       "title": "Scheduler profillarini sozlash",
-      "summary": "Scheduling framework - kengaytma nuqtalari, plugin'lar va profillar - va plugin'ni yoqish yoki o'chirish."
+      "summary": "Scheduling framework - kengaytma nuqtalari, plugin’lar va profillar - va plugin’ni yoqish yoki o’chirish."
     },
     "admission-control-basics": {
-      "title": "Admission controller'lar",
-      "summary": "etcd oldidagi oxirgi darvoza: admission controller'lar nima qiladi, qaysilari default yoqilgan va birini qanday yoqish."
+      "title": "Admission controller’lar",
+      "summary": "etcd oldidagi oxirgi darvoza: admission controller’lar nima qiladi, qaysilari default yoqilgan va birini qanday yoqish."
     },
     "validating-and-mutating-admission-controllers": {
-      "title": "Validating va mutating admission controller'lar",
-      "summary": "Webhook'lar: ishlash tartibi, mutating javob qanday ko'rinishi va birini qanday ro'yxatdan o'tkazish."
+      "title": "Validating va mutating admission controller’lar",
+      "summary": "Webhook’lar: ishlash tartibi, mutating javob qanday ko’rinishi va birini qanday ro’yxatdan o’tkazish."
     },
     "cluster-observability": {
       "title": "Klaster komponentlarini monitoring qilish",
@@ -326,7 +326,7 @@
     },
     "monitoring-and-log-aggregation": {
       "title": "Ilova loglarini boshqarish",
-      "summary": "kubectl logs, -f, --previous va ko'p konteynerli Pod'lar."
+      "summary": "kubectl logs, -f, --previous va ko’p konteynerli Pod’lar."
     },
     "deployment-strategies-and-rollbacks": {
       "title": "Rolling update va rollback",
@@ -334,87 +334,87 @@
     },
     "configure-applications": {
       "title": "Ilovalarni sozlash",
-      "summary": "To'rt tugma haqida umumiy ko'rinish: buyruq va argumentlar, environment o'zgaruvchilari, ConfigMap va Secret."
+      "summary": "To’rt tugma haqida umumiy ko’rinish: buyruq va argumentlar, environment o’zgaruvchilari, ConfigMap va Secret."
     },
     "commands-and-arguments-in-docker": {
-      "title": "Docker'da buyruq va argumentlar",
+      "title": "Docker’da buyruq va argumentlar",
       "summary": "ENTRYPOINT va CMD, docker run argumenti ularni qanday qayta belgilaydi."
     },
     "commands-and-arguments-in-kubernetes": {
-      "title": "Kubernetes'da buyruq va argumentlar",
+      "title": "Kubernetes’da buyruq va argumentlar",
       "summary": "Konteynerdagi command va args, ularning ENTRYPOINT va CMD bilan mosligi."
     },
     "environment-variables": {
-      "title": "Ilovalarda environment o'zgaruvchilari",
-      "summary": "env maydoni: oddiy qiymatlar va ConfigMap/Secret'ga olib boradigan valueFrom."
+      "title": "Ilovalarda environment o’zgaruvchilari",
+      "summary": "env maydoni: oddiy qiymatlar va ConfigMap/Secret’ga olib boradigan valueFrom."
     },
     "configmaps-in-practice": {
-      "title": "Ilovalarda ConfigMap'ni sozlash",
-      "summary": "ConfigMap'ni imperativ va fayllardan yaratish, env yoki volume sifatida ulash."
+      "title": "Ilovalarda ConfigMap’ni sozlash",
+      "summary": "ConfigMap’ni imperativ va fayllardan yaratish, env yoki volume sifatida ulash."
     },
     "secrets-and-encryption": {
-      "title": "Secret'lar",
-      "summary": "Secret turlari, base64 shifrlash emasligi va Secret'ni iste'mol qilishning uch yo'li."
+      "title": "Secret’lar",
+      "summary": "Secret turlari, base64 shifrlash emasligi va Secret’ni iste’mol qilishning uch yo’li."
     },
     "encrypting-secret-data-at-rest": {
-      "title": "Demo - Secret ma'lumotlarini tinch holatda shifrlash",
-      "summary": "Secret'ni etcd'da ochiq ko'rish, keyin EncryptionConfiguration sozlab qayta shifrlash."
+      "title": "Demo - Secret ma’lumotlarini tinch holatda shifrlash",
+      "summary": "Secret’ni etcd’da ochiq ko’rish, keyin EncryptionConfiguration sozlab qayta shifrlash."
     },
     "multi-container-pods": {
-      "title": "Ko'p konteynerli Pod'lar",
-      "summary": "Nega ikki konteyner bitta Pod'da bo'ladi va ular nimani bo'lishadi."
+      "title": "Ko’p konteynerli Pod’lar",
+      "summary": "Nega ikki konteyner bitta Pod’da bo’ladi va ular nimani bo’lishadi."
     },
     "multi-container-pod-design-patterns": {
-      "title": "Ko'p konteynerli Pod pattern'lari",
-      "summary": "Sidecar, adapter va ambassador - hamda qayta ishga tushadigan init container sifatidagi native sidecar'lar."
+      "title": "Ko’p konteynerli Pod pattern’lari",
+      "summary": "Sidecar, adapter va ambassador - hamda qayta ishga tushadigan init container sifatidagi native sidecar’lar."
     },
     "init-containers": {
-      "title": "Init container'lar",
-      "summary": "Ilova boshlanishidan oldin tartib bilan tugallanadigan konteynerlar va biri yiqilganda nima bo'lishi."
+      "title": "Init container’lar",
+      "summary": "Ilova boshlanishidan oldin tartib bilan tugallanadigan konteynerlar va biri yiqilganda nima bo’lishi."
     },
     "probes-and-self-healing": {
-      "title": "O'z-o'zini tiklaydigan ilovalar",
-      "summary": "Restart siyosati, ReplicaSet va probe'lar: Kubernetes buzilgan ilovani qanday sezadi va tuzatadi."
+      "title": "O’z-o’zini tiklaydigan ilovalar",
+      "summary": "Restart siyosati, ReplicaSet va probe’lar: Kubernetes buzilgan ilovani qanday sezadi va tuzatadi."
     },
     "jobs-and-cronjobs": {
-      "title": "Job va CronJob'lar",
-      "summary": "Yakuniga yetadigan workload'lar, parallellik, backoff chegarasi va jadval bo'yicha bajarish."
+      "title": "Job va CronJob’lar",
+      "summary": "Yakuniga yetadigan workload’lar, parallellik, backoff chegarasi va jadval bo’yicha bajarish."
     },
     "introduction-to-autoscaling": {
-      "title": "Autoscaling'ga kirish",
+      "title": "Autoscaling’ga kirish",
       "summary": "Vertikal va gorizontal, klaster va workload - autoscaling nimani anglatishi xaritasi."
     },
     "horizontal-pod-autoscaling": {
       "title": "Horizontal Pod Autoscaler",
-      "summary": "CPU, xotira yoki maxsus metrikalar bo'yicha replikalarni masshtablash: HPA obyekti, algoritmi va flag'lari."
+      "summary": "CPU, xotira yoki maxsus metrikalar bo’yicha replikalarni masshtablash: HPA obyekti, algoritmi va flag’lari."
     },
     "in-place-resize-of-pods": {
-      "title": "Pod'ni joyida o'lchamlash",
-      "summary": "Ishlayotgan konteynerning CPU yoki xotirasini qayta ishga tushirmasdan o'zgartirish: resizePolicy va feature gate."
+      "title": "Pod’ni joyida o’lchamlash",
+      "summary": "Ishlayotgan konteynerning CPU yoki xotirasini qayta ishga tushirmasdan o’zgartirish: resizePolicy va feature gate."
     },
     "vertical-pod-autoscaling": {
       "title": "Vertical Pod Autoscaler",
-      "summary": "VPA komponentlari, yangilash rejimlari va uni HPA'dan qachon afzal ko'rish."
+      "summary": "VPA komponentlari, yangilash rejimlari va uni HPA’dan qachon afzal ko’rish."
     },
     "node-maintenance-cordon-drain": {
       "title": "OS yangilanishlari",
-      "summary": "cordon, drain va uncordon - node'ni xavfsiz bo'shatish va eviction timeout nima qilishi."
+      "summary": "cordon, drain va uncordon - node’ni xavfsiz bo’shatish va eviction timeout nima qilishi."
     },
     "kubernetes-releases": {
       "title": "Kubernetes relizlari",
-      "summary": "Versiyalash, komponentlar orasidagi ruxsat etilgan farq va minor versiya qancha vaqt qo'llab-quvvatlanishi."
+      "summary": "Versiyalash, komponentlar orasidagi ruxsat etilgan farq va minor versiya qancha vaqt qo’llab-quvvatlanishi."
     },
     "cluster-upgrades": {
       "title": "Klasterni yangilashga kirish",
-      "summary": "Yangilash tartibi - kubeadm, control plane, kubelet'lar, worker'lar birma-bir - va uning ortidagi versiya farqi qoidalari."
+      "summary": "Yangilash tartibi - kubeadm, control plane, kubelet’lar, worker’lar birma-bir - va uning ortidagi versiya farqi qoidalari."
     },
     "demo-cluster-upgrade": {
       "title": "Demo - Klasterni yangilash",
-      "summary": "kubeadm klasterida to'liq minor yangilash: avval control plane, keyin har bir worker."
+      "summary": "kubeadm klasterida to’liq minor yangilash: avval control plane, keyin har bir worker."
     },
     "etcd-backup-and-restore": {
       "title": "Zaxira va tiklash usullari",
-      "summary": "Nimani zaxiralash - manifestlar, etcd - va to'g'ri sertifikatlar bilan snapshot save / restore jarayoni."
+      "summary": "Nimani zaxiralash - manifestlar, etcd - va to’g’ri sertifikatlar bilan snapshot save / restore jarayoni."
     },
     "etcdctl-and-etcdutl": {
       "title": "etcdctl va etcdutl bilan ishlash",
@@ -422,31 +422,31 @@
     },
     "kubernetes-security-primitives": {
       "title": "Kubernetes xavfsizlik asoslari",
-      "summary": "Hujum yuzasi: API server'ga kim yeta oladi va u yerda nima qila oladi."
+      "summary": "Hujum yuzasi: API server’ga kim yeta oladi va u yerda nima qila oladi."
     },
     "authentication": {
       "title": "Autentifikatsiya",
-      "summary": "Statik parol va token fayllari, sertifikatlar, tashqi provayderlar - so'rov kimligini qanday isbotlaydi."
+      "summary": "Statik parol va token fayllari, sertifikatlar, tashqi provayderlar - so’rov kimligini qanday isbotlaydi."
     },
     "tls-introduction": {
-      "title": "TLS'ga kirish",
-      "summary": "Klaster nega hamma joyda TLS'da gaplashadi."
+      "title": "TLS’ga kirish",
+      "summary": "Klaster nega hamma joyda TLS’da gaplashadi."
     },
     "tls-basics": {
       "title": "TLS asoslari",
-      "summary": "Simmetrik va asimmetrik shifrlash, sertifikatlar, CA va handshake - to'liq manzara."
+      "summary": "Simmetrik va asimmetrik shifrlash, sertifikatlar, CA va handshake - to’liq manzara."
     },
     "tls-in-kubernetes": {
-      "title": "Kubernetes'da TLS",
+      "title": "Kubernetes’da TLS",
       "summary": "Klasterdagi har bir server va mijoz sertifikati va uni qaysi CA imzolagani."
     },
     "tls-certificate-creation": {
-      "title": "Kubernetes'da TLS - sertifikat yaratish",
-      "summary": "openssl bilan CA, server va mijoz sertifikatini yaratish va kubeadm ularni qayerga qo'yishi."
+      "title": "Kubernetes’da TLS - sertifikat yaratish",
+      "summary": "openssl bilan CA, server va mijoz sertifikatini yaratish va kubeadm ularni qayerga qo’yishi."
     },
     "view-certificate-details": {
-      "title": "Sertifikat tafsilotlarini ko'rish",
-      "summary": "openssl x509 bilan sertifikatni o'qish va butun to'plamning sog'ligini tekshirish."
+      "title": "Sertifikat tafsilotlarini ko’rish",
+      "summary": "openssl x509 bilan sertifikatni o’qish va butun to’plamning sog’ligini tekshirish."
     },
     "certificates-api": {
       "title": "Certificates API",
@@ -458,99 +458,99 @@
     },
     "api-groups": {
       "title": "API guruhlari",
-      "summary": "core va nomlangan guruhlar, resurslar va fe'llar - RBAC yoziladigan lug'at."
+      "summary": "core va nomlangan guruhlar, resurslar va fe’llar - RBAC yoziladigan lug’at."
     },
     "authorization": {
       "title": "Avtorizatsiya",
-      "summary": "Node, ABAC, RBAC, Webhook va authorization-mode flag'i - isbotlangan identitet ruxsatlarni qanday oladi."
+      "summary": "Node, ABAC, RBAC, Webhook va authorization-mode flag’i - isbotlangan identitet ruxsatlarni qanday oladi."
     },
     "rbac-roles-and-bindings": {
-      "title": "Role'ga asoslangan kirish nazorati",
+      "title": "Role’ga asoslangan kirish nazorati",
       "summary": "Role, RoleBinding va kubectl auth can-i."
     },
     "cluster-roles": {
-      "title": "Cluster role'lar",
+      "title": "Cluster role’lar",
       "summary": "Klaster darajasidagi resurslar - node, PV, namespace - va ClusterRole / ClusterRoleBinding juftligi."
     },
     "service-accounts-and-tokens": {
-      "title": "Service account'lar",
-      "summary": "Pod'lar uchun identitet: bog'langan token'lar, TokenRequest API va token'ni ulash yoki ulamaslik."
+      "title": "Service account’lar",
+      "summary": "Pod’lar uchun identitet: bog’langan token’lar, TokenRequest API va token’ni ulash yoki ulamaslik."
     },
     "image-security": {
       "title": "Image xavfsizligi",
-      "summary": "To'liq image nomlari, xususiy registry'lar va imagePullSecrets."
+      "summary": "To’liq image nomlari, xususiy registry’lar va imagePullSecrets."
     },
     "security-in-docker": {
-      "title": "Asos - Docker'da xavfsizlik",
-      "summary": "Konteynerdagi foydalanuvchilar, capability'lar va namespace'lar - security context tayanadigan poydevor."
+      "title": "Asos - Docker’da xavfsizlik",
+      "summary": "Konteynerdagi foydalanuvchilar, capability’lar va namespace’lar - security context tayanadigan poydevor."
     },
     "security-contexts": {
-      "title": "Security context'lar",
+      "title": "Security context’lar",
       "summary": "Pod va konteyner darajasida runAsUser, capability va boshqalar, qaysi biri ustun kelishi."
     },
     "network-policies": {
-      "title": "Network policy'lar",
-      "summary": "Ingress va egress qoidalari, selector'lar va CNI ularni qo'llab-quvvatlashi shartligi."
+      "title": "Network policy’lar",
+      "summary": "Ingress va egress qoidalari, selector’lar va CNI ularni qo’llab-quvvatlashi shartligi."
     },
     "developing-network-policies": {
-      "title": "Network policy'larni ishlab chiqish",
-      "summary": "Policy'ni bosqichma-bosqich yozish: podSelector, namespaceSelector, ipBlock va qoidalar qanday birlashishi."
+      "title": "Network policy’larni ishlab chiqish",
+      "summary": "Policy’ni bosqichma-bosqich yozish: podSelector, namespaceSelector, ipBlock va qoidalar qanday birlashishi."
     },
     "kubectx-and-kubens": {
       "title": "kubectx va kubens",
-      "summary": "Flag'larni termasdan kontekst va namespace almashtirish uchun ikki kichik vosita."
+      "summary": "Flag’larni termasdan kontekst va namespace almashtirish uchun ikki kichik vosita."
     },
     "crds-and-operators": {
       "title": "Custom Resource Definition",
-      "summary": "API'ni o'z kind'laringiz bilan kengaytirish: CRD sxemasi, ko'lami va maxsus obyektlar yaratish."
+      "summary": "API’ni o’z kind’laringiz bilan kengaytirish: CRD sxemasi, ko’lami va maxsus obyektlar yaratish."
     },
     "custom-controllers": {
-      "title": "Maxsus controller'lar",
-      "summary": "Maxsus resursni kim kuzatadi va harakat qiladi: controller loop, client-go va informer'lar qisqacha."
+      "title": "Maxsus controller’lar",
+      "summary": "Maxsus resursni kim kuzatadi va harakat qiladi: controller loop, client-go va informer’lar qisqacha."
     },
     "operator-framework": {
       "title": "Operator framework",
-      "summary": "CRD va controller bitta paketda: operator'lar, OperatorHub va qachon murojaat qilish."
+      "summary": "CRD va controller bitta paketda: operator’lar, OperatorHub va qachon murojaat qilish."
     },
     "storage-in-docker": {
-      "title": "Docker'da saqlash",
-      "summary": "Qatlamli image'lar, yoziladigan qatlam, volume va bind mount'lar, storage driver'lar."
+      "title": "Docker’da saqlash",
+      "summary": "Qatlamli image’lar, yoziladigan qatlam, volume va bind mount’lar, storage driver’lar."
     },
     "volume-driver-plugins-in-docker": {
-      "title": "Docker'da volume driver plugin'lar",
-      "summary": "Volume driver'lar storage driver'larga nisbatan qayerda turadi va Kubernetes'ga nega umumiyroq narsa kerak bo'ldi."
+      "title": "Docker’da volume driver plugin’lar",
+      "summary": "Volume driver’lar storage driver’larga nisbatan qayerda turadi va Kubernetes’ga nega umumiyroq narsa kerak bo’ldi."
     },
     "container-storage-interface": {
       "title": "Container Storage Interface",
       "summary": "Kubernetes va istalgan storage vendor orasidagi CSI kelishuvi: CreateVolume, DeleteVolume va boshqalar."
     },
     "volumes-and-volume-types": {
-      "title": "Volume'lar",
-      "summary": "Pod'ga saqlashni ulash: emptyDir, hostPath va hostPath nega masshtablanmasligi."
+      "title": "Volume’lar",
+      "summary": "Pod’ga saqlashni ulash: emptyDir, hostPath va hostPath nega masshtablanmasligi."
     },
     "persistent-volumes": {
       "title": "Persistent Volume",
-      "summary": "Klaster darajasidagi saqlash obyektlari: sig'im, kirish rejimlari, reclaim siyosati."
+      "summary": "Klaster darajasidagi saqlash obyektlari: sig’im, kirish rejimlari, reclaim siyosati."
     },
     "persistent-volumes-and-claims": {
       "title": "Persistent Volume Claim",
-      "summary": "Claim'ni volume'ga bog'lash: moslik, birga-bir qoidasi va o'chirishda nima bo'lishi."
+      "summary": "Claim’ni volume’ga bog’lash: moslik, birga-bir qoidasi va o’chirishda nima bo’lishi."
     },
     "using-pvc-in-pods": {
-      "title": "Pod'larda PVC ishlatish",
-      "summary": "Pod volume sifatida persistentVolumeClaim, Deployment va StatefulSet'larda."
+      "title": "Pod’larda PVC ishlatish",
+      "summary": "Pod volume sifatida persistentVolumeClaim, Deployment va StatefulSet’larda."
     },
     "storage-classes-and-dynamic-provisioning": {
-      "title": "Storage class'lar",
-      "summary": "Dinamik provisioning: claim so'raganda StorageClass PV'ni o'zi yaratadi."
+      "title": "Storage class’lar",
+      "summary": "Dinamik provisioning: claim so’raganda StorageClass PV’ni o’zi yaratadi."
     },
     "stateful-workloads-with-storage": {
-      "title": "Stateful workload'larni ishga tushirish",
-      "summary": "volumeClaimTemplates, headless Service'lar va tartibli rollout'lar."
+      "title": "Stateful workload’larni ishga tushirish",
+      "summary": "volumeClaimTemplates, headless Service’lar va tartibli rollout’lar."
     },
     "networking-prerequisites-switching-routing": {
       "title": "Asos - Switching, routing va gateway",
-      "summary": "Interfeyslar, switch'lar, router'lar, default gateway va ip buyrug'i - Linux tarmog'i asosdan."
+      "summary": "Interfeyslar, switch’lar, router’lar, default gateway va ip buyrug’i - Linux tarmog’i asosdan."
     },
     "networking-prerequisites-dns": {
       "title": "Asos - DNS",
@@ -558,106 +558,106 @@
     },
     "networking-prerequisites-coredns": {
       "title": "Asos - CoreDNS",
-      "summary": "Klaster ichida uchratishdan oldin CoreDNS'ni Corefile bilan qo'lda yuritish."
+      "summary": "Klaster ichida uchratishdan oldin CoreDNS’ni Corefile bilan qo’lda yuritish."
     },
     "networking-prerequisites-network-namespaces": {
-      "title": "Asos - Tarmoq namespace'lari",
-      "summary": "Izolyatsiyalangan tarmoq steklari, veth juftliklar va bridge'lar - har bir konteyner tarmog'i quriladigan mexanizm."
+      "title": "Asos - Tarmoq namespace’lari",
+      "summary": "Izolyatsiyalangan tarmoq steklari, veth juftliklar va bridge’lar - har bir konteyner tarmog’i quriladigan mexanizm."
     },
     "networking-prerequisites-docker-networking": {
-      "title": "Asos - Docker tarmog'i",
-      "summary": "none, host va bridge, Docker konteynerni docker0'ga qanday ulashi."
+      "title": "Asos - Docker tarmog’i",
+      "summary": "none, host va bridge, Docker konteynerni docker0’ga qanday ulashi."
     },
     "networking-prerequisites-cni": {
       "title": "Asos - CNI",
-      "summary": "Container Network Interface: kelishuv, plugin'lar va ularni kim chaqirishi."
+      "summary": "Container Network Interface: kelishuv, plugin’lar va ularni kim chaqirishi."
     },
     "cluster-networking": {
-      "title": "Klaster tarmog'i",
+      "title": "Klaster tarmog’i",
       "summary": "Har bir komponent qaysi portlarda tinglaydi va imtihon CNI haqida nimani bilishingizni kutadi."
     },
     "kubernetes-network-model": {
-      "title": "Pod tarmog'i",
-      "summary": "Har Pod'ga IP, har Pod'ga yetish mumkin: model va CNI plugin uni qanday ta'minlaydi."
+      "title": "Pod tarmog’i",
+      "summary": "Har Pod’ga IP, har Pod’ga yetish mumkin: model va CNI plugin uni qanday ta’minlaydi."
     },
     "cni-in-kubernetes": {
-      "title": "Kubernetes'da CNI",
+      "title": "Kubernetes’da CNI",
       "summary": "Kubelet plugin va konfiguratsiyani qayerdan topadi: /opt/cni/bin va /etc/cni/net.d."
     },
     "ipam": {
       "title": "IPAM",
-      "summary": "Pod IP'larini kim tarqatadi: host-local, DHCP va CNI chaqira oladigan IPAM plugin'lar."
+      "summary": "Pod IP’larini kim tarqatadi: host-local, DHCP va CNI chaqira oladigan IPAM plugin’lar."
     },
     "service-networking": {
-      "title": "Service tarmog'i",
+      "title": "Service tarmog’i",
       "summary": "ClusterIP va NodePort ichkaridan: kube-proxy, iptables qoidalari va service CIDR."
     },
     "dns-in-kubernetes": {
-      "title": "Kubernetes'da DNS",
+      "title": "Kubernetes’da DNS",
       "summary": "Service va Pod DNS nomlari: svc.cluster.local ierarxiyasi va qidiruv domenlari."
     },
     "coredns-and-service-discovery": {
-      "title": "Kubernetes'da CoreDNS",
-      "summary": "CoreDNS Deployment'i, uning Corefile ConfigMap'i va Pod'lar unga qanday yo'naltirilishi."
+      "title": "Kubernetes’da CoreDNS",
+      "summary": "CoreDNS Deployment’i, uning Corefile ConfigMap’i va Pod’lar unga qanday yo’naltirilishi."
     },
     "ingress-controllers-and-rules": {
       "title": "Ingress",
-      "summary": "Har Service'ga LoadBalancer nega masshtablanmasligi va Ingress controller + Ingress resurslari buni qanday hal qilishi."
+      "summary": "Har Service’ga LoadBalancer nega masshtablanmasligi va Ingress controller + Ingress resurslari buni qanday hal qilishi."
     },
     "ingress-article": {
       "title": "Maqola - Ingress",
-      "summary": "API'dagi Ingress'ning hozirgi holati: networking.k8s.io/v1 shakli va beta'dan nima o'zgargani."
+      "summary": "API’dagi Ingress’ning hozirgi holati: networking.k8s.io/v1 shakli va beta’dan nima o’zgargani."
     },
     "ingress-annotations-and-rewrite-target": {
       "title": "Ingress - annotatsiyalar va rewrite-target",
-      "summary": "Annotatsiyalar orqali controller'ga xos xatti-harakat, rewrite-target misolida."
+      "summary": "Annotatsiyalar orqali controller’ga xos xatti-harakat, rewrite-target misolida."
     },
     "gateway-api-introduction": {
-      "title": "Gateway API'ga kirish",
-      "summary": "GatewayClass, Gateway va HTTPRoute: Ingress'ning rollarga yo'naltirilgan vorisi."
+      "title": "Gateway API’ga kirish",
+      "summary": "GatewayClass, Gateway va HTTPRoute: Ingress’ning rollarga yo’naltirilgan vorisi."
     },
     "gateway-api-practical-guide": {
-      "title": "Gateway API bo'yicha amaliy qo'llanma",
-      "summary": "Gateway controller'ni o'rnatish va HTTPRoute bilan haqiqiy trafikni yo'naltirish, bosqichma-bosqich."
+      "title": "Gateway API bo’yicha amaliy qo’llanma",
+      "summary": "Gateway controller’ni o’rnatish va HTTPRoute bilan haqiqiy trafikni yo’naltirish, bosqichma-bosqich."
     },
     "phase-3-consolidation": {
       "title": "Mustahkamlash - tarmoq boshidan oxirigacha",
-      "summary": "Brauzerdan Pod'gacha va qaytib: Gateway, Service, DNS, CNI, kube-proxy - bitta yurish."
+      "summary": "Brauzerdan Pod’gacha va qaytib: Gateway, Service, DNS, CNI, kube-proxy - bitta yurish."
     },
     "designing-a-kubernetes-cluster": {
       "title": "Kubernetes klasterini loyihalash",
-      "summary": "Maqsad, o'lcham, bulut yoki on-prem, nechta control plane node - birinchi buyruqdan oldingi savollar."
+      "summary": "Maqsad, o’lcham, bulut yoki on-prem, nechta control plane node - birinchi buyruqdan oldingi savollar."
     },
     "choosing-kubernetes-infrastructure": {
       "title": "Kubernetes infratuzilmasini tanlash",
-      "summary": "Turnkey, hosted va o'zi boshqariladigan variantlar, har biri nima beradi va nimani oladi."
+      "summary": "Turnkey, hosted va o’zi boshqariladigan variantlar, har biri nima beradi va nimani oladi."
     },
     "highly-available-control-planes": {
       "title": "Yuqori mavjudlikni sozlash",
       "summary": "Load balancer ortida bir nechta API server, scheduler va controller manager uchun leader election."
     },
     "etcd-in-ha": {
-      "title": "HA'da etcd",
-      "summary": "Kvorum, RAFT protokoli, toq a'zolar soni, stacked va external etcd topologiyalari."
+      "title": "HA’da etcd",
+      "summary": "Kvorum, RAFT protokoli, toq a’zolar soni, stacked va external etcd topologiyalari."
     },
     "kubernetes-the-hard-way": {
       "title": "Kubernetes the hard way",
-      "summary": "Klasterni bir marta qo'lda qurish nega hali ham uni tushunishning eng yaxshi yo'li va yo'riqnomani qayerdan topish."
+      "summary": "Klasterni bir marta qo’lda qurish nega hali ham uni tushunishning eng yaxshi yo’li va yo’riqnomani qayerdan topish."
     },
     "kubeadm-introduction": {
       "title": "kubeadm bilan joylashtirish - kirish",
       "summary": "kubeadm nima qiladi va nima qilmaydi, init, CNI va join tartibi."
     },
     "provision-vms-with-vagrant": {
-      "title": "Vagrant bilan VM'lar tayyorlash",
-      "summary": "kubeadm klasteri uchun node'larni takrorlanadigan tarzda ko'tarish."
+      "title": "Vagrant bilan VM’lar tayyorlash",
+      "summary": "kubeadm klasteri uchun node’larni takrorlanadigan tarzda ko’tarish."
     },
     "kubeadm-cluster-bootstrap": {
       "title": "Demo - kubeadm bilan joylashtirish",
-      "summary": "Container runtime, kubeadm, kubelet, init, CNI va join buyrug'i, boshidan oxirigacha."
+      "summary": "Container runtime, kubeadm, kubelet, init, CNI va join buyrug’i, boshidan oxirigacha."
     },
     "helm-and-kustomize-basics": {
-      "title": "Helm va Kustomize - umumiy ko'rinish",
+      "title": "Helm va Kustomize - umumiy ko’rinish",
       "summary": "Bitta muammoga ikki javob - manifestlarni muhitlar aro qayta ishlatish - va qachon qaysi birini tanlash."
     },
     "helm-introduction": {
@@ -665,52 +665,52 @@
       "summary": "Kubernetes uchun paket menejeri: chart, release va repozitoriylar."
     },
     "helm-installation-and-configuration": {
-      "title": "Helm - o'rnatish va sozlash",
-      "summary": "Helm CLI'ni o'rnatish va uni klasterga yo'naltirish."
+      "title": "Helm - o’rnatish va sozlash",
+      "summary": "Helm CLI’ni o’rnatish va uni klasterga yo’naltirish."
     },
     "helm2-vs-helm3": {
       "title": "Helm 2 va Helm 3 haqida qisqacha",
-      "summary": "Tiller ketdi, three-way merge keldi - nima o'zgardi va bu rollback uchun nega muhim."
+      "summary": "Tiller ketdi, three-way merge keldi - nima o’zgardi va bu rollback uchun nega muhim."
     },
     "helm-components": {
       "title": "Helm komponentlari",
-      "summary": "CLI, chart'lar, release'lar, reviziyalar, repozitoriylar va klasterdagi release secret'lari."
+      "summary": "CLI, chart’lar, release’lar, reviziyalar, repozitoriylar va klasterdagi release secret’lari."
     },
     "helm-charts": {
-      "title": "Helm chart'lar",
+      "title": "Helm chart’lar",
       "summary": "Chart.yaml, templates va values.yaml - chart anatomiyasi."
     },
     "working-with-helm-basics": {
       "title": "Helm bilan ishlash - asoslar",
-      "summary": "install, list, uninstall, upgrade - kundalik fe'llar."
+      "summary": "install, list, uninstall, upgrade - kundalik fe’llar."
     },
     "customizing-chart-parameters": {
       "title": "Chart parametrlarini moslashtirish",
-      "summary": "--set, --values va o'rnatishdan oldin chart'ni tortib tahrirlash."
+      "summary": "--set, --values va o’rnatishdan oldin chart’ni tortib tahrirlash."
     },
     "helm-lifecycle-management": {
       "title": "Helm bilan hayot siklini boshqarish",
       "summary": "upgrade, history, rollback - va rollback nimani tiklaydi, nimani tiklamaydi."
     },
     "kustomize-problem-statement": {
-      "title": "Kustomize - muammo bayoni va g'oyasi",
-      "summary": "Har muhit uchun nusxalangan YAML o'rniga base va overlay'lar."
+      "title": "Kustomize - muammo bayoni va g’oyasi",
+      "summary": "Har muhit uchun nusxalangan YAML o’rniga base va overlay’lar."
     },
     "kustomize-vs-helm": {
       "title": "Kustomize va Helm",
-      "summary": "Shablonlash va patch'lash: murosalar va ularning birga yashashi."
+      "summary": "Shablonlash va patch’lash: murosalar va ularning birga yashashi."
     },
     "kustomize-installation": {
-      "title": "Kustomize - o'rnatish va sozlash",
-      "summary": "kubectl -k va alohida kustomize binary'si."
+      "title": "Kustomize - o’rnatish va sozlash",
+      "summary": "kubectl -k va alohida kustomize binary’si."
     },
     "kustomization-yaml-file": {
       "title": "kustomization.yaml fayli",
-      "summary": "resources va ularni o'zgartiradigan bo'limlar - hamma narsaning markazidagi fayl."
+      "summary": "resources va ularni o’zgartiradigan bo’limlar - hamma narsaning markazidagi fayl."
     },
     "kustomize-output": {
       "title": "Kustomize natijasi",
-      "summary": "kustomize build va uni kubectl apply'ga uzatish."
+      "summary": "kustomize build va uni kubectl apply’ga uzatish."
     },
     "kustomize-apiversion-and-kind": {
       "title": "Kustomize apiVersion va kind",
@@ -718,59 +718,59 @@
     },
     "kustomize-managing-directories": {
       "title": "Kataloglarni boshqarish",
-      "summary": "Ichma-ich kustomization'lar: ichki kataloglarga ishora qiluvchi root."
+      "summary": "Ichma-ich kustomization’lar: ichki kataloglarga ishora qiluvchi root."
     },
     "kustomize-managing-directories-demo": {
       "title": "Kataloglarni boshqarish - demo",
-      "summary": "Katalog tuzilmasini qo'lda qurish va uni root'dan qo'llash."
+      "summary": "Katalog tuzilmasini qo’lda qurish va uni root’dan qo’llash."
     },
     "kustomize-common-transformers": {
-      "title": "Umumiy transformer'lar",
-      "summary": "commonLabels, namePrefix, namespace, commonAnnotations - hammasiga birdan qo'llanadi."
+      "title": "Umumiy transformer’lar",
+      "summary": "commonLabels, namePrefix, namespace, commonAnnotations - hammasiga birdan qo’llanadi."
     },
     "kustomize-image-transformers": {
-      "title": "Image transformer'lar",
+      "title": "Image transformer’lar",
       "summary": "Manifestga tegmasdan image nomi yoki tegini almashtirish."
     },
     "kustomize-transformers-demo": {
-      "title": "Transformer'lar - demo",
-      "summary": "Umumiy va image transformer'lar haqiqiy loyihada qo'llanishi."
+      "title": "Transformer’lar - demo",
+      "summary": "Umumiy va image transformer’lar haqiqiy loyihada qo’llanishi."
     },
     "kustomize-patches-intro": {
-      "title": "Patch'lar - kirish",
-      "summary": "JSON 6902 va strategic merge patch'lar bilan nishonli o'zgarishlar."
+      "title": "Patch’lar - kirish",
+      "summary": "JSON 6902 va strategic merge patch’lar bilan nishonli o’zgarishlar."
     },
     "kustomize-patch-types": {
       "title": "Patch turlari",
-      "summary": "Inline va alohida fayldagi patch'lar, qaysini tanlash."
+      "summary": "Inline va alohida fayldagi patch’lar, qaysini tanlash."
     },
     "kustomize-patches-dictionary": {
-      "title": "Patch'lar - lug'at",
-      "summary": "Map'dagi kalitlarni almashtirish, qo'shish va olib tashlash."
+      "title": "Patch’lar - lug’at",
+      "summary": "Map’dagi kalitlarni almashtirish, qo’shish va olib tashlash."
     },
     "kustomize-patches-list": {
-      "title": "Patch'lar - ro'yxat",
-      "summary": "Ro'yxatdagi yozuvlarni indeks bo'yicha almashtirish, qo'shish va olib tashlash."
+      "title": "Patch’lar - ro’yxat",
+      "summary": "Ro’yxatdagi yozuvlarni indeks bo’yicha almashtirish, qo’shish va olib tashlash."
     },
     "kustomize-overlays": {
-      "title": "Overlay'lar",
+      "title": "Overlay’lar",
       "summary": "base/ va overlays/dev, overlays/prod - muhitlarni arzon qiladigan tuzilma."
     },
     "kustomize-components": {
-      "title": "Component'lar",
-      "summary": "Har overlay uchun yoqiladigan qayta ishlatiladigan bo'laklar - nusxalamasdan ixtiyoriy imkoniyatlar."
+      "title": "Component’lar",
+      "summary": "Har overlay uchun yoqiladigan qayta ishlatiladigan bo’laklar - nusxalamasdan ixtiyoriy imkoniyatlar."
     },
     "troubleshooting-methodology": {
       "title": "Kengayadigan nosozlik aniqlash usuli",
-      "summary": "describe -> events -> logs -> exec tsikli va vaqt yo'qotmaslik yo'llari."
+      "summary": "describe -> events -> logs -> exec tsikli va vaqt yo’qotmaslik yo’llari."
     },
     "debugging-pods-and-containers": {
       "title": "Ilova nosozligi",
-      "summary": "Yiqilgan ilovani olddan tekshirish: Service, selector'lar, portlar, Pod holati, loglar, environment."
+      "summary": "Yiqilgan ilovani olddan tekshirish: Service, selector’lar, portlar, Pod holati, loglar, environment."
     },
     "control-plane-failures": {
       "title": "Control plane nosozligi",
-      "summary": "kubectl o'zi noto'g'ri ishlaganda: static Pod manifestlari, komponent loglari, sertifikatlar va flag'lar."
+      "summary": "kubectl o’zi noto’g’ri ishlaganda: static Pod manifestlari, komponent loglari, sertifikatlar va flag’lar."
     },
     "node-not-ready": {
       "title": "Worker node nosozligi",
@@ -778,47 +778,47 @@
     },
     "network-troubleshooting": {
       "title": "Tarmoq nosozliklarini bartaraf etish",
-      "summary": "CNI plugin'lar, kube-proxy va CoreDNS - klaster tarmog'i buziladigan uch joy."
+      "summary": "CNI plugin’lar, kube-proxy va CoreDNS - klaster tarmog’i buziladigan uch joy."
     },
     "troubleshooting-network-and-storage": {
       "title": "Tarmoq va saqlash nosozliklarini bartaraf etish",
-      "summary": "Ulanish va mount nosozliklari uchun takrorlanadigan tekshiruv ro'yxati."
+      "summary": "Ulanish va mount nosozliklari uchun takrorlanadigan tekshiruv ro’yxati."
     },
     "json-path-prerequisites": {
       "title": "Asos - JSONPath",
-      "summary": "JSONPath tilining o'zidagi lug'atlar, ro'yxatlar, filtrlar va joker belgilar."
+      "summary": "JSONPath tilining o’zidagi lug’atlar, ro’yxatlar, filtrlar va joker belgilar."
     },
     "json-path-in-kubernetes": {
-      "title": "Kubernetes'da JSONPath",
+      "title": "Kubernetes’da JSONPath",
       "summary": "-o jsonpath, range, custom-columns va --sort-by - aynan kerakli maydonni olish."
     },
     "exam-day-logistics": {
       "title": "Mock imtihonlar - kirish",
-      "summary": "Mock'lar qanday baholanadi, vaqtni qanday o'lchash va noto'g'ri javob bilan nima qilish."
+      "summary": "Mock’lar qanday baholanadi, vaqtni qanday o’lchash va noto’g’ri javob bilan nima qilish."
     },
     "mock-exam-one": {
       "title": "Mock imtihon 1",
-      "summary": "Imtihon sharoitida to'liq vaqtli mock."
+      "summary": "Imtihon sharoitida to’liq vaqtli mock."
     },
     "mock-exam-one-solutions": {
       "title": "Mock imtihon 1 - bosqichma-bosqich yechimlar",
-      "summary": "1-mock'ning har bir savoli tez yo'l va tuzog'i bilan yechilgan."
+      "summary": "1-mock’ning har bir savoli tez yo’l va tuzog’i bilan yechilgan."
     },
     "mock-exam-two": {
       "title": "Mock imtihon 2",
-      "summary": "Ikkinchi to'liq vaqtli mock."
+      "summary": "Ikkinchi to’liq vaqtli mock."
     },
     "mock-exam-two-solutions": {
       "title": "Mock imtihon 2 - bosqichma-bosqich yechimlar",
-      "summary": "2-mock'ning har bir savoli yechilgan."
+      "summary": "2-mock’ning har bir savoli yechilgan."
     },
     "mock-exam-three": {
       "title": "Mock imtihon 3",
-      "summary": "Uchinchi to'liq vaqtli mock - uchtasining eng qiyini."
+      "summary": "Uchinchi to’liq vaqtli mock - uchtasining eng qiyini."
     },
     "mock-exam-three-solutions": {
       "title": "Mock imtihon 3 - bosqichma-bosqich yechimlar",
-      "summary": "3-mock'ning har bir savoli yechilgan."
+      "summary": "3-mock’ning har bir savoli yechilgan."
     },
     "speed-drills-and-imperative-commands": {
       "title": "Tezlik mashqlari va imperativ buyruqlar",
@@ -826,11 +826,11 @@
     },
     "weak-domain-review": {
       "title": "Zaif sohalarni takrorlash",
-      "summary": "Dashboard'dagi tayyorlik tahlilidan foydalanib nimani qayta ko'rish kerakligini aniqlash."
+      "summary": "Dashboard’dagi tayyorlik tahlilidan foydalanib nimani qayta ko’rish kerakligini aniqlash."
     },
     "final-checklist": {
       "title": "Keyin nima",
-      "summary": "Imtihonni band qilish, imtihon kuni va CKA'dan keyin qayerga borish."
+      "summary": "Imtihonni band qilish, imtihon kuni va CKA’dan keyin qayerga borish."
     }
   }
 }
