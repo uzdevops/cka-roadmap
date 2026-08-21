@@ -44,6 +44,8 @@ YAML_LINE = re.compile(r"^\s*-?\s*[A-Za-z_][A-Za-z0-9_.\-/]*:(\s|$)")
 # "1. kubeadm (the tool)   on the control plane node" is an outline, not a
 # command, even though it names one - those labels are prose and translatable.
 OUTLINE = re.compile(r"^\s*\d+\.\s")
+# Drawn arrows only appear in diagrams, never in a shell command.
+ARROW = re.compile(r"[→←↔▶◀⟶⟵]")
 
 
 def code_signature(code: list[str]) -> list[str]:
@@ -60,7 +62,12 @@ def code_signature(code: list[str]) -> list[str]:
         if "#" in line:
             line = line.split("#", 1)[0].rstrip()  # a trailing comment may be translated
             s = line.strip()
+        # A bare drawn arrow makes the line a diagram row, not an invocation,
+        # so its labels are prose and translatable. An arrow *inside quotes* is
+        # part of a command's argument - jsonpath'{" → "} - and stays.
         if not s or OUTLINE.match(line):
+            continue
+        if ARROW.search(re.sub(r"""(["'])(?:(?!\1).)*\1""", "", line)):
             continue
         if COMMAND.search(s) or YAML_LINE.match(line):
             out.append(line.rstrip())

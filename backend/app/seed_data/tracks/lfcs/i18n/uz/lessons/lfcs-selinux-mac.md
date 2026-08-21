@@ -7,10 +7,10 @@ bir haqiqiy denial’ni hal qiladigan to’rtta vosita: **restorecon**,
 Ularni sinash tartibi:
 
 ```
- denial → ausearch/audit2why → is the label wrong?  → restorecon (temporary path) or semanage fcontext + restorecon (permanent)
-                              → is it a port?       → semanage port
-                              → is it a policy switch? → setsebool -P
-                              → none of the above    → audit2allow module (last resort)
+ rad etish → ausearch/audit2why → label noto'g'rimi?  → restorecon (vaqtinchalik) yoki semanage fcontext + restorecon (doimiy)
+                              → port masalasimi?    → semanage port
+                              → siyosat kalitimi?      → setsebool -P
+                              → yuqoridagilar emasmi → audit2allow moduli (oxirgi chora)
 ```
 
 ## Rejimlar va paketlar
