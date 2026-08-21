@@ -40,7 +40,7 @@ kubectl edit deployment metrics-server -n kube-system
 :::exam-tip
 `kubectl top` `error: Metrics API not available` qaytarsa, bu Metrics Server
 o’rnatilmagan yoki Ready emas degani - `kubectl get pods -n kube-system
-| grep metrics` ni tekshiring. Bu kamdan-kam topshiriqning o’zi bo’ladi; bu
+| grep metrics`’ni tekshiring. Bu kamdan-kam topshiriqning o’zi bo’ladi; bu
 "qaysi Pod eng ko’p CPU ishlatyapti" deb so’raydigan topshiriqni to’sib
 turgan narsa.
 :::

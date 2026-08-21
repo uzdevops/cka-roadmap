@@ -89,4 +89,4 @@ haqida.
 2. Root sifatida ishlayotgan konteyner tizim soatini o’rnatmoqchi bo’ldi va
    rad etildi. Nega va nima bunga ruxsat bergan bo’lardi?
 3. `--privileged` nima beradi va u `--cap-add
-   SYS_ADMIN` dan nega farq qiladi?
+   SYS_ADMIN`’dan nega farq qiladi?

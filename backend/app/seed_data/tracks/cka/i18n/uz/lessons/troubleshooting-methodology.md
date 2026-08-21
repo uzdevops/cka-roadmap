@@ -71,7 +71,7 @@ nodes`. Tekshirilmagan tuzatish - taxmin.
 
 - **Xatoni to’liq o’qing.** `Back-off pulling image "nginx:1.99"` ichida
   javobning o’zi turibdi. `0/3 nodes are available: 3 node(s) had
-  untolerated taint` da ham shunday. Imtihondagi ko’p nosozliklar - bitta
+  untolerated taint`’da ham shunday. Imtihondagi ko’p nosozliklar - bitta
   `describe`’da ko’rinib turgan xato yozilgan so’z.
 - **Bitta narsani o’zgartiring, keyin tekshiring.** Ikkita o’zgarish va
   bitta tuzatish sizga hech narsa o’rgatmaydi va boshqa narsani buzgan

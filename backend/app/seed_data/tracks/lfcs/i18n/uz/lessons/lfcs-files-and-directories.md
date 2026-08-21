@@ -67,7 +67,7 @@ rm ./-weird-name
 Bo’sh o’zgaruvchi bilan yoki o’zingiz mo’ljallagandan ko’prog’iga mos
 keladigan glob bilan `rm -rf` istalgan hujumchidan ko’ra ko’proq serverni
 yo’q qilgan. `rm -rf
-$DIR/*` dan oldin `echo rm -rf $DIR/*` - nima ochilishiga qarang. Va hech
+$DIR/*`’dan oldin `echo rm -rf $DIR/*` - nima ochilishiga qarang. Va hech
 qachon `rm`’ni `rm -i`’ga alias qilib, unga tayanmang; bu odat keyingi
 mashinaga o’tmaydi.
 :::

@@ -92,7 +92,7 @@ O’rnatish topshirig’i node’larning Ready bo’lishi va Pod’larning IP ol
 bo’yicha baholanadi. Buni buzadigan narsa - CNI’da sozlangan CIDR
 klasterning `--pod-network-cidr` iga mos kelmasligi.
 Avval `kubectl cluster-info dump | grep
-cluster-cidr` ni ishlating, keyin apply qilishdan oldin manifestni unga
+cluster-cidr`’ni ishlating, keyin apply qilishdan oldin manifestni unga
 moslashtiring. Va agar imtihon manifest faylni mahalliy bersa, o’shani
 ishlating - imtihon mashinasida internet yo’q.
 :::
