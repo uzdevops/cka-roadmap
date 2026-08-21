@@ -36,6 +36,9 @@ COMMAND = re.compile(
     r"useradd|usermod|groupadd|chage|passwd|setfacl|getfacl|chmod|chown|chattr|"
     r"semanage|setsebool|restorecon|getenforce|sysctl|modprobe|virsh|virt-install|"
     r"qemu-img|chronyc|timedatectl|logrotate|crontab|find|grep|sed|awk|nginx)\b"
+    # not when it is the head of a hyphenated identifier: "kubeadm-config" is
+    # the name of a ConfigMap in a prose line, not an invocation of kubeadm.
+    r"(?!-)"
 )
 YAML_LINE = re.compile(r"^\s*-?\s*[A-Za-z_][A-Za-z0-9_.\-/]*:(\s|$)")
 # "1. kubeadm (the tool)   on the control plane node" is an outline, not a
