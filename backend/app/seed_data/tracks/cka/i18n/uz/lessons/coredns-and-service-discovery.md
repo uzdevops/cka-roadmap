@@ -89,7 +89,7 @@ kubectl edit configmap coredns -n kube-system
 # masalan, server bloki qo'shish:
 #   corp.internal:53 { forward . 10.10.0.53 }
 # yoki forward . /etc/resolv.conf ni forward . 8.8.8.8 ga o'zgartirish
-kubectl rollout restart deployment coredns -n kube-system     # faqat `reload` ni kuta olmasangiz
+kubectl rollout restart deployment coredns -n kube-system     # faqat `reload`'ni kuta olmasangiz
 ```
 
 `forward`’ni ommaviy resolver’ga o’zgartirish - o’z resolv.conf fayli systemd

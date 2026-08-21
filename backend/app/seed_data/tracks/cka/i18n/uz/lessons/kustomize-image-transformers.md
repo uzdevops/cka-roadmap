@@ -16,7 +16,7 @@ containers:
 # overlays/prod/kustomization.yaml
 resources: [../../base]
 images:
-  - name: nginx                 # `image: nginx:<anything>` ga mos keladi - nom qismi, konteyner nomi emas
+  - name: nginx                 # `image: nginx:<anything>`'ga mos keladi - nom qismi, konteyner nomi emas
     newTag: "1.27.1"
 ```
 

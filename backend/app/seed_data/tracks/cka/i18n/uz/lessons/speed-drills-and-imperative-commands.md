@@ -90,7 +90,7 @@ k set serviceaccount deploy web sa-name
 ```bash
 k explain pod.spec.tolerations             # har bir maydon, turi va tavsifi bilan
 k explain deploy.spec.strategy --recursive
-k create role --help | grep -A5 Examples   # har bir `create` da Examples bor
+k create role --help | grep -A5 Examples   # har bir `create`'da Examples bor
 k api-resources | grep -i netpol           # qisqa nomlar va namespace'ga tegishlimi
 k api-resources --namespaced=false
 ```
